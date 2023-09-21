@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'da-bubble';
+  hide = false;
+
+  hideText() {
+    this.hide = true;
+  }
 }

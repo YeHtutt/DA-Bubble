@@ -19,6 +19,10 @@ import { HeaderComponent } from './main/header/header.component';
 import { SidenavComponent } from './main/sidenav/sidenav.component';
 import { ThreadsComponent } from './main/threads/threads.component';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +43,10 @@ import { ThreadsComponent } from './main/threads/threads.component';
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
