@@ -13,6 +13,15 @@
   </div>
 </header>
 
+  <mat-toolbar class="toolbar" color="primary">
+    <mat-toolbar-row class="mat-toolbar-row">
+      <div class="toggle-box" (click)="drawer.toggle()">
+        <div class="toggle-text">Workspace-Menü schließen</div>
+        <img src="assets/img/hide-menu.png">
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
 <mat-drawer-container class="mat-drawer-container" autosize>
 
   <mat-drawer #drawer [opened]="true" class="sidenav" mode="side">
@@ -35,16 +44,5 @@
     </ul>
   </div>
   </mat-drawer>
-
-  <div class="toggle-sidenav">
-    <mat-toolbar class="toolbar" color="primary">
-      <mat-toolbar-row class="mat-toolbar-row">
-        <div class="toggle-box" (click)="drawer.toggle()">
-          <div class="toggle-text">Workspace-Menü schließen</div>
-          <img src="assets/img/hide-menu.png">
-        </div>
-      </mat-toolbar-row>
-    </mat-toolbar>
-  </div>
 
 </mat-drawer-container>
