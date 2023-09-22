@@ -17,7 +17,8 @@ export class ChannelsComponent {
   openCreateChannelDialog() {
     this.dialog.open(CreateChannelDialogComponent, {
       width: '520px',
-      hasBackdrop: true
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style'
     });
   }
 
