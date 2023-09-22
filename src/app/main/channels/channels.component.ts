@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-channels',
@@ -6,5 +8,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./channels.component.scss']
 })
 export class ChannelsComponent {
+
+  constructor(public dialog: MatDialog,
+    
+    
+    ) { }
+
+  openCreateChannelDialog() {
+    this.dialog.open(CreateChannelDialogComponent, {
+      width: '520px',
+      hasBackdrop: true
+    });
+  }
+
 
 }

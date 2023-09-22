@@ -1,0 +1,32 @@
+@use "@angular/material" as mat;
+@use "material/_theming" as app;
+@use 'material/_palette' as palette;
+@use "sass:map";
+
+@include mat.core();
+
+$app-primary: mat.define-palette(palette.$my-light-palette, 100);
+$app-accent: mat.define-palette(palette.$my-light-palette, A100, A200, A700);
+
+// Use your own "app" define-light-theme function instead of "mat" one.
+$app-theme: app.define-light-theme((color: (primary: $app-primary,
+        accent: $app-accent,
+      )));
+
+
+@include mat.core-theme($app-theme);
+@include mat.button-theme($app-theme);
+@include mat.expansion-theme($app-theme);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@include mat.all-component-colors($app-theme);
+
