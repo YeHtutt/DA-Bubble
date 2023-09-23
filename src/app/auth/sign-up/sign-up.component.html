@@ -1,1 +1,42 @@
-<p>sign-up works!</p>
+<div class="signUpPage-Container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Konto erstellen</mat-card-title>
+            <mat-card-subtitle>Mit deinem Namen und deiner E-mail-Adresse hast <br> du dein neues
+                DABubble-Konto.</mat-card-subtitle>
+        </mat-card-header>
+
+        <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+            <div class="input-field-container">
+                <img src="./assets/img/person.png">
+                <input matInput placeholder="Name und Nachname" formControlName="name" type="text">
+            </div>
+
+            <div class="input-field-container">
+                <img src="./assets/img/mail.png">
+                <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
+            </div>
+
+            <div class="input-field-container">
+                <img src="./assets/img/lock.png">
+                <input matInput placeholder="Password" formControlName="password" type="password">
+            </div>
+
+            <section class="sectionCheckbox">
+                <mat-checkbox class="example-margin" [(ngModel)]="checked">Ich stimme die <a
+                        href="#">Datenschutzerklärungen</a> zu</mat-checkbox>
+            </section>
+
+            <div class="buttonBox">
+                <button type="submit">Weiter</button>
+            </div>
+
+        </form>
+
+        <div class="arrow-back">
+            <img src="assets/img/arrow_back.png">
+        </div>
+
+    </mat-card>
+
+</div>

@@ -1,0 +1,98 @@
+.signUpPage-Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    max-width: 100%;
+    min-height: 100vh;
+    background-color: #ECEEFE;
+    position: relative;
+}
+
+mat-card {
+    width: 606px;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 64px;
+    position: relative;
+}
+
+
+mat-card-header {
+    text-align: center;
+    color: #444DF2;
+    --mat-card-title-text-size: 45px;
+    position: relative;
+    margin-bottom: 41px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+
+
+    .input-field-container {
+        width: 500px;
+        height: 60px;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+        background-color: #ECEEFE;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 18px 32px;
+        gap: 30px;
+
+
+        input {
+            outline: none;
+            border: none;
+            background-color: #ECEEFE;
+        }
+    }
+
+    .sectionCheckbox {
+        display: flex;
+        box-sizing: border-box;
+        width: 100%;
+        padding-bottom: 40px;
+    }
+
+    .buttonBox {
+        position: absolute;
+        right: 53px;
+        bottom: 40px;
+
+        button {
+            width: 82px;
+            height: 37px;
+            border-radius: 25px;
+            background-color: #444DF2;
+            border: none;
+            cursor: pointer;
+
+            &:hover {
+                filter: opacity(70%);
+            }
+        }
+        
+    }
+
+}
+
+.arrow-back {
+    position: absolute;
+    top: 53px;
+    left: 40px;
+    cursor: pointer;
+    border-radius: 20%;
+
+    &:hover {
+        background-color: rgba(0,0,0,0.15);
+    }
+}
