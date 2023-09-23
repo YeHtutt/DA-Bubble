@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
+  showSidenav: boolean = true;
 
+
+  toggleSidenav() {
+    if (this.showSidenav) {
+      this.showSidenav = false;
+      console.log('true');
+    } else {
+      this.showSidenav = true;
+      console.log('false');
+    }
+  }
 }

@@ -4,15 +4,6 @@
 // Plus imports for other components in your app.
 @import './custom-theme.scss';
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
 
 
 .mat-mdc-dialog-container .mdc-dialog__surface {

@@ -1,1 +1,75 @@
-<p>sidenav works!</p>
+<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="showSidenav" src="../assets/img/close-sidenav.png">
+<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="!showSidenav" src="../assets/img/open-sidenav.png">
+
+
+
+<mat-drawer-container class="mat-drawer-container" autosize>
+
+  <mat-drawer #drawer [opened]="true" class="sidenav" mode="side">
+    <div class="mat-drawer-box">
+
+      <div class="sidenav-header">
+        <img class="workspace-logo" src="../assets/img/workspace.png">
+        <span>Code learning</span>
+        <div class="edit-div">
+          <img class="edit-icon" src="../assets/img/edit_square.png">
+          <div class="bg-div"></div>
+        </div>
+      </div>
+
+      <div class="channels-section">
+        <div class="channels-headline">
+          <div>
+            <img class="drop-down-icon" src="../assets/img/arrow_drop_down.png">
+            <img class="channels-icon" src="../assets/img/channels-icon.png">
+            <span>Channels</span>
+          </div>
+          <div>
+            <img class="add-icon" src="../assets/img/add.png">
+          </div>
+        </div>
+        <div class="channel"> <!-- später mit einer ngFor alle vorhandenen channel rendern -->
+          <img src="../assets/img/tag.png">
+          <span>Entwicklerteam</span>
+        </div>
+        <div class="add-channel">
+          <mat-icon class="add-icon">add_circle_outline</mat-icon>
+          <span>Channel hinzufügen</span>
+        </div>
+      </div>
+
+      <div class="dm-section">
+        <div class="dm-headline">
+          <img class="drop-down-icon" src="../assets/img/arrow_drop_down.png">
+          <img class="profil-icon" src="../assets/img/account_circle.png">
+          <span>Direktnachrichten</span>
+        </div>
+        <div class="contact">  <!-- kontakte werden später mit einer ngFor gerendert -->
+          <img class="profil-icon" src="../assets/img/avatar/avatar6-online.png">
+          <span>Frederik Beck (Du)</span>
+        </div>
+        <div class="contact">
+          <img class="profil-icon" src="../assets/img/avatar/avatar5-online.png">
+          <span>Sofia Müller</span>
+        </div>
+        <div class="contact">
+          <img class="profil-icon" src="../assets/img/avatar/avatar4-online.png">
+          <span>Noah Braun</span>
+        </div>
+        <div class="contact">
+          <img class="profil-icon" src="../assets/img/avatar/avatar1-offline.png">
+          <span>Elise Roth</span>
+        </div>
+        <div class="contact">
+          <img class="profil-icon" src="../assets/img/avatar/avatar2-online.png">
+          <span>Elias Neumann</span>
+        </div>
+        <div class="contact">
+          <img class="profil-icon" src="../assets/img/avatar/avatar3-online.png">
+          <span>Steffen Hoffmann</span>
+        </div>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content></mat-drawer-content>
+</mat-drawer-container>
