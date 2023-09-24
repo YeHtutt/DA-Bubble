@@ -1,0 +1,159 @@
+.logInPage-Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    max-width: 100%;
+    min-height: 100vh;
+    background-color: #ECEEFE;
+    position: relative;
+}
+
+
+mat-card {
+    width: 606px;
+    height: 769px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 53px;
+}
+
+
+mat-card-header {
+    text-align: center;
+    color: #444DF2;
+    --mat-card-title-text-size: 46px;
+    --mat-card-subtitle-text-size: 20px;
+    margin-bottom: 46px;
+}
+
+mat-card-title {
+    margin-bottom: 30px;
+}
+
+
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+
+
+    .input-field-container {
+        width: 500px;
+        height: 60px;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+        background-color: #ECEEFE;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 18px 32px;
+        gap: 30px;
+
+
+        input {
+            outline: none;
+            border: none;
+            background-color: #ECEEFE;
+        }
+    }
+
+    .forgetPassword {
+        box-sizing: border-box;
+        width: 100%;
+        text-align: center;
+    }
+
+
+    .divider {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .divider .line {
+        flex-grow: 1;
+        height: 1px;
+        background-color: #ccc;
+    }
+    
+    .divider .text {
+        padding: 0 10px;
+        color: #777;
+    }
+
+
+
+    .googleLoginBtn {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        img {
+            width: 38px;
+            height: 38px;
+            object-fit: cover;
+        }
+
+        cursor: pointer;
+    }
+
+
+    .buttonBox {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+
+        .loginBtn {
+            width: 137px;
+            height: 49px;
+            border-radius: 25px;
+            padding: 12px 25px;
+            background-color: #444DF2;
+            border: none;
+            cursor: pointer;
+    
+            &:hover {
+                filter: opacity(70%);
+            }
+        }
+
+
+        .guestLoginBtn {
+            width: 137px;
+            height: 49px;
+            border-radius: 25px;
+            padding: 12px 25px;
+            background-color: #FFF;
+            border: none;
+            cursor: pointer;
+            border: 1px solid #ABAEF8;
+    
+            &:hover {
+                filter: opacity(70%);
+            }
+        }
+    }
+
+    
+
+}
+
+
+
+
+

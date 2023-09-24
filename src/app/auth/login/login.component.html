@@ -1,1 +1,47 @@
-<p>login works!</p>
+<div class="logInPage-Container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Anmeldung</mat-card-title>
+            <mat-card-subtitle>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeite
+                verwendest</mat-card-subtitle>
+        </mat-card-header>
+
+        <form>
+            <div class="input-field-container">
+                <img src="./assets/img/mail.png">
+                <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
+            </div>
+
+            <div class="input-field-container">
+                <img src="./assets/img/lock.png">
+                <input matInput placeholder="Password" formControlName="password" type="password">
+            </div>
+
+            <div class="forgetPassword">
+                <a href="#">Password vergessen?</a>
+            </div>
+
+
+            <div class="divider">
+                <div class="line"></div>
+                <div class="text">ODER</div>
+                <div class="line"></div>
+            </div>
+
+
+            <div class="input-field-container">
+                <div class="googleLoginBtn">
+                    <img src="./assets/img/Google.png">
+                    <span>Anmelden mit Google</span>
+                </div>
+            </div>
+
+
+            <div class="buttonBox">
+                <button type="submit" class="loginBtn">Anmelden</button>
+                <button class="guestLoginBtn" type="submit">Gäste Login</button>
+            </div>
+
+        </form>
+    </mat-card>
+</div>
