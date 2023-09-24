@@ -1,5 +1,7 @@
-<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="showSidenav" src="../assets/img/close-sidenav.png">
-<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="!showSidenav" src="../assets/img/open-sidenav.png">
+<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="showSidenav"
+  src="../assets/img/close-sidenav.png">
+<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="!showSidenav"
+  src="../assets/img/open-sidenav.png">
 
 
 
@@ -17,26 +19,7 @@
         </div>
       </div>
 
-      <div class="channels-section">
-        <div class="channels-headline">
-          <div>
-            <img class="drop-down-icon" src="../assets/img/arrow_drop_down.png">
-            <img class="channels-icon" src="../assets/img/channels-icon.png">
-            <span>Channels</span>
-          </div>
-          <div>
-            <img class="add-icon" src="../assets/img/add.png">
-          </div>
-        </div>
-        <div class="channel"> <!-- später mit einer ngFor alle vorhandenen channel rendern -->
-          <img src="../assets/img/tag.png">
-          <span>Entwicklerteam</span>
-        </div>
-        <div class="add-channel">
-          <mat-icon class="add-icon">add_circle_outline</mat-icon>
-          <span>Channel hinzufügen</span>
-        </div>
-      </div>
+      <app-channels></app-channels>
 
       <div class="dm-section">
         <div class="dm-headline">
@@ -44,7 +27,7 @@
           <img class="profil-icon" src="../assets/img/account_circle.png">
           <span>Direktnachrichten</span>
         </div>
-        <div class="contact">  <!-- kontakte werden später mit einer ngFor gerendert -->
+        <div class="contact"> <!-- kontakte werden später mit einer ngFor gerendert -->
           <img class="profil-icon" src="../assets/img/avatar/avatar6-online.png">
           <span>Frederik Beck (Du)</span>
         </div>

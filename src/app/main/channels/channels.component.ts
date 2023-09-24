@@ -9,16 +9,17 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ChannelsComponent {
 
-  constructor(public dialog: MatDialog,
-    
+  constructor(
+    public dialog: MatDialog,   
     
     ) { }
 
   openCreateChannelDialog() {
     this.dialog.open(CreateChannelDialogComponent, {
-      width: '520px',
+      width: '880px',
+      height: '514px',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style'
+      panelClass: 'dialog-main-style',
     });
   }
 

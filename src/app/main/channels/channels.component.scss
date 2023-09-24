@@ -19,6 +19,33 @@ button {
     background-color: transparent;
 }
 
+.channels-headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
+
+    :first-child {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            cursor: pointer;
+            color: #535AF1;
+
+            img {
+                filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
+            }
+        }
+    }
+}
+
+.drop-down-icon {
+    margin-right: 7px;
+}
+
 .channels-icon {
     margin-right: 5px;
     width: 22px;
@@ -61,4 +88,28 @@ button {
     margin: 20px 0 20px 37px;
     font-size: 16px;
     font-weight: 500;
-    color: black;}
+    color: black;
+
+    span {
+        margin-top: 2px;
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        :first-child {
+            color: #535AF1;
+        }
+
+        span {
+            color: #535AF1;
+        }
+    }
+}
+
+.add-icon {
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+}
+

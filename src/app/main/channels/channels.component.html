@@ -6,15 +6,15 @@
         <span>Channels</span>
       </div>
       <div>
-        <img class="add-icon" src="../assets/img/add.png">
+        <mat-icon class="add-icon" (click)="openCreateChannelDialog()">add</mat-icon>
       </div>
     </div>
     <div class="channel"> <!-- später mit einer ngFor alle vorhandenen channel rendern -->
       <img src="../assets/img/tag.png">
       <span>Entwicklerteam</span>
     </div>
-    <div class="add-channel">
-      <mat-icon class="add-icon">add_circle_outline</mat-icon>
+    <div class="add-channel" (click)="openCreateChannelDialog()">
+      <mat-icon class="add-icon" >add_circle_outline</mat-icon>
       <span>Channel hinzufügen</span>
     </div>
   </div>
