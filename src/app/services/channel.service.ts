@@ -25,7 +25,7 @@ export class ChannelService {
   }
 
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
-  getRef(ref) {
+  getRef(ref: any) {
     return collection(this.firestore, ref);
   }
 
