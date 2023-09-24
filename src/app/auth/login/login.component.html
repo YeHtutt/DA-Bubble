@@ -6,7 +6,7 @@
                 verwendest</mat-card-subtitle>
         </mat-card-header>
 
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <div class="input-field-container">
                 <img src="./assets/img/mail.png">
                 <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
@@ -39,7 +39,7 @@
 
             <div class="buttonBox">
                 <button type="submit" class="loginBtn">Anmelden</button>
-                <button class="guestLoginBtn" type="submit">Gäste Login</button>
+                <button class="guestLoginBtn" (click)="loginAsGuest()">Gäste Login</button>
             </div>
 
         </form>
