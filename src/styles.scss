@@ -21,4 +21,17 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mdc-notched-outline__trailing {
+  border-top-right-radius: 42px !important;
+  border-bottom-right-radius: 42px !important; 
+  min-width: 0px !important;
+}
+
+.mdc-notched-outline__leading {
+  border-top-left-radius: 42px !important;
+  border-bottom-left-radius: 42px !important;
+  min-width: 42px !important; 
+
+}
+
 

@@ -7,12 +7,12 @@
         </div>
         <h3>Channel-Name</h3>
 
-        <input [(ngModel)]="channelNameInput" matInput placeholder="# e.g. marketing">
 
 
+        <mat-form-field appearance="outline" style="border-radius: 50px;"> <input [(ngModel)]="channelNameInput" matInput placeholder="# e.g. marketing"></mat-form-field>
         <h3>Beschreibung (optional)</h3>
+        <mat-form-field appearance="outline"> <input [(ngModel)]="channelDiscription" matInput></mat-form-field>
 
-        <input [(ngModel)]="channelDiscription" matInput>
         <button (click)="addChannel()">Add Channel</button>
     </div>
 </div>
