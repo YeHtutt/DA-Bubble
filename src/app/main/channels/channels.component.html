@@ -1,3 +1,20 @@
-<button class="create-channel-btn" (click)="openCreateChannelDialog()">
-    <mat-icon>add_circle_outline</mat-icon>
-</button>
+<div class="channels-section">
+    <div class="channels-headline">
+      <div>
+        <img class="drop-down-icon" src="../assets/img/arrow_drop_down.png">
+        <img class="channels-icon" src="../assets/img/channels-icon.png">
+        <span>Channels</span>
+      </div>
+      <div>
+        <img class="add-icon" src="../assets/img/add.png">
+      </div>
+    </div>
+    <div class="channel"> <!-- später mit einer ngFor alle vorhandenen channel rendern -->
+      <img src="../assets/img/tag.png">
+      <span>Entwicklerteam</span>
+    </div>
+    <div class="add-channel">
+      <mat-icon class="add-icon">add_circle_outline</mat-icon>
+      <span>Channel hinzufügen</span>
+    </div>
+  </div>

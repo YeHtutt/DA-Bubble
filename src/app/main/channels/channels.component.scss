@@ -19,3 +19,46 @@ button {
     background-color: transparent;
 }
 
+.channels-icon {
+    margin-right: 5px;
+    width: 22px;
+}
+
+.add-icon {
+    width: 25px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.channel {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 20px 22px;
+    padding: 4px 15px;
+    color: #535AF1;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #ECEEFE;
+    border-radius: 20px;
+    width: fit-content;
+
+    img {
+        width: 19px;
+        margin-right: 6px;
+        margin-left: 2px;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.add-channel {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 20px 37px;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;}
