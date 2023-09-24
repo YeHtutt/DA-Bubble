@@ -3,11 +3,14 @@
 }
 
 section {
+    position: relative;
     background-color: white;
     height: calc(100% - 25px);
     border-radius: 30px;
     margin: 0 25px 0 50px;
 }
+
+// HEADER SECTION
 
 header {
     height: 96px;
@@ -27,11 +30,13 @@ header {
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    transition: background-color 120ms ease-in;
     
     span, mat-icon {
         font-size: 22px;
         font-weight: 500;
         color: black;
+        transition: color 120ms ease-in;
     }
 
     &:hover {
@@ -57,6 +62,7 @@ header {
     gap: 10px;
     border-radius: 100px;
     cursor: pointer;
+    transition: background-color 120ms ease-in;
 
     &:hover {
         background-color: #ECEEFE;
@@ -87,6 +93,7 @@ header {
     font-size: 20px;
     color: black;
     height: 36px;
+    transition: color 120ms ease-in;
 }
 
 .add_user {
@@ -111,5 +118,80 @@ header {
             transform: scale(1.1);
             color: #535AF1;
         }
+    }
+}
+
+// INPUT MESSAGE SECTION
+
+.input_message_container {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    right: 25px;
+    border-radius: 20px;
+    border: 1px solid #ADB0D9;
+    padding: 20px;
+
+    &:hover {
+        border: 1px solid #535AF1;
+    }
+
+    &:focus-within {
+        border: 1px solid #535AF1;
+    }
+
+    textarea {
+        border: unset;
+        resize: none;
+        width: 100%;
+        min-height: 70px;
+        max-height: 200px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.control_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat_action_box {
+    display: flex;
+    gap: 5px;
+
+    hr {
+        margin: 0;
+    }
+}
+
+.action_btn_style {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+    transition: color 225ms ease-in-out, background-color 225ms ease-in-out;
+
+    &:hover {
+        background-color: #ECEEFE;
+        color: #535AF1;
+    }
+}
+
+.send_btn {
+    color: #444DF2;
+    cursor: pointer;
+    transition: color 150ms ease-in-out;
+
+    &:hover {
+        color: #ADB0D9;
     }
 }
