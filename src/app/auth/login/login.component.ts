@@ -10,9 +10,12 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  isIntro = true;
 
   constructor(private authService : AuthenticationService, private router: Router, private formBuilder: FormBuilder) {
-
+    setTimeout(() => {
+      this.isIntro = false;
+    }, 2500);
   }
 
   loginForm = new FormGroup({

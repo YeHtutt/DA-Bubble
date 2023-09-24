@@ -1,4 +1,28 @@
 <div class="logInPage-Container">
+    <div [style.display]="!isIntro ? 'block' : 'none' " class="logoContent-normal">
+        <img src="./assets/img/logo+text.png">
+    </div>
+
+
+    <div style="position: absolute;">
+        <div style="position: relative; width: 100vw; height: 100vh;">
+            <div [style.display]="isIntro ? 'block' : 'none' " class="introBg"> </div>
+            <div [style.display]="isIntro ? 'block' : 'none' " class="logoAndTitleAnimation">
+
+                <div class="introLogoTitle">
+                    <div class="LogoAndTitleContent">
+                        <img src="./assets/img/logo.png">
+                        <div class="title">DABubble</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
     <mat-card>
         <mat-card-header>
             <mat-card-title>Anmeldung</mat-card-title>
