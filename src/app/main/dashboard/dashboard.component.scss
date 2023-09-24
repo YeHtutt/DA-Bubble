@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+section {
+    background-color: white;
+    height: calc(100% - 25px);
+    border-radius: 30px;
+    margin: 0 25px 0 50px;
+}
+
+header {
+    height: 96px;
+    padding: 25px 45px 25px 45px;
+    box-shadow: 0px 2px 10px 0px #00000014;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.channel_info_box {
+    padding: 6px 10px 6px 10px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    
+    span, mat-icon {
+        font-size: 22px;
+        font-weight: 500;
+        color: black;
+    }
+
+    &:hover {
+        background-color: #ECEEFE;
+
+        span, mat-icon {
+            color: #535AF1;
+        }
+    }
+}
