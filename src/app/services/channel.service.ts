@@ -51,7 +51,7 @@ export class ChannelService {
   }
 
   getRefSubcollChannel() {
-    return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`)
+    return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
   }
 
   ngOnDestroy() {
@@ -69,7 +69,7 @@ export class ChannelService {
 
 
   renderChannelTree() {
-    
+
   }
 
   getChannelMessages() {
