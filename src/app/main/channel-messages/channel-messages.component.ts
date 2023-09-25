@@ -33,5 +33,6 @@ export class ChannelMessagesComponent {
     this.message.time = new Date();
     this.message.text = this.text;
     this.channelService.addMessageToChannel(this.message.toJSON());
+    this.text = '';
   }
 }
