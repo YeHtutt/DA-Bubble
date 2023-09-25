@@ -33,7 +33,7 @@ export class Message {
     username: string;
     userEmail: string;
     messageId: string;
-    replies: Reply[];
+    // replies: Reply[];
 
     constructor(obj?: any) {
         this.text = obj ? obj.text : '';
@@ -42,7 +42,7 @@ export class Message {
         this.username = obj ? obj.username : '';
         this.userEmail = obj ? obj.userEmail : '';
         this.messageId = obj ? obj.messageId : '';
-        this.replies = obj && obj.replies ? obj.replies.map(reply => new Reply({ obj: reply })) : [];
+        // this.replies = obj && obj.replies ? obj.replies.map(reply => new Reply({ obj: reply })) : [];
     }
 
     public toJSON() {
@@ -53,7 +53,7 @@ export class Message {
             username: this.username,
             userEmail: this.userEmail,
             messageId: this.messageId,
-            replies: this.replies.map(reply => reply.toJSON())
+            // replies: this.replies.map(reply => reply.toJSON())
         };
     }
 }

@@ -36,6 +36,8 @@ import { ThreadsComponent } from './main/threads/threads.component';
 
 /* Module */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChannelMessagesComponent } from './main/channel-messages/channel-messages.component';
+import { MessageComponent } from './main/dashboard/message/message.component';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     HeaderComponent,
     SidenavComponent,
     ThreadsComponent,
-    CreateChannelDialogComponent
+    CreateChannelDialogComponent,
+    ChannelMessagesComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

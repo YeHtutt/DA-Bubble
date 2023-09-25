@@ -1,0 +1,35 @@
+<section>
+    <header>
+        <div class="channel_info_box">
+            <span># Entwicklerteam</span>
+            <mat-icon>expand_more</mat-icon>
+        </div>
+        <div class="user_channel_info_box">
+            <div class="user_in_channel_box">
+                <div class="user_avatar_box">
+                    <img *ngFor="let c of [0,1,2]; let i = index;" [ngStyle]="{'right.px': i * 25, 'z-index': 4 - i}"
+                        src="assets/img/avatar/avatar1.png" alt="">
+                </div>
+                <div class="user_amount_box">3</div>
+            </div>
+            <div class="add_user">
+                <mat-icon>person_add</mat-icon>
+            </div>
+        </div>
+    </header>
+    <main>
+        <app-message *ngFor="let message of messages$ | async" [message]="message"></app-message>
+    </main>
+    <div class="input_message_container">
+        <textarea  [(ngModel)]="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
+        <div class="control_container">
+            <div class="chat_action_box">
+                <mat-icon class="action_btn_style">add</mat-icon>
+                <hr>
+                <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
+                <mat-icon class="action_btn_style">alternate_email</mat-icon>
+            </div>
+            <mat-icon (click)="sendMessage()" class="send_btn">send</mat-icon>
+        </div>
+    </div>
+</section>

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Channel } from '../models/channel';
+import { Channel, Message } from '../models/channel';
 
 
 
@@ -23,7 +23,8 @@ import {
   addDoc, updateDoc,
   deleteDoc, orderBy,
   where, query,
-  limit
+  limit,
+  collectionData
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -49,6 +50,10 @@ export class ChannelService {
     return collection(this.firestore, ref);
   }
 
+  getRefSubcollChannel() {
+    return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`)
+  }
+
   ngOnDestroy() {
     this.unsubChannel();
   }
@@ -65,6 +70,15 @@ export class ChannelService {
 
   renderChannelTree() {
     
+  }
+
+  getChannelMessages() {
+    const channelMessages$ = collectionData(this.getRefSubcollChannel());
+    return channelMessages$
+  }
+
+  async addMessageToChannel(message: any) {
+    const docRef = addDoc(this.getRefSubcollChannel(), message);
   }
 
 }
