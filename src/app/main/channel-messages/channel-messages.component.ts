@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 
@@ -12,19 +12,16 @@ export class ChannelMessagesComponent {
 
   text: string;
   message: Message = new Message()
-  messages$: Observable<any> = this.channelService.getChannelMessages();
-  sortedMessages: any;
+  messages$: Observable<any>;
 
   constructor(private channelService: ChannelService) {
-    const messages = this.channelService.getChannelMessages();
-    messages.subscribe((message) => {
-      this.sortedMessages = this.sortByDate(message)
-      console.log(this.sortedMessages)
-    });
+    this.messages$ = this.channelService.getChannelMessages().pipe(map((message) => {
+      return this.sortByDate(message);
+    }));
   }
 
   sortByDate(message: any) {
-    message.sort((a: any, b: any) => {
+    return message.sort((a: any, b: any) => {
       const dateA = a.time.seconds * 1000;
       const dateB = b.time.seconds * 1000;
       return dateA - dateB;
