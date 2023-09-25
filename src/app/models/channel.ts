@@ -1,8 +1,8 @@
 export class Channel {
-    id: string;
+    id: string = '';
     channelName: string;
     description: string;
-    channelCreator: string;
+    channelCreator: string = '';
     creatorId: string;
     creationTime: any;
     createdBy: string;

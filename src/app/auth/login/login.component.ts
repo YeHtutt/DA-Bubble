@@ -37,7 +37,7 @@ export class LoginComponent {
       return;
     } else {
       const { email, password } = this.loginForm.value;
-      this.authService.login( email, password).subscribe(() => {
+      this.authService.login(email, password).subscribe(() => {
         console.log(this.loginForm);
         this.router.navigate(['/main']);
       })

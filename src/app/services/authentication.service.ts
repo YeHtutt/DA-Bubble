@@ -10,8 +10,8 @@ export class AuthenticationService {
 
   constructor(private auth: Auth) { }
 
-  login(username: string, password: string) {
-    return from(signInWithEmailAndPassword(this.auth, username, password));
+  login(email: any, password: any) {
+    return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
   logout(){

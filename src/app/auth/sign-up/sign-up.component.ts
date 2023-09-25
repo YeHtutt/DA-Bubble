@@ -15,7 +15,7 @@ export class SignUpComponent {
 
   }
 
-  signUpForm = new FormGroup({
+  signUpForm: any = new FormGroup({
     "name" : new FormControl('', [Validators.required]),
     "email": new FormControl('', [Validators.email, Validators.required]) ,
     "password" : new FormControl('', [Validators.required]), 

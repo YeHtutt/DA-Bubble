@@ -10,7 +10,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 })
 export class ChannelMessagesComponent {
 
-  text: string;
+  text: string = '';
   message: Message = new Message()
   messages$: Observable<any>;
 
