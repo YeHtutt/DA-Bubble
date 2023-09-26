@@ -106,6 +106,11 @@ export class ChannelService {
   }
 
 
+  getChannelId() {
+    return this.currentChannelId;
+  }
+
+
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
       channelId: docId,
@@ -117,9 +122,6 @@ export class ChannelService {
       children: []
     });
   }
-
-
-
 
   ngOnDestroy() {
     this.unsubChannel();
@@ -143,9 +145,5 @@ export class ChannelService {
   async addMessageToChannel(message: any) {
     const docRef = addDoc(this.getRefSubcollChannel(), message);
   }
-
-
-
-
 
 }
