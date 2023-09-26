@@ -45,6 +45,8 @@ export class ChannelService {
   channelTree: ChannelsNode[] = [];
   themes: any;
   unsubChannel: any;
+  currentChannelId: string | undefined;
+
 
   async addChannel(item: {}, ref: string) {
     await addDoc(this.getRef(ref), item)
@@ -96,9 +98,12 @@ export class ChannelService {
       });
       this.themes = [{ channelName: 'Channels', children: this.channelTree }];
       this.dataSource.data = this.themes;
-      console.log(this.dataSource.data, this.themes);
     });
-}
+  }
+
+  setChannelId(channelId: string) {
+    this.currentChannelId = channelId;
+  }
 
 
   setChannelObj(obj: any, docId: string): ChannelsNode {

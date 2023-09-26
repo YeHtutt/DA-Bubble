@@ -6,11 +6,12 @@
 @include mat.core();
 
 $app-primary: mat.define-palette(palette.$my-light-palette, 100);
-$app-accent: mat.define-palette(palette.$my-light-palette, A100, A200, A700);
+$app-accent: mat.define-palette(palette.$my-light-palette, A700, A700, A700);
 
 // Use your own "app" define-light-theme function instead of "mat" one.
 $app-theme: app.define-light-theme((color: (primary: $app-primary,
-        accent: $app-accent,
+        accent: $app-accent
+        
       )));
 
 
@@ -29,5 +30,3 @@ body {
 }
 
 @include mat.all-component-colors($app-theme);
-
-

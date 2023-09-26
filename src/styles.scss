@@ -23,16 +23,32 @@ body {
 
 .mdc-notched-outline__trailing {
   border-top-right-radius: 42px !important;
-  border-bottom-right-radius: 42px !important; 
+  border-bottom-right-radius: 42px !important;
   min-width: 0px !important;
 }
 
 .mdc-notched-outline__leading {
   border-top-left-radius: 42px !important;
   border-bottom-left-radius: 42px !important;
-  min-width: 42px !important; 
+  min-width: 42px !important;
 }
 
 [hidden] {
   display: none !important;
+}
+
+/* used for main headlines */
+
+h3 {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+
+.mat-typography h3 {
+  margin: 0px !important;
+}
+
+.mat-tree-node {
+  flex: 0;
 }

@@ -1,40 +1,35 @@
 <div class="channels-section">
-  <div class="channels-headline">
-    <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
-      <!-- This is the tree node template for leaf nodes !IMPORTANT -->
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0px"
-        [routerLink]="[{ outlets: { mainOutlet: ['channel', node.channelId] }}]">
-        <!-- use a disabled button to provide padding for tree leaf -->
-        <button class="mat-tree-node-btn" mat-button>
-               <mat-icon>tag</mat-icon>
-          <div>{{node.channelName}}</div>
-        </button>
-      </mat-tree-node>
-      <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="highest-node">
-        <div class="main-node">
-          <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
-            [attr.aria-label]="'Toggle ' + node.channelName">
-            <mat-icon class="main-icon" (click)="toggleExpanded(node)">
-              {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
-            </mat-icon>
-          </button>
-          <span class="channels" [matMenuTriggerFor]="menu">{{node.channelName}}</span>
-          <mat-menu #menu="matMenu">
-            <button class="channel-options" mat-menu-item>Create</button>
-            <mat-divider></mat-divider>
-            <button class="channel-options" mat-menu-item>Manage</button>
-          </mat-menu>
+  <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
+    <!-- This is the tree node template for leaf nodes !IMPORTANT -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
+      <button mat-flat-button class="child-node">
+        <mat-icon>tag</mat-icon>
+        <div>{{node.channelName}}</div>
+      </button>
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
+      <div class="main-node">
+        <div class="channel-headline">
+          <div class="channel-head">
+            <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
+              [attr.aria-label]="'Toggle ' + node.channelName">
+              <mat-icon class="main-icon" (click)="toggleExpanded(node)">
+                {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+              </mat-icon>
+            </button>
+            <img src="../../../assets/img/channels-icon.png">
+            <h3 [matMenuTriggerFor]="menu">{{node.channelName}}</h3>
+          </div>
+          <mat-icon class="add-icon" (click)="openCreateChannelDialog()">add</mat-icon>
         </div>
-      </mat-tree-node>
-    </mat-tree>
-    <div>
-      <mat-icon class="add-icon" (click)="openCreateChannelDialog()">add</mat-icon>
-    </div>
-  </div>
-  <div class="channel"> <!-- später mit einer ngFor alle vorhandenen channel rendern -->
-    <img src="../assets/img/tag.png">
-    <span>Entwicklerteam</span>
-  </div>
+        <mat-menu #menu="matMenu">
+          <button class="channel-options" mat-menu-item>Create</button>
+          <mat-divider></mat-divider>
+          <button class="channel-options" mat-menu-item>Manage</button>
+        </mat-menu>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
   <div class="add-channel" (click)="openCreateChannelDialog()">
     <mat-icon class="add-icon">add_circle_outline</mat-icon>
     <span>Channel hinzufügen</span>
