@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SignUpComponent {
   checked = false;
 
-  constructor(private authService: AuthenticationService, private router:Router) {
+  constructor(private authService: AuthenticationService, private router:Router, private usersFbService: UsersFirebaseService) {
 
   }
 
@@ -42,9 +43,19 @@ export class SignUpComponent {
     const {name, email, password} = this.signUpForm.value;
     this.authService.signUp(name, email, password)
     .subscribe(() => {
-      this.router.navigate(['/main']);
+
+      const user = {
+        name: name,
+        email: email,
+      };
+
+      this.usersFbService.addUserToFirebase(user).then((docId) => {
+        //console.log('user saved successfully');
+        this.router.navigate(['/main']);
+      })
+      .catch((error) => {
+        console.error('Fehler beim Speichern des Benutzers in Firestore:', error);
+      });
     })
   }
-  
-
 }
