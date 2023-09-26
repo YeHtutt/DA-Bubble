@@ -159,6 +159,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    button {
+        border: unset;
+        background-color: transparent;
+    }
 }
 
 .chat_action_box {
