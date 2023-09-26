@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ChannelService } from 'src/app/services/channel.service';
+
 
 @Component({
   selector: 'app-channels',
@@ -10,9 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class ChannelsComponent {
 
   constructor(
-    public dialog: MatDialog,   
-    
-    ) { }
+    public dialog: MatDialog,
+    public channelService: ChannelService,
+  ) { }
 
   openCreateChannelDialog() {
     this.dialog.open(CreateChannelDialogComponent, {
@@ -21,6 +23,13 @@ export class ChannelsComponent {
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
     });
+  }
+
+
+
+  toggleExpanded(node: any) {
+    // Code to toggle the expanded state of the node
+    this.channelService.treeControl.toggle(node);
   }
 
 

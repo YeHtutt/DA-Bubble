@@ -1,18 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Channel, Message } from '../models/channel';
-
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
 
 interface ChannelsNode {
-  name: string;
+  channelName: string;
   channelId: string;
   children?: ChannelsNode[];
 }
 
 interface ExampleFlatNode {
   expandable: boolean;
-  name: string;
+  channelName: string;
   level: number;
 }
 
@@ -35,8 +36,14 @@ import {
 export class ChannelService {
 
   firestore: Firestore = inject(Firestore);
-  constructor(/* private channel: Channel */) { }
+  constructor() {
+    this.unsubChannel = this.subChannelList();
 
+  }
+
+
+  channelTree: ChannelsNode[] = [];
+  themes: any;
   unsubChannel: any;
 
   async addChannel(item: {}, ref: string) {
@@ -53,6 +60,57 @@ export class ChannelService {
   getRefSubcollChannel() {
     return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
   }
+
+
+  private _transformer = (node: ChannelsNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      channelName: node.channelName,
+      channelId: node.channelId,
+      level: level,
+    };
+  };
+
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level,
+    node => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener<ChannelsNode, ExampleFlatNode>(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children,
+  );
+
+
+  subChannelList() {
+    return this.unsubChannel = onSnapshot(this.getRef('channels'), (list: any) => {
+      this.channelTree = [];
+      list.forEach((element: any) => {
+        const channelObj = this.setChannelObj(element.data(), element.id);
+        this.channelTree.push(channelObj);
+      });
+      console.log(this.channelTree);
+    });
+  }
+
+
+  setChannelObj(obj: any, docId: string): ChannelsNode {
+    return new Channel({
+      channelId: docId,
+      channelName: obj.channelName,
+      creatorId: obj.creatorId,
+      description: obj.description,
+      creationTime: obj.creationTime,
+      createdBy: obj.createdBy,
+      children: []
+    });
+  }
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   ngOnDestroy() {
     this.unsubChannel();
@@ -72,7 +130,7 @@ export class ChannelService {
 
   }
 
-  getChannelMessages() {
+  getChannelMessages(id: string) {
     const channelMessages$ = collectionData(this.getRefSubcollChannel());
     return channelMessages$
   }
@@ -80,5 +138,9 @@ export class ChannelService {
   async addMessageToChannel(message: any) {
     const docRef = addDoc(this.getRefSubcollChannel(), message);
   }
+
+
+
+
 
 }

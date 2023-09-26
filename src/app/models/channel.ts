@@ -1,13 +1,13 @@
 export class Channel {
-    id: string = '';
+    channelId: string;
     channelName: string;
     description: string;
-    channelCreator: string = '';
     creatorId: string;
     creationTime: any;
     createdBy: string;
 
     constructor(obj?: any) {
+        this.channelId = obj ? obj.channelId : '';
         this.channelName = obj ? obj.channelName : '';
         this.creatorId = obj ? obj.creatorId : '';
         this.description = obj ? obj.description : '';
@@ -17,6 +17,7 @@ export class Channel {
 
     public toJSON() {
         return {
+            channelId: this.channelId,
             channelName: this.channelName,
             creatorId: this.creatorId,
             description: this.description,

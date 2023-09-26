@@ -13,9 +13,10 @@ export class ChannelMessagesComponent {
   text: string = '';
   message: Message = new Message()
   messages$: Observable<any>;
+  id: string = '';
 
   constructor(private channelService: ChannelService) {
-    this.messages$ = this.channelService.getChannelMessages().pipe(map((message) => {
+    this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
       return this.sortByDate(message);
     }));
   }
