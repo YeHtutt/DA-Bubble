@@ -13,7 +13,7 @@
       <div class="sidenav-header">
         <img class="workspace-logo" src="../assets/img/workspace.png">
         <span>Code learning</span>
-        <div class="edit-div">
+        <div  [routerLink]="['direct']" class="edit-div">
           <img class="edit-icon" src="../assets/img/edit_square.png">
           <div class="bg-div"></div>
         </div>
@@ -55,6 +55,7 @@
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <app-dashboard></app-dashboard>
+    <!-- <app-dashboard [channel_window]="channel_window"></app-dashboard> -->
+    <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

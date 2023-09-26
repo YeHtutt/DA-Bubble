@@ -1,12 +1,12 @@
 <section>
     <header>
-        <!-- <div class="direct_message_info_box">
+        <div [hidden]="!hasData" class="direct_message_info_box">
             <span>Neue Nachricht</span>
             <div class="input_container">
                 <input placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
             </div>
-        </div> -->
-        <div class="user_avatar_container">
+        </div>
+        <div [hidden]="hasData" class="user_avatar_container">
             <img src="assets/img/avatar/avatar1.png" alt="">
             <span>Sofia Müller</span>
         </div>
@@ -30,7 +30,7 @@
                 <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
                 <mat-icon class="action_btn_style">alternate_email</mat-icon>
             </div>
-            <mat-icon (click)="sendMessage()" class="send_btn">send</mat-icon>
+            <button [disabled]="text.length == 0" (click)="sendMessage()"><mat-icon class="send_btn">send</mat-icon></button>
         </div>
     </div>
 </section>

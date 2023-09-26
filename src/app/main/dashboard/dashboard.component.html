@@ -1,2 +1,2 @@
-<!-- <app-channel-messages></app-channel-messages> -->
-<app-direct-messages></app-direct-messages>
+<app-channel-messages *ngIf="channel_window == 'main-channel'"></app-channel-messages>
+<app-direct-messages *ngIf="channel_window == 'direct-message'"></app-direct-messages>
