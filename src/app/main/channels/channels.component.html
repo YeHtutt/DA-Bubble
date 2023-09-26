@@ -1,18 +1,12 @@
 <div class="channels-section">
   <div class="channels-headline">
-    <div>
-      <img class="drop-down-icon" src="../assets/img/arrow_drop_down.png">
-      <img class="channels-icon" src="../assets/img/channels-icon.png">
-      <span>Channels</span>
-    </div>
     <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
       <!-- This is the tree node template for leaf nodes !IMPORTANT -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0px"
         [routerLink]="[{ outlets: { mainOutlet: ['channel', node.channelId] }}]">
         <!-- use a disabled button to provide padding for tree leaf -->
         <button class="mat-tree-node-btn" mat-button>
-      <!--     <mat-icon [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
-            node.isClosed ? 'lock' : 'tag'}}</mat-icon> -->
+               <mat-icon>tag</mat-icon>
           <div>{{node.channelName}}</div>
         </button>
       </mat-tree-node>
@@ -24,13 +18,11 @@
               {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
             </mat-icon>
           </button>
-          <span class="channels" [matMenuTriggerFor]="menu">{{node.channelName}}
-        
-          </span>
+          <span class="channels" [matMenuTriggerFor]="menu">{{node.channelName}}</span>
           <mat-menu #menu="matMenu">
-            <button class="channel-options" mat-menu-item >Create</button>
+            <button class="channel-options" mat-menu-item>Create</button>
             <mat-divider></mat-divider>
-            <button class="channel-options" mat-menu-item >Manage</button>
+            <button class="channel-options" mat-menu-item>Manage</button>
           </mat-menu>
         </div>
       </mat-tree-node>

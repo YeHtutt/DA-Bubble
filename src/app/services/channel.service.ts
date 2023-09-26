@@ -94,10 +94,13 @@ export class ChannelService {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channelTree.push(channelObj);
       });
-      this.themes = [{ name: 'Channels', children: this.channelTree }];
+      this.themes = [{ channelName: 'Channels', children: this.channelTree }];
       this.dataSource.data = this.themes;
+      console.log(this.dataSource.data, this.themes);
     });
-  }
+}
+
+
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
       channelId: docId,

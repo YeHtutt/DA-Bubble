@@ -16,8 +16,7 @@ export class ChannelsComponent {
     public channelService: ChannelService,
   ) { }
 
-  ngOnInit() {
-    
+  ngOnInit() {    
   }
 
   openCreateChannelDialog() {
