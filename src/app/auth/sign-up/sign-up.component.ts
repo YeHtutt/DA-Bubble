@@ -50,11 +50,10 @@ export class SignUpComponent {
       };
 
       this.usersFbService.addUserToFirebase(user).then((docId) => {
-        //console.log('user saved successfully');
-        this.router.navigate(['/main']);
+        this.router.navigate([`/main/${docId}`]);
       })
       .catch((error) => {
-        console.error('Fehler beim Speichern des Benutzers in Firestore:', error);
+        console.error('error of saving users in Firestore:', error);
       });
     })
   }

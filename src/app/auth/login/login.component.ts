@@ -38,8 +38,14 @@ export class LoginComponent {
     } else {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(() => {
-        console.log(this.loginForm);
-        this.router.navigate(['/main']);
+        const user = this.authService.getCurrentUser();
+
+        if (user) {
+          const docId = user.uid; // used Firebase Authentication ID as user-ID 
+          this.router.navigate([`/main/${docId}`]);
+        } else {
+          console.error('user is null.');
+        }
       })
     }
   }
@@ -59,7 +65,13 @@ export class LoginComponent {
     this.fillGuestForm();
 
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(() => {
-      this.router.navigate(['/main']);
+      const user = this.authService.getCurrentUser();
+      if (user) {
+        const docId = user.uid; // used Firebase Authentication ID as user-ID 
+      this.router.navigate([`/main/${docId}`]);
+      }else {
+        console.error('user is null.');
+      }
     })
   }
 }

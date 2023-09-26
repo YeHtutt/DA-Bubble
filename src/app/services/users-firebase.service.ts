@@ -14,7 +14,7 @@ export class UsersFirebaseService {
       console.log('user saved successfully - ID:', docRef.id);
       return docRef.id;
     }catch (error) {
-      console.error('Error with saving user in Firebase:', error);
+      console.error('Error of saving users in Firebase:', error);
       throw error;
     }
   }
