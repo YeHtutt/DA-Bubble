@@ -3,9 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+import { AuthenticationService } from './services/authentication.service';
+
+let docId: any;
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
+const redirectAuthorizedToMain = () => redirectLoggedInTo([`main/${docId}`]);
 
 const routes: Routes = [
-  { path: 'main', component: MainComponent },
+  { path:'', pathMatch: 'full', component: LoginComponent },
+  { path: 'main/:docId', component: MainComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
 
@@ -15,4 +23,14 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+
+  constructor(private authService: AuthenticationService) {
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      docId = user.uid; // used Firebase Authentication ID as user-ID 
+    }
+  }
+}
+
+

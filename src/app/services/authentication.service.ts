@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User } from '@angular/fire/auth';
 import { from, switchMap } from 'rxjs';
 
 
@@ -25,4 +25,9 @@ export class AuthenticationService {
        )
     );
   }
+
+  getCurrentUser(): User | null {
+    return this.auth.currentUser;
+  }
+
 }
