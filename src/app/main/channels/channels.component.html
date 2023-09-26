@@ -13,18 +13,18 @@
         <button class="mat-tree-node-btn" mat-button>
       <!--     <mat-icon [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
             node.isClosed ? 'lock' : 'tag'}}</mat-icon> -->
-          <div>{{node.name}}</div>
+          <div>{{node.channelName}}</div>
         </button>
       </mat-tree-node>
       <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="highest-node">
         <div class="main-node">
           <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
-            [attr.aria-label]="'Toggle ' + node.name">
+            [attr.aria-label]="'Toggle ' + node.channelName">
             <mat-icon class="main-icon" (click)="toggleExpanded(node)">
               {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
             </mat-icon>
           </button>
-          <span class="channels" [matMenuTriggerFor]="menu">{{node.name}}
+          <span class="channels" [matMenuTriggerFor]="menu">{{node.channelName}}
         
           </span>
           <mat-menu #menu="matMenu">

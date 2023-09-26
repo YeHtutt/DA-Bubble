@@ -16,6 +16,10 @@ export class ChannelsComponent {
     public channelService: ChannelService,
   ) { }
 
+  ngOnInit() {
+    
+  }
+
   openCreateChannelDialog() {
     this.dialog.open(CreateChannelDialogComponent, {
       width: '880px',

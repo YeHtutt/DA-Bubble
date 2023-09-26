@@ -36,9 +36,9 @@ import {
 export class ChannelService {
 
   firestore: Firestore = inject(Firestore);
+
   constructor() {
     this.unsubChannel = this.subChannelList();
-
   }
 
 
@@ -83,6 +83,9 @@ export class ChannelService {
     node => node.children,
   );
 
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   subChannelList() {
     return this.unsubChannel = onSnapshot(this.getRef('channels'), (list: any) => {
@@ -91,11 +94,10 @@ export class ChannelService {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channelTree.push(channelObj);
       });
-      console.log(this.channelTree);
+      this.themes = [{ name: 'Channels', children: this.channelTree }];
+      this.dataSource.data = this.themes;
     });
   }
-
-
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
       channelId: docId,
@@ -108,9 +110,8 @@ export class ChannelService {
     });
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
 
   ngOnDestroy() {
     this.unsubChannel();
@@ -125,10 +126,6 @@ export class ChannelService {
     return dateTime
   }
 
-
-  renderChannelTree() {
-
-  }
 
   getChannelMessages(id: string) {
     const channelMessages$ = collectionData(this.getRefSubcollChannel());
