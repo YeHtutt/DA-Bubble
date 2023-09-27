@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,9 +10,7 @@ export class SidenavComponent {
   showSidenav: boolean = true;
   @Input() channel_window: any;
 
-  constructor() {
-    this.channel_window = 'main-channel';
-  }
+  constructor(private Route: ActivatedRoute, private router: Router) {}
 
 
   toggleSidenav() {
@@ -22,9 +21,5 @@ export class SidenavComponent {
       this.showSidenav = true;
       console.log('false');
     }
-  }
-
-  openNewDirectMessage() {
-    this.channel_window = 'direct-message';
   }
 }

@@ -4,11 +4,11 @@ import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 
 @Component({
-  selector: 'app-direct-messages',
-  templateUrl: './direct-messages.component.html',
-  styleUrls: ['./direct-messages.component.scss']
+  selector: 'app-new-message',
+  templateUrl: './new-message.component.html',
+  styleUrls: ['./new-message.component.scss']
 })
-export class DirectMessagesComponent {
+export class NewMessageComponent {
 
   text: string = '';
   message: Message = new Message()
