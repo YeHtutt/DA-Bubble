@@ -228,6 +228,7 @@ form {
 }
 
 
+
 @keyframes bgAnimation {
     from {
         opacity: 1;
@@ -272,3 +273,12 @@ form {
 
 
 
+.legals {
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    gap: 16px;
+    color: #A4A8F7;
+    cursor: pointer;
+}

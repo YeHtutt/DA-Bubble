@@ -42,7 +42,9 @@ import { ThreadsComponent } from './main/threads/threads.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ChannelMessagesComponent } from './main/channel-messages/channel-messages.component';
 import { MessageComponent } from './main/dashboard/message/message.component';
-
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
+import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,10 @@ import { MessageComponent } from './main/dashboard/message/message.component';
     ThreadsComponent,
     CreateChannelDialogComponent,
     ChannelMessagesComponent,
-    MessageComponent
+    MessageComponent,
+    ResetPasswordComponent,
+    ChooseAvatarComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,

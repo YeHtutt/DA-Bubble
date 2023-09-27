@@ -8,6 +8,9 @@ import { ChannelMessagesComponent } from './main/channel-messages/channel-messag
 import { DirectMessagesComponent } from './main/direct-messages/direct-messages.component';
 import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 import { AuthenticationService } from './services/authentication.service';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
+import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 
 let docId: any;
 
@@ -25,7 +28,10 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: 'sign-up', component: SignUpComponent }
+  { path: 'sign-up', component: SignUpComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent},
+  { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'choose-avatar', component: ChooseAvatarComponent},
 
 ];
 
