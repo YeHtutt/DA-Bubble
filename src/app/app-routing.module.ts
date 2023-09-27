@@ -15,9 +15,7 @@ const redirectAuthorizedToMain = () => redirectLoggedInTo([`main/${docId}`]);
 
 const routes: Routes = [
   { path:'', pathMatch: 'full', component: LoginComponent },
-  { path: 'main/:docId', component: MainComponent },
-  {
-    path: 'main', component: MainComponent,
+  { path: 'main/:docId', component: MainComponent,
     children: [
       { path: '', component: ChannelMessagesComponent },
       { path: 'direct', component: DirectMessagesComponent }
@@ -32,12 +30,12 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { 
+export class AppRoutingModule {
 
   constructor(private authService: AuthenticationService) {
     const user = this.authService.getCurrentUser();
     if (user) {
-      docId = user.uid; // used Firebase Authentication ID as user-ID 
+      docId = user.uid; // used Firebase Authentication ID as user-ID
     }
   }
 }
