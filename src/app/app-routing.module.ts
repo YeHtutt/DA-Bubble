@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { DirectMessage } from './models/direct-message';
 import { ChannelMessagesComponent } from './main/channel-messages/channel-messages.component';
 import { DirectMessagesComponent } from './main/direct-messages/direct-messages.component';
 import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
