@@ -4,11 +4,11 @@ import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 
 @Component({
-  selector: 'app-channel-messages',
-  templateUrl: './channel-messages.component.html',
-  styleUrls: ['./channel-messages.component.scss']
+  selector: 'app-channel-chat',
+  templateUrl: './channel-chat.component.html',
+  styleUrls: ['./channel-chat.component.scss']
 })
-export class ChannelMessagesComponent {
+export class ChannelChatComponent {
 
   text: string = '';
   message: Message = new Message()

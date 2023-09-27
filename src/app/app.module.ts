@@ -32,7 +32,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ChannelsComponent } from './main/channels/channels.component';
 import { MainComponent } from './main/main.component';
-import { DirectMessagesComponent } from './main/direct-messages/direct-messages.component';
+import { NewMessageComponent } from './main/new-message/new-message.component';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { HeaderComponent } from './main/header/header.component';
 import { SidenavComponent } from './main/sidenav/sidenav.component';
@@ -40,8 +40,9 @@ import { ThreadsComponent } from './main/threads/threads.component';
 
 /* Module */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ChannelMessagesComponent } from './main/channel-messages/channel-messages.component';
+import { ChannelChatComponent } from './main/channel-chat/channel-chat.component';
 import { MessageComponent } from './main/dashboard/message/message.component';
+import { ChatComponent } from './main/chat/chat.component';
 
 
 @NgModule({
@@ -51,14 +52,15 @@ import { MessageComponent } from './main/dashboard/message/message.component';
     SignUpComponent,
     ChannelsComponent,
     MainComponent,
-    DirectMessagesComponent,
+    NewMessageComponent,
     DashboardComponent,
     HeaderComponent,
     SidenavComponent,
     ThreadsComponent,
     CreateChannelDialogComponent,
-    ChannelMessagesComponent,
-    MessageComponent
+    ChannelChatComponent,
+    MessageComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
