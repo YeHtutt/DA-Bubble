@@ -21,7 +21,7 @@ interface ExampleFlatNode {
 import {
   Firestore, collection,
   doc, onSnapshot,
-  addDoc, updateDoc,
+  addDoc, getDoc, updateDoc,
   deleteDoc, orderBy,
   where, query,
   limit,
@@ -45,6 +45,8 @@ export class ChannelService {
   channelTree: ChannelsNode[] = [];
   themes: any;
   unsubChannel: any;
+  currentChannelId: string | undefined;
+
 
   async addChannel(item: {}, ref: string) {
     await addDoc(this.getRef(ref), item)
@@ -96,9 +98,17 @@ export class ChannelService {
       });
       this.themes = [{ channelName: 'Channels', children: this.channelTree }];
       this.dataSource.data = this.themes;
-      console.log(this.dataSource.data, this.themes);
     });
-}
+  }
+
+  setChannelId(channelId: string) {
+    this.currentChannelId = channelId;
+  }
+
+
+  getChannelId() {
+    return this.currentChannelId;
+  }
 
 
   setChannelObj(obj: any, docId: string): ChannelsNode {
@@ -112,9 +122,6 @@ export class ChannelService {
       children: []
     });
   }
-
-
-
 
   ngOnDestroy() {
     this.unsubChannel();
@@ -138,9 +145,5 @@ export class ChannelService {
   async addMessageToChannel(message: any) {
     const docRef = addDoc(this.getRefSubcollChannel(), message);
   }
-
-
-
-
 
 }

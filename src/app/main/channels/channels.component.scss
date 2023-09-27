@@ -1,16 +1,10 @@
 @use "../../../styles.scss";
 
 
-.example-flex-container {
+.mat-tree {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
 
@@ -19,27 +13,49 @@ button {
     background-color: transparent;
 }
 
-.channels-headline {
+.channel-headline {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     font-weight: 600;
     font-size: 16px;
     color: black;
+    width: 100%;
 
-    :first-child {
-        display: flex;
-        align-items: center;
+    img {
+        width: 22px;
+        height: 22px;
+        margin-right: 5px;
+    }
 
-        &:hover {
-            cursor: pointer;
-            color: #535AF1;
+    &:hover {
+        cursor: pointer;
+        color: #535AF1;
 
-            img {
-                filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
-            }
+        img {
+            filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
         }
     }
+}
+
+.child-node {
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 30px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #ECEEFE;
+    }
+}
+
+.main-node {
+    width: 100%;
+}
+
+.channel-head {
+    display: flex;
+    align-items: center;
 }
 
 .drop-down-icon {
@@ -62,6 +78,7 @@ button {
 .channel {
     display: flex;
     align-items: center;
+    flex-direction: column;
     margin: 20px 0 20px 22px;
     padding: 4px 15px;
     color: #535AF1;
@@ -70,13 +87,6 @@ button {
     background-color: #ECEEFE;
     border-radius: 20px;
     width: fit-content;
-
-    img {
-        width: 19px;
-        margin-right: 6px;
-        margin-left: 2px;
-    }
-
     &:hover {
         cursor: pointer;
     }
@@ -93,13 +103,11 @@ button {
     span {
         margin-top: 2px;
     }
-
     &:hover {
         cursor: pointer;
 
         :first-child {
-            color: #535AF1;
-        }
+            color: #535AF1;        }
 
         span {
             color: #535AF1;
@@ -112,4 +120,3 @@ button {
     width: 22px;
     margin-right: 5px;
 }
-

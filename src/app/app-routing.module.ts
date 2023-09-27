@@ -6,9 +6,17 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { DirectMessage } from './models/direct-message';
 import { ChannelMessagesComponent } from './main/channel-messages/channel-messages.component';
 import { DirectMessagesComponent } from './main/direct-messages/direct-messages.component';
+import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
+import { AuthenticationService } from './services/authentication.service';
+
+let docId: any;
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
+const redirectAuthorizedToMain = () => redirectLoggedInTo([`main/${docId}`]);
 
 const routes: Routes = [
-  { path: 'main', component: MainComponent },
+  { path:'', pathMatch: 'full', component: LoginComponent },
+  { path: 'main/:docId', component: MainComponent },
   {
     path: 'main', component: MainComponent,
     children: [
@@ -25,4 +33,14 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+
+  constructor(private authService: AuthenticationService) {
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      docId = user.uid; // used Firebase Authentication ID as user-ID 
+    }
+  }
+}
+
+
