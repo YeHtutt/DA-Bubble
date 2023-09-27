@@ -21,7 +21,7 @@ interface ExampleFlatNode {
 import {
   Firestore, collection,
   doc, onSnapshot,
-  addDoc, updateDoc,
+  addDoc, getDoc, updateDoc,
   deleteDoc, orderBy,
   where, query,
   limit,

@@ -87,7 +87,6 @@ button {
     background-color: #ECEEFE;
     border-radius: 20px;
     width: fit-content;
-
     &:hover {
         cursor: pointer;
     }
@@ -104,13 +103,11 @@ button {
     span {
         margin-top: 2px;
     }
-
     &:hover {
         cursor: pointer;
 
         :first-child {
-            color: #535AF1;
-        }
+            color: #535AF1;        }
 
         span {
             color: #535AF1;
