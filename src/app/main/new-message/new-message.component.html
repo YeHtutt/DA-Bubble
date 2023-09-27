@@ -1,26 +1,14 @@
 <section>
     <header>
-        <div [hidden]="!hasData" class="direct_message_info_box">
+        <div class="direct_message_info_box">
             <span>Neue Nachricht</span>
             <div class="input_container">
                 <input placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
             </div>
         </div>
-        <div [hidden]="hasData" class="user_avatar_container">
-            <img src="assets/img/avatar/avatar1.png" alt="">
-            <span>Sofia Müller</span>
-        </div>
+
     </header>
-    <main>
-        <app-message *ngFor="let message of messages$ | async" [message]="message"></app-message>
-        <div *ngIf="!hasData" class="new_conversation_container">
-            <div class="user_info_box">
-                <img src="assets/img/avatar/avatar1.png" alt="">
-                <span>Sofia Müller</span>
-            </div>
-            <span>Diese Unterhaltung findet nur zwischen <span>@Sofia Müller</span> und dir statt.</span>
-        </div>
-    </main>
+
     <div class="input_message_container">
         <textarea [(ngModel)]="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
         <div class="control_container">
