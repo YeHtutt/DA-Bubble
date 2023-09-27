@@ -10,7 +10,7 @@ export class SidenavComponent {
   @Input() channel_window: any;
 
   constructor() {
-    this.channel_window = 'main-channel';
+    // this.channel_window = 'main-channel';
   }
 
 
@@ -22,9 +22,5 @@ export class SidenavComponent {
       this.showSidenav = true;
       console.log('false');
     }
-  }
-
-  openNewDirectMessage() {
-    this.channel_window = 'direct-message';
   }
 }

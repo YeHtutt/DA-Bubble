@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'main', component: MainComponent,
     children: [
-      { path: 'channel', component: ChannelMessagesComponent },
+      { path: '', component: ChannelMessagesComponent },
       { path: 'direct', component: DirectMessagesComponent }
     ]
   },
