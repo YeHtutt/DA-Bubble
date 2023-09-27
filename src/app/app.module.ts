@@ -33,7 +33,6 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ChannelsComponent } from './main/channels/channels.component';
 import { MainComponent } from './main/main.component';
 import { NewMessageComponent } from './main/new-message/new-message.component';
-import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { HeaderComponent } from './main/header/header.component';
 import { SidenavComponent } from './main/sidenav/sidenav.component';
 import { ThreadsComponent } from './main/threads/threads.component';
@@ -53,7 +52,6 @@ import { ChatComponent } from './main/chat/chat.component';
     ChannelsComponent,
     MainComponent,
     NewMessageComponent,
-    DashboardComponent,
     HeaderComponent,
     SidenavComponent,
     ThreadsComponent,
