@@ -10,6 +10,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
+import { ChatComponent } from './main/chat/chat.component';
 
 let docId: any;
 
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'main/:docId', component: MainComponent,
     children: [
       { path: '', component: ChannelChatComponent },
-      { path: 'direct', component: NewMessageComponent }
+      { path: 'direct', component: NewMessageComponent },
+      { path: 'chat', component: ChatComponent }
     ]
   },
   { path: 'login', component: LoginComponent },

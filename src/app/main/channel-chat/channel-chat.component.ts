@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, expand, map } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 
@@ -8,7 +8,7 @@ import { ChannelService } from 'src/app/services/channel.service';
   templateUrl: './channel-chat.component.html',
   styleUrls: ['./channel-chat.component.scss']
 })
-export class ChannelChatComponent {
+export class ChannelChatComponent implements OnInit {
 
   text: string = '';
   message: Message = new Message()
@@ -20,6 +20,10 @@ export class ChannelChatComponent {
       return this.sortByDate(message);
     }));
   }
+
+  ngOnInit() {
+  }
+
 
   sortByDate(message: any) {
     return message.sort((a: any, b: any) => {
