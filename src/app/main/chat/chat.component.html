@@ -1,31 +1,30 @@
 <section>
-    <header>
-
-        <div class="user_avatar_container">
-            <img src="assets/img/avatar/avatar1.png" alt="">
-            <span>Sofia Müller</span>
-        </div>
-    </header>
-    <main>
-        <app-message *ngFor="let message of messages$ | async" [message]="message"></app-message>
-        <div class="new_conversation_container">
-            <div class="user_info_box">
-                <img src="assets/img/avatar/avatar1.png" alt="">
-                <span>Sofia Müller</span>
-            </div>
-            <span>Diese Unterhaltung findet nur zwischen <span>@Sofia Müller</span> und dir statt.</span>
-        </div>
-    </main>
-    <div class="input_message_container">
-        <textarea [(ngModel)]="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
-        <div class="control_container">
-            <div class="chat_action_box">
-                <mat-icon class="action_btn_style">add</mat-icon>
-                <hr>
-                <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
-                <mat-icon class="action_btn_style">alternate_email</mat-icon>
-            </div>
-            <button [disabled]="text.length == 0" (click)="sendMessage()"><mat-icon class="send_btn">send</mat-icon></button>
-        </div>
-    </div>
+  <header>
+      <div class="user_avatar_container">
+          <img src="assets/img/avatar/avatar1.png" alt="">
+          <span>Sofia Müller</span>
+      </div>
+  </header>
+  <main>
+      <!-- <app-message></app-message> hier die entsprecheneden Nachrichten mit einer ngFor rendern -->
+      <div class="new_conversation_container">
+          <div class="user_info_box">
+              <img src="assets/img/avatar/avatar1.png" alt="">
+              <span>Sofia Müller</span>
+          </div>
+          <span>Diese Unterhaltung findet nur zwischen <span>@Sofia Müller</span> und dir statt.</span>
+      </div>
+  </main>
+  <div class="input_message_container">
+      <textarea [(ngModel)]="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
+      <div class="control_container">
+          <div class="chat_action_box">
+              <mat-icon class="action_btn_style">add</mat-icon>
+              <hr>
+              <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
+              <mat-icon class="action_btn_style">alternate_email</mat-icon>
+          </div>
+          <button [disabled]="text.length == 0" (click)="sendMessage()"><mat-icon class="send_btn">send</mat-icon></button>
+      </div>
+  </div>
 </section>
