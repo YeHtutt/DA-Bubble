@@ -15,11 +15,11 @@ import { ChatComponent } from './main/chat/chat.component';
 let docId: any;
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
-const redirectAuthorizedToMain = () => redirectLoggedInTo([`main/${docId}`]);
+const redirectAuthorizedToMain = () => redirectLoggedInTo([`main`]);
 
 const routes: Routes = [
   { path:'', pathMatch: 'full', component: LoginComponent },
-  { path: 'main/:docId', component: MainComponent,
+  { path: 'main', component: MainComponent,
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'direct', component: NewMessageComponent },

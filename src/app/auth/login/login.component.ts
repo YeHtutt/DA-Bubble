@@ -42,7 +42,7 @@ export class LoginComponent {
 
         if (user) {
           const docId = user.uid; // used Firebase Authentication ID as user-ID 
-          this.router.navigate([`/main/${docId}`]);
+          this.router.navigate([`/main`]);
         } else {
           console.error('user is null.');
         }
