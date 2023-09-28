@@ -1,1 +1,50 @@
-<p>choose-avatar works!</p>
+<div class="avatarContainer">
+    <div class="logoContent-normal">
+        <img src="./assets/img/logo+text.png">
+    </div>
+    <mat-card>
+        <mat-card-title>Wähle deinen Avatar</mat-card-title>
+
+        <div class="avatarContentBox">
+            <div class="profileImg">
+                <img src="assets/img/avatar/person.png">
+            </div>
+            <div class="newUser"> Frederik Beck </div>
+            <div class="chooseInfo">Aus der Liste wählen</div>
+
+            <div class="allProfilePics">
+                <div  *ngFor="let avatar of avatars">
+                    <img src="assets/img/avatar/{{ avatar }}">
+                </div>
+            </div>
+
+            <div class="ownPic">
+                <span>Eigenes Bild anwenden</span>
+                <div class="form-group"> 
+                    <label for="file">Datei Hochladen</label>
+                    <input
+                    type="file"
+                    id="file"
+                    style="display: none;"
+                    >
+                </div>
+            </div>
+
+            <div class="buttonBox">
+                <button type="submit">Weiter</button>
+            </div>
+            
+        </div>
+
+        <div class="arrow-back">
+            <img src="assets/img/arrow_back.png" [routerLink]="'/login'">
+        </div>
+    </mat-card>
+
+    <div class="legals">
+        <div routerLink="/impressum">Impressum</div>
+        <div>Datenschutz</div>
+    </div>
+
+    
+</div>
