@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ChannelChatComponent } from './main/channel-chat/channel-chat.component';
+import { ChannelChatComponent } from './main/channels/channel-chat/channel-chat.component';
 import { NewMessageComponent } from './main/new-message/new-message.component';
 import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 import { AuthenticationService } from './services/authentication.service';
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path:'', pathMatch: 'full', component: LoginComponent },
   { path: 'main/:docId', component: MainComponent,
     children: [
-      { path: '', component: ChannelChatComponent },
+      { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'direct', component: NewMessageComponent },
       { path: 'chat', component: ChatComponent }
     ]

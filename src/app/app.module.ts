@@ -39,7 +39,7 @@ import { ThreadsComponent } from './main/threads/threads.component';
 
 /* Module */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ChannelChatComponent } from './main/channel-chat/channel-chat.component';
+import { ChannelChatComponent } from './main/channels/channel-chat/channel-chat.component';
 import { MessageComponent } from './main/dashboard/message/message.component';
 import { ChatComponent } from './main/chat/chat.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
