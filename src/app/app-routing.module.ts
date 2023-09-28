@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'main/:docId', component: MainComponent,
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
-      { path: 'direct', component: NewMessageComponent },
+      { path: 'message', component: NewMessageComponent },
       { path: 'chat', component: ChatComponent }
     ]
   },
