@@ -30,10 +30,7 @@ export class ChatComponent {
     });
   }
 
-  sendMessage() {
-
-  }
-  text: string = '';
+  
 
   sendMessage() {
     // this.message.username = 'Kevin Ammerman'
