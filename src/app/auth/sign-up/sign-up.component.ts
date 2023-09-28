@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+/*import { UserProfile } from '@angular/fire/auth';*/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserProfile } from 'src/app/models/user-profile';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
@@ -11,8 +14,9 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 })
 export class SignUpComponent {
   checked = false;
+  user: UserProfile = new UserProfile;
 
-  constructor(private authService: AuthenticationService, private router:Router, private usersFbService: UsersFirebaseService) {
+  constructor(private authService: AuthenticationService, private router:Router, private usersFbService: UsersFirebaseService, private auth: Auth) {
 
   }
 
@@ -44,13 +48,12 @@ export class SignUpComponent {
     this.authService.signUp(name, email, password)
     .subscribe(() => {
 
-      const user = {
-        name: name,
-        email: email,
-      };
+      this.user.email = email;
+      this.user.name = name;
+      this.user.id = this.auth.currentUser?.uid;
 
-      this.usersFbService.addUserToFirebase(user).then((docId) => {
-        this.router.navigate([`/main/${docId}`]);
+      this.usersFbService.addUserToFirebase(this.user.toJSON()).then((docId) => {
+        this.router.navigate([`/main`]);
       })
       .catch((error) => {
         console.error('error of saving users in Firestore:', error);
