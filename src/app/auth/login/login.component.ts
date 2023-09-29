@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormBuilder } from '@angular/forms';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +12,15 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  isIntro = true;
+  //isIntro = true;
 
-  constructor(private authService : AuthenticationService, private router: Router, private formBuilder: FormBuilder) {
-    setTimeout(() => {
+  constructor(private authService: AuthenticationService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private usersFbService: UsersFirebaseService,) {
+    /*setTimeout(() => {
       this.isIntro = false;
-    }, 2500);
+    }, 2500);*/
   }
 
   loginForm = new FormGroup({
@@ -33,15 +38,16 @@ export class LoginComponent {
   }
 
   submit() {
-    if(!this.loginForm.valid) {
+    if (!this.loginForm.valid) {
       return;
     } else {
       const { email, password } = this.loginForm.value;
+
       this.authService.login(email, password).subscribe(() => {
         const user = this.authService.getCurrentUser();
 
         if (user) {
-          const docId = user.uid; // used Firebase Authentication ID as user-ID 
+          this.usersFbService.saveToLocalStorage(user.uid); //save Firebase Authentication ID to local Storage to find the logged user
           this.router.navigate([`/main`]);
         } else {
           console.error('user is null.');
@@ -67,9 +73,9 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(() => {
       const user = this.authService.getCurrentUser();
       if (user) {
-        const docId = user.uid; // used Firebase Authentication ID as user-ID 
-      this.router.navigate([`/main/${docId}`]);
-      }else {
+        this.usersFbService.saveToLocalStorage(user.uid); //save Firebase Authentication ID to local Storage to find the logged user 
+        this.router.navigate([`/main`]);
+      } else {
         console.error('user is null.');
       }
     })

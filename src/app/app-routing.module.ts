@@ -11,6 +11,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { ChatComponent } from './main/chat/chat.component';
+import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 
 let docId: any;
 
@@ -18,7 +19,7 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 const redirectAuthorizedToMain = () => redirectLoggedInTo([`main`]);
 
 const routes: Routes = [
-  { path:'', pathMatch: 'full', component: LoginComponent },
+  { path:'', pathMatch: 'full', component: StartAnimationComponent },
   { path: 'main', component: MainComponent,
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },

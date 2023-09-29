@@ -20,7 +20,7 @@ export class AuthenticationService {
 
   signUp(name: string, email: string, password: string) {
     this.auth.currentUser;
-    console.log("UID Ausgabe:", this.auth.currentUser?.uid);
+    console.log("current user Id: ", this.auth.currentUser?.uid);
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap( ({ user }) => 
         updateProfile(user, {displayName: name})

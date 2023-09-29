@@ -45,6 +45,7 @@ import { ChatComponent } from './main/chat/chat.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
+import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
     ChatComponent,
     ResetPasswordComponent,
     ChooseAvatarComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    StartAnimationComponent
   ],
   imports: [
     BrowserModule,

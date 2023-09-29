@@ -52,6 +52,8 @@ export class SignUpComponent {
       this.user.name = name;
       this.user.id = this.auth.currentUser?.uid;
 
+      this.usersFbService.saveToLocalStorage(this.auth.currentUser?.uid);
+
       this.usersFbService.addUserToFirebase(this.user.toJSON()).then((docId) => {
         this.router.navigate([`/main`]);
       })
@@ -60,4 +62,5 @@ export class SignUpComponent {
       });
     })
   }
+
 }

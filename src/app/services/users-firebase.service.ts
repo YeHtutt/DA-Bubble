@@ -18,4 +18,8 @@ export class UsersFirebaseService {
       throw error;
     }
   }
+
+  saveToLocalStorage(value: any) {
+    localStorage.setItem('currentUser', value);
+  }
 }
