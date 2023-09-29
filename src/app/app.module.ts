@@ -25,6 +25,8 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 /* Components */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,6 +48,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
+
 
 @NgModule({
   declarations: [
@@ -89,9 +92,12 @@ import { StartAnimationComponent } from './auth/start-animation/start-animation.
     MatTreeModule,
     MatAutocompleteModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
