@@ -23,7 +23,7 @@
 
       <mat-tree class="mat-tree" [dataSource]="directMessageService.dataSource" [treeControl]="directMessageService.treeControl">
         <!-- This is the tree node template for leaf nodes !IMPORTANT -->
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact" [routerLink]="['chat/' + node.id]">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact" routerLink="chat/{{ node.id }}" routerLinkActive="router-link-active">
           <img class="profil-icon" src="../assets/img/avatar/{{ node.photoURL }}">
           <div>{{node.name}}</div>
         </mat-tree-node>
