@@ -9,6 +9,15 @@
   <div class="profil-box">
     <span class="profil-name">Frederik Beck</span>
     <img class="avatar" src="../assets/img/avatar/avatar6-online.png">
-    <img class="arrow-down" src="../assets/img/arrow-down.png">
+    <button mat-icon-button [matMenuTriggerFor]="menu"><img class="arrow-down"
+        src="../assets/img/arrow-down.png"></button>
   </div>
+  <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>Profile</span>
+      </button>
+      <button mat-menu-item (click)="userLoggedout()">
+        <span>Logout</span>
+      </button>
+  </mat-menu>
 </header>
