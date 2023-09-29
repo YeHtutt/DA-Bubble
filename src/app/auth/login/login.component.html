@@ -3,26 +3,6 @@
         <img src="./assets/img/logo+text.png">
     </div>
 
-    <!--
-    <div style="position: absolute;">
-        <div style="position: relative; width: 100vw; height: 100vh;">
-            <div [style.display]="isIntro ? 'block' : 'none' " class="introBg"> </div>
-            <div [style.display]="isIntro ? 'block' : 'none' " class="logoAndTitleAnimation">
-
-                <div class="introLogoTitle">
-                    <div class="LogoAndTitleContent">
-                        <img src="./assets/img/logo.png">
-                        <div class="title">DABubble</div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div> 
-    </div>-->
-
-
-
     <mat-card>
         <mat-card-header>
             <mat-card-title>Anmeldung</mat-card-title>
@@ -31,15 +11,19 @@
         </mat-card-header>
 
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
-            <div class="input-field-container">
-                <img src="./assets/img/mail.png">
-                <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
-            </div>
+            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+                <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
+                <input matInput formControlName="email" placeholder="beispiel@email.com" type="email" style="
+                color: black !important;">
+                <mat-error>email eingeben</mat-error>
+            </mat-form-field>
 
-            <div class="input-field-container">
-                <img src="./assets/img/lock.png">
-                <input matInput placeholder="Password" formControlName="password" type="password">
-            </div>
+            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+                <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
+                <input matInput placeholder="Password" formControlName="password" type="password" style="
+                color: black !important;">
+                <mat-error>password eingeben</mat-error>
+            </mat-form-field>
 
             <div class="forgetPassword">
                 <a href="#">Password vergessen?</a>

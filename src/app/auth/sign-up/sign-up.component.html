@@ -7,20 +7,26 @@
         </mat-card-header>
 
         <form [formGroup]="signUpForm" (ngSubmit)="submit()">
-            <div class="input-field-container">
-                <img src="./assets/img/person.png">
-                <input matInput placeholder="Name und Nachname" formControlName="name" type="text">
-            </div>
+            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+                <mat-icon matIconPrefix><img src="./assets/img/person.png"></mat-icon>
+                <input matInput placeholder="Name und Nachname" formControlName="name" type="text" style="
+                color: black !important;">
+                <mat-error>name eingeben</mat-error>
+            </mat-form-field>
 
-            <div class="input-field-container">
-                <img src="./assets/img/mail.png">
-                <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
-            </div>
+            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+                <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
+                <input matInput placeholder="beispiel@email.com" formControlName="email" type="email" style="
+                color: black !important;">
+                <mat-error>email eingeben</mat-error>
+            </mat-form-field>
 
-            <div class="input-field-container">
-                <img src="./assets/img/lock.png">
-                <input matInput placeholder="Password" formControlName="password" type="password">
-            </div>
+            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+                <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
+                <input matInput placeholder="Password" formControlName="password" type="password" style="
+                color: black !important;">
+                <mat-error>password eingeben</mat-error>
+            </mat-form-field>
 
             <section class="sectionCheckbox">
                 <mat-checkbox class="example-margin" formControlName="agreement">Ich stimme die <a
