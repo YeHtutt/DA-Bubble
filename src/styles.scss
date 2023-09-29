@@ -6,6 +6,7 @@
 
 
 
+
 .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 30px !important;
 }
@@ -40,8 +41,8 @@ body {
 /* used for main headlines */
 
 $hover-effect-color: #ECEEFE;
-
-
+$material-size: 24px;
+$main-color: #797EF3;
 
 h3 {
   font-weight: 600;
@@ -57,51 +58,64 @@ h3 {
   flex: 0;
 }
 
-.mat-icon {
-  font-size: 20px !important;
-  height: 20px !important;
-  width: 20px !important;
-}
 
-.mat-mdc-icon-button {
-  padding: 0px !important;
-  border-radius: 4px !important;
-  --mdc-icon-button-state-layer-size: 22px !important;
-  --mdc-icon-button-icon-size: 22px !important;
-  --mdc-icon-button-disabled-icon-color: black;
-  --mdc-icon-button-disabled-icon-opacity: 0.38;
 
-  .mat-mdc-button-persistent-ripple {
-    border-radius: 0% !important;
+
+
+
+.highest-node {
+  .mat-icon {
+    font-size: $material-size !important;
+    height: $material-size !important;
+    width: $material-size !important;
   }
 
-  .mat-mdc-button-touch-target {
-    height: 22px;
-    width: 22px;
-    position: absolute;
-    height: 22px !important;
-    width: 22px !important;
-    transform: translate(-50%, -50%);
+
+  .mat-mdc-icon-button {
+    padding: 0px !important;
+    border-radius: 4px !important;
+    --mdc-icon-button-state-layer-size: $material-size !important;
+    --mdc-icon-button-icon-size: $material-size !important;
+
+    .mat-mdc-button-persistent-ripple {
+      border-radius: 0% !important;
+    }
+
+    .mat-mdc-button-touch-target {
+      height: $material-size;
+      width: $material-size;
+      position: absolute;
+      height: $material-size !important;
+      width: $material-size !important;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .mdc-button,
+  .mat-mdc-button,
+  .mat-unthemed,
+  .mat-mdc-button-base {
+    min-width: $material-size;
+    height: $material-size !important;
+
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .mat-mdc-tab-body-wrapper {
+    height: 100%;
   }
 }
 
-.mdc-button,
-.mat-mdc-button,
-.mat-unthemed,
-.mat-mdc-button-base {
-  min-width: 22px;
-  height: 22px !important;
 
+.unstyled-button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
   &:hover {
     background-color: $hover-effect-color;
-    border-radius: 4px;
   }
-}
-
-button {
-  cursor: pointer;
-}
-
-.mat-mdc-tab-body-wrapper {
-  height: 100%;
 }

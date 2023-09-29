@@ -16,6 +16,9 @@ export class ChannelChatComponent implements OnInit {
   id: string = '';
 
   constructor(private channelService: ChannelService) {
+
+
+    
     this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
       return this.sortByDate(message);
     }));

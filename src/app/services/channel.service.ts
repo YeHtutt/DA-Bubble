@@ -18,6 +18,19 @@ interface ExampleFlatNode {
 }
 
 
+interface MessagesNode {
+  MessageName: string;
+  MessageId: string;
+  children?: ChannelsNode[];
+}
+
+interface ExampleMessageFlatNode {
+  expandable: boolean;
+  Name: string;
+  level: number;
+}
+
+
 import {
   Firestore, collection,
   doc, onSnapshot,
@@ -42,9 +55,11 @@ export class ChannelService {
   }
 
 
+  messageTree: MessagesNode[] = [];
   channelTree: ChannelsNode[] = [];
   themes: any;
   unsubChannel: any;
+  unsubMessage: any;
   currentChannelId: string | undefined;
 
 
@@ -62,6 +77,8 @@ export class ChannelService {
   getRefSubcollChannel() {
     return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
   }
+
+  getUser() {}
 
 
   private _transformer = (node: ChannelsNode, level: number) => {
@@ -85,6 +102,8 @@ export class ChannelService {
     node => node.children,
   );
 
+
+
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -100,6 +119,9 @@ export class ChannelService {
       this.dataSource.data = this.themes;
     });
   }
+
+
+
 
   setChannelId(channelId: string) {
     this.currentChannelId = channelId;
@@ -122,6 +144,35 @@ export class ChannelService {
       children: []
     });
   }
+
+
+
+
+
+  /*
+    subMessageList() {
+      return this.unsubMessage = onSnapshot(this.getRef('directMessages'), (list: any) => {
+        this.messageTree = [];
+        list.forEach((element: any) => {
+          const messageObj = this.setMessageObj(element.data(), element.id);
+          this.messageTree.push(messageObj);
+        });
+        this.themes = [{ channelName: 'directMessages', children: this.messageTree }];
+        this.dataSource.data = this.themes;
+      });
+    }
+  
+  setMessageObj(obj: any, docId: string): MessagesNode {
+      return new Message({
+        MessageId: docId,
+        users: obj.users,
+        description: obj.description,
+        creationTime: obj.creationTime,
+        createdBy: obj.createdBy,
+        children: []
+      });
+    } */
+
 
   ngOnDestroy() {
     this.unsubChannel();

@@ -1,17 +1,16 @@
 @use "@angular/material" as mat;
-@use "material/_theming" as app;
+@use "material/theming" as app;
 @use 'material/_palette' as palette;
 @use "sass:map";
 
 @include mat.core();
 
-$app-primary: mat.define-palette(palette.$my-light-palette, 100);
-$app-accent: mat.define-palette(palette.$my-light-palette, A700, A700, A700);
+$app-primary: mat.define-palette(palette.$my-light-palette, 500);
+$app-accent: mat.define-palette(palette.$my-light-palette, A100, A200, A700);
 
 // Use your own "app" define-light-theme function instead of "mat" one.
 $app-theme: app.define-light-theme((color: (primary: $app-primary,
-        accent: $app-accent
-        
+        accent: $app-accent,
       )));
 
 
@@ -29,4 +28,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+  height: 44px !important;
+}
+
 @include mat.all-component-colors($app-theme);
+

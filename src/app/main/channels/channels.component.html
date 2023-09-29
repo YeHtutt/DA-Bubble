@@ -10,23 +10,18 @@
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
       <div class="main-node">
         <div class="channel-headline">
-          <div class="channel-head">
+          <div class="channel-head" (click)="toggleExpanded(node)">
             <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
               [attr.aria-label]="'Toggle ' + node.channelName">
-              <mat-icon class="main-icon" (click)="toggleExpanded(node)">
+              <mat-icon class="main-icon">
                 {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
               </mat-icon>
             </button>
             <img src="../../../assets/img/channels-icon.png">
-            <h3 [matMenuTriggerFor]="menu">{{node.channelName}}</h3>
+            <h3>{{node.channelName}}</h3>
           </div>
-          <mat-icon class="add-icon" (click)="openCreateChannelDialog()">add</mat-icon>
+          <mat-icon mat-mini-fab color="primary" mat-rai(click)="openCreateChannelDialog()">add</mat-icon>
         </div>
-        <mat-menu #menu="matMenu">
-          <button class="channel-options" mat-menu-item>Create</button>
-          <mat-divider></mat-divider>
-          <button class="channel-options" mat-menu-item>Manage</button>
-        </mat-menu>
       </div>
     </mat-tree-node>
   </mat-tree>
