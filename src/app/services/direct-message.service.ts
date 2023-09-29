@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Message } from '../models/channel';
+import { UserProfile } from '../models/user-profile';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -15,14 +16,16 @@ import {
 
 
 interface MessagesNode {
-  messageName: string;
-  messageId: string;
+  name: string;
+  id: any;
+  photoURL: any;
   children?: MessagesNode[];
 }
 
+
 interface ExampleFlatNode {
   expandable: boolean;
-  messageName: string;
+  name: string;
   level: number;
 }
 
@@ -30,6 +33,7 @@ interface ExampleFlatNode {
 @Injectable({
   providedIn: 'root'
 })
+
 export class DirectMessageService {
 
   messageTree: MessagesNode[] = [];
@@ -44,8 +48,9 @@ export class DirectMessageService {
   private _transformer = (node: MessagesNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
-      messageName: node.messageName,
-      messageId: node.messageId,
+      name: node.name,
+      id: node.id,
+      photoURL: node.photoURL,
       level: level,
     };
   };
@@ -75,22 +80,21 @@ export class DirectMessageService {
     return this.unsubMessage = onSnapshot(this.channelService.getRef('users'), (list: any) => {
       this.messageTree = [];
       list.forEach((element: any) => {
-        const channelObj = this.setChannelObj(element.data(), element.id);
-        this.messageTree.push(channelObj);
+        const messageObj = this.setMessageObj(element.data(), element.id);
+        this.messageTree.push(messageObj);
       });
-      this.themes = [{ channelName: 'Channels', children: this.messageTree }];
+      this.themes = [{ messageName: 'Messages', children: this.messageTree }];
       this.dataSource.data = this.themes;
     });
   }
 
+
   setMessageObj(obj: any, docId: string): MessagesNode {
-    return new Message({
-      channelId: docId,
-      channelName: obj.channelName,
-      creatorId: obj.creatorId,
-      description: obj.description,
-      creationTime: obj.creationTime,
-      createdBy: obj.createdBy,
+    return new UserProfile({
+      name: obj.name,
+      email: obj.email,
+      id: docId,
+      photoURL: obj.photoURL,
       children: []
     });
   }

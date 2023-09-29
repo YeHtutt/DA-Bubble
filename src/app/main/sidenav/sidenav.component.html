@@ -21,64 +21,31 @@
 
       <app-channels></app-channels>
 
-      <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
+      <mat-tree class="mat-tree" [dataSource]="directMessageService.dataSource" [treeControl]="directMessageService.treeControl">
         <!-- This is the tree node template for leaf nodes !IMPORTANT -->
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
-          <button mat-flat-button class="child-node" [routerLink]="['channel/' + node.channelId]">
-            <mat-icon>tag</mat-icon>
-            <div>{{node.channelName}}</div>
-          </button>
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact" [routerLink]="['chat/' + node.id]">
+          <img class="profil-icon" src="../assets/img/avatar/{{ node.photoURL }}">
+          <div>{{node.name}}</div>
         </mat-tree-node>
-        <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
+        <mat-tree-node *matTreeNodeDef="let node;when: directMessageService.hasChild" class="highest-node">
           <div class="main-node">
             <div class="channel-headline">
-              <div class="channel-head" (click)="toggleExpanded(node)">
-                <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
-                  [attr.aria-label]="'Toggle ' + node.channelName">
+              <div class="channel-head head-box" (click)="toggleExpanded(node)" matTreeNodeToggle
+              [attr.aria-label]="'Toggle ' + node.name">
+                <button class="expand-channels-btn" mat-icon-button>
                   <mat-icon class="main-icon">
-                    {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+                    {{ directMessageService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
                   </mat-icon>
                 </button>
-                <img src="../../../assets/img/channels-icon.png">
-                <h3>{{node.channelName}}</h3>
+                <div class="dm-headline">
+                  <img class="profil-icon" src="../assets/img/account_circle.png">
+                  <span>Direktnachrichten</span>
+                </div>
               </div>
-              <mat-icon mat-mini-fab color="primary" mat-raised-button>add</mat-icon>
             </div>
           </div>
         </mat-tree-node>
       </mat-tree>
-
-      <div class="dm-section">
-        <div class="dm-headline">
-          <img class="drop-down-icon" src="../assets/img/arrow_drop_down.png">
-          <img class="profil-icon" src="../assets/img/account_circle.png">
-          <span>Direktnachrichten</span>
-        </div>
-        <div class="contact" routerLink="chat" routerLinkActive="router-link-active"> <!-- kontakte werden später mit einer ngFor gerendert -->
-          <img class="profil-icon" src="../assets/img/avatar/avatar6-online.png">
-          <span>Frederik Beck (Du)</span>
-        </div>
-        <div class="contact">
-          <img class="profil-icon" src="../assets/img/avatar/avatar5-online.png">
-          <span>Sofia Müller</span>
-        </div>
-        <div class="contact">
-          <img class="profil-icon" src="../assets/img/avatar/avatar4-online.png">
-          <span>Noah Braun</span>
-        </div>
-        <div class="contact">
-          <img class="profil-icon" src="../assets/img/avatar/avatar1-offline.png">
-          <span>Elise Roth</span>
-        </div>
-        <div class="contact">
-          <img class="profil-icon" src="../assets/img/avatar/avatar2-online.png">
-          <span>Elias Neumann</span>
-        </div>
-        <div class="contact">
-          <img class="profil-icon" src="../assets/img/avatar/avatar3-online.png">
-          <span>Steffen Hoffmann</span>
-        </div>
-      </div>
     </div>
   </mat-drawer>
   <mat-drawer-content>
