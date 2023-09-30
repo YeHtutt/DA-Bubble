@@ -4,7 +4,6 @@ import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { docData } from 'rxfire/firestore';
 import { map } from 'rxjs';
-import { UserProfile } from '../models/user-profile';
 
 
 interface User {
