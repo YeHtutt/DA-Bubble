@@ -13,7 +13,7 @@
             <div class="chooseInfo">Aus der Liste wählen</div>
 
             <div class="allProfilePics">
-                <div  *ngFor="let avatar of avatars">
+                <div  *ngFor="let avatar of avatars" (click)="this.setNewPic(avatar)">
                     <img src="assets/img/avatar/{{ avatar }}">
                 </div>
             </div>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="buttonBox">
-                <button type="submit">Weiter</button>
+                <button type="submit" (click)="this.saveNewPic(currentPic)">Weiter</button>
             </div>
             
         </div>

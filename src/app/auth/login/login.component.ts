@@ -12,6 +12,7 @@ import { Auth } from '@angular/fire/auth';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  userID: any;
 
   constructor(private authService: AuthenticationService,
     private router: Router,
@@ -44,6 +45,7 @@ export class LoginComponent {
 
         if (user) {
           this.usersFbService.saveToLocalStorage(user.uid); //save Firebase Authentication ID to local Storage to find the logged user
+          //this.usersFbService.getCurrentUser();
           this.router.navigate([`/main`]);
         } else {
           console.error('user is null.');
@@ -69,7 +71,8 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(() => {
       const user = this.authService.getCurrentUser();
       if (user) {
-        this.usersFbService.saveToLocalStorage(user.uid); //save Firebase Authentication ID to local Storage to find the logged user 
+        this.usersFbService.saveToLocalStorage(user.uid); //save Firebase Authentication ID to local Storage to find the logged user
+        //this.usersFbService.getCurrentUser(); 
         this.router.navigate([`/main`]);
       } else {
         console.error('user is null.');

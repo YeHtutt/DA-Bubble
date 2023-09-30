@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, User } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { from, switchMap } from 'rxjs';
+import { UsersFirebaseService } from './users-firebase.service';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { from, switchMap } from 'rxjs';
 })
 export class AuthenticationService {
 
-  constructor(private auth: Auth, private afAuth: AngularFireAuth) { }
+  constructor(private auth: Auth, private afAuth: AngularFireAuth, private userfbService: UsersFirebaseService ) { }
 
   login(email: any, password: any) {
     return from(signInWithEmailAndPassword(this.auth, email, password));

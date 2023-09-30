@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
+  @Input() image: any;
 
   constructor(private authService: AuthenticationService, private router: Router) {
 
