@@ -2,7 +2,7 @@
   <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
     <!-- This is the tree node template for leaf nodes !IMPORTANT -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
-      <button mat-flat-button class="child-node" [routerLink]="['channel/' + node.channelId]">
+      <button mat-flat-button class="child-node" [routerLink]="['channel/' + node.channelId]" (click)="this.channelService.setChannelId(node.channelId)">
         <mat-icon class="tag">tag</mat-icon>
         <div>{{node.channelName}}</div>
       </button>

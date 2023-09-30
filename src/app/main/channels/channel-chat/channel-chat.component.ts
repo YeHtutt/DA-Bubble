@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, expand, map } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
@@ -14,19 +14,20 @@ export class ChannelChatComponent implements OnInit {
   message: Message = new Message()
   messages$: Observable<any>;
   id: string = '';
-  channelId: string | undefined = '';
-  constructor(private channelService: ChannelService) {
-
-
-
+  channelId: string | null | undefined = '';
+  constructor(
+    private channelService: ChannelService,
+    private route: ActivatedRoute) {
     this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
       return this.sortByDate(message);
     }));
   }
 
-  ngOnInit() {
-    this.getChannel();
-    console.log(this.channelId)
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.channelId = params.get('channelId');
+      console.log(this.channelId);
+    });
   }
 
 
