@@ -5,7 +5,12 @@
 @import './custom-theme.scss';
 
 
-
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 400;
+  src: url('/src/assets/fonts/Nunito-Regular.woff2') format('woff2');
+  src: url('/src/assets/fonts/Nunito-Regular.woff') format('woff');
+}
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 30px !important;
@@ -47,6 +52,7 @@ $main-color: #797EF3;
 h3 {
   font-weight: 600;
   font-size: 16px;
+  font-family: 'Nunito';
 }
 
 
@@ -61,9 +67,19 @@ h3 {
 
 
 
+.mat-icon {
+  font-size: $material-size !important;
+  height: $material-size !important;
+  width: $material-size !important;
+}
 
 
 .highest-node {
+  .mat-icon {
+  font-size: $material-size !important;
+    height: $material-size !important;
+    width: $material-size !important;
+  }
   .mat-icon {
     font-size: $material-size !important;
     height: $material-size !important;
