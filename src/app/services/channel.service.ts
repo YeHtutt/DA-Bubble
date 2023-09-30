@@ -18,19 +18,6 @@ interface ExampleFlatNode {
 }
 
 
-interface MessagesNode {
-  MessageName: string;
-  MessageId: string;
-  children?: ChannelsNode[];
-}
-
-interface ExampleMessageFlatNode {
-  expandable: boolean;
-  Name: string;
-  level: number;
-}
-
-
 import {
   Firestore, collection,
   doc, onSnapshot,
@@ -55,7 +42,6 @@ export class ChannelService {
   }
 
 
-  messageTree: MessagesNode[] = [];
   channelTree: ChannelsNode[] = [];
   themes: any;
   unsubChannel: any;
@@ -161,7 +147,7 @@ export class ChannelService {
         this.dataSource.data = this.themes;
       });
     }
-  
+
   setMessageObj(obj: any, docId: string): MessagesNode {
       return new Message({
         MessageId: docId,

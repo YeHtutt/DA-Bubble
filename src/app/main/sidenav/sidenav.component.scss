@@ -1,3 +1,5 @@
+@import 'src/app/main/channels/channels.component.scss';
+
 .toolbar {
   background-color:#ECEEFE;
 }
@@ -248,8 +250,6 @@ mat-toolbar {
   font-weight: 600;
   font-size: 16px;
   color: black;
-  margin-top: 30px;
-  margin-bottom: 15px;
 
   &:hover {
     cursor: pointer;
@@ -263,16 +263,16 @@ mat-toolbar {
 }
 
 .profil-icon {
-  width: 22px;
-  height: 22px;
+  width: 35px;
+  height: 35px;
   margin-right: 5px;
 }
 
 .contact {
   display: flex;
   align-items: center;
-  margin: 5px 0 5px 27px;
-  padding: 5px 0px 5px 10px;
+  margin: 0 0 0 27px;
+  padding: 0 0 0 10px;
   font-size: 16px;
   font-weight: 500;
 
@@ -285,5 +285,26 @@ mat-toolbar {
     background-color: #ECEEFE;
     border-radius: 30px;
     cursor: pointer;
+  }
+}
+
+.mdc-button__label {
+  display: flex !important;
+}
+
+.head-box {
+  &:hover {
+    :first-child {
+      color: #535AF1;
+    }
+
+    :last-child {
+      img {
+        filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
+      }
+      span {
+        color: #535AF1;
+      }
+    }
   }
 }

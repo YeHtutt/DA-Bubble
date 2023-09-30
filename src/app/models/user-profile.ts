@@ -1,8 +1,8 @@
 export class UserProfile {
     name: string = '';
     email: string = '';
-    id?: string;
-    photoURL?: string;
+    id: any;
+    photoURL: any;
 
     constructor(obj?: any) {
         this.name = obj? obj.name: '';
@@ -11,7 +11,7 @@ export class UserProfile {
         this.photoURL = obj? obj.photoURL: '';
     }
 
-    public toJSON() { 
+    public toJSON() {
         return {
             name: this.name,
             email: this.email,
