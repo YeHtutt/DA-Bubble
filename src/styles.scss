@@ -8,8 +8,8 @@
 @font-face {
   font-family: 'Nunito';
   font-weight: 400;
-  src: url('/src/assets/fonts/Nunito-Regular.woff2') format('woff2');
-  src: url('/src/assets/fonts/Nunito-Regular.woff') format('woff');
+  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
 }
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
@@ -126,12 +126,14 @@ h3 {
 }
 
 
-.unstyled-button {
+.basic-button {
   background-color: transparent;
   cursor: pointer;
   border: none;
   border-radius: 50%;
+  padding: 8px;
   &:hover {
     background-color: $hover-effect-color;
+    color: $main-color
   }
 }

@@ -14,19 +14,25 @@ export class ChannelChatComponent implements OnInit {
   message: Message = new Message()
   messages$: Observable<any>;
   id: string = '';
-
+  channelId: string | undefined = '';
   constructor(private channelService: ChannelService) {
 
 
-    
+
     this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
       return this.sortByDate(message);
     }));
   }
 
   ngOnInit() {
+    this.getChannel();
+    console.log(this.channelId)
   }
 
+
+  getChannel() {
+    this.channelId = this.channelService.getChannelId();
+  }
 
   sortByDate(message: any) {
     return message.sort((a: any, b: any) => {

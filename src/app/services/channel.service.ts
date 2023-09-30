@@ -67,6 +67,7 @@ export class ChannelService {
 
   getUser() {}
 
+  getChannelByURL() {}
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {
