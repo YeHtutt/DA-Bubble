@@ -32,14 +32,19 @@
     }
 }
 
+.tag {
+    font-style: italic;
+    font-weight: 600;
+}
+
 .child-node {
     display: flex;
     justify-content: flex-start;
     border-radius: 30px;
-
     &:hover {
         cursor: pointer;
         background-color: #ECEEFE;
+        color: #535AF1;
     }
 }
 
@@ -99,10 +104,8 @@
     }
     &:hover {
         cursor: pointer;
-
         :first-child {
             color: #535AF1;        }
-
         span {
             color: #535AF1;
         }
@@ -113,4 +116,8 @@
     height: 22px;
     width: 22px;
     margin-right: 5px;
+}
+
+.each-channel {
+    font-family: Nunito;
 }
