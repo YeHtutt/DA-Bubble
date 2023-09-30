@@ -25,7 +25,8 @@ import {
   deleteDoc, orderBy,
   where, query,
   limit,
-  collectionData
+  collectionData,
+  getDocs
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -66,6 +67,7 @@ export class ChannelService {
 
   getUser() {}
 
+  getChannelByURL() {}
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {
@@ -181,6 +183,17 @@ export class ChannelService {
 
   async addMessageToChannel(message: any) {
     const docRef = addDoc(this.getRefSubcollChannel(), message);
+  }
+
+  async getChannels() {
+    const itemCollection = collection(this.firestore, 'channels');
+    const channelArray: any[] = [];
+    const querySnapshot = await getDocs(itemCollection);
+    querySnapshot.forEach(doc => {
+      const channel = this.setChannelObj(doc.data(), doc.id);
+      channelArray.push(channel);
+    });
+    return channelArray;
   }
 
 }

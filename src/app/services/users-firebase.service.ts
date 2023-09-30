@@ -4,6 +4,7 @@ import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { docData } from 'rxfire/firestore';
 import { map } from 'rxjs';
+import { UserProfile } from '../models/user-profile';
 
 
 interface User {
@@ -61,13 +62,13 @@ export class UsersFirebaseService {
   }
 
   setUserObject(obj: any, id: string): User {
-    return {
+    return new UserProfile({
       name: obj.name || '',
       email: obj.email || '',
       docId: id || '',
       uid: obj.id || '',
       photoURL: obj.photoURL || ''
-    }
+    });
   }
 
 
