@@ -3,7 +3,7 @@
         <div class="direct_message_info_box">
             <span>Neue Nachricht</span>
             <div class="input_container">
-                <input placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
+                <input (keyup)="searchUsersAndChannels()" [(ngModel)]="search" placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
             </div>
         </div>
     </header>
