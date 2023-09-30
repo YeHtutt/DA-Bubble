@@ -15,22 +15,25 @@ export class NewMessageComponent {
   text: string = '';
   message: Message = new Message()
   id: string = '';
-  users: any;
+  usersAndChannels: any = [];
   search: string = '';
 
 
   constructor(private channelService: ChannelService, private userService: UsersFirebaseService) {
-    this.getUsersArray();
-    console.log(this.channelService.dataSource)
+    this.getUserAndChannelData();
   }
 
-  async getUsersArray() {
-    this.users = await this.userService.getUsers();
-    this.userNameToLowerCase(this.users);
+  async getUserAndChannelData() {
+    this.usersAndChannels.users = await this.userService.getUsers();
+    this.usersAndChannels.channels = await this.channelService.getChannels();
+    this.userNameToLowerCase(this.usersAndChannels);
   }
 
-  userNameToLowerCase(user: any) {
-    user.forEach((u: any) => {
+  userNameToLowerCase(array: any) {
+    array.channels.forEach((c: any) => {
+      c.channelName = c.channelName.toLowerCase();
+    });
+    array.users.forEach((u: any) => {
       u.name = u.name.toLowerCase();
     });
   }
@@ -44,11 +47,15 @@ export class NewMessageComponent {
   }
 
   searchUsersAndChannels() {
-    const filtered = this.users.filter((user: object) => this.checkIfIncluded(user, this.search));
-    console.log(filtered)
+    const filteredUser = this.search && this.usersAndChannels.users.filter((user: object) => this.checkIfIncluded(user, this.search));
+    const filteredChannel = this.search && this.usersAndChannels.channels.filter((channel: object) => this.checkIfIncluded(channel, this.search));
+    console.log('filteredUser', filteredUser)
+    console.log('filteredChannel', filteredChannel)
   }
 
-  checkIfIncluded(user:any, search: string) {
-    return user.name.startsWith(search);
+  checkIfIncluded(obj: any, search: string) {
+    const isUserMatch = obj.name && obj.name.startsWith(search);
+    const isChannelMatch = obj.channelName && obj.channelName.startsWith(search);
+    return isUserMatch || isChannelMatch;
   }
 }

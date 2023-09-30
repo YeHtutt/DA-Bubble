@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, addDoc, getDocs } from '@angular/fire/firestore';
+import { UserProfile } from '../models/user-profile';
 
 
 interface User {
@@ -45,13 +46,13 @@ export class UsersFirebaseService {
   }
 
   setUserObject(obj: any, id: string): User {
-    return {
+    return new UserProfile({
       name: obj.name || '',
       email: obj.email || '',
       docId: id || '',
       uid: obj.id || '',
       photoURL: obj.photoURL || ''
-    }
+    });
   }
 
 }
