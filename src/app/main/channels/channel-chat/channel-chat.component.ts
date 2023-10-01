@@ -3,6 +3,10 @@ import { Observable, expand, map } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
+import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
+import { MatDialog } from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
@@ -14,9 +18,12 @@ export class ChannelChatComponent implements OnInit {
   message: Message = new Message()
   messages$: Observable<any>;
   id: string = '';
-  channelId: string | null | undefined = '';
+  channelId: any = '';
+  channel: any;
+  ref: any;
   constructor(
     private channelService: ChannelService,
+    public dialog: MatDialog,
     private route: ActivatedRoute) {
     this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
       return this.sortByDate(message);
@@ -24,15 +31,21 @@ export class ChannelChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe(async (params) => {
       this.channelId = params.get('channelId');
-      console.log(this.channelId);
+
+      // Using the service method to fetch the document data
+      this.channelService.getDocData('channels', this.channelId).then(channelData => {
+        this.channel = channelData;
+      }).catch(err => {
+        console.error("Error fetching channel data:", err);
+      });
     });
   }
 
 
   getChannel() {
-    this.channelId = this.channelService.getChannelId();
+
   }
 
   sortByDate(message: any) {
@@ -50,4 +63,17 @@ export class ChannelChatComponent implements OnInit {
     this.channelService.addMessageToChannel(this.message.toJSON());
     this.text = '';
   }
+
+
+
+  openChannelMenu() {
+    this.dialog.open(ChannelMenuComponent, {
+      width: '880px',
+      height: '514px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      data: { channel: this.channel }
+    });
+  }
+
 }

@@ -1,7 +1,7 @@
 <section>
     <header>
         <div class="channel_info_box">
-            <span># Entwicklerteam</span>
+            <span (click)="openChannelMenu()">{{channel?.channelName}}</span>
             <mat-icon>expand_more</mat-icon>
         </div>
         <div class="user_channel_info_box">
@@ -21,7 +21,7 @@
         <app-message *ngFor="let message of messages$ | async" [message]="message"></app-message>
     </main>
     <div class="input_message_container">
-        <textarea  [(ngModel)]="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
+        <textarea [(ngModel)]="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
         <div class="control_container">
             <div class="chat_action_box">
                 <mat-icon class="action_btn_style">add</mat-icon>
@@ -29,7 +29,8 @@
                 <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
                 <mat-icon class="action_btn_style">alternate_email</mat-icon>
             </div>
-            <button [disabled]="text.length == 0" (click)="sendMessage()"><mat-icon class="send_btn">send</mat-icon></button>
+            <button [disabled]="text.length == 0" (click)="sendMessage()"><mat-icon
+                    class="send_btn">send</mat-icon></button>
         </div>
     </div>
 </section>
