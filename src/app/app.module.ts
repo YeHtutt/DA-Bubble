@@ -48,6 +48,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
+import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { StartAnimationComponent } from './auth/start-animation/start-animation.
     ResetPasswordComponent,
     ChooseAvatarComponent,
     ForgetPasswordComponent,
-    StartAnimationComponent
+    StartAnimationComponent,
+    ChannelMenuComponent
   ],
   imports: [
     BrowserModule,
