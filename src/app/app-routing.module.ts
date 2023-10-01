@@ -19,7 +19,14 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 const redirectAuthorizedToMain = () => redirectLoggedInTo([`main`]);
 
 const routes: Routes = [
-  { path:'', pathMatch: 'full', component: StartAnimationComponent },
+  { path: '', redirectTo: 'start', pathMatch: 'full' },
+  { path: 'start', component: StartAnimationComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'sign-up', component: SignUpComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent},
+  { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'choose-avatar', component: ChooseAvatarComponent},
+
   { path: 'main', component: MainComponent,
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
@@ -27,12 +34,6 @@ const routes: Routes = [
       { path: 'chat/:id', component: ChatComponent }
     ]
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'sign-up', component: SignUpComponent },
-  { path: 'forget-password', component: ForgetPasswordComponent},
-  { path: 'reset-password', component: ResetPasswordComponent},
-  { path: 'choose-avatar', component: ChooseAvatarComponent},
-
 ];
 
 @NgModule({
