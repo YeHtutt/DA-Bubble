@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -14,7 +16,10 @@ export class ForgetPasswordComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
   })*/
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthenticationService) {
+  constructor(private formBuilder: FormBuilder, 
+    private authService: AuthenticationService,
+    private router: Router,
+    private afauth: AngularFireAuth) {
       this.forgetPasswordForm = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]]
       });
@@ -22,7 +27,8 @@ export class ForgetPasswordComponent {
 
   onSubmit() {
     const email = this.forgetPasswordForm.value.email;
-    this.authService.resetPassword(email);
+    this.afauth.sendPasswordResetEmail(email);
+    this.router.navigate(['/login'])
   }
 
   

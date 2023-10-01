@@ -49,7 +49,11 @@ import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.compon
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
+<<<<<<< HEAD
 import { ErrorHandlingComponent } from './error-handling/error-handling.component';
+=======
+import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
+>>>>>>> 473782e06a35884d41a1f67ddc0a654677d4bd62
 
 
 @NgModule({
@@ -71,8 +75,14 @@ import { ErrorHandlingComponent } from './error-handling/error-handling.componen
     ChooseAvatarComponent,
     ForgetPasswordComponent,
     StartAnimationComponent,
+<<<<<<< HEAD
     ChannelMenuComponent,
     ErrorHandlingComponent
+=======
+    UserProfileViewComponent,
+    ChannelMenuComponent
+
+>>>>>>> 473782e06a35884d41a1f67ddc0a654677d4bd62
   ],
   imports: [
     BrowserModule,
