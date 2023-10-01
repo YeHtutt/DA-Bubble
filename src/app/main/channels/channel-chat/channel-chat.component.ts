@@ -32,19 +32,16 @@ export class ChannelChatComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(async (params) => {
       this.channelId = params.get('channelId');
-      let docRef = this.channelService.getSingleDocRef('channels', this.channelId);
 
-      // Fetch the actual document data using the getDoc method
-      const docSnapshot = await getDoc(docRef);
-
-      // Check if the document exists and print its data
-      if (docSnapshot.exists()) {
-        console.log("Document data:", docSnapshot.data());
-      } else {
-        console.log("No such document!");
-      }
+      // Using the service method to fetch the document data
+      this.channelService.getDocData('channels', this.channelId).then(channelData => {
+        this.channel = channelData;
+      }).catch(err => {
+        console.error("Error fetching channel data:", err);
+      });
     });
   }
+
 
   getChannel() {
 

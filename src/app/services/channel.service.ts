@@ -37,7 +37,7 @@ export class ChannelService {
   firestore: Firestore = inject(Firestore);
 
   constructor() {
-    this.unsubChannelTree = this.subChannelList();   
+    this.unsubChannelTree = this.subChannelList();
   }
 
 
@@ -73,12 +73,27 @@ export class ChannelService {
     return doc(collection(this.firestore, col), docId)
   }
 
-  
-  
 
 
-   getDocumentContent(documentId: string) {
-    const docRef = doc(this.getRef('channels'), documentId);    
+
+  async getDocData(col: string, docId: string) {
+    let docRef = this.getSingleDocRef(col, docId);
+
+    // Fetch the actual document data using the getDoc method
+    const docSnapshot = await getDoc(docRef);
+
+    // Check if the document exists and print its data
+    if (docSnapshot.exists()) {
+      return docSnapshot.data();
+    } else {
+      return console.log("No such document!");
+    }
+  }
+
+
+
+  getDocumentContent(documentId: string) {
+    const docRef = doc(this.getRef('channels'), documentId);
     return this.unsubChannel = onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         return this.setChannelContentObj(docSnapshot.data(), docSnapshot.id);
@@ -175,7 +190,7 @@ export class ChannelService {
         this.dataSource.data = this.themes;
       });
     }
-
+  
   setMessageObj(obj: any, docId: string): MessagesNode {
       return new Message({
         MessageId: docId,
