@@ -49,6 +49,7 @@ import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.compon
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
+import { ErrorHandlingComponent } from './error-handling/error-handling.component';
 import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
 
 
@@ -71,6 +72,8 @@ import { UserProfileViewComponent } from './main/user-profile-view/user-profile-
     ChooseAvatarComponent,
     ForgetPasswordComponent,
     StartAnimationComponent,
+    ChannelMenuComponent,
+    ErrorHandlingComponent,
     UserProfileViewComponent,
     ChannelMenuComponent
 

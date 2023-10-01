@@ -10,7 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class CreateChannelDialogComponent {
 
   channelNameInput: string = '';
-  channelDiscription: string = '';
+  channelDescription: string = '';
 
   constructor(
     private channelService: ChannelService,
@@ -20,7 +20,7 @@ export class CreateChannelDialogComponent {
   addChannel() {
     let channel = {
       channelName: this.channelNameInput,
-      description: this.channelDiscription,
+      description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
       creatorId: '',
       createdBy: '',
