@@ -25,24 +25,18 @@ export class UsersFirebaseService {
 
   constructor(private firestore: Firestore, private auth: Auth) { }
 
-  async addUserToFirebase(user: any) {
+  async addUserToFirebase(user: any, uid: string) {
     try {
-      const docRef = await addDoc(collection(this.firestore, 'users'), user);
-      //console.log('user saved successfully - ID:', docRef.id);
-      this.id = docRef.id;
-      this.saveToLocalStorage(this.id);
-      //localStorage.setItem('currentUser', this.id);
-      return docRef.id;
+      const userRef = doc(this.firestore, 'users', uid);
+      console.log(user)
+      await setDoc(userRef, user);
+      this.saveToLocalStorage(uid);
+      this.id = uid;
     } catch (error) {
       console.error('Error of saving users in Firebase:', error);
       throw error;
     }
   }
-
-  /*
-  saveToLocalStorage(value: any) {
-    localStorage.setItem('currentUser', value);
-  }*/
 
 
   saveToLocalStorage(idValue: any) {
@@ -75,15 +69,11 @@ export class UsersFirebaseService {
 
   async saveUserPic(image: any) {
     this.user.photoURL = image;
-    console.log('img path:', this.user.photoURL);
-    console.log('auth ID:', this.auth.currentUser?.uid);
-
     const docRef = doc(this.firestore, 'users', `${this.id}`);
-    console.log(docRef);
     await updateDoc(docRef, {
       photoURL: image
     }
-    )
+    );
   }
 
   /*
