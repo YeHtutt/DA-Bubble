@@ -48,6 +48,7 @@ body {
 $hover-effect-color: #ECEEFE;
 $material-size: 24px;
 $main-color: #797EF3;
+$accent-color: #535AF1;
 
 h3 {
   font-weight: 600;
@@ -64,9 +65,6 @@ h3 {
   flex: 0;
 }
 
-
-
-
 .mat-icon {
   font-size: $material-size !important;
   height: $material-size !important;
@@ -76,10 +74,11 @@ h3 {
 
 .highest-node {
   .mat-icon {
-  font-size: $material-size !important;
+    font-size: $material-size !important;
     height: $material-size !important;
     width: $material-size !important;
   }
+
   .mat-icon {
     font-size: $material-size !important;
     height: $material-size !important;
@@ -132,8 +131,14 @@ h3 {
   border: none;
   border-radius: 50%;
   padding: 8px;
+
   &:hover {
     background-color: $hover-effect-color;
     color: $main-color
   }
+}
+
+
+button {
+  cursor: pointer;
 }

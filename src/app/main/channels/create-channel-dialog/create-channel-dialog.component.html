@@ -6,12 +6,13 @@
             Beispiel.
         </div>
         <h3>Channel-Name</h3>
-        <mat-form-field appearance="outline" style="border-radius: 50px;"> <input [(ngModel)]="channelNameInput"
-                matInput placeholder="# e.g. marketing"></mat-form-field>
+        <mat-form-field appearance="outline" style="border-radius: 50px;">
+            <input [(ngModel)]="channelNameInput" matInput placeholder="# e.g. marketing">
+        </mat-form-field>
         <h3>Beschreibung (optional)</h3>
-        <mat-form-field appearance="outline"> <input [(ngModel)]="channelDiscription" matInput></mat-form-field>
+        <mat-form-field appearance="outline"> <input [(ngModel)]="channelDescription" matInput></mat-form-field>
         <button mat-fab extended color="primary" (click)="addChannel()">
             Erstellen
-        </button>    
+        </button>
     </div>
 </div>

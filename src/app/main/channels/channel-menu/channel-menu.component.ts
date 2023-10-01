@@ -17,4 +17,23 @@ export class ChannelMenuComponent {
   ngOnInit() {
     console.log(this.channel)
   }
+
+
+  leaveChannel() {
+
+  }
+
+  editDescription() {
+
+  }
+
+  editChannelName() {
+
+  }
+
+  deleteChannel() {
+
+  }
+
+
 }

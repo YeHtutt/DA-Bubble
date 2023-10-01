@@ -1,1 +1,12 @@
-<p>channel-menu works!</p>
+<div>{{channel.channelName}}</div><button class="edit-btn">bearbeiten</button>
+<div>{{channel.channelDescription}}</div><button class="edit-btn">bearbeiten</button>
+
+
+
+
+<button mat-fab extended color="primary" (click)="leaveChannel()">
+    Channel verlassen
+</button>
+<button mat-fab extended color="warn" (click)="deleteChannel()">
+    Channel löschen
+</button>
