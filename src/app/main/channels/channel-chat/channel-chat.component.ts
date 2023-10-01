@@ -3,6 +3,10 @@ import { Observable, expand, map } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
+import { Channel } from 'src/app/models/channel';
+import { getDoc } from '@firebase/firestore';
+
+
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
@@ -14,7 +18,9 @@ export class ChannelChatComponent implements OnInit {
   message: Message = new Message()
   messages$: Observable<any>;
   id: string = '';
-  channelId: string | null | undefined = '';
+  channelId: any = '';
+  channel: any;
+  ref: any;
   constructor(
     private channelService: ChannelService,
     private route: ActivatedRoute) {
@@ -24,15 +30,24 @@ export class ChannelChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe(async (params) => {
       this.channelId = params.get('channelId');
-      console.log(this.channelId);
+      let docRef = this.channelService.getSingleDocRef('channels', this.channelId);
+
+      // Fetch the actual document data using the getDoc method
+      const docSnapshot = await getDoc(docRef);
+
+      // Check if the document exists and print its data
+      if (docSnapshot.exists()) {
+        console.log("Document data:", docSnapshot.data());
+      } else {
+        console.log("No such document!");
+      }
     });
   }
 
-
   getChannel() {
-    this.channelId = this.channelService.getChannelId();
+
   }
 
   sortByDate(message: any) {

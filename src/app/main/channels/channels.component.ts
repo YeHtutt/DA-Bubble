@@ -28,17 +28,8 @@ export class ChannelsComponent {
     });
   }
 
-  openChannel(channelId: string) {
-    this.channelService.setChannelId(channelId);
-    console.log(channelId)
-   }
-
   toggleExpanded(node: any) {
     // Code to toggle the expanded state of the node
     this.channelService.treeControl.toggle(node);
   }
-
-  
-
-
 }

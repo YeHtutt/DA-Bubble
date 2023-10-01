@@ -3,6 +3,16 @@ import { Observable } from 'rxjs';
 import { Channel, Message } from '../models/channel';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import {
+  Firestore, collection,
+  doc, onSnapshot,
+  addDoc, getDoc, updateDoc,
+  deleteDoc, orderBy,
+  where, query,
+  limit,
+  collectionData,
+  getDocs
+} from '@angular/fire/firestore';
 
 
 interface ChannelsNode {
@@ -17,18 +27,6 @@ interface ExampleFlatNode {
   level: number;
 }
 
-
-import {
-  Firestore, collection,
-  doc, onSnapshot,
-  addDoc, getDoc, updateDoc,
-  deleteDoc, orderBy,
-  where, query,
-  limit,
-  collectionData,
-  getDocs
-} from '@angular/fire/firestore';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -39,16 +37,26 @@ export class ChannelService {
   firestore: Firestore = inject(Firestore);
 
   constructor() {
-    this.unsubChannel = this.subChannelList();
+    this.unsubChannelTree = this.subChannelList();   
   }
 
 
+  channelContent: Channel[] = [];
   channelTree: ChannelsNode[] = [];
   themes: any;
   unsubChannel: any;
+  unsubChannelTree: any;
   unsubMessage: any;
-  currentChannelId: string | undefined;
+  unsubChannelContent: any;
 
+
+
+  ngOnDestroy() {
+    this.unsubChannelTree();
+    this.unsubChannel();
+    this.unsubChannelContent();
+
+  }
 
   async addChannel(item: {}, ref: string) {
     await addDoc(this.getRef(ref), item)
@@ -61,13 +69,32 @@ export class ChannelService {
     return collection(this.firestore, ref);
   }
 
+  getSingleDocRef(col: string, docId: string) {
+    return doc(collection(this.firestore, col), docId)
+  }
+
+  
+  
+
+
+   getDocumentContent(documentId: string) {
+    const docRef = doc(this.getRef('channels'), documentId);    
+    return this.unsubChannel = onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        return this.setChannelContentObj(docSnapshot.data(), docSnapshot.id);
+      } else {
+        return console.log('Document does not exist!');
+      }
+    });
+  }
+
+
+  getRefofSubCollection(colId: string, docId: string) { }
+
+
   getRefSubcollChannel() {
     return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
   }
-
-  getUser() {}
-
-  getChannelByURL() {}
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {
@@ -97,7 +124,7 @@ export class ChannelService {
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   subChannelList() {
-    return this.unsubChannel = onSnapshot(this.getRef('channels'), (list: any) => {
+    return this.unsubChannelTree = onSnapshot(this.getRef('channels'), (list: any) => {
       this.channelTree = [];
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
@@ -108,17 +135,6 @@ export class ChannelService {
     });
   }
 
-
-
-
-  setChannelId(channelId: string) {
-    this.currentChannelId = channelId;
-  }
-
-
-  getChannelId() {
-    return this.currentChannelId;
-  }
 
 
   setChannelObj(obj: any, docId: string): ChannelsNode {
@@ -133,6 +149,16 @@ export class ChannelService {
     });
   }
 
+  setChannelContentObj(obj: any, docId: string): Channel {
+    return new Channel({
+      channelId: docId,
+      channelName: obj.channelName,
+      creatorId: obj.creatorId,
+      description: obj.description,
+      creationTime: obj.creationTime,
+      createdBy: obj.createdBy
+    });
+  }
 
 
 
@@ -162,9 +188,7 @@ export class ChannelService {
     } */
 
 
-  ngOnDestroy() {
-    this.unsubChannel();
-  }
+
 
   /*   addChannel(newChannel: string, collection: string)  {
       newChannel.toJSON(collection)
