@@ -1,7 +1,7 @@
 <section>
     <header>
         <div class="channel_info_box">
-            <span>{{channel?.channelName}}</span>
+            <span (click)="openChannelMenu()">{{channel?.channelName}}</span>
             <mat-icon>expand_more</mat-icon>
         </div>
         <div class="user_channel_info_box">

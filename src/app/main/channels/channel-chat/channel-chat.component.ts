@@ -3,8 +3,8 @@ import { Observable, expand, map } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
-import { Channel } from 'src/app/models/channel';
-import { getDoc } from '@firebase/firestore';
+import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -23,6 +23,7 @@ export class ChannelChatComponent implements OnInit {
   ref: any;
   constructor(
     private channelService: ChannelService,
+    public dialog: MatDialog,
     private route: ActivatedRoute) {
     this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
       return this.sortByDate(message);
@@ -62,4 +63,17 @@ export class ChannelChatComponent implements OnInit {
     this.channelService.addMessageToChannel(this.message.toJSON());
     this.text = '';
   }
+
+
+
+  openChannelMenu() {
+    this.dialog.open(ChannelMenuComponent, {
+      width: '880px',
+      height: '514px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      data: { channel: this.channel }
+    });
+  }
+
 }
