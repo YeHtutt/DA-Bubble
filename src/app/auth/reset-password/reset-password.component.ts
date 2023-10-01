@@ -42,7 +42,10 @@ export class ResetPasswordComponent {
     .catch(error => {
       console.log('password change failed: ', error);
     });
-    this.router.navigate(['/login'])
+    setTimeout(() => {
+      this.router.navigate(['/login'])
+    }, 4000);
+    
   }
 
 }

@@ -1,0 +1,40 @@
+.userProfileViewContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 30px;
+    gap: 45px;
+
+    .profileViewHeader {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .profileViewImg {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .profileImg {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 100%;
+        }
+    }
+
+    .profileViewName {
+        width: 100%;
+    }
+
+    .profileViewEmail {
+        width: 100%;
+    }
+    
+    
+}
