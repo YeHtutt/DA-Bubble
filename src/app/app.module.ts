@@ -70,7 +70,10 @@ import { UserProfileViewComponent } from './main/user-profile-view/user-profile-
     ResetPasswordComponent,
     ChooseAvatarComponent,
     ForgetPasswordComponent,
-    StartAnimationComponent
+    StartAnimationComponent,
+    UserProfileViewComponent,
+    ChannelMenuComponent
+
   ],
   imports: [
     BrowserModule,
