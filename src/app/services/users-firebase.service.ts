@@ -24,6 +24,7 @@ export class UsersFirebaseService {
   @Input() loggedInUserID: any;
   @Input() loggedInUserImg: any;
   @Input() loggedInUserName: any;
+  @Input() loggedInUserEmail: any;
 
 
   constructor(private firestore: Firestore, private auth: Auth) { }
@@ -114,6 +115,7 @@ export class UsersFirebaseService {
       this.loggedInUserID = docSnap.id;
       this.loggedInUserImg = userData['photoURL'];
       this.loggedInUserName = userData['name'];
+      this.loggedInUserEmail = userData['email'];
 
     } else {
       // docSnap.data() will be undefined in this case
