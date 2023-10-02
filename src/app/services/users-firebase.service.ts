@@ -1,5 +1,5 @@
 import { Injectable, Input } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc, getDoc } from '@angular/fire/firestore';
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { docData } from 'rxfire/firestore';
@@ -46,10 +46,6 @@ export class UsersFirebaseService {
     localStorage.setItem('currentUser', idValue);
   }
 
-  removeFromLocalStorage() {
-    localStorage.removeItem('currentUser');
-  }
-
   async getUsers() {
     const itemCollection = collection(this.firestore, 'users');
     const usersArray: any[] = [];
@@ -61,6 +57,14 @@ export class UsersFirebaseService {
     return usersArray;
   }
 
+  async getCurrentUser(uid: any) {
+    const itemDoc = doc(this.firestore, 'users', uid);
+    const querySnapshot = await getDoc(itemDoc);
+    const user = this.setUserObject(querySnapshot.data())
+    console.log(user)
+    return user;
+  }
+
   setUserObject(obj: any): User {
     return new UserProfile({
       name: obj.name || '',
@@ -69,8 +73,6 @@ export class UsersFirebaseService {
       photoURL: obj.photoURL || ''
     });
   }
-
-
 
 
   async saveUserPic(image: any) {
