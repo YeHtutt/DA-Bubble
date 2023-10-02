@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 /*import { UserProfile } from '@angular/fire/auth';*/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -15,8 +16,13 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 export class SignUpComponent {
   checked = false;
   user: UserProfile = new UserProfile;
+  sighUpSuccess: boolean | null = null;
 
-  constructor(private authService: AuthenticationService, private router: Router, private usersFbService: UsersFirebaseService, private auth: Auth) {
+  constructor(private authService: AuthenticationService, 
+    private router: Router, 
+    private usersFbService: UsersFirebaseService, 
+    private auth: Auth,
+    private _snackBar: MatSnackBar) {
 
   }
 
@@ -49,18 +55,8 @@ export class SignUpComponent {
 
     this.authService.signUp(name, email, password, this.user)
       .subscribe(() => {
-
-
-
-        //this.usersFbService.saveToLocalStorage(this.auth.currentUser?.uid);
-
-        // this.usersFbService.addUserToFirebase(this.user.toJSON()).then((docId) => {
-        //   //console.log('firestore userId:', docId);
-        //   this.router.navigate([`/choose-avatar`]);
-        // })
-        // .catch((error) => {
-        //   console.error('error of saving users in Firestore:', error);
-        // });
+        this.sighUpSuccess = true;
+        this.openSnackBar();
         setTimeout(() => {
           this.router.navigate([`/choose-avatar`]);
         }, 2000);
@@ -70,6 +66,19 @@ export class SignUpComponent {
   fillUserObject(name: string, email: string) {
     this.user.email = email;
     this.user.name = name;
+  }
+
+
+  openSnackBar() {
+    if(this.sighUpSuccess == true) {
+      this._snackBar.open('Registrierung erfolgreich', 'Undo', {
+        duration: 2000
+      });
+    }else{
+      this._snackBar.open('Registrierung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', 'Undo', {
+        duration: 2000
+      });
+    }
   }
 
 

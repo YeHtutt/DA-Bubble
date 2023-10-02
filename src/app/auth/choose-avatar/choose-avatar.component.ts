@@ -30,7 +30,6 @@ export class ChooseAvatarComponent {
   }
 
   async saveNewPic(image: any) {
-    //console.log(image);
     this.usersfbService.saveUserPic(image);
     setTimeout(() => {
       this.router.navigate(['/login'])
