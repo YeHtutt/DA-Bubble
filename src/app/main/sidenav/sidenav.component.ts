@@ -21,9 +21,11 @@ export class SidenavComponent {
     public directMessageService: DirectMessageService
     ) {}
 
+
     // ngAfterViewInit() {
     //   this.directMessageService.treeControl.expandAll();
     // }
+
 
   toggleExpanded(node: any) {
     // Code to toggle the expanded state of the node

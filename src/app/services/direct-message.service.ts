@@ -3,6 +3,8 @@ import { UserProfile } from '../models/user-profile';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+
 import {
   Firestore, collection,
   doc, onSnapshot,
@@ -35,14 +37,36 @@ interface ExampleFlatNode {
 })
 
 export class DirectMessageService {
-
+  allUsers:any = [];
+  currentUser: UserProfile = new UserProfile;
   messageTree: MessagesNode[] = [];
   themes: any;
   unsubMessage: any;
 
 
-  constructor(public channelService: ChannelService,) {
+  constructor(
+    public channelService: ChannelService,
+    private userService: UsersFirebaseService,
+    ) {
     this.unsubMessage = this.subMessageList();
+  }
+
+
+  //load current user
+  createChat() {
+    this.getCurrentUser();
+    this.getAllUsers();
+  }
+
+
+  getCurrentUser() {
+    this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
+    console.log('chat test:', this.currentUser);
+  }
+
+  async getAllUsers() {
+    this.allUsers = await this.userService.getUsers();
+    console.log('all users:', this.allUsers);
   }
 
 

@@ -77,6 +77,6 @@ export class NewMessageComponent {
   //   if (this.receiver instanceof Channel) {
   //     this.userService.checkIfSubcollectionExists(`channel/${this.receiver.channelId}/channel-message`);
   //     // this.router.navigateByUrl('/main/channel/' + this.receiver.channelId);
-  //   } 
+  //   }
   // }
 }

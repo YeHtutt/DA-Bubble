@@ -9,13 +9,14 @@ import { ChannelService } from 'src/app/services/channel.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-
   id: string = '';
   text: string = '';
-  message: Message = new Message()
+  message: Message = new Message();
   messages$: Observable<any>;
 
-  constructor(private channelService: ChannelService) {
+  constructor(
+    private channelService: ChannelService,
+    ) {
     this.messages$ = this.channelService.getChannelMessages(this.id).pipe(
       map((messages) => {
         return this.sortByDate(messages);
@@ -30,7 +31,7 @@ export class ChatComponent {
     });
   }
 
-  
+
 
   sendMessage() {
     // this.message.username = 'Kevin Ammerman'
