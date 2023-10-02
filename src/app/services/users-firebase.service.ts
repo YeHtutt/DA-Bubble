@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot } from '@angular/fire/firestore';
+import { Injectable, Input } from '@angular/core';
+import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { docData } from 'rxfire/firestore';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 
 interface User {
@@ -20,7 +20,11 @@ export class UsersFirebaseService {
   picURL: any;
   user: UserProfile = new UserProfile;
   id: any;
-  loginID: any;
+
+  @Input() loggedInUserID: any;
+  @Input() loggedInUserImg: any;
+  @Input() loggedInUserName: any;
+
 
   constructor(private firestore: Firestore, private auth: Auth) { }
 
@@ -40,6 +44,10 @@ export class UsersFirebaseService {
 
   saveToLocalStorage(idValue: any) {
     localStorage.setItem('currentUser', idValue);
+  }
+
+  removeFromLocalStorage() {
+    localStorage.removeItem('currentUser');
   }
 
   async getUsers() {
@@ -74,13 +82,28 @@ export class UsersFirebaseService {
     );
   }
 
-  /*
-  getCurrentUser() {
-    const docRef = doc(this.firestore, 'users', 'xzYmGNA9f2PSTIScvGn7');
-    this.loginID = docRef.id; // gibt immer ID vom User zurück
-    this.saveToLocalStorage(this.loginID);
-    //return docData(docRef).pipe(map(data => data as User)); // gibt immer Daten vom Typ User zurück
-  }*/
+
+  async getLoggedInUser(currentUserID: any) {
+    const docRef = doc(this.firestore, 'users', currentUserID);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const userData = docSnap.data(); // Daten aus dem Snapshot abrufen
+      // console.log("Document data:", docSnap.data());
+      console.log("docId:", docSnap.id);
+      console.log("Pic:", userData['photoURL']);
+      console.log("name:", userData['name']);
+      this.loggedInUserID = docSnap.id;
+      this.loggedInUserImg = userData['photoURL'];
+      this.loggedInUserName = userData['name'];
+
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+
 
 }
 

@@ -18,7 +18,9 @@ export class AuthenticationService {
   }
 
   logout() {
-    return from(this.auth.signOut());
+    return from(this.auth.signOut().then(()=> {
+      this.userfbService.removeFromLocalStorage();
+    }));
   }
 
   signUp(name: string, email: string, password: string, newUser: UserProfile) {

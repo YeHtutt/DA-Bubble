@@ -2,7 +2,7 @@ export class UserProfile {
     name: string = '';
     email: string = '';
     id: any;
-    photoURL: any;
+    photoURL: any = 'person.png';
 
     constructor(obj?: any) {
         this.name = obj? obj.name: '';
