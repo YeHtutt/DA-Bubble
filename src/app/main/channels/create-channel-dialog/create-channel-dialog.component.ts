@@ -3,6 +3,8 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -17,25 +19,33 @@ export class CreateChannelDialogComponent {
   constructor(
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UsersFirebaseService
   ) { }
 
   addChannel() {
     if (this.channelNameInput.invalid) {
       this.checkInputLength();
       return;
-    }
+    };
+    /* openDialog(); */
 
+  }
+
+
+  setChannelProperties() {
     let channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
-      creatorId: '',
+      creatorId: this.getCreatorId(),
       createdBy: '',
-    }
+    };
+    console.log(channel);
     this.channelService.addChannel(channel, 'channels');
     this.closeCreateChannelDialog();
   }
+
 
   getCurrentTimestamp() {
     return this.channelService.getDateTime();
@@ -44,6 +54,7 @@ export class CreateChannelDialogComponent {
   closeCreateChannelDialog() {
     this.dialogRef.close();
   }
+
   checkInputLength(): void {
     if (this.channelNameInput.hasError('required')) {
       this.showError('Channel name is required!');
@@ -51,9 +62,16 @@ export class CreateChannelDialogComponent {
       this.showError('Input should have at least 3 letters!');
     }
   }
+
+
+  getCreatorId() {
+    return this.userService.getFromLocalStorage();
+  }
+
+
   showError(message: string): void {
     this.snackBar.open(message, 'Close', {
-      duration: 5000, // 5 seconds
+      duration: 3000,
       panelClass: ['error-snackbar']
     });
   }
