@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 import { Channel } from 'src/app/models/channel';
 import { Message } from 'src/app/models/message';
@@ -29,9 +30,15 @@ export class NewMessageComponent {
   currentUser: UserProfile = new UserProfile;
 
 
-  constructor(private channelService: ChannelService, private userService: UsersFirebaseService, private messageService: MessageService) {
+  constructor(
+    private channelService: ChannelService,
+    private userService: UsersFirebaseService,
+    private messageService: MessageService,
+    private router: Router
+
+  ) {
     this.getUserAndChannelData();
-    this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then( (user: any) => {
+    this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {
       this.currentUser = user;
     });
   }
@@ -53,11 +60,12 @@ export class NewMessageComponent {
 
   sendMessage() {
     this.createMessageObject();
-    console.log(this.search)
     if (this.receiver instanceof UserProfile) {
       this.messageService.uploadMessage('users', this.receiver.id, 'message', this.message);
+      this.router.navigateByUrl('/main/chat/' + this.receiver.id);
     } else {
       this.messageService.uploadMessage('channels', this.receiver.channelId, 'channel-message', this.message);
+      this.router.navigateByUrl('/main/channel/' + this.receiver.channelId);
     }
   }
 
@@ -80,9 +88,22 @@ export class NewMessageComponent {
   }
 
   selectReceiver(receiver: any) {
-    this.search = receiver.name;
+    this.search = receiver.name || receiver.channelName;
     this.receiver = receiver;
     this.filteredChannel = [];
     this.filteredUser = [];
+    // this.checkIfChatAlreadyExists();
   }
+
+  // checkIfChatAlreadyExists() {
+  //   if (this.receiver instanceof UserProfile) {
+  //     this.userService.checkIfSubcollectionExists(`user/${this.receiver.id}/message`);
+  //     // this.router.navigateByUrl('/main/chat/' + this.receiver.id);
+  //     console.log(this.receiver.id)
+  //   }
+  //   if (this.receiver instanceof Channel) {
+  //     this.userService.checkIfSubcollectionExists(`channel/${this.receiver.channelId}/channel-message`);
+  //     // this.router.navigateByUrl('/main/channel/' + this.receiver.channelId);
+  //   } 
+  // }
 }
