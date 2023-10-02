@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Message } from '../models/message';
 
 
 @Injectable({
@@ -13,8 +14,8 @@ export class MessageService {
     return collection(this.firestore, `${type}/${docId}/${typeMessage}`);
   }
 
-  async addMessageToReceiver(type: string, docId: string, typeMessage: string, text: string) {
-    console.log(type, docId, text)
-    // const docRef = addDoc(this.getRefSubcollChannel(type, docId, typeMessage), message);
+  async uploadMessage(type: string, docId: string, typeMessage: string, message: Message) {
+    console.log(type, docId, message)
+    const docRef = addDoc(this.getRefSubcollChannel(type, docId, typeMessage), message.toJSON());
   }
 }

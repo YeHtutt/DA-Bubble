@@ -1,18 +1,15 @@
-export class DirectMessage {    
+import { UserProfile } from "./user-profile";
+
+export class Message {    
     text: string;
     time: any;
-    userId: string;
-    username: string;
-    userEmail: string;
+    user: any[] = [];
     messageId: string;
-    // replies: Reply[];
 
     constructor(obj?: any) {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
-        this.userId = obj ? obj.userId : '';
-        this.username = obj ? obj.username : '';
-        this.userEmail = obj ? obj.userEmail : '';
+        this.user = obj && obj.user ? obj.replies.map((user: any) => new UserProfile({ obj: user })) : [];
         this.messageId = obj ? obj.messageId : '';
       
     }
@@ -21,9 +18,7 @@ export class DirectMessage {
         return {
             text: this.text,
             time: this.time,
-            userId: this.userId,
-            username: this.username,
-            userEmail: this.userEmail,
+            user: this.user.map(user => user.toJSON()),
             messageId: this.messageId,           
         };
     }

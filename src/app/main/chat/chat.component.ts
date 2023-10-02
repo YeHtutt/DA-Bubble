@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Message } from 'src/app/models/channel';
+import { Message } from 'src/app/models/message';
 import { ChannelService } from 'src/app/services/channel.service';
 
 @Component({

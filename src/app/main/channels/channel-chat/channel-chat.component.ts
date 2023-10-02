@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, expand, map } from 'rxjs';
-import { Message } from 'src/app/models/channel';
+
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Message } from 'src/app/models/message';
 
 
 @Component({
@@ -57,11 +58,11 @@ export class ChannelChatComponent implements OnInit {
   }
 
   sendMessage() {
-    this.message.username = 'Kevin Ammerman'
-    this.message.time = new Date();
-    this.message.text = this.text;
-    this.channelService.addMessageToChannel(this.message.toJSON());
-    this.text = '';
+    // this.message.username = 'Kevin Ammerman'
+    // this.message.time = new Date();
+    // this.message.text = this.text;
+    // this.channelService.addMessageToChannel(this.message.toJSON());
+    // this.text = '';
   }
 
 

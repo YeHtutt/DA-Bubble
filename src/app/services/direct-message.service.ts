@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Message } from '../models/channel';
 import { UserProfile } from '../models/user-profile';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FlatTreeControl } from '@angular/cdk/tree';

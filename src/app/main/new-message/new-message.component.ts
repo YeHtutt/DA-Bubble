@@ -1,16 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
-import { Message } from 'src/app/models/channel';
+import { Channel } from 'src/app/models/channel';
+import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ChannelService } from 'src/app/services/channel.service';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+
+
+type ReceiverType = UserProfile | Channel;
 
 @Component({
   selector: 'app-new-message',
   templateUrl: './new-message.component.html',
   styleUrls: ['./new-message.component.scss']
 })
+
 export class NewMessageComponent {
 
   text: string = '';
@@ -20,6 +25,7 @@ export class NewMessageComponent {
   public search: string = '';
   filteredUser: any = [];
   filteredChannel: any = [];
+  receiver: ReceiverType = new UserProfile;
 
 
   constructor(private channelService: ChannelService, private userService: UsersFirebaseService, private messageService: MessageService) {
@@ -42,11 +48,27 @@ export class NewMessageComponent {
   }
 
   sendMessage() {
-    this.message.username = 'Kevin Ammerman'
-    this.message.time = new Date();
-    this.message.text = this.text;
+    // this.message.username = 'Kevin Ammerman'
+    // this.message.time = new Date();
+    // this.message.text = this.text;
     // this.channelService.addMessageToChannel(this.message.toJSON());
-    this.text = '';
+    // this.text = '';
+    this.createMessageObject();
+    console.log(this.search)
+    if (this.receiver instanceof UserProfile) {
+      this.messageService.uploadMessage('users', this.receiver.id, 'message', this.message);
+    } else {
+      this.messageService.uploadMessage('channels', this.receiver.channelId, 'channel-message', this.message);
+    }
+  }
+
+  createMessageObject() {
+    this.message.text = this.text;
+    this.message.time = new Date();
+    this.message.messageId || '';
+    if (this.receiver instanceof UserProfile) {
+      this.message.user.push(this.receiver);
+    }
   }
 
   searchUsersAndChannels() {
@@ -63,11 +85,9 @@ export class NewMessageComponent {
   }
 
   selectReceiver(receiver: any) {
-    console.log(receiver)
-    if (receiver instanceof UserProfile) {
-      this.messageService.addMessageToReceiver('users', receiver.id, 'message', this.text);
-    } else {
-      this.messageService.addMessageToReceiver('channels', receiver.channelId, 'channel-message', this.text);
-    }
+    this.search = receiver.name;
+    this.receiver = receiver;
+    this.filteredChannel = [];
+    this.filteredUser = [];
   }
 }
