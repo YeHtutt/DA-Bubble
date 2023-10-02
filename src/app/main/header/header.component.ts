@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
-    console.log('currentUserID:__', this.userFbService.getFromLocalStorage())
+    //console.log('currentUserID:__', this.userFbService.getFromLocalStorage())
   }
 
   userLoggedout() {

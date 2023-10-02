@@ -31,12 +31,12 @@ export class UsersFirebaseService {
   async addUserToFirebase(user: any, uid: string) {
     try {
       const userRef = doc(this.firestore, 'users', uid);
-      console.log(user)
+      //console.log(user)
       await setDoc(userRef, user);
       //this.saveToLocalStorage(uid);
       this.id = uid;
     } catch (error) {
-      console.error('Error of saving users in Firebase:', error);
+      //console.error('Error of saving users in Firebase:', error);
       throw error;
     }
   }
@@ -52,7 +52,7 @@ export class UsersFirebaseService {
 
   getFromLocalStorage() {
     const currentUser = localStorage.getItem('currentUser');
-    console.log('__:', currentUser)
+    //console.log('__:', currentUser)
     return currentUser;
   }
 
@@ -86,7 +86,7 @@ export class UsersFirebaseService {
   async checkIfSubcollectionExists(documentPath: string): Promise<boolean> {
     const subcollectionRef = collection(this.firestore, documentPath);
     const snapshot = await getDocs(subcollectionRef);
-    console.log(snapshot)
+    //console.log(snapshot)
     return !snapshot.empty;
   }
 
@@ -108,9 +108,9 @@ export class UsersFirebaseService {
     if (docSnap.exists()) {
       const userData = docSnap.data(); // Daten aus dem Snapshot abrufen
       // console.log("Document data:", docSnap.data());
-      console.log("docId:", docSnap.id);
+      /*console.log("docId:", docSnap.id);
       console.log("Pic:", userData['photoURL']);
-      console.log("name:", userData['name']);
+      console.log("name:", userData['name']);*/
       this.loggedInUserID = docSnap.id;
       this.loggedInUserImg = userData['photoURL'];
       this.loggedInUserName = userData['name'];
