@@ -1,5 +1,5 @@
 import { Injectable, Input } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { docData } from 'rxfire/firestore';
@@ -44,6 +44,15 @@ export class UsersFirebaseService {
 
   saveToLocalStorage(idValue: any) {
     localStorage.setItem('currentUser', idValue);
+  }
+
+  removeFromLocalStorage() {
+    localStorage.removeItem('currentUser');
+  }
+
+  getFromLocalStorage() {
+    const currentUser = localStorage.getItem('currentUser');
+    return currentUser;
   }
 
   async getUsers() {
