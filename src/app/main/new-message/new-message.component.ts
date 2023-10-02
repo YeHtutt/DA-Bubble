@@ -26,10 +26,14 @@ export class NewMessageComponent {
   filteredUser: any = [];
   filteredChannel: any = [];
   receiver: ReceiverType = new UserProfile;
+  currentUser: UserProfile = new UserProfile;
 
 
   constructor(private channelService: ChannelService, private userService: UsersFirebaseService, private messageService: MessageService) {
     this.getUserAndChannelData();
+    this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then( (user: any) => {
+      this.currentUser = user;
+    });
   }
 
   async getUserAndChannelData() {
@@ -48,11 +52,6 @@ export class NewMessageComponent {
   }
 
   sendMessage() {
-    // this.message.username = 'Kevin Ammerman'
-    // this.message.time = new Date();
-    // this.message.text = this.text;
-    // this.channelService.addMessageToChannel(this.message.toJSON());
-    // this.text = '';
     this.createMessageObject();
     console.log(this.search)
     if (this.receiver instanceof UserProfile) {
@@ -66,16 +65,12 @@ export class NewMessageComponent {
     this.message.text = this.text;
     this.message.time = new Date();
     this.message.messageId || '';
-    if (this.receiver instanceof UserProfile) {
-      this.message.user.push(this.receiver);
-    }
+    this.message.user.push(this.currentUser);
   }
 
   searchUsersAndChannels() {
     this.filteredUser = this.search && this.usersAndChannels.users.filter((user: object) => this.checkIfIncluded(user, this.search.toLowerCase()));
     this.filteredChannel = this.search && this.usersAndChannels.channels.filter((channel: object) => this.checkIfIncluded(channel, this.search.toLowerCase()));
-    console.log('filteredUser', this.filteredUser)
-    console.log('filteredChannel', this.filteredChannel)
   }
 
   checkIfIncluded(obj: any, search: string) {
