@@ -3,7 +3,7 @@
         <div class="direct_message_info_box">
             <span>Neue Nachricht</span>
             <div class="input_container">
-                <input (keyup)="searchUsersAndChannels()" [(ngModel)]="search"
+                <input (keyup)="searchData()" [(ngModel)]="search"
                     placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
                 <div *ngIf="filteredChannel.length > 0 || filteredUser.length > 0" class="searchOutput">
                     <div class="userBox">
@@ -32,7 +32,7 @@
                 <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
                 <mat-icon class="action_btn_style">alternate_email</mat-icon>
             </div>
-            <button [disabled]="text.length == 0 || search.length <= 0" (click)="sendMessage()"><mat-icon
+            <button [disabled]="text.length == 0 || search.length <= 0" (click)="send()"><mat-icon
                     class="send_btn">send</mat-icon></button>
         </div>
     </div>
