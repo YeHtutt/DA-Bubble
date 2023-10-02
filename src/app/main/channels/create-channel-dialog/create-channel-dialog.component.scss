@@ -1,8 +1,29 @@
+@import "../../../../styles.scss";
+
 .create-channel-container {
     padding: 20px;
+    width: calc(90% - 40px);
+    margin: auto;  
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
+.close-btn {
+    display: flex;
+    align-self: flex-end;
+}
 
+.mat-input {
+    width: 100%;
 
+}
 
+h3 {
+    padding: 10px 0px 10px 0px;
+}
 
+.create-btn {
+    display: flex;
+    align-self: flex-end;
+}

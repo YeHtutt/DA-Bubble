@@ -1,18 +1,19 @@
 <div class="create-channel-container">
-    <button class="basic-button" (click)="closeCreateChannelDialog()"><mat-icon>close</mat-icon></button>
+    <button class="basic-button close-btn" (click)="closeCreateChannelDialog()"><mat-icon>close</mat-icon></button>
     <div>
         <h2>Channel erstellen</h2>
         <div>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum
             Beispiel.
         </div>
         <h3>Channel-Name</h3>
-        <mat-form-field appearance="outline" style="border-radius: 50px;">
+        <mat-form-field appearance="outline" class="mat-input">
             <input [(ngModel)]="channelNameInput" matInput placeholder="# e.g. marketing">
         </mat-form-field>
         <h3>Beschreibung (optional)</h3>
-        <mat-form-field appearance="outline"> <input [(ngModel)]="channelDescription" matInput></mat-form-field>
-        <button mat-fab extended color="primary" (click)="addChannel()">
-            Erstellen
-        </button>
+        <mat-form-field appearance="outline" class="mat-input"> <input [(ngModel)]="channelDescription"
+                matInput></mat-form-field>
     </div>
+    <button class="create-btn" mat-fab extended color="primary" (click)="addChannel()">
+        Erstellen
+    </button>
 </div>
