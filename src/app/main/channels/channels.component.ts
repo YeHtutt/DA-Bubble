@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,7 +10,9 @@ import { ChannelService } from 'src/app/services/channel.service';
   templateUrl: './channels.component.html',
   styleUrls: ['./channels.component.scss']
 })
-export class ChannelsComponent {
+export class ChannelsComponent implements OnInit {
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -17,7 +20,19 @@ export class ChannelsComponent {
   ) { }
 
   ngOnInit() {
+    const sub = this.channelService.dataLoaded.subscribe(loaded => {
+      if (loaded) {
+        this.channelService.treeControl.expandAll();
+      }
+    });
+    this.subscriptions.push(sub);
   }
+
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
 
   openCreateChannelDialog() {
     this.dialog.open(CreateChannelDialogComponent, {
