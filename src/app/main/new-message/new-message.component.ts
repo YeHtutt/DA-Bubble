@@ -3,6 +3,7 @@ import { Observable, map, tap } from 'rxjs';
 import { Message } from 'src/app/models/channel';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ChannelService } from 'src/app/services/channel.service';
+import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class NewMessageComponent {
   filteredChannel: any = [];
 
 
-  constructor(private channelService: ChannelService, private userService: UsersFirebaseService) {
+  constructor(private channelService: ChannelService, private userService: UsersFirebaseService, private messageService: MessageService) {
     this.getUserAndChannelData();
   }
 
@@ -61,7 +62,12 @@ export class NewMessageComponent {
     return isUserMatch || isChannelMatch;
   }
 
-  selectReceiver(receiver: Object) {
+  selectReceiver(receiver: any) {
     console.log(receiver)
+    if (receiver instanceof UserProfile) {
+      this.messageService.addMessageToReceiver('users', receiver.id, 'message', this.text);
+    } else {
+      this.messageService.addMessageToReceiver('channels', receiver.channelId, 'channel-message', this.text);
+    }
   }
 }
