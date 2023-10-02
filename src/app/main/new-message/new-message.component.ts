@@ -88,7 +88,7 @@ export class NewMessageComponent {
   }
 
   selectReceiver(receiver: any) {
-    this.search = receiver.name;
+    this.search = receiver.name || receiver.channelName;
     this.receiver = receiver;
     this.filteredChannel = [];
     this.filteredUser = [];
