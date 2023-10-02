@@ -45,6 +45,7 @@ export class LoginComponent {
 
         if (user) {
           this.usersFbService.getLoggedInUser(user.uid);
+          this.usersFbService.saveToLocalStorage(user.uid);
           this.router.navigate([`/main`]);
         } else {
           console.error('user is null.');
@@ -71,6 +72,7 @@ export class LoginComponent {
       const user = this.authService.getCurrentUser();
       if (user) {
         this.usersFbService.getLoggedInUser(user.uid);
+        this.usersFbService.saveToLocalStorage(user.uid);
         this.router.navigate([`/main`]);
       } else {
         console.error('user is null.');

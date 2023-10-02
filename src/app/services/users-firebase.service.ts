@@ -33,7 +33,7 @@ export class UsersFirebaseService {
       const userRef = doc(this.firestore, 'users', uid);
       console.log(user)
       await setDoc(userRef, user);
-      this.saveToLocalStorage(uid);
+      //this.saveToLocalStorage(uid);
       this.id = uid;
     } catch (error) {
       console.error('Error of saving users in Firebase:', error);
@@ -52,6 +52,7 @@ export class UsersFirebaseService {
 
   getFromLocalStorage() {
     const currentUser = localStorage.getItem('currentUser');
+    console.log('__:', currentUser)
     return currentUser;
   }
 
