@@ -14,6 +14,7 @@ import {
 } from '@angular/fire/firestore';
 
 
+//interfaces for mat tree
 interface MessagesNode {
   name: string;
   id: any;
@@ -44,6 +45,8 @@ export class DirectMessageService {
     this.unsubMessage = this.subMessageList();
   }
 
+
+  //the following functions are for rendering the contacts in sidenav with in a mat tree
   private _transformer = (node: MessagesNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
