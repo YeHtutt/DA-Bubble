@@ -18,6 +18,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBarModule, matSnackBarAnimations } from '@angular/material/snack-bar';
+
+
 
 /* Firestore */
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -49,7 +52,6 @@ import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.compon
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
-import { ErrorHandlingComponent } from './error-handling/error-handling.component';
 import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
 
 
@@ -72,8 +74,7 @@ import { UserProfileViewComponent } from './main/user-profile-view/user-profile-
     ChooseAvatarComponent,
     ForgetPasswordComponent,
     StartAnimationComponent,
-    ChannelMenuComponent,
-    ErrorHandlingComponent,
+    ChannelMenuComponent,   
     UserProfileViewComponent,
     ChannelMenuComponent
 
@@ -102,6 +103,7 @@ import { UserProfileViewComponent } from './main/user-profile-view/user-profile-
     MatMenuModule,
     MatDividerModule,
     AngularFireAuthModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
