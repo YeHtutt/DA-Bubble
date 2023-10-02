@@ -9,8 +9,7 @@ import { map } from 'rxjs';
 interface User {
   name: string;
   email: string;
-  docId?: string;
-  uid?: string;
+  id?: string;
   photoURL?: string;
 }
 
@@ -48,18 +47,17 @@ export class UsersFirebaseService {
     const usersArray: any[] = [];
     const querySnapshot = await getDocs(itemCollection);
     querySnapshot.forEach(doc => {
-      const users = this.setUserObject(doc.data(), doc.id);
+      const users = this.setUserObject(doc.data());
       usersArray.push(users);
     });
     return usersArray;
   }
 
-  setUserObject(obj: any, id: string): User {
+  setUserObject(obj: any): User {
     return new UserProfile({
       name: obj.name || '',
       email: obj.email || '',
-      docId: id || '',
-      uid: obj.id || '',
+      id: obj.id || '',
       photoURL: obj.photoURL || ''
     });
   }
