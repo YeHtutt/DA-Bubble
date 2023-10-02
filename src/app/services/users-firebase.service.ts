@@ -62,7 +62,6 @@ export class UsersFirebaseService {
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
-    console.log(user)
     return user;
   }
 
@@ -73,6 +72,13 @@ export class UsersFirebaseService {
       id: obj.id || '',
       photoURL: obj.photoURL || ''
     });
+  }
+
+  async checkIfSubcollectionExists(documentPath: string): Promise<boolean> {
+    const subcollectionRef = collection(this.firestore, documentPath);
+    const snapshot = await getDocs(subcollectionRef);
+    console.log(snapshot)
+    return !snapshot.empty;
   }
 
 
