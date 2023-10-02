@@ -11,21 +11,24 @@
                 <mat-icon matIconPrefix><img src="./assets/img/person.png"></mat-icon>
                 <input matInput placeholder="Name und Nachname" formControlName="name" type="text" style="
                 color: black !important;">
-                <mat-error>name eingeben</mat-error>
+                <mat-error *ngIf="signUpForm.get('name')?.hasError('required')">Name eingeben</mat-error>
+                <mat-error *ngIf="signUpForm.get('name')?.hasError('minlength')">Mindestens 3 Zeichen eingeben</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
                 <input matInput placeholder="beispiel@email.com" formControlName="email" type="email" style="
                 color: black !important;">
-                <mat-error>email eingeben</mat-error>
+                <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">Email eingeben</mat-error>
+                <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
                 <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
-                <mat-error>password eingeben</mat-error>
+                <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">Password eingeben</mat-error>
+                <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">Mindestens 6 Zeichen eingeben</mat-error>
             </mat-form-field>
 
             <section class="sectionCheckbox">

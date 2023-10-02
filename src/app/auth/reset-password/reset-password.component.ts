@@ -1,7 +1,21 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+
+export function passwordsMatchValidator(): ValidatorFn {
+  return ( control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    if(password && confirmPassword && password !== confirmPassword){
+      return {
+        passwordsDontMatch: true
+      };
+    }
+    return null;
+  }
+}
 
 @Component({
   selector: 'app-reset-password',
@@ -24,9 +38,9 @@ export class ResetPasswordComponent {
     private route: ActivatedRoute
   ) {
     this.resetPasswordForm = this.formBuilder.group({
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-    });
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+    }, {validators: passwordsMatchValidator()});
 
     this.route.queryParams.subscribe(params => {
       this.oobCode = params['oobCode'];

@@ -1,20 +1,28 @@
 <div class="userProfileViewContainer">
     <div class="profileViewHeader">
-        <h2 mat-dialog-title>Profile</h2>
-        <mat-icon>close</mat-icon>
+        <div mat-dialog-title>Profile</div>
+        <mat-icon (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
     </div>
     <div class="profileViewImg">
-        <img class="profileImg" src="../assets/img/avatar/avatar1.png" />
+        <img class="profileImg" src="../assets/img/avatar/{{ this.userFbService.loggedInUserImg }}" />
     </div>
     <div class="profileViewName">
-        <h1>Elise Roth</h1>
-        <p>Abwesend</p>
+        <div> {{ this.userFbService.loggedInUserName }} </div>
+        <div class="flexRow">
+            <img src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID">
+            <p *ngIf="this.userFbService.loggedInUserID">Anwesend</p>
+            <img src="assets/img/Offline.png" *ngIf="!this.userFbService.loggedInUserID">
+            <p *ngIf="!this.userFbService.loggedInUserID">Abwesend</p>
+        </div>
     </div>
     <div class="profileViewEmail">
         <p><img src="assets/img/mail.png">E-Mail-Adresse</p>
-        <a>rothelise@beispiel.com</a>
+        <a href=""> {{this.userFbService.loggedInUserEmail}} </a>
     </div>
     <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="" cdkFocusInitial>Nachricht</button>
+        <button mat-button [mat-dialog-close]="">
+            <mat-icon>mode_comment</mat-icon>
+            Nachricht
+        </button>
     </div>
 </div>
