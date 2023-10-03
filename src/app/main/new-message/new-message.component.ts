@@ -58,7 +58,7 @@ export class NewMessageComponent {
     const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
-    console.log(this.filteredChannel)
+    console.log(this.filteredChannel);
   }
 
   selectReceiver(receiver: any) {
