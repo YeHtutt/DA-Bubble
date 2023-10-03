@@ -111,17 +111,19 @@ header {
 
 // SEARCH 
 
-.searchOutput {
+.searchOutputHeader {
   position: absolute;
   left: 0;
   top: 40px;
   z-index: 5;
   width: calc(100% - 41.5px);
-  height: 300px;
+  height: fit-content;
+  max-height: 300px;
   box-shadow: 0 4px 8px #0000004d;
   background-color: white;
   border-radius: 30px;
   padding: 20px;
+  overflow-y: scroll;
 
 
   img {
@@ -147,7 +149,9 @@ header {
 
   span {
     display: flex;
+    align-items: center;
     gap: 28px;
+    font-size: 18px;
   }
 }
 
@@ -155,6 +159,7 @@ header {
   display: flex;
   align-items: center;
   gap: 16px;
+  font-size: 18px;
 }
 
 .user,
@@ -166,8 +171,4 @@ header {
   &:hover {
     background-color: #ECEEFE;
   }
-}
-
-.searchOutput {
-  overflow-y: scroll;
 }

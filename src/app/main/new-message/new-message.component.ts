@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 import { Channel } from 'src/app/models/channel';
@@ -29,6 +29,7 @@ export class NewMessageComponent {
   filteredChannel: any = [];
   receiver: ReceiverType = new UserProfile;
   currentUser: UserProfile = new UserProfile;
+  searchOutput: boolean = false;
 
 
   constructor(
@@ -37,12 +38,12 @@ export class NewMessageComponent {
     private searchService: SearchService
 
   ) {
-    this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
   send() {
     this.createMessageObject();
-    this.messageService.sendMessage(this.message, this.receiver)
+    this.messageService.sendMessage(this.message, this.receiver, true)
   }
 
   createMessageObject() {
@@ -57,7 +58,7 @@ export class NewMessageComponent {
     const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
-    console.log(this.filteredChannel)
+    console.log(this.filteredChannel);
   }
 
   selectReceiver(receiver: any) {
@@ -66,6 +67,18 @@ export class NewMessageComponent {
     this.filteredChannel = [];
     this.filteredUser = [];
     // this.checkIfChatAlreadyExists();
+  }
+
+  toggleSearchOutput() {
+    this.searchOutput = !this.searchOutput;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('input') && !target.closest('.searchOutput')) {
+      this.searchOutput = false;
+    }
   }
 
   // checkIfChatAlreadyExists() {

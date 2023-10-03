@@ -118,12 +118,13 @@ main {
     position: absolute;
     left: 0;
     width: 100%;
-    height: 300px;
+    height: fit-content;
+    max-height: 300px;
     box-shadow: 0 4px 8px #0000004d;
     background-color: white;
     border-radius: 30px;
     padding: 20px;
-
+    overflow-y: scroll;
 
     img {
         width: 40px;
@@ -149,6 +150,7 @@ main {
     span {
         display: flex;
         gap: 28px;
+        align-items: center;
     }
 }
 
@@ -167,8 +169,4 @@ main {
     &:hover {
         background-color: #ECEEFE;
     }
-}
-
-.searchOutput {
-    overflow-y: scroll;
 }

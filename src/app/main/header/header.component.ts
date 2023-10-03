@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   filteredUser: any = [];
   filteredChannel: any = [];
   usersAndChannels: any = [];
+  searchOutput: boolean = false;
 
   constructor(private authService: AuthenticationService, 
     private afAuth: AngularFireAuth,
@@ -55,6 +56,18 @@ export class HeaderComponent implements OnInit {
     const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
+  }
+
+  toggleSearchOutput() {
+    this.searchOutput = !this.searchOutput;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
+      this.searchOutput = false;
+    }
   }
 
   openProfil(user: UserProfile) {

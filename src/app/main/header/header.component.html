@@ -2,9 +2,9 @@
   <div class="logo-search-box">
     <img class="logo" src="../assets/img/logo+text.png">
     <div class="search-box">
-      <input (keyup)="searchData()" [(ngModel)]="search" placeholder="Code learning durchsuchen">
+      <input (click)="toggleSearchOutput()" (keyup)="searchData()" [(ngModel)]="search" placeholder="Code learning durchsuchen">
       <img src="../assets/img/search.png">
-      <div *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
+      <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutputHeader">
         <div class="userBox" *ngIf="filteredUser.length > 0">
           <div class="user" *ngFor="let user of filteredUser" (click)="openProfil(user)">
             <img src="assets/img/avatar/{{user.photoURL}}" alt="">
