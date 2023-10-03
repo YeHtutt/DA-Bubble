@@ -178,7 +178,10 @@ export class ChannelService {
   }
 
 
+  deleteChannel(channelId: string) {
+    
 
+  }
 
   /*
     subMessageList() {

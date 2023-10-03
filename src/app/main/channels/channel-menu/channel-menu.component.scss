@@ -1,9 +1,34 @@
 @import "../../../../styles.scss";
 
+.channel-name-border {
+    border: solid 1px #ADB0D9;
+    border-radius: 20px;
+}
 
+.create-channel-container {
+    padding: 20px;
+    width: calc(90% - 40px);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
 
-.edit-btn {
-    border: none;
-    background-color: transparent;
-    color: $accent-color;
+.close-btn {
+    display: flex;
+    align-self: flex-end;
+}
+
+.mat-input {
+    width: 100%;
+
+}
+
+h3 {
+    padding: 10px 0px 10px 0px;
+}
+
+.create-btn {
+    display: flex;
+    align-self: flex-end;
 }

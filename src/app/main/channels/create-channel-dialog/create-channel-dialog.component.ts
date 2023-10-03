@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -19,13 +18,13 @@ export class CreateChannelDialogComponent {
   constructor(
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
-    private snackBar: MatSnackBar,
+    public utilsService: UtilsService,   
     private userService: UsersFirebaseService
   ) { }
 
   addChannel() {
     if (this.channelNameInput.invalid) {
-      this.checkInputLength();
+      this.utilsService.checkInputLength(this.channelNameInput);
       return;
     };
     /* openDialog(); */
@@ -55,13 +54,7 @@ export class CreateChannelDialogComponent {
     this.dialogRef.close();
   }
 
-  checkInputLength(): void {
-    if (this.channelNameInput.hasError('required')) {
-      this.showError('Channel name is required!');
-    } else if (this.channelNameInput.hasError('minlength')) {
-      this.showError('Input should have at least 3 letters!');
-    }
-  }
+ 
 
 
   getCreatorId() {
@@ -69,10 +62,5 @@ export class CreateChannelDialogComponent {
   }
 
 
-  showError(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      panelClass: ['error-snackbar']
-    });
-  }
+
 }

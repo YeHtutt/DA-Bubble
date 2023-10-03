@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './channels.component.html',
   styleUrls: ['./channels.component.scss']
 })
-export class ChannelsComponent implements OnInit {
+export class ChannelsComponent {
 
   private subscriptions: Subscription[] = [];
 

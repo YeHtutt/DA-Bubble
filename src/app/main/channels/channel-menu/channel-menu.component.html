@@ -1,16 +1,29 @@
 <div>{{channel.channelName}}</div><button class="edit-btn">bearbeiten</button>
 <div>{{channel.channelDescription}}</div><button class="edit-btn">bearbeiten</button>
+<div class="create-channel-container">
+    <button class="basic-button close-btn" (click)="closeCreateChannelDialog()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="channel-name-border">
+        <h3>Channel-Name</h3>
+        <mat-form-field appearance="outline" class="mat-input">
+            <input [formControl]="channelNameInput" matInput placeholder="# e.g. marketing"
+                (blur)="this.utilsService.checkInputLength(this.channelNameInput)">
+        </mat-form-field>
+    </div>
+    <div>
+        <h3>Beschreibung (optional)</h3>
+        <mat-form-field appearance="outline" class="mat-input">
+            <input [formControl]="channelDescriptionInput" matInput>
+        </mat-form-field>
+    </div>
 
-
-
-
-<button mat-fab extended color="primary" (click)="leaveChannel()">
-    Channel verlassen
-</button>
-<button mat-fab extended color="warn" (click)="deleteChannel()">
-    Channel löschen
-</button>
-
-<button mat-fab extended color="primary" (click)="leaveChannel()">
-    Speichern
-</button>
+    <div>
+        <button mat-fab extended color="primary" (click)="leaveChannel()">
+            Channel verlassen
+        </button>
+        <button mat-fab extended color="warn" (click)="deleteChannel()">
+            Channel löschen
+        </button>
+    </div>
+</div>
