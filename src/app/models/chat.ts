@@ -1,6 +1,6 @@
 export class Chat {
   name: string;
-  chatId: number;
+  chatId: any;
 
 
   constructor(obj?: any) {

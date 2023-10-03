@@ -61,9 +61,9 @@ export class DirectMessageService {
   }
 
 
-  //load current user
-  createChat() {
-    this.getCurrentUser();
+  //load all data and create current chat
+  async createChat() {
+    await this.getCurrentUser();
     this.getAllUsers();
     this.getAllChats();
     this.getCurrentChat();
@@ -71,26 +71,26 @@ export class DirectMessageService {
 
 
   async getCurrentUser() {
-    await this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
-    console.log('chat test:', this.currentUser);
+      await this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {
+      this.currentUser = user;
+    });
   }
 
   async getAllUsers() {
     this.allUsers = await this.userService.getUsers();
-    console.log('all users:', this.allUsers);
   }
 
 
-
   async getAllChats() {
-    const itemCollection = collection(this.firestore, 'users/' + this.currentUser.id);
+    const itemCollection = collection(this.firestore, 'users/' + this.currentUser.id, '/chats');
     const chatsArray: any[] = [];
     const querySnapshot = await getDocs(itemCollection);
     querySnapshot.forEach(doc => {
       const chats = this.setChatObject(doc.data());
       chatsArray.push(chats);
-      console.log('alle chats:', chatsArray);
+      this.allChats = chatsArray;
     });
+    console.log('alle chats:', this.allChats);
     return chatsArray;
   }
 
@@ -103,19 +103,25 @@ export class DirectMessageService {
   }
 
 
-
   getCurrentChat() {
     // this.route.paramMap.subscribe(async (params) => {
     //   this.chatId = params.get('userId');
     //   console.log('chatid:', this.chatId);
 
-    //   Using the service method to fetch the document data
+      //Using the service method to fetch the document data
     //   this.channelService.getDocData('users/message/' + this.currentUser.id, this.chatId).then(chatData => {
     //     this.currentChat = chatData;
     //     console.log('aktueller chat:,', this.currentChat);
     //   }).catch(err => {
     //     console.error("Error fetching channel data:", err);
     //   });
+    // });
+
+    // this.channelService.getDocData('users/' + this.currentUser.id, this.currentUser.id).then(chatData => {
+    //   this.currentChat = chatData;
+    //   console.log('aktueller chat:,', this.currentChat);
+    // }).catch(err => {
+    //   console.error("Error fetching channel data:", err);
     // });
   }
 
