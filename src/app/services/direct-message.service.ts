@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserProfile } from '../models/user-profile';
+import { Chat } from '../models/chat';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ActivatedRoute } from '@angular/router';
+
 import {
   Firestore, collection,
   doc, onSnapshot,
-  addDoc, getDoc, updateDoc,
+  addDoc, getDoc, getDocs, updateDoc,
   deleteDoc, orderBy,
   where, query,
   limit,
@@ -14,6 +18,8 @@ import {
 } from '@angular/fire/firestore';
 
 
+
+//interfaces for mat tree
 interface MessagesNode {
   name: string;
   id: any;
@@ -34,16 +40,99 @@ interface ExampleFlatNode {
 })
 
 export class DirectMessageService {
+  firestore: Firestore = inject(Firestore);
 
+  allUsers:any = [];
+  allChats:any = [];
+  currentUser: UserProfile = new UserProfile;
+  currentChat: any;
+  chatId: any = '';
   messageTree: MessagesNode[] = [];
   themes: any;
   unsubMessage: any;
 
 
-  constructor(public channelService: ChannelService,) {
+  constructor(
+    public channelService: ChannelService,
+    private userService: UsersFirebaseService,
+    private route: ActivatedRoute
+    ) {
     this.unsubMessage = this.subMessageList();
   }
 
+
+  //load all data and create current chat
+  async createChat() {
+    await this.getCurrentUser();
+    this.getAllUsers();
+    this.getAllChats();
+    this.getCurrentChat();
+  }
+
+
+  async getCurrentUser() {
+      await this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {
+      this.currentUser = user;
+    });
+  }
+
+  async getAllUsers() {
+    this.allUsers = await this.userService.getUsers();
+  }
+
+
+  async getAllChats() {
+    const itemCollection = collection(this.firestore, 'users/' + this.currentUser.id, '/chats');
+    const chatsArray: any[] = [];
+    const querySnapshot = await getDocs(itemCollection);
+    querySnapshot.forEach(doc => {
+      const chats = this.setChatObject(doc.data());
+      chatsArray.push(chats);
+      this.allChats = chatsArray;
+    });
+    console.log('alle chats:', this.allChats);
+    return chatsArray;
+  }
+
+
+  setChatObject(obj: any): Chat {
+    return new Chat({
+      name: obj.name || '',
+      chatId: obj.chatId || ''
+    });
+  }
+
+
+  getCurrentChat() {
+    // this.route.paramMap.subscribe(async (params) => {
+    //   this.chatId = params.get('userId');
+    //   console.log('chatid:', this.chatId);
+
+      //Using the service method to fetch the document data
+    //   this.channelService.getDocData('users/message/' + this.currentUser.id, this.chatId).then(chatData => {
+    //     this.currentChat = chatData;
+    //     console.log('aktueller chat:,', this.currentChat);
+    //   }).catch(err => {
+    //     console.error("Error fetching channel data:", err);
+    //   });
+    // });
+
+    // this.channelService.getDocData('users/' + this.currentUser.id, this.currentUser.id).then(chatData => {
+    //   this.currentChat = chatData;
+    //   console.log('aktueller chat:,', this.currentChat);
+    // }).catch(err => {
+    //   console.error("Error fetching channel data:", err);
+    // });
+  }
+
+
+
+  getSingleDocRef(col: string, docId: string) {
+    return doc(collection(this.firestore, col), docId)
+  }
+
+
+  //the following functions are for rendering the contacts in sidenav with in a mat tree
   private _transformer = (node: MessagesNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,

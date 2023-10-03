@@ -21,12 +21,16 @@
       </div>
     </div>
   </div>
-  <div class="profil-box" *ngIf="this.userFbService.loggedInUserImg">
+  <div class="profil-box" *ngIf="this.userFbService.loggedInUserID">
     <span class="profil-name">{{ this.userFbService.loggedInUserName}}</span>
-    <img class="avatar" src="../assets/img/avatar/{{ this.userFbService.loggedInUserImg }}"
-      style="background-color: lightgray; border-radius: 100%;">
-    <button mat-icon-button [matMenuTriggerFor]="menu"><img class="arrow-down"
-        src="../assets/img/arrow-down.png"></button>
+    <div class="alignRight" style="position: relative;">
+      <img class="avatar" src="../assets/img/avatar/{{ this.userFbService.loggedInUserImg }}">
+      <img class="status" src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID" style="position: absolute !important;
+      bottom: 2px !important;
+      right: 5px !important;">
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <img class="arrow-down" src="../assets/img/arrow-down.png"></button>
   </div>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="openUserProfile()">

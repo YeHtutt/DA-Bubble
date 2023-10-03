@@ -13,16 +13,19 @@
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
-                <input matInput formControlName="email" placeholder="beispiel@email.com" type="email" style="
-                color: black !important;">
-                <mat-error>email eingeben</mat-error>
+                <input matInput formControlName="email" placeholder="beispiel@email.com" type="email"
+                    style="color: black !important;">
+                <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email eingeben</mat-error>
+                <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
                 <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
-                <mat-error>password eingeben</mat-error>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password eingeben</mat-error>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Mindestens 6 Zeichen
+                    eingeben</mat-error>
             </mat-form-field>
 
             <div class="forgetPassword">
@@ -46,7 +49,8 @@
 
 
             <div class="buttonBox">
-                <button type="submit" class="loginBtn">Anmelden</button>
+                <button type="submit" class="loginBtn"
+                    [disabled]="loginForm.invalid">Anmelden</button>
                 <button class="guestLoginBtn" (click)="loginAsGuest()">Gäste Login</button>
             </div>
 
@@ -62,4 +66,5 @@
         <div routerLink="/impressum">Impressum</div>
         <div>Datenschutz</div>
     </div>
+
 </div>

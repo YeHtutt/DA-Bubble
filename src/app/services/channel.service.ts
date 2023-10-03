@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Channel } from '../models/channel';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { BehaviorSubject } from 'rxjs';
 import {
   Firestore, collection,
   doc, onSnapshot,
@@ -132,11 +133,11 @@ export class ChannelService {
     node => node.children,
   );
 
-
-
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  public dataLoaded = new BehaviorSubject<boolean>(false);
+
 
   subChannelList() {
     return this.unsubChannelTree = onSnapshot(this.getRef('channels'), (list: any) => {
@@ -147,6 +148,7 @@ export class ChannelService {
       });
       this.themes = [{ channelName: 'Channels', children: this.channelTree }];
       this.dataSource.data = this.themes;
+      this.dataLoaded.next(true);  // Emit event when data is loaded
     });
   }
 
