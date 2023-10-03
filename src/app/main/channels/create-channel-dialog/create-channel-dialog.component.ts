@@ -18,7 +18,7 @@ export class CreateChannelDialogComponent {
   constructor(
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
-    public utilsService: UtilsService,   
+    public utilsService: UtilsService,
     private userService: UsersFirebaseService
   ) { }
 
@@ -27,24 +27,28 @@ export class CreateChannelDialogComponent {
       this.utilsService.checkInputLength(this.channelNameInput);
       return;
     };
-    /* openDialog(); */
-
+    this.setChannelProperties();
   }
 
 
-  setChannelProperties() {
+  async setChannelProperties() {
     let channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
       creatorId: this.getCreatorId(),
+      channelId: '',
       createdBy: '',
     };
-    console.log(channel);
-    this.channelService.addChannel(channel, 'channels');
+
+    const channelId = await this.channelService.addChannel(channel, 'channels');
+    if (channelId) {
+      channel['channelId'] = channelId; // Add the ID to the channel object
+      console.log(channel);
+    }
+
     this.closeCreateChannelDialog();
   }
-
 
   getCurrentTimestamp() {
     return this.channelService.getDateTime();
@@ -54,7 +58,7 @@ export class CreateChannelDialogComponent {
     this.dialogRef.close();
   }
 
- 
+
 
 
   getCreatorId() {

@@ -59,10 +59,15 @@ export class ChannelService {
 
   }
 
-  async addChannel(item: {}, ref: string) {
-    await addDoc(this.getRef(ref), item)
-      .catch((err) => { console.log(err) })
-      .then((docRef: any) => { console.log("Document written with ID", docRef?.id) })
+  async addChannel(item: {}, ref: string): Promise<string | null> {
+    try {
+      const docRef = await addDoc(this.getRef(ref), item);
+      console.log("Document written with ID", docRef.id);
+      return docRef.id;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
@@ -179,7 +184,7 @@ export class ChannelService {
 
 
   deleteChannel(channelId: string) {
-    
+
 
   }
 
