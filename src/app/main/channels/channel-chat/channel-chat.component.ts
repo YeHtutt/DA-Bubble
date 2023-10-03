@@ -69,8 +69,8 @@ export class ChannelChatComponent implements OnInit {
 
   openChannelMenu() {
     this.dialog.open(ChannelMenuComponent, {
-      width: '880px',
-      height: '514px',
+      width: '872px',
+      height: '616px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
       data: { channel: this.channel }

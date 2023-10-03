@@ -26,15 +26,24 @@ export class ChannelMenuComponent {
 
   channel = this.data.channel;
   currentUserId: string | null = '';
-
+  isEditing = false;
   channelNameInput = new FormControl(this.channel.channelName);
   channelDescriptionInput = new FormControl(this.channel.description);
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
 
   ngOnInit() {
     console.log(this.channel)
     this.currentUserId = this.userService.getFromLocalStorage()
   }
 
+  isOutlineVisible = true;
+
+  toggleOutline() {
+    this.isOutlineVisible = !this.isOutlineVisible;
+  }
 
   closeCreateChannelDialog() {
     this.dialogRef.close();
