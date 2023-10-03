@@ -29,9 +29,7 @@ export class HeaderComponent implements OnInit {
     public userFbService: UsersFirebaseService, 
     private auth: Auth,
     private searchService: SearchService
-    ) {
-      this.searchService.getUserAndChannelData().then((searchData: any) => {this.usersAndChannels = searchData});
-  }
+    ) {}
 
   
   ngOnInit(): void {
@@ -53,8 +51,8 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  searchData() {
-    const searchResult = this.searchService.searchUsersAndChannels(this.search, this.usersAndChannels)
+  async searchData() {
+    const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
   }

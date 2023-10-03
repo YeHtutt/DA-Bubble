@@ -37,7 +37,6 @@ export class NewMessageComponent {
     private searchService: SearchService
 
   ) {
-    this.searchService.getUserAndChannelData().then((searchData: any) => {this.usersAndChannels = searchData});
     this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
   }
 
@@ -54,10 +53,11 @@ export class NewMessageComponent {
   }
 
 
-  searchData() {
-    const searchResult = this.searchService.searchUsersAndChannels(this.search, this.usersAndChannels)
+  async searchData() {
+    const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
+    console.log(this.filteredChannel)
   }
 
   selectReceiver(receiver: any) {

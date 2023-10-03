@@ -5,7 +5,7 @@
             <div class="input_container">
                 <input (keyup)="searchData()" [(ngModel)]="search"
                     placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
-                <div *ngIf="filteredChannel.length > 0 || filteredUser.length > 0" class="searchOutput">
+                <div *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
                     <div class="userBox">
                         <h3 class="headline" *ngIf="filteredUser.length > 0">User</h3>
                         <div class="user" *ngFor="let user of filteredUser" (click)="selectReceiver(user)">
