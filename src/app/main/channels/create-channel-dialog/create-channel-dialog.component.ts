@@ -31,24 +31,19 @@ export class CreateChannelDialogComponent {
   }
 
 
-  async setChannelProperties() {
+  setChannelProperties() {
     let channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
       creatorId: this.getCreatorId(),
-      channelId: '',
       createdBy: '',
     };
-
-    const channelId = await this.channelService.addChannel(channel, 'channels');
-    if (channelId) {
-      channel['channelId'] = channelId; // Add the ID to the channel object
-      console.log(channel);
-    }
-
+    console.log(channel);
+    this.channelService.addChannel(channel, 'channels');
     this.closeCreateChannelDialog();
   }
+
 
   getCurrentTimestamp() {
     return this.channelService.getDateTime();

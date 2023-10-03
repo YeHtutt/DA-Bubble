@@ -59,14 +59,15 @@ export class ChannelService {
 
   }
 
-  async addChannel(item: {}, ref: string): Promise<string | null> {
+  async addChannel(item: {}, ref: string) {
     try {
       const docRef = await addDoc(this.getRef(ref), item);
       console.log("Document written with ID", docRef.id);
-      return docRef.id;
+
+      // Update the document with the ID
+      await updateDoc(docRef, { channelId: docRef.id });
     } catch (err) {
       console.log(err);
-      return null;
     }
   }
 
@@ -157,7 +158,15 @@ export class ChannelService {
     });
   }
 
-
+  async updateChannel(channel: Channel) {
+    if (channel.channelId) {
+      const docRef = this.getSingleDocRef('channels', channel.channelId);
+      const updatedChannelData = this.setChannelContentObj(channel, channel.channelId);
+      await updateDoc(docRef, updatedChannelData as any);
+    } else {
+      console.error("Channel ID is missing");
+    }
+  }
 
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
@@ -188,36 +197,6 @@ export class ChannelService {
 
   }
 
-  /*
-    subMessageList() {
-      return this.unsubMessage = onSnapshot(this.getRef('directMessages'), (list: any) => {
-        this.messageTree = [];
-        list.forEach((element: any) => {
-          const messageObj = this.setMessageObj(element.data(), element.id);
-          this.messageTree.push(messageObj);
-        });
-        this.themes = [{ channelName: 'directMessages', children: this.messageTree }];
-        this.dataSource.data = this.themes;
-      });
-    }
-  
-  setMessageObj(obj: any, docId: string): MessagesNode {
-      return new Message({
-        MessageId: docId,
-        users: obj.users,
-        description: obj.description,
-        creationTime: obj.creationTime,
-        createdBy: obj.createdBy,
-        children: []
-      });
-    } */
-
-
-
-
-  /*   addChannel(newChannel: string, collection: string)  {
-      newChannel.toJSON(collection)
-    } */
 
   getDateTime() {
     let dateTime = new Date();
@@ -244,5 +223,4 @@ export class ChannelService {
     });
     return channelArray;
   }
-
 }
