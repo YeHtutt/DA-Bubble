@@ -54,6 +54,7 @@ export class ChatComponent {
     console.log(this.currentUser)
     this.createMessageObject();
     this.messageService.sendMessage(this.message, this.receiver, false);
+    this.message = new Message();
   }
 
   createMessageObject() {

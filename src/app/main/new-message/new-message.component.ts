@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 import { Channel } from 'src/app/models/channel';
@@ -29,6 +29,7 @@ export class NewMessageComponent {
   filteredChannel: any = [];
   receiver: ReceiverType = new UserProfile;
   currentUser: UserProfile = new UserProfile;
+  searchOutput: boolean = false;
 
 
   constructor(
@@ -37,7 +38,7 @@ export class NewMessageComponent {
     private searchService: SearchService
 
   ) {
-    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
   send() {
@@ -66,6 +67,18 @@ export class NewMessageComponent {
     this.filteredChannel = [];
     this.filteredUser = [];
     // this.checkIfChatAlreadyExists();
+  }
+
+  toggleSearchOutput() {
+    this.searchOutput = !this.searchOutput;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('input') && !target.closest('.searchOutput')) {
+      this.searchOutput = false;
+    }
   }
 
   // checkIfChatAlreadyExists() {
