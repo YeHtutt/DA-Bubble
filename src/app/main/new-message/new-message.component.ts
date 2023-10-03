@@ -37,7 +37,7 @@ export class NewMessageComponent {
     private searchService: SearchService
 
   ) {
-    this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
   }
 
   send() {

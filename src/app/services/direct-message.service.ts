@@ -71,7 +71,7 @@ export class DirectMessageService {
 
 
   async getCurrentUser() {
-      await this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {
+      await this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => {
       this.currentUser = user;
     });
   }

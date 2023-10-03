@@ -64,7 +64,7 @@ export class UsersFirebaseService {
     return usersArray;
   }
 
-  async getCurrentUser(uid: any) {
+  async getUser(uid: any) {
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())

@@ -24,15 +24,14 @@ export class ChatComponent {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService
-    ) {
-      this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
-      this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.receiver = user});
-    }
+  ) {
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
-       this.userId = params.get('id');
-      
+      this.userId = params.get('id');
+      this.userService.getUser(this.userId).then((user: any) => { this.receiver = user });
       this.messages$ = this.messageService.getChannelMessages('users', this.userId, 'message').pipe(
         map((messages) => {
           if (messages.length > 0) this.chatExists = true;
