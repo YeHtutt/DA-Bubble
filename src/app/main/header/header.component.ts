@@ -6,6 +6,9 @@ import { UserProfileViewComponent } from '../user-profile-view/user-profile-view
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Auth } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { SearchService } from 'src/app/services/search.service';
+import { UserProfile } from 'src/app/models/user-profile';
+import { Channel } from 'src/app/models/channel';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +17,20 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class HeaderComponent implements OnInit {
 
+  public search: string = '';
+  filteredUser: any = [];
+  filteredChannel: any = [];
+  usersAndChannels: any = [];
+
   constructor(private authService: AuthenticationService, 
     private afAuth: AngularFireAuth,
     private router: Router, 
     public dialog: MatDialog, 
     public userFbService: UsersFirebaseService, 
-    private auth: Auth) {
-
+    private auth: Auth,
+    private searchService: SearchService
+    ) {
+      this.searchService.getUserAndChannelData().then((searchData: any) => {this.usersAndChannels = searchData});
   }
 
   
@@ -41,6 +51,20 @@ export class HeaderComponent implements OnInit {
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
     });
+  }
+
+  searchData() {
+    const searchResult = this.searchService.searchUsersAndChannels(this.search, this.usersAndChannels)
+    this.filteredUser = searchResult.filteredUser;
+    this.filteredChannel = searchResult.filteredChannel;
+  }
+
+  openProfil(user: UserProfile) {
+
+  }
+
+  openChannel(channel: Channel) {
+    
   }
 
 }
