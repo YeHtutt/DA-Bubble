@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, map, of } from 'rxjs';
 import { Message } from 'src/app/models/message';
-import { ChannelService } from 'src/app/services/channel.service';
+import { UserProfile } from 'src/app/models/user-profile';
+import { MessageService } from 'src/app/services/message.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
   selector: 'app-chat',
@@ -9,18 +12,33 @@ import { ChannelService } from 'src/app/services/channel.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-  id: string = '';
+  userId: string | null = '';
   text: string = '';
   message: Message = new Message();
-  messages$: Observable<any>;
+  chatExists: boolean = false;
+  currentUser: UserProfile = new UserProfile;
+  public receiver: UserProfile = new UserProfile;
+  messages$: Observable<any[]> = of([]);
 
   constructor(
-    private channelService: ChannelService,
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private userService: UsersFirebaseService
     ) {
-    this.messages$ = this.channelService.getChannelMessages(this.id).pipe(
-      map((messages) => {
-        return this.sortByDate(messages);
-      }));
+      this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.currentUser = user});
+      this.userService.getCurrentUser(this.userService.getFromLocalStorage()).then((user: any) => {this.receiver = user});
+    }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(async (params) => {
+       this.userId = params.get('id');
+      
+      this.messages$ = this.messageService.getChannelMessages('users', this.userId, 'message').pipe(
+        map((messages) => {
+          if (messages.length > 0) this.chatExists = true;
+          return this.sortByDate(messages);
+        }));
+    });
   }
 
   sortByDate(message: any) {
@@ -33,11 +51,16 @@ export class ChatComponent {
 
 
 
-  sendMessage() {
-    // this.message.username = 'Kevin Ammerman'
-    // this.message.time = new Date();
-    // this.message.text = this.text;
-    // this.channelService.addMessageToChannel(this.message.toJSON());
-    // this.text = '';
+  send() {
+    console.log(this.currentUser)
+    this.createMessageObject();
+    this.messageService.sendMessage(this.message, this.receiver, false);
+  }
+
+  createMessageObject() {
+    this.message.text = this.text;
+    this.message.time = new Date();
+    this.message.messageId || '';
+    this.message.user.push(this.currentUser);
   }
 }

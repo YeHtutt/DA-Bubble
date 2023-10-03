@@ -42,7 +42,7 @@ export class NewMessageComponent {
 
   send() {
     this.createMessageObject();
-    this.messageService.sendMessage(this.message, this.receiver)
+    this.messageService.sendMessage(this.message, this.receiver, true)
   }
 
   createMessageObject() {
