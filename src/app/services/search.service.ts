@@ -41,7 +41,7 @@ export class SearchService {
     this.transformForSearch(this.usersAndChannels, search)
     this.SearchResult.filteredUser = search && this.usersAndChannels.users.filter((user: object) => this.checkIfIncluded(user, search.toLowerCase()));
     this.SearchResult.filteredChannel = search && this.usersAndChannels.channels.filter((channel: object) => this.checkIfIncluded(channel, search.toLowerCase()));
-    if (search.length > 0) this.transformForFinalResult(this.SearchResult)
+    if (search.length > 0 && search.includes('#') || search.includes('@')) this.transformForFinalResult(this.SearchResult)
     return this.SearchResult;
   }
 

@@ -6,17 +6,17 @@
                 <input (keyup)="searchData()" [(ngModel)]="search"
                     placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
                 <div *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
-                    <div class="userBox">
-                        <h3 class="headline" *ngIf="filteredUser.length > 0">User</h3>
+                    <div class="userBox" *ngIf="filteredUser.length > 0">
+                        <!-- <h3 class="headline">User</h3> -->
                         <div class="user" *ngFor="let user of filteredUser" (click)="selectReceiver(user)">
                             <img src="assets/img/avatar/{{user.photoURL}}" alt="">
                             <span>{{user.name}}</span>
                         </div>
                     </div>
-                    <div class="channelBox">
-                        <h3 class="headline" *ngIf="filteredChannel.length > 0">Channel</h3>
+                    <div class="channelBox" *ngIf="filteredChannel.length > 0">
+                        <!-- <h3 class="headline">Channel</h3> -->
                         <div class="channel" *ngFor="let channel of filteredChannel" (click)="selectReceiver(channel)">
-                            <span># {{channel.channelName}}</span>
+                            <span><mat-icon>tag</mat-icon>{{channel.channelName}}</span>
                         </div>
                     </div>
                 </div>

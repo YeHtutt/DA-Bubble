@@ -109,13 +109,14 @@ header {
 }
  */
 
- // SEARCH 
+// SEARCH 
 
 .searchOutput {
   position: absolute;
+  left: 0;
   top: 40px;
   z-index: 5;
-  width: 400px;
+  width: calc(100% - 41.5px);
   height: 300px;
   box-shadow: 0 4px 8px #0000004d;
   background-color: white;
@@ -124,20 +125,30 @@ header {
 
 
   img {
-      width: 40px;
-      height: 40px;
-      border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
   }
 }
 
-.userBox > .headline,
-.channelBox > .headline {
+.userBox>.headline,
+.channelBox>.headline {
   color: #535AF1;
   margin-bottom: 16px !important;
 }
 
-.userBox, .channelBox {
-  margin-bottom: 25px;
+.channel {
+
+  mat-icon {
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 4px;
+  }
+
+  span {
+    display: flex;
+    gap: 28px;
+  }
 }
 
 .user {
@@ -146,11 +157,17 @@ header {
   gap: 16px;
 }
 
-.user, .channel {
+.user,
+.channel {
   padding: 4px 8px;
   border-radius: 30px;
+  cursor: pointer;
 
   &:hover {
-      background-color: #ECEEFE;
+    background-color: #ECEEFE;
   }
+}
+
+.searchOutput {
+  overflow-y: scroll;
 }
