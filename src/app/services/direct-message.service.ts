@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { UserProfile } from '../models/user-profile';
-import { Chat } from '../models/chat';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -63,10 +62,10 @@ export class DirectMessageService {
 
   //load all data and create current chat
   async createChat() {
-    await this.getCurrentUser();
-    this.getAllUsers();
-    this.getAllChats();
-    this.getCurrentChat();
+    // await this.getCurrentUser();
+    // this.getAllUsers();
+    // this.getAllChats();
+    // this.getCurrentChat();
   }
 
 
@@ -82,25 +81,25 @@ export class DirectMessageService {
 
 
   async getAllChats() {
-    const itemCollection = collection(this.firestore, 'users/' + this.currentUser.id, '/chats');
-    const chatsArray: any[] = [];
-    const querySnapshot = await getDocs(itemCollection);
-    querySnapshot.forEach(doc => {
-      const chats = this.setChatObject(doc.data());
-      chatsArray.push(chats);
-      this.allChats = chatsArray;
-    });
-    console.log('alle chats:', this.allChats);
-    return chatsArray;
+    // const itemCollection = collection(this.firestore, 'users/' + this.currentUser.id, '/chats');
+    // const chatsArray: any[] = [];
+    // const querySnapshot = await getDocs(itemCollection);
+    // querySnapshot.forEach(doc => {
+    //   const chats = this.setChatObject(doc.data());
+    //   chatsArray.push(chats);
+    //   this.allChats = chatsArray;
+    // });
+    // console.log('alle chats:', this.allChats);
+    // return chatsArray;
   }
 
 
-  setChatObject(obj: any): Chat {
-    return new Chat({
-      name: obj.name || '',
-      chatId: obj.chatId || ''
-    });
-  }
+  // setChatObject(obj: any): Chat {
+  //   return new Chat({
+  //     name: obj.name || '',
+  //     chatId: obj.chatId || ''
+  //   });
+  // }
 
 
   getCurrentChat() {
