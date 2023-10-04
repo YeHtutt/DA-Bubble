@@ -1,7 +1,8 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelService } from 'src/app/services/channel.service';
 import { DirectMessageService } from 'src/app/services/direct-message.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,10 +10,11 @@ import { DirectMessageService } from 'src/app/services/direct-message.service';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
   showSidenav: boolean = true;
   @Input() channel_window: any;
-  // @ViewChild('tree') tree:any;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private Route: ActivatedRoute,
@@ -21,10 +23,16 @@ export class SidenavComponent {
     public directMessageService: DirectMessageService
     ) {}
 
+    //habe alles von channels übernommen das der tree standartmäßig geöffnet ist, klappt aber aus irgendeinem grund noch nicht
+    ngOnInit() {
+      const sub = this.directMessageService.dataLoaded.subscribe(loaded => {
+        if (loaded) {
+          this.directMessageService.treeControl.expandAll();
+        }
+      });
+      this.subscriptions.push(sub);
+    }
 
-    // ngAfterViewInit() {
-    //   this.directMessageService.treeControl.expandAll();
-    // }
 
 
   toggleExpanded(node: any) {

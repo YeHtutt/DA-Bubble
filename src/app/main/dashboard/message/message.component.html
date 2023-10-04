@@ -1,8 +1,8 @@
 <div class="message_container">
-    <img class="user_avatar" src="assets/img/avatar/avatar1.png" alt="">
+    <img class="user_avatar" src="assets/img/avatar/{{ message.user[0].photoURL }}" alt="">
     <div class="content_container">
         <div class="creator_info">
-            <span>{{message.username}}</span>
+            <span>{{ message.user[0].name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
         <div class="message">{{message.text}}</div>
