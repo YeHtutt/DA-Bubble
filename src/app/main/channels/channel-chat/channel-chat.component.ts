@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, expand, map } from 'rxjs';
+import { Observable, expand, map, of } from 'rxjs';
 
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
@@ -28,6 +28,8 @@ export class ChannelChatComponent implements OnInit {
   ref: any;
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
+  messages$: Observable<any[]> = of([]);
+
 
   constructor(
     private channelService: ChannelService,
@@ -36,18 +38,20 @@ export class ChannelChatComponent implements OnInit {
     private messageService: MessageService,
     private userService: UsersFirebaseService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
-    // this.messages$ = this.messageService.getChannelMessages(this.id).pipe(map((message) => {
-    //   return this.sortByDate(message);
-    // }));
+    
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async (params) => {
       this.channelId = params.get('channelId');
-
+      this.messages$ = this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
+        map((messages) => {
+          return this.sortByDate(messages);
+        }));
       // Using the service method to fetch the document data
       this.channelService.getDocData('channels', this.channelId).then(channelData => {
         this.channel = channelData;
+        this.receiver = new Channel(channelData);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
@@ -67,7 +71,7 @@ export class ChannelChatComponent implements OnInit {
     });
   }
 
-  
+
 
 
 
@@ -84,17 +88,17 @@ export class ChannelChatComponent implements OnInit {
   // SEND MESSAGE
 
   send() {
-    console.log(this.currentUser)
-    this.createMessageObject();
-    this.messageService.sendMessage(this.message, this.channelId, false);
-    this.message = new Message();
+    this.messageService.sendMessage(this.createMessageObject(), this.receiver, false);
   }
 
+
   createMessageObject() {
-    this.message.text = this.text;
-    this.message.time = new Date();
-    this.message.messageId || '';
-    this.message.user.push(this.currentUser);
+    return new Message({
+      text: this.text,
+      time: new Date(),
+      messageId: '',
+      user: [this.currentUser]
+    });
   }
 
 }

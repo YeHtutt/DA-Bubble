@@ -9,7 +9,7 @@ export class Message {
     constructor(obj?: any) {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
-        this.user = obj && obj.user ? obj.replies.map((user: any) => new UserProfile({ obj: user })) : [];
+        this.user = obj && obj.user ? obj.user : [];
         this.messageId = obj ? obj.messageId : '';
       
     }

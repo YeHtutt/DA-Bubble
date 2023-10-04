@@ -51,16 +51,15 @@ export class ChatComponent {
 
 
   send() {
-    console.log(this.currentUser)
-    this.createMessageObject();
-    this.messageService.sendMessage(this.message, this.receiver, false);
-    this.message = new Message();
+    this.messageService.sendMessage(this.createMessageObject(), this.receiver, false);
   }
 
   createMessageObject() {
-    this.message.text = this.text;
-    this.message.time = new Date();
-    this.message.messageId || '';
-    this.message.user.push(this.currentUser);
+    return new Message({
+      text: this.text,
+      time: new Date(),
+      messageId: '',
+      user: [this.currentUser]
+    });
   }
 }
