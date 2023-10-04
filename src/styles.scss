@@ -158,7 +158,7 @@ $hover-effect-color: #ECEEFE;
 $material-size: 24px;
 $main-color: #797EF3;
 $accent-color: #535AF1;
-
+$border-color: #ADB0D9;
 
 h2 {
   font-family: 'Nunito', sans-serif;
@@ -273,4 +273,9 @@ button {
 .mat-mdc-form-field-infix {
   min-height: 56px;
   height: 60px;
+}
+
+.mat-divider {
+
+  border-top-color: $border-color !important
 }

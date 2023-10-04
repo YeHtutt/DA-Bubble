@@ -172,7 +172,7 @@ export class ChannelService {
     return new Channel({
       channelId: docId,
       channelName: obj.channelName,
-      creatorId: obj.creatorId,
+      creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
       createdBy: obj.createdBy,
@@ -184,7 +184,7 @@ export class ChannelService {
     return new Channel({
       channelId: docId,
       channelName: obj.channelName,
-      creatorId: obj.creatorId,
+      creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
       createdBy: obj.createdBy

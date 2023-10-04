@@ -1,12 +1,14 @@
 <div class="create-channel-container">
-    <button class="basic-button close-btn" (click)="closeCreateChannelDialog()">
-        <mat-icon>close</mat-icon>
-    </button>
-    <div>
+    <div class="edit-header">
         <div class="headline">
             <mat-icon class="tag">tag</mat-icon>
             <h2> {{channel.channelName}}</h2>
         </div>
+        <button class="basic-button close-btn" (click)="closeCreateChannelDialog()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div>
         <div class="channel-name-border pdg-20">
             <div class="edit-channel">
                 <div>
@@ -18,26 +20,25 @@
                 </div>
                 <button class="edit-btn" (click)="toggleOutline()">Bearbeiten</button>
             </div>
-            <div *ngIf="!isOutlineVisible">{{ channelNameInput.value }}</div>
         </div>
     </div>
     <div>
-        <div class="headline">
-            <mat-icon class="tag">tag</mat-icon>
-            <h2> {{channel.channelName}}</h2>
-        </div>
         <div class="channel-name-border pdg-20">
             <div class="edit-channel">
                 <div>
-                    <h3>Channel-Name</h3>
+                    <h3>Beschreibung</h3>
                     <div class="flex-center">
                         <mat-icon class="tag">tag</mat-icon>
-                        <h3>{{channel.channelName}}</h3>
+                        <h3>{{channel.description}}</h3>
                     </div>
                 </div>
                 <button class="edit-btn" (click)="toggleOutline()">Bearbeiten</button>
             </div>
-            <div *ngIf="!isOutlineVisible">{{ channelNameInput.value }}</div>
+            <mat-divider></mat-divider>
+            <div>
+                <h3>Erstellt von </h3>
+                <div class="creator-name">{{channel?.creator.name}}</div>
+            </div>
         </div>
     </div>
     <div>
