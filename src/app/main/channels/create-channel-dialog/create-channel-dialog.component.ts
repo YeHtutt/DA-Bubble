@@ -4,6 +4,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { UserProfile } from 'src/app/models/user-profile';
+
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -18,7 +20,7 @@ export class CreateChannelDialogComponent {
   constructor(
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
-    public utilsService: UtilsService,   
+    public utilsService: UtilsService,
     private userService: UsersFirebaseService
   ) { }
 
@@ -27,17 +29,19 @@ export class CreateChannelDialogComponent {
       this.utilsService.checkInputLength(this.channelNameInput);
       return;
     };
-    /* openDialog(); */
-
+    this.setChannelProperties();
   }
 
 
-  setChannelProperties() {
+  async setChannelProperties() {
+    debugger
+    let creatorId = this.getCreatorId();
+    let creator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
     let channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
-      creatorId: this.getCreatorId(),
+      creator: creator,
       createdBy: '',
     };
     console.log(channel);
@@ -54,7 +58,7 @@ export class CreateChannelDialogComponent {
     this.dialogRef.close();
   }
 
- 
+
 
 
   getCreatorId() {

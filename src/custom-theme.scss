@@ -28,10 +28,5 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
-.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
-  height: 44px !important;
-}
-
 @include mat.all-component-colors($app-theme);
 

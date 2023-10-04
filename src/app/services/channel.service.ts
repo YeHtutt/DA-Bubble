@@ -60,9 +60,15 @@ export class ChannelService {
   }
 
   async addChannel(item: {}, ref: string) {
-    await addDoc(this.getRef(ref), item)
-      .catch((err) => { console.log(err) })
-      .then((docRef: any) => { console.log("Document written with ID", docRef?.id) })
+    try {
+      const docRef = await addDoc(this.getRef(ref), item);
+      console.log("Document written with ID", docRef.id);
+
+      // Update the document with the ID
+      await updateDoc(docRef, { channelId: docRef.id });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
@@ -152,13 +158,21 @@ export class ChannelService {
     });
   }
 
-
+  async updateChannel(channel: Channel) {
+    if (channel.channelId) {
+      const docRef = this.getSingleDocRef('channels', channel.channelId);
+      const updatedChannelData = this.setChannelContentObj(channel, channel.channelId);
+      await updateDoc(docRef, updatedChannelData as any);
+    } else {
+      console.error("Channel ID is missing");
+    }
+  }
 
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
       channelId: docId,
       channelName: obj.channelName,
-      creatorId: obj.creatorId,
+      creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
       createdBy: obj.createdBy,
@@ -170,7 +184,7 @@ export class ChannelService {
     return new Channel({
       channelId: docId,
       channelName: obj.channelName,
-      creatorId: obj.creatorId,
+      creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
       createdBy: obj.createdBy
@@ -179,40 +193,10 @@ export class ChannelService {
 
 
   deleteChannel(channelId: string) {
-    
+
 
   }
 
-  /*
-    subMessageList() {
-      return this.unsubMessage = onSnapshot(this.getRef('directMessages'), (list: any) => {
-        this.messageTree = [];
-        list.forEach((element: any) => {
-          const messageObj = this.setMessageObj(element.data(), element.id);
-          this.messageTree.push(messageObj);
-        });
-        this.themes = [{ channelName: 'directMessages', children: this.messageTree }];
-        this.dataSource.data = this.themes;
-      });
-    }
-  
-  setMessageObj(obj: any, docId: string): MessagesNode {
-      return new Message({
-        MessageId: docId,
-        users: obj.users,
-        description: obj.description,
-        creationTime: obj.creationTime,
-        createdBy: obj.createdBy,
-        children: []
-      });
-    } */
-
-
-
-
-  /*   addChannel(newChannel: string, collection: string)  {
-      newChannel.toJSON(collection)
-    } */
 
   getDateTime() {
     let dateTime = new Date();
@@ -239,5 +223,4 @@ export class ChannelService {
     });
     return channelArray;
   }
-
 }

@@ -1,28 +1,27 @@
+import { UserProfile as User } from "./user-profile";
+
 export class Channel {
     channelId: string;
     channelName: string;
     description: string;
-    creatorId: string;
     creationTime: any;
-    createdBy: string;
+    creator: User;
 
     constructor(obj?: any) {
+        this.creationTime = obj ? obj.creationTime : '';
         this.channelId = obj ? obj.channelId : '';
         this.channelName = obj ? obj.channelName : '';
-        this.creatorId = obj ? obj.creatorId : '';
         this.description = obj ? obj.description : '';
-        this.creationTime = obj ? obj.creationTime : '';
-        this.createdBy = obj ? obj.createdBy : '';
+        this.creator = obj ? obj.creator : '';
     }
 
     public toJSON() {
         return {
+            creationTime: this.creationTime,
             channelId: this.channelId,
             channelName: this.channelName,
-            creatorId: this.creatorId,
             description: this.description,
-            creationTime: this.creationTime,
-            createdBy: this.createdBy,
+            creator: this.creator,
         }
     }
 }
