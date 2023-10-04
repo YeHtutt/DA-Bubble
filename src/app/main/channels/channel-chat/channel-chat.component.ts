@@ -21,7 +21,7 @@ export class ChannelChatComponent implements OnInit {
 
   text: string = '';
   message: Message = new Message()
-  messages$: Observable<any>;
+  // messages$: Observable<any>;
   id: string = '';
   channelId: any = '';
   channel: any;
@@ -36,9 +36,9 @@ export class ChannelChatComponent implements OnInit {
     private messageService: MessageService,
     private userService: UsersFirebaseService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
-    this.messages$ = this.channelService.getChannelMessages(this.id).pipe(map((message) => {
-      return this.sortByDate(message);
-    }));
+    // this.messages$ = this.messageService.getChannelMessages(this.id).pipe(map((message) => {
+    //   return this.sortByDate(message);
+    // }));
   }
 
   ngOnInit(): void {

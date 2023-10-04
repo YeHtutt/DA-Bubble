@@ -108,9 +108,9 @@ export class ChannelService {
   getRefofSubCollection(colId: string, docId: string) { }
 
 
-  getRefSubcollChannel() {
-    return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
-  }
+  // getRefSubcollChannel() {
+  //   return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
+  // }
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {
@@ -220,14 +220,14 @@ export class ChannelService {
   }
 
 
-  getChannelMessages(id: string) {
-    const channelMessages$ = collectionData(this.getRefSubcollChannel());
-    return channelMessages$
-  }
+  // getChannelMessages(id: string) {
+  //   const channelMessages$ = collectionData(this.getRefSubcollChannel());
+  //   return channelMessages$
+  // }
 
-  async addMessageToChannel(message: any) {
-    const docRef = addDoc(this.getRefSubcollChannel(), message);
-  }
+  // async addMessageToChannel(message: any) {
+  //   const docRef = addDoc(this.getRefSubcollChannel(), message);
+  // }
 
   async getChannels() {
     const itemCollection = collection(this.firestore, 'channels');
