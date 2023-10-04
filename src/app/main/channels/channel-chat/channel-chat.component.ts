@@ -89,6 +89,7 @@ export class ChannelChatComponent implements OnInit {
 
   send() {
     this.messageService.sendMessage(this.createMessageObject(), this.receiver, false);
+    this.text = '';
   }
 
 

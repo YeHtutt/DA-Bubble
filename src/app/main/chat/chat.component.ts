@@ -52,6 +52,7 @@ export class ChatComponent {
 
   send() {
     this.messageService.sendMessage(this.createMessageObject(), this.receiver, false);
+    this.text = '';
   }
 
   createMessageObject() {
