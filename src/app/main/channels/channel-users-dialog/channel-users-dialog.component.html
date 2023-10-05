@@ -1,0 +1,15 @@
+<div class="invitation-dialog-container">
+    <div>
+        <h3>Leute hinzufügen</h3>
+    </div>
+    <mat-radio-group class="flex-column" [(ngModel)]="selectedOption" (change)="openUsernameInput()">
+        <mat-radio-button color="primary" value="all">Alle Mitglieder von <span>{{channel.channelName}}</span>
+            hinzufügen</mat-radio-button>
+        <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="mat-form-field" *ngIf="inputOpened" appearance="outline">
+        <input matInput placeholder="Name eingeben">
+    </mat-form-field>
+    <button class="create-btn" mat-fab extended color="primary">Erstellen</button>
+</div>

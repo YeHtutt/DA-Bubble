@@ -19,7 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule, matSnackBarAnimations } from '@angular/material/snack-bar';
-
+import { MatRadioModule } from '@angular/material/radio';
 
 
 /* Firestore */
@@ -53,6 +53,7 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
 import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
+import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
 
 @NgModule({
   declarations: [
@@ -73,9 +74,10 @@ import { UserProfileViewComponent } from './main/user-profile-view/user-profile-
     ChooseAvatarComponent,
     ForgetPasswordComponent,
     StartAnimationComponent,
-    ChannelMenuComponent,   
+    ChannelMenuComponent,
     UserProfileViewComponent,
-    ChannelMenuComponent
+    ChannelMenuComponent,
+    ChannelUsersDialogComponent
 
   ],
   imports: [
@@ -102,7 +104,8 @@ import { UserProfileViewComponent } from './main/user-profile-view/user-profile-
     MatMenuModule,
     MatDividerModule,
     AngularFireAuthModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRadioModule
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },

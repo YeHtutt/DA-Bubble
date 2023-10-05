@@ -1,0 +1,32 @@
+@import "../../../../styles.scss";
+
+
+.d-none {
+    display: none;
+}
+
+.invitation-dialog-container {
+    padding: 40px;
+    width: calc(90% - 80px);
+    height: auto;
+    @include flex-column;
+    margin: auto;
+
+    .flex-column {
+        @include flex-column
+    }
+}
+
+span {
+    color: $accent-color;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.create-btn {
+    display: flex;
+    align-self: flex-end;
+    justify-self: baseline;
+}

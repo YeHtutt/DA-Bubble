@@ -46,6 +46,7 @@ $my-dark-palette: (
 );
 
 
+
 $my-light-palette: (
   50 : #e9eafd,
   100 : #c7cafb,
@@ -61,20 +62,20 @@ $my-light-palette: (
   A200 : #ebecff,
   A400 : #b8baff,
   A700 : #9fa1ff,
-  contrast: (50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #ffffff,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
+  contrast: (50 : black,
+    100 : black,
+    200 : black,
+    300 : black,
+    400 : white,
+    500 : white,
+    600 : white,
+    700 : white,
+    800 : white,
+    900 : white,
+    A100 : black,
+    A200 : black,
+    A400 : black,
+    A700 : black,
   )
 );
 

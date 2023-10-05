@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { UserProfile } from 'src/app/models/user-profile';
-
+import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-users-dialog.component';
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -16,12 +16,15 @@ export class CreateChannelDialogComponent {
 
   channelNameInput = new FormControl('', [Validators.required, Validators.minLength(3)]);
   channelDescription: string = '';
+  channel: any;
+
 
   constructor(
     private channelService: ChannelService,
-    public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
     public utilsService: UtilsService,
-    private userService: UsersFirebaseService
+    private userService: UsersFirebaseService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
   ) { }
 
   addChannel() {
@@ -34,24 +37,29 @@ export class CreateChannelDialogComponent {
 
 
   async setChannelProperties() {
-    debugger
     let creatorId = this.getCreatorId();
     let creator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
-    let channel = {
+    this.channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
       creator: creator,
-      createdBy: '',
+      
     };
-    console.log(channel);
-    this.channelService.addChannel(channel, 'channels');
-    this.closeCreateChannelDialog();
+
+    this.openAddUserlDialog();
+   /*  this.channelService.addChannel(this.channel, 'channels'); */
   }
 
 
-  getCurrentTimestamp() {
-    return this.channelService.getDateTime();
+  openAddUserlDialog() {
+    this.dialog.open(ChannelUsersDialogComponent, {
+      width: '710px',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      data: { channel: this.channel }
+    });
   }
 
   closeCreateChannelDialog() {
@@ -60,6 +68,9 @@ export class CreateChannelDialogComponent {
 
 
 
+  getCurrentTimestamp() {
+    return this.channelService.getDateTime();
+  }
 
   getCreatorId() {
     return this.userService.getFromLocalStorage();

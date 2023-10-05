@@ -175,7 +175,6 @@ export class ChannelService {
       creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
-      createdBy: obj.createdBy,
       children: []
     });
   }
@@ -187,8 +186,7 @@ export class ChannelService {
       creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
-      createdBy: obj.createdBy
-    });
+       });
   }
 
 

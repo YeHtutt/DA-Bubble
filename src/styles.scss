@@ -159,6 +159,7 @@ $material-size: 24px;
 $main-color: #797EF3;
 $accent-color: #535AF1;
 $border-color: #ADB0D9;
+$active-color: #444DF2;
 
 h2 {
   font-family: 'Nunito', sans-serif;
@@ -278,4 +279,25 @@ button {
 .mat-divider {
 
   border-top-color: $border-color !important
+}
+
+html {
+  --mdc-outlined-text-field-outline-color: #ADB0D9;
+  --mdc-outlined-text-field-hover-outline-color: #444DF2;
+}
+
+.mat-mdc-radio-button.mat-primary {
+  --mdc-radio-unselected-hover-icon-color: #444DF2;
+  --mdc-radio-unselected-icon-color: #ADB0D9;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
 }

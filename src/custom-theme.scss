@@ -9,7 +9,8 @@ $app-primary: mat.define-palette(palette.$my-light-palette, 500);
 $app-accent: mat.define-palette(palette.$my-light-palette, A100, A200, A700);
 
 // Use your own "app" define-light-theme function instead of "mat" one.
-$app-theme: app.define-light-theme((color: (primary: $app-primary,
+$app-theme: app.define-light-theme(
+  (color: (primary: $app-primary,
         accent: $app-accent,
       )));
 
