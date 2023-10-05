@@ -4,7 +4,7 @@
         <mat-icon (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
     </div>
     <div class="profileViewImg">
-        <img class="profileImg" src="../assets/img/avatar/{{ this.userFbService.loggedInUserImg }}" />
+        <img class="profileImg" src="{{ this.userFbService.loggedInUserImg }}" />
     </div>
     <div class="profileViewName">
         <div> {{ this.userFbService.loggedInUserName }} </div>
