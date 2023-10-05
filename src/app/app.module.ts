@@ -54,7 +54,6 @@ import { StartAnimationComponent } from './auth/start-animation/start-animation.
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
 import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
