@@ -91,7 +91,7 @@ export class UsersFirebaseService {
     this.user.photoURL = image;
     const docRef = doc(this.firestore, 'users', `${this.id}`);
     await updateDoc(docRef, {
-      photoURL: image
+      photoURL: '../assets/img/avatar/' + image
     }
     );
   }
