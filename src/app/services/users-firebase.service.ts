@@ -87,13 +87,20 @@ export class UsersFirebaseService {
   }
 
 
-  async saveUserPic(image: any) {
+  async saveUserPic(image: string, avatarPic:boolean) {
     this.user.photoURL = image;
     const docRef = doc(this.firestore, 'users', `${this.id}`);
-    await updateDoc(docRef, {
-      photoURL: '../assets/img/avatar/' + image
+    if(avatarPic){
+      await updateDoc(docRef, {
+        photoURL: '../assets/img/avatar/' + image
+      }
+      );
+    }else {
+      await updateDoc(docRef, {
+        photoURL: image
+      })
     }
-    );
+    
   }
 
 
