@@ -14,7 +14,7 @@
 
             <div class="allProfilePics">
                 <div  *ngFor="let avatar of avatars" (click)="this.setNewPic(avatar)">
-                    <img src="assets/img/avatar/{{ avatar }}">
+                    <img src="../assets/img/avatar/{{ avatar }}">
                 </div>
             </div>
 
@@ -26,6 +26,7 @@
                     type="file"
                     id="file"
                     style="display: none;"
+                    (change)="onSelect($event)"
                     >
                 </div>
             </div>

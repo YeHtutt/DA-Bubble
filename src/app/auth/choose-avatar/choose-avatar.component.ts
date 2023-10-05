@@ -11,7 +11,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 })
 export class ChooseAvatarComponent {
   avatars = ['avatar1.png','avatar2.png','avatar3.png','avatar4.png','avatar5.png','avatar6.png' ];
-  currentPic = 'person.png'; //default Pic
+  currentPic = '../assets/img/avatar/person.png'; //default Pic
   url = 'assets/img/avatar/';
   newUserID:any;
   avatarPic: boolean = true;
@@ -30,9 +30,33 @@ export class ChooseAvatarComponent {
   }
 
   async saveNewPic(image: any) {
-    this.usersfbService.saveUserPic(image);
+    this.usersfbService.saveUserPic(image, this.avatarPic);
     setTimeout(() => {
       this.router.navigate(['/login'])
     })
   }
+
+  
+  onSelect(event: any) {
+    this.avatarPic = false;
+    const file: File = event.target.files[0]; // ausgewählte Datei wird als variable file gespeichert (typ File interface)
+    let fileType = file.type;
+    let fileSize = file.size;
+    if (fileSize > 500 * 1024) {
+      window.alert('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+      return; // wenn die Datei zu groß ist, nicht ausgeben bzw. beenden.
+    }
+    if (fileType.match(/image\/(png|jpeg|jpg)/)) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+    
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+        this.setNewPic(this.url);
+        };
+    } else {
+      window.alert('Bitte nur png, jpg oder jpeg senden');
+    }
+  }
+
 }
