@@ -22,7 +22,7 @@
   <div class="profil-box" *ngIf="this.userFbService.loggedInUserID">
     <span class="profil-name">{{ this.userFbService.loggedInUserName}}</span>
     <div class="alignRight" style="position: relative;">
-      <img class="avatar" src="../assets/img/avatar/{{ this.userFbService.loggedInUserImg }}">
+      <img class="avatar" src="{{ this.userFbService.loggedInUserImg }}">
       <img class="status" src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID" style="position: absolute !important;
       bottom: 2px !important;
       right: 5px !important;">
