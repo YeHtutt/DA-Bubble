@@ -5,10 +5,10 @@ export class UserProfile {
     photoURL: any = '../assets/img/avatar/person.png';
 
     constructor(obj?: any) {
-        this.name = obj? obj.name: '';
-        this.email = obj? obj.email: '';
-        this.id = obj? obj.id: '';
-        this.photoURL = obj? obj.photoURL: '';
+        this.name = obj ? obj.name : '';
+        this.email = obj ? obj.email : '';
+        this.id = obj ? obj.id : '';
+        this.photoURL = obj ? obj.photoURL : '';
     }
 
     public toJSON() {

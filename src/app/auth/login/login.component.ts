@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private usersFbService: UsersFirebaseService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    ) {
   }
 
   loginForm = new FormGroup({
@@ -95,7 +96,11 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-
+  
+  
+  loginWithGoogle() {
+    this.authService.signinWithGoogle();
+  }
 
   openSnackBar() {
     if(this.loginSuccess == true) {
