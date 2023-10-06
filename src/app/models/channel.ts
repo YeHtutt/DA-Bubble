@@ -6,6 +6,7 @@ export class Channel {
     description: string;
     creationTime: any;
     creator: User;
+    usersData: { email: string; id: string; name: string; photoUrl: string; } | undefined;
 
     constructor(obj?: any) {
         this.creationTime = obj ? obj.creationTime : '';
@@ -13,6 +14,7 @@ export class Channel {
         this.channelName = obj ? obj.channelName : '';
         this.description = obj ? obj.description : '';
         this.creator = obj ? obj.creator : '';
+        this.usersData = obj ? obj.usersData : '';
     }
 
     public toJSON() {
@@ -22,6 +24,7 @@ export class Channel {
             channelName: this.channelName,
             description: this.description,
             creator: this.creator,
+            usersData: this.usersData
         }
     }
 }
