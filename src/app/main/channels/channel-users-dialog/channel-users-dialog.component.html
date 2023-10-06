@@ -9,7 +9,18 @@
     </mat-radio-group>
 
     <mat-form-field class="mat-form-field" *ngIf="inputOpened" appearance="outline">
-        <input matInput placeholder="Name eingeben">
+        <input matInput placeholder="Name eingeben" (click)="toggleSearchOutput()" (keyup)="searchData()"
+            [(ngModel)]="search">
     </mat-form-field>
-    <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()">Erstellen</button>  
+    <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" [ngClass]="{'some-class': filteredUser?.length > 0}"
+        class="search-output-header">
+
+        <div class="userBox" *ngIf="filteredUser?.length > 0">
+            <div class="user" *ngFor="let user of filteredUser" (click)="openProfile(user)">
+                <img src="assets/img/avatar/{{user.photoURL}}" alt="">
+                <span>{{user.name}}</span>
+            </div>
+        </div>
+    </div>
+    <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()">Erstellen</button>
 </div>

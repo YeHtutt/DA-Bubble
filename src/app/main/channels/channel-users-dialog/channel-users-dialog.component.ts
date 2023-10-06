@@ -1,7 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, HostListener, } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
+import { SearchService } from 'src/app/services/search.service';
+
 
 @Component({
   selector: 'app-channel-users-dialog',
@@ -14,13 +16,18 @@ export class ChannelUsersDialogComponent {
   selectedOption: string | undefined;
   inputOpened = false;
   allUsers: any;
+  public search: string = '';
+  filteredUser: any = [];
+  searchOutput: boolean = false;
 
 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private usersService: UsersFirebaseService,
-    private channelService: ChannelService) { }
+    private channelService: ChannelService,
+    private searchService: SearchService,
+    ) { }
 
   ngOnInit() {
     console.log(this.channel);
@@ -37,9 +44,6 @@ export class ChannelUsersDialogComponent {
   }
 
   pushAllUsersToChannel() {
-    
-    console.log(this.channel);
-    debugger
     this.allUsers.forEach((user: any) => this.channel.usersData.push(user));
   }
 
@@ -49,8 +53,27 @@ export class ChannelUsersDialogComponent {
       this.pushAllUsersToChannel();
       console.log(this.channel);
     }
-
   }
 
+
+  
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
+      this.searchOutput = false;
+    }
+  }
+
+  async searchData() {
+    const searchResult = await this.searchService.searchUsersAndChannels(this.search)
+    this.filteredUser = searchResult.filteredUser;
+  }
+
+  toggleSearchOutput() {
+    this.searchOutput = !this.searchOutput;
+  }
+
+  openProfile(user: any) {console.log(user);}
 
 }
