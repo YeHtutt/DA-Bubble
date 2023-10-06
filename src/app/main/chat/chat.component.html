@@ -1,7 +1,7 @@
 <section>
     <header>
         <div class="user_avatar_container">
-            <img src="assets/img/avatar/{{receiver.photoURL}}" alt="">
+            <img src="{{receiver.photoURL}}" alt="">
             <span>{{receiver.name}}</span>
         </div>
     </header>
@@ -9,7 +9,7 @@
         <app-message *ngFor="let message of messages$ | async" [message]="message"></app-message>
         <div *ngIf="!chatExists" class="new_conversation_container">
             <div class="user_info_box">
-                <img src="assets/img/avatar/{{receiver.photoURL}}" alt="">
+                <img src="{{receiver.photoURL}}" alt="">
                 <span>{{receiver.name}}</span>
             </div>
             <span>Diese Unterhaltung findet nur zwischen <span>@{{receiver.name}}</span> und dir statt.</span>

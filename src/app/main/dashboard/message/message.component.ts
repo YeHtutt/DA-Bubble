@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
   selector: 'app-message',
@@ -8,6 +9,11 @@ import { Component, Input } from '@angular/core';
 export class MessageComponent {
 
   @Input() message: any;
+  public currentUser: string | null = '';
+
+  constructor(private userService: UsersFirebaseService) {
+    this.currentUser = this.userService.getFromLocalStorage();
+  }
 
 
   getTimeOfDate(timestamp: any) {
