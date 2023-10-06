@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, query } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
+import { collectionData } from 'rxfire/firestore';
 
 type ReceiverType = UserProfile | Channel;
 
@@ -12,10 +13,11 @@ type ReceiverType = UserProfile | Channel;
 })
 export class MessageService {
 
+
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router
-  ) { }
+  ) {}
 
   // SEND MESSAGE
 
@@ -34,6 +36,7 @@ export class MessageService {
     return collection(this.firestore, `${mainColl}/${docId}/${subColl}`);
   }
 
+
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
     console.log(mainColl, docId, message)
     const docRef = addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
@@ -45,4 +48,5 @@ export class MessageService {
     const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
     return channelMessages$
   }
+
 }
