@@ -52,6 +52,7 @@ export class UsersFirebaseService {
     const currentUser = localStorage.getItem('currentUser');
     return currentUser;
   }
+  
 
   async getUsers() {
     const itemCollection = collection(this.firestore, 'users');
@@ -64,6 +65,7 @@ export class UsersFirebaseService {
     return usersArray;
   }
 
+
   async getUser(uid: any) {
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
@@ -71,6 +73,7 @@ export class UsersFirebaseService {
     return user;
   }
 
+  
   setUserObject(obj: any): User {
     return new UserProfile({
       name: obj.name || '',
@@ -79,6 +82,7 @@ export class UsersFirebaseService {
       photoURL: obj.photoURL || ''
     });
   }
+
 
   async checkIfSubcollectionExists(documentPath: string): Promise<boolean> {
     const subcollectionRef = collection(this.firestore, documentPath);
