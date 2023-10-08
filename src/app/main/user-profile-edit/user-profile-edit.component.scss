@@ -1,0 +1,129 @@
+.profileEditContianer {
+    display: flex;
+    padding: 33px;
+    flex-direction: column;
+    align-items: center;
+    gap: 45px;
+}
+
+.title {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 100%;
+    text-align: start;
+}
+
+.userImg {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    background-color: lightgray;
+    border-radius: 100%;
+}
+
+.nameEmail-container {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .nameContainer {
+        box-sizing: border-box;
+        width: 100%;
+
+        input {
+            font-size: 18px !important;
+        }
+    }
+
+    .emailContainer {
+        box-sizing: border-box;
+        width: 100%;
+
+        input {
+            font-size: 18px !important;
+        }
+    }
+
+    .nameContainerTitle,
+    .emailContainerTitle {
+        display: flex;
+        align-items: center;
+        font-family: Nunito;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .fullWidth {
+        width: 100%;
+    }
+
+    ::ng-deep .mdc-notched-outline>* {
+        background-color: rgb(236, 238, 254, 0.3) !important;
+    }
+
+    --mdc-outlined-text-field-hover-outline-color: #ADB0D9 !important;
+}
+
+.nameIcon {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border: 2px solid gray;
+    border-radius: 100%;
+    margin-right: 20px;
+}
+
+.emailIcon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+
+    .cancelBtn {
+        display: flex;
+        padding: 12px 25px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 50px;
+        border: 1px solid var(--Purple-2, #797EF3);
+        color: #797EF3;
+
+        &:hover {
+            filter: opacity(70%);
+        }
+    }
+
+    .saveBtn {
+        display: flex;
+        padding: 12px 25px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 50px;
+        border: 1px solid var(--Purple-2, #797EF3);
+        background-color: #444DF2;
+        color: white;
+
+        &:hover {
+            filter: opacity(70%);
+        }
+    }
+}
+

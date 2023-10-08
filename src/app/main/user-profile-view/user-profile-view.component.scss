@@ -35,6 +35,7 @@
             height: 200px;
             object-fit: cover;
             border-radius: 100%;
+            background-color: lightgray;
         }
     }
 
@@ -64,6 +65,21 @@
             display: flex !important;
             align-items: center !important;
             gap: 15px;
+        }
+
+        .profileEdit-container {
+            display: flex;
+            justify-content: space-between;
+
+            a {
+                text-decoration: none;
+                font-family: Nunito;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                color: #1381FF;
+            }
         }
     }
 
