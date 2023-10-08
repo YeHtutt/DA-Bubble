@@ -66,10 +66,6 @@
         width: 100%;
     }
 
-    ::ng-deep .mdc-notched-outline>* {
-        background-color: rgb(236, 238, 254, 0.3) !important;
-    }
-
     --mdc-outlined-text-field-hover-outline-color: #ADB0D9 !important;
 }
 
@@ -126,4 +122,3 @@
         }
     }
 }
-

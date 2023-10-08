@@ -8,7 +8,7 @@
                 <img class="nameIcon" src="../assets/img/person.png">
                 <span>Vollständiger Name</span>
             </div>
-            <mat-form-field appearance="outline" class="fullWidth" color="primary">
+            <mat-form-field appearance="outline"  color="primary">
                 <input matInput placeholder="Frederik Beck" formControlName="name" type="text">
                 <mat-error *ngIf="userEditForm.get('name')?.hasError('required')">Name eingeben</mat-error>
             </mat-form-field>
@@ -18,7 +18,7 @@
                 <img class="emailIcon" src="../assets/img/mail.png">
                 <span>E-Mail-Adresse</span>
             </div>
-            <mat-form-field appearance="outline" class="fullWidth" color="primary">
+            <mat-form-field appearance="outline" color="primary">
                 <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('required')">Email eingeben</mat-error>
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>

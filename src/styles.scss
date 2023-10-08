@@ -204,14 +204,7 @@ div {
     width: $material-size !important;
   }
 
-  .mat-icon {
-    font-size: $material-size !important;
-    height: $material-size !important;
-    width: $material-size !important;
-  }
-
-
-  .mat-mdc-icon-button {
+   .mat-mdc-icon-button {
     padding: 0px !important;
     border-radius: 4px !important;
     --mdc-icon-button-state-layer-size: $material-size !important;
