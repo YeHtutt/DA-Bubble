@@ -1,10 +1,15 @@
-<div class="message_container">
-    <img class="user_avatar" src="assets/img/avatar/{{ message.user[0].photoURL }}" alt="">
-    <div class="content_container">
-        <div class="creator_info">
+<div [ngClass]="{'message_container_reverse': currentUser == message.user[0].id}" class="message_container">
+    <img class="user_avatar" src="{{ message.user[0].photoURL }}" alt="">
+    <div [ngClass]="{'content_container_reverse': currentUser == message.user[0].id}" class="content_container">
+        <div [ngClass]="{'creator_info_reverse': currentUser == message.user[0].id}" class="creator_info">
             <span>{{ message.user[0].name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
-        <div class="message">{{message.text}}</div>
+        <div [ngClass]="{'message_reverse': currentUser == message.user[0].id}" class="message">{{message.text}}</div>
+    </div>
+    <div [ngClass]="{'reaction_container_reverse': currentUser == message.user[0].id}" class="reaction_container">
+        <mat-icon>add_reaction</mat-icon>
+        <mat-icon>comment</mat-icon>
+        <mat-icon>more_vert</mat-icon>
     </div>
 </div>

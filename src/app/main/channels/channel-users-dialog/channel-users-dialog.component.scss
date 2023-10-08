@@ -5,6 +5,21 @@
     display: none;
 }
 
+.search-output-header {
+    position: absolute;
+    left: 0;
+    top: 40px;
+    z-index: 5;
+    width: calc(100% - 80px);
+    height: fit-content;
+    max-height: 300px;
+    box-shadow: 0 4px 8px #0000004d;
+    background-color: white;
+    border-radius: 30px;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
 .invitation-dialog-container {
     padding: 40px;
     width: calc(90% - 80px);

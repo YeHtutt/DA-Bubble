@@ -56,7 +56,6 @@ export class ChannelService {
     this.unsubChannelTree();
     this.unsubChannel();
     this.unsubChannelContent();
-
   }
 
   async addChannel(item: {}, ref: string) {
@@ -81,8 +80,6 @@ export class ChannelService {
   }
 
 
-
-
   async getDocData(col: string, docId: string) {
     let docRef = this.getSingleDocRef(col, docId);
 
@@ -99,7 +96,7 @@ export class ChannelService {
 
 
 
-  getDocumentContent(documentId: string) {
+  getChannelContent(documentId: string) {
     const docRef = doc(this.getRef('channels'), documentId);
     return this.unsubChannel = onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
@@ -175,6 +172,7 @@ export class ChannelService {
       creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
+      usersData: obj.usersData,
       children: []
     });
   }
@@ -186,7 +184,8 @@ export class ChannelService {
       creator: obj.creator,
       description: obj.description,
       creationTime: obj.creationTime,
-       });
+      usersData: obj.usersData,
+    });
   }
 
 
@@ -200,16 +199,6 @@ export class ChannelService {
     let dateTime = new Date();
     return dateTime
   }
-
-
-  // getChannelMessages(id: string) {
-  //   const channelMessages$ = collectionData(this.getRefSubcollChannel());
-  //   return channelMessages$
-  // }
-
-  // async addMessageToChannel(message: any) {
-  //   const docRef = addDoc(this.getRefSubcollChannel(), message);
-  // }
 
   async getChannels() {
     const itemCollection = collection(this.firestore, 'channels');

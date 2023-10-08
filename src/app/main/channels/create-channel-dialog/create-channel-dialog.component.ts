@@ -44,11 +44,10 @@ export class CreateChannelDialogComponent {
       description: this.channelDescription,
       creationTime: this.getCurrentTimestamp(),
       creator: creator,
-      
+      usersData: [],
     };
-
-    this.openAddUserlDialog();
-   /*  this.channelService.addChannel(this.channel, 'channels'); */
+    this.openAddUserlDialog(); 
+/*       this.channelService.addChannel(this.channel, 'channels');  */
   }
 
 
