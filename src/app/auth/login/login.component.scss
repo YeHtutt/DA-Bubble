@@ -43,7 +43,7 @@ form {
     align-items: flex-start;
     gap: 40px;
 
-    
+
     .input-field-container {
         width: 500px;
         height: 60px;
@@ -63,7 +63,7 @@ form {
             border: none;
             background-color: #ECEEFE;
         }*/
-    } 
+    }
 
     .forgetPassword {
         box-sizing: border-box;
@@ -167,11 +167,6 @@ form {
     ::ng-deep .mdc-text-field--focused .mdc-notched-outline>* {
         border-color: lightgray !important;
     }
-
-    ::ng-deep .mdc-notched-outline>* {
-        background-color: rgb(236, 238, 254, 0.3) !important;
-    }
-
 }
 
 /*Logo image after animation*/

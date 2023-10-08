@@ -198,13 +198,7 @@ div {
 
 
 .highest-node {
-  .mat-icon {
-    font-size: $material-size !important;
-    height: $material-size !important;
-    width: $material-size !important;
-  }
-
-   .mat-mdc-icon-button {
+  .mat-mdc-icon-button {
     padding: 0px !important;
     border-radius: 4px !important;
     --mdc-icon-button-state-layer-size: $material-size !important;
@@ -230,7 +224,6 @@ div {
   .mat-mdc-button-base {
     min-width: $material-size;
     height: $material-size !important;
-
   }
 
   button {
@@ -300,4 +293,44 @@ html {
 
 .mat-mdc-form-field-infix {
   display: flex;
+}
+
+.mdc-fab--extended {
+  border-radius: 50px !important;
+  padding: 12px 25px 12px 25px !important;
+  height: 49px !important;
+}
+
+.custom-outline-field {
+
+  /*   .mdc-notched-outline>* {
+    background-color: #ECEEFE !important;
+  } */
+
+  .mdc-text-field--outlined {
+    --mdc-outlined-text-field-outline-width: 0px !important;
+    --mdc-outlined-text-field-focus-outline-width: 0px !important;
+    --mdc-outlined-text-field-container-shape: 0px !important;
+  }
+
+  .mdc-notched-outline__leading {
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
+    min-width: 100px !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    background-color: #ECEEFE !important;
+    border-top-right-radius: 100px !important;
+    border-bottom-right-radius: 100px !important;
+  }
+
+  .mat-mdc-form-field-icon-prefix,
+  .mat-mdc-form-field-icon-suffix {
+    padding: 0 0px 0 0;
+    background-color: #ECEEFE !important;
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
+  }
+
 }
