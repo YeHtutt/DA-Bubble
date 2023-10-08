@@ -47,13 +47,14 @@
                 </div>
             </div>
 
-
-            <div class="buttonBox">
-                <button type="submit" class="loginBtn"
-                    [disabled]="loginForm.invalid">Anmelden</button>
-                <button class="guestLoginBtn" (click)="loginAsGuest()">Gäste Login</button>
+            <div class="login-btns">
+                <button type="submit" [disabled]="loginForm.invalid" mat-fab extended color="primary">
+                    Anmelden
+                </button>
+                <button (click)="loginAsGuest()" mat-fab extended class="unfilled-text-btn">
+                    Gäste Login
+                </button>
             </div>
-
         </form>
     </mat-card>
 

@@ -47,7 +47,7 @@ form {
     .input-field-container {
         width: 500px;
         height: 60px;
-        border-radius: 25px;
+        border-radius: 100px;
         border: none;
         outline: none;
         background-color: #ECEEFE;
@@ -194,4 +194,10 @@ form {
     gap: 16px;
     color: #A4A8F7;
     cursor: pointer;
+}
+
+.login-btns {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
 }

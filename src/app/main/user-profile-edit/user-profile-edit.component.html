@@ -1,32 +1,32 @@
-<div class="profileEditContianer">
+<div class="profile-edit-contianer">
     <div class="title">Dein Profil bearbeiten</div>
-    <img class="userImg" src="../assets/img/avatar/person.png">
+    <img class="user-img" src="../assets/img/avatar/person.png">
 
-    <form [formGroup]="userEditForm" (ngSubmit)="onEdit()" class="nameEmail-container">
-        <div class="nameContainer form-group">
-            <div class="nameContainerTitle">
-                <img class="nameIcon" src="../assets/img/person.png">
+    <form [formGroup]="userEditForm" (ngSubmit)="onEdit()" class="name-email-container">
+        <div class="name-container form-group">
+            <div class="name-container-title">
+                <img class="name-icon" src="../assets/img/person.png">
                 <span>Vollständiger Name</span>
             </div>
-            <mat-form-field appearance="outline"  color="primary">
+            <mat-form-field appearance="outline"  color="primary" class="width-100">
                 <input matInput placeholder="Frederik Beck" formControlName="name" type="text">
                 <mat-error *ngIf="userEditForm.get('name')?.hasError('required')">Name eingeben</mat-error>
             </mat-form-field>
         </div>
-        <div class="emailContainer form-group">
+        <div class="email-container form-group">
             <div class="emailContainerTitle">
-                <img class="emailIcon" src="../assets/img/mail.png">
+                <img class="email-icon" src="../assets/img/mail.png">
                 <span>E-Mail-Adresse</span>
             </div>
-            <mat-form-field appearance="outline" color="primary">
+            <mat-form-field appearance="outline" color="primary" class="width-100">
                 <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('required')">Email eingeben</mat-error>
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>
         </div>
 
-        <div class="buttonContainer paddingTop45">
-            <button mat-fab extended  (click)="this.dialog.closeAll()">Abbrechen</button>
+        <div class="button-container paddingTop45">
+            <button mat-fab extended class="unfilled-text-btn" (click)="this.dialog.closeAll()">Abbrechen</button>
             <button mat-fab extended color="primary" type="submit">Speichern</button>
         </div>
     </form>

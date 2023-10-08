@@ -1,4 +1,4 @@
-.profileEditContianer {
+.profile-edit-contianer {
     display: flex;
     padding: 33px;
     flex-direction: column;
@@ -17,7 +17,7 @@
     text-align: start;
 }
 
-.userImg {
+.user-img {
     width: 200px;
     height: 200px;
     object-fit: cover;
@@ -25,7 +25,7 @@
     border-radius: 100%;
 }
 
-.nameEmail-container {
+.name-email-container {
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -33,7 +33,7 @@
     align-items: center;
     flex-direction: column;
 
-    .nameContainer {
+    .name-container {
         box-sizing: border-box;
         width: 100%;
 
@@ -42,7 +42,7 @@
         }
     }
 
-    .emailContainer {
+    .email-container {
         box-sizing: border-box;
         width: 100%;
 
@@ -51,8 +51,8 @@
         }
     }
 
-    .nameContainerTitle,
-    .emailContainerTitle {
+    .name-container-title,
+    .email-container-title {
         display: flex;
         align-items: center;
         font-family: 'Nunito', sans-serif;
@@ -62,14 +62,16 @@
         line-height: normal;
     }
 
-    .fullWidth {
-        width: 100%;
-    }
 
     --mdc-outlined-text-field-hover-outline-color: #ADB0D9 !important;
 }
 
-.nameIcon {
+.width-100 {
+    width: 100%;
+}
+
+
+.name-icon {
     width: 30px;
     height: 30px;
     object-fit: cover;
@@ -78,20 +80,20 @@
     margin-right: 20px;
 }
 
-.emailIcon {
+.email-icon {
     width: 30px;
     height: 30px;
     object-fit: contain;
     margin-right: 20px;
 }
 
-.buttonContainer {
+.button-container {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 32px;
 
-    .cancelBtn {
+    .cancel-btn {
         display: flex;
         padding: 12px 25px;
         justify-content: center;
@@ -106,7 +108,7 @@
         }
     }
 
-    .saveBtn {
+    .save-btn {
         display: flex;
         padding: 12px 25px;
         justify-content: center;

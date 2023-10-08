@@ -136,23 +136,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.mdc-notched-outline__trailing {
-  border-top-right-radius: 42px !important;
-  border-bottom-right-radius: 42px !important;
-  min-width: 0px !important;
-}
-
-.mdc-notched-outline__leading {
-  border-top-left-radius: 42px !important;
-  border-bottom-left-radius: 42px !important;
-  min-width: 42px !important;
-}
 
 [hidden] {
   display: none !important;
 }
-
-/* used for main headlines */
 
 $hover-effect-color: #ECEEFE;
 $material-size: 24px;
@@ -235,10 +222,77 @@ div {
   }
 }
 
+.mat-divider {
+  border-top-color: $border-color !important
+}
+
+.paddingTop45 {
+  padding-top: 45px;
+}
+
+
+/****************************** MIXINS ***********************/
+
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/****************************** MAIN INPUT STYLES ***********************/
+
+html {
+  --mdc-outlined-text-field-outline-color: #ADB0D9;
+  --mdc-outlined-text-field-hover-outline-color: #444DF2;
+}
+
+
+.mat-mdc-form-field-infix {
+  display: flex;
+}
+
+
+.mat-mdc-form-field-infix {
+  min-height: 56px;
+  height: 60px;
+}
+
+
+.mdc-notched-outline__trailing {
+  border-top-right-radius: 42px !important;
+  border-bottom-right-radius: 42px !important;
+  min-width: 0px !important;
+}
+
+
+.mdc-notched-outline__leading {
+  border-top-left-radius: 42px !important;
+  border-bottom-left-radius: 42px !important;
+  min-width: 42px !important;
+}
+
+/****************************** BUTTON STYLES ***************************/
+
+button {
+  cursor: pointer;
+}
+
+
+.mat-mdc-radio-button.mat-primary {
+  --mdc-radio-unselected-hover-icon-color: #444DF2;
+  --mdc-radio-unselected-icon-color: #ADB0D9;
+}
+
 
 .basic-button {
   background-color: transparent;
-  cursor: pointer;
   border: none;
   border-radius: 50%;
   padding: 8px;
@@ -252,60 +306,28 @@ div {
 }
 
 
-button {
-  cursor: pointer;
+.unfilled-text-btn {
+  border: solid 1px #797EF3 !important;
+  border-radius: 25px;
+  &:hover {
+    background-color: #535AF1;
+    color: white
+  }
 }
 
 
-.mat-mdc-form-field-infix {
-  min-height: 56px;
-  height: 60px;
-}
-
-.mat-divider {
-  border-top-color: $border-color !important
-}
-
-html {
-  --mdc-outlined-text-field-outline-color: #ADB0D9;
-  --mdc-outlined-text-field-hover-outline-color: #444DF2;
-}
-
-.mat-mdc-radio-button.mat-primary {
-  --mdc-radio-unselected-hover-icon-color: #444DF2;
-  --mdc-radio-unselected-icon-color: #ADB0D9;
-}
-
-.paddingTop45 {
-  padding-top: 45px;
-}
-
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.mat-mdc-form-field-infix {
-  display: flex;
-}
 
 .mdc-fab--extended {
-  border-radius: 50px !important;
+  border-radius: 25px !important;
   padding: 12px 25px 12px 25px !important;
   height: 49px !important;
 }
 
-.custom-outline-field {
+/************************** AUTH COPONENT MATERIAL STYLES **********************/
 
-  /*   .mdc-notched-outline>* {
-    background-color: #ECEEFE !important;
-  } */
+/* auth components input field styles */
+
+.register-outline-field {
 
   .mdc-text-field--outlined {
     --mdc-outlined-text-field-outline-width: 0px !important;
@@ -332,5 +354,25 @@ html {
     border-top-left-radius: 100px !important;
     border-bottom-left-radius: 100px !important;
   }
+}
 
+/************************** SCROLLBAR STYLES **********************/
+
+/* For Webkit browsers (Chrome, Safari, newer versions of Edge) */
+::-webkit-scrollbar {
+  width: 5px; // Adjust width for vertical scrollbar
+  height: 5px; // Adjust height for horizontal scrollbar
+}
+
+
+::-webkit-scrollbar-thumb {
+  background-color: #444DF2; // Color of the scrollbar
+  border-radius: 2px; // Rounded corners
+}
+
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #444DF2;
 }

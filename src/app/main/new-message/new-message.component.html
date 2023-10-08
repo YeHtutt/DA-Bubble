@@ -6,7 +6,7 @@
                 <input (click)="toggleSearchOutput()" (keyup)="searchData()" [(ngModel)]="search"
                     placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
                 <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
-                    <div class="userBox" *ngIf="filteredUser.length > 0">
+                    <div class="user-box" *ngIf="filteredUser.length > 0">
                         <!-- <h3 class="headline">User</h3> -->
                         <div class="user" *ngFor="let user of filteredUser" (click)="selectReceiver(user)">
                             <img src="assets/img/avatar/{{user.photoURL}}" alt="">
