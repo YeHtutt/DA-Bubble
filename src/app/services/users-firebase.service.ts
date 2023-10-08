@@ -1,7 +1,8 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable, Input, OnInit } from '@angular/core';
 import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { docData } from 'rxfire/firestore';
 import { Observable, map } from 'rxjs';
 
@@ -16,7 +17,7 @@ interface User {
 @Injectable({
   providedIn: 'root'
 })
-export class UsersFirebaseService {
+export class UsersFirebaseService implements OnInit {
   picURL: any;
   user: UserProfile = new UserProfile;
   id: any;
@@ -27,7 +28,11 @@ export class UsersFirebaseService {
   @Input() loggedInUserEmail: any;
 
 
-  constructor(private firestore: Firestore, private auth: Auth) { }
+  constructor(private firestore: Firestore, private auth: Auth, private AngFirestore: AngularFirestore) { }
+
+  ngOnInit() {
+    this.getUserData();
+  }
 
   async addUserToFirebase(user: any, uid: string) {
     try {
@@ -119,6 +124,31 @@ export class UsersFirebaseService {
     }
   }
 
+
+  //User updaten ins Firestore
+  async updateUserProfile(userID: string, formData: any) {
+    try {
+      const userRef = doc(this.firestore, 'users', userID);
+      await setDoc(userRef, formData, { merge: true }); // Mit { merge: true } werden vorhandene Daten beibehalten und nur die aktualisierten Felder überschrieben
+      this.getUserData();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+  getUserData() {
+    if (this.loggedInUserID) {
+      const userDocRef = this.AngFirestore.collection('users').doc(this.loggedInUserID);
+      userDocRef.valueChanges().subscribe((userData: any) => {
+        if (userData) {
+          this.loggedInUserName = userData.name;
+          this.loggedInUserEmail = userData.email;
+          // Weitere Daten wie Bild können ebenfalls aktualisiert werden, falls benötigt
+        }
+      });
+    }
+  }
 
 
 }

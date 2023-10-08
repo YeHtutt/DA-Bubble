@@ -54,6 +54,7 @@ import { StartAnimationComponent } from './auth/start-animation/start-animation.
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
 import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
+import { UserProfileEditComponent } from './main/user-profile-edit/user-profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialo
     ChannelMenuComponent,
     UserProfileViewComponent,
     ChannelMenuComponent,
-    ChannelUsersDialogComponent
+    ChannelUsersDialogComponent,
+    UserProfileEditComponent
 
   ],
   imports: [

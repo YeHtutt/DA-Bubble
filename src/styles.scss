@@ -291,6 +291,10 @@ html {
   --mdc-radio-unselected-icon-color: #ADB0D9;
 }
 
+.paddingTop45 {
+  padding-top: 45px;
+}
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
