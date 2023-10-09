@@ -177,7 +177,7 @@ export class ChannelService {
 
   setChannelContentObj(obj: any, docId: string): Channel {
     const channelJSON = { ...obj, channelId: docId };
-    return Channel.toObj(channelJSON);
+    return Channel.fromJSON(channelJSON);
   }
 
   deleteChannel(channelId: string) {

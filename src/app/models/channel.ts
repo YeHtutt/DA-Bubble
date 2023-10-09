@@ -28,7 +28,7 @@ export class Channel {
         }
     }
 
-    public static toObj(json: any): Channel {
+    public static fromJSON(json: any): Channel {
         return new Channel({
             channelId: json.channelId,
             channelName: json.channelName,

@@ -17,7 +17,7 @@ import { Channel } from 'src/app/models/channel';
   templateUrl: './channel-chat.component.html',
   styleUrls: ['./channel-chat.component.scss']
 })
-export class ChannelChatComponent implements OnInit {
+export class ChannelChatComponent {
 
   text: string = '';
   message: Message = new Message()
@@ -36,15 +36,15 @@ export class ChannelChatComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private userService: UsersFirebaseService) {
-    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
-    
+    private userService: UsersFirebaseService,
+    ) {
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });    
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async (params) => {
-      this.channelId = params.get('channelId');
-      this.messages$ = this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
+      this.channelId = params.get('channelId');          
+      this.messages$ = await this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
         map((messages) => {
           return this.sortByDate(messages);
         }));
@@ -102,4 +102,6 @@ export class ChannelChatComponent implements OnInit {
     });
   }
 
+
+  
 }
