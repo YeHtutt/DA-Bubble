@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, query } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, query, updateDoc } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
@@ -24,7 +24,7 @@ export class MessageService {
   sendMessage(message: Message, receiver: ReceiverType, newMessage: boolean) {
     if (receiver instanceof UserProfile) {
       this.uploadMessage('direct-messages', receiver.id, 'message', message);
-      // if (newMessage) this.router.navigateByUrl('/main/chat/' + receiver.id);
+      if (newMessage) this.router.navigateByUrl('/main/chat/' + receiver.id);
     } else {
       this.uploadMessage('channels', receiver.channelId, 'channel-message', message);
       if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
@@ -40,7 +40,8 @@ export class MessageService {
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
     console.log('Absender',message.user[0].id)
     console.log('Empfänger', docId)
-    addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
+    const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
+    await updateDoc(docRef, { messageId: docRef.id });
   }
 
   // GET MESSAGE

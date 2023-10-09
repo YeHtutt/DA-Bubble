@@ -49,9 +49,9 @@ export class ChannelChatComponent implements OnInit {
       this.messages$ = this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
         map((messages) => {
           this.changeDetectorRef.detectChanges();
+          console.log('test')
           return this.sortByDate(messages);
         }));
-        
       // Using the service method to fetch the document data
       this.channelService.getDocData('channels', this.channelId).then(channelData => {
         this.channel = channelData;
@@ -60,6 +60,10 @@ export class ChannelChatComponent implements OnInit {
         console.error("Error fetching channel data:", err);
       });
     });
+  }
+
+  trackByMessageId(index: number, message: any): string {
+    return message.messageId;
   }
 
 
