@@ -1,5 +1,3 @@
-import { UserProfile } from "./user-profile";
-
 export class Message {    
     text: string;
     time: any;

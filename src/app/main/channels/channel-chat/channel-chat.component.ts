@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, expand, map, of } from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Observable, map, of } from 'rxjs';
 
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +29,7 @@ export class ChannelChatComponent {
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
   messages$: Observable<any[]> = of([]);
+  messages: any[] = [];
 
 
   constructor(
@@ -37,8 +38,9 @@ export class ChannelChatComponent {
     private route: ActivatedRoute,
     private messageService: MessageService,
     private userService: UsersFirebaseService,
-    ) {
-    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });    
+    private changeDetectorRef: ChangeDetectorRef) {
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
+    
   }
 
   ngOnInit(): void {
@@ -46,6 +48,8 @@ export class ChannelChatComponent {
       this.channelId = params.get('channelId');          
       this.messages$ = await this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
         map((messages) => {
+          this.changeDetectorRef.detectChanges();
+          console.log('test')
           return this.sortByDate(messages);
         }));
       // Using the service method to fetch the document data
@@ -56,6 +60,10 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
+  }
+
+  trackByMessageId(index: number, message: any): string {
+    return message.messageId;
   }
 
 
