@@ -30,7 +30,7 @@ export class ChannelUsersDialogComponent {
     ) { }
 
   ngOnInit() {
-    console.log(this.channel);
+
     this.getAllUsers();
   }
 

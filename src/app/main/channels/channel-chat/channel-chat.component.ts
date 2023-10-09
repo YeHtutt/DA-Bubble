@@ -17,7 +17,7 @@ import { Channel } from 'src/app/models/channel';
   templateUrl: './channel-chat.component.html',
   styleUrls: ['./channel-chat.component.scss']
 })
-export class ChannelChatComponent implements OnInit {
+export class ChannelChatComponent {
 
   text: string = '';
   message: Message = new Message()
@@ -45,8 +45,8 @@ export class ChannelChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async (params) => {
-      this.channelId = params.get('channelId');
-      this.messages$ = this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
+      this.channelId = params.get('channelId');          
+      this.messages$ = await this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
         map((messages) => {
           this.changeDetectorRef.detectChanges();
           console.log('test')
@@ -110,4 +110,6 @@ export class ChannelChatComponent implements OnInit {
     });
   }
 
+
+  
 }

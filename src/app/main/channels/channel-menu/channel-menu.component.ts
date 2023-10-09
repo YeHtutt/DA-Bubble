@@ -21,7 +21,7 @@ export class ChannelMenuComponent {
     private userService: UsersFirebaseService,
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<ChannelMenuComponent>,
-    public utilsService: UtilsService, 
+    public utilsService: UtilsService,
 
   ) { }
 
@@ -77,12 +77,12 @@ export class ChannelMenuComponent {
     this.channel.channelName = this.channelNameInput.value || '';
     this.channelService.updateChannel(this.channel);
     this.toggleDescriptionInput();
-}
+  }
 
-saveDescription() {
+  saveDescription() {
     this.channel.description = this.channelDescriptionInput.value;
     this.channelService.updateChannel(this.channel);
     this.toggleChannelNameInput();
-}
+  }
 
 }
