@@ -2,8 +2,8 @@ import { UserProfile as User } from "./user-profile";
 
 export class Channel {
     channelId: string;
-    channelName: string;
-    description: string;
+    channelName: string ;
+    description: string | null;
     creationTime: any;
     creator: User;
     usersData: { email: string; id: string; name: string; photoUrl: string; } | undefined;

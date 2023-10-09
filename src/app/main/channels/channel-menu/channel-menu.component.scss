@@ -18,7 +18,8 @@
 }
 
 .pdg-20 {
-    padding: 20px
+    padding: 20px;
+    transition: padding 0.3s ease;
 }
 
 .flex-center {
@@ -41,6 +42,7 @@ h3 {
 .channel-name-border {
     border: solid 1px #ADB0D9;
     border-radius: 20px;
+    transition: border 0.3s ease, padding 0.3s ease;
 }
 
 .create-channel-container {
@@ -54,14 +56,10 @@ h3 {
     justify-content: space-around;
 }
 
+
 .close-btn {
     display: flex;
     align-self: flex-end;
-}
-
-.mat-input {
-    width: 100%;
-
 }
 
 
@@ -102,4 +100,9 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+}
+
+
+.no-border {
+    border: none !important;
 }

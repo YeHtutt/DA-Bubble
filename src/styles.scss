@@ -223,13 +223,18 @@ div {
 }
 
 .mat-divider {
-  border-top-color: $border-color !important
+  border-top-color: $border-color !important;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .paddingTop45 {
   padding-top: 45px;
 }
 
+.width-100 {
+  width: 100%;
+}
 
 /****************************** MIXINS ***********************/
 
@@ -309,13 +314,12 @@ button {
 .unfilled-text-btn {
   border: solid 1px #797EF3 !important;
   border-radius: 25px;
+
   &:hover {
     background-color: #535AF1;
     color: white
   }
 }
-
-
 
 .mdc-fab--extended {
   border-radius: 25px !important;

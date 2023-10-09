@@ -4,7 +4,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FormControl, Validators } from '@angular/forms';
 import { UtilsService } from 'src/app/services/utils.service';
-
+import { Channel } from 'src/app/models/channel';
 
 
 @Component({
@@ -21,14 +21,18 @@ export class ChannelMenuComponent {
     private userService: UsersFirebaseService,
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<ChannelMenuComponent>,
-    public utilsService: UtilsService
+    public utilsService: UtilsService, 
+
   ) { }
 
-  channel = this.data.channel;
+  channel: Channel = new Channel(this.data.channel);
   currentUserId: string | null = '';
   isEditing = false;
   channelNameInput = new FormControl(this.channel.channelName);
   channelDescriptionInput = new FormControl(this.channel.description);
+  editChannelName: boolean = false;
+  editDescription: boolean = false;
+
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
@@ -53,19 +57,32 @@ export class ChannelMenuComponent {
 
   }
 
-  editDescription() {
-
+  toggleDescriptionInput() {
+    this.editChannelName = !this.editChannelName;
   }
 
-  editChannelName() {
-
+  toggleChannelNameInput() {
+    this.editDescription = !this.editDescription;
   }
 
   deleteChannel() {
-    if (this.currentUserId == this.channel.creatorId) {
-      this.channelService.deleteChannel(this.channel);
+    if (this.currentUserId == this.channel.creator.id) {
+      this.channelService.deleteChannel(this.channel.creator.id);
     }
   }
 
+
+  saveChannelName() {
+    debugger
+    this.channel.channelName = this.channelNameInput.value || '';
+    this.channelService.updateChannel(this.channel);
+    this.toggleDescriptionInput();
+}
+
+saveDescription() {
+    this.channel.description = this.channelDescriptionInput.value;
+    this.channelService.updateChannel(this.channel);
+    this.toggleChannelNameInput();
+}
 
 }

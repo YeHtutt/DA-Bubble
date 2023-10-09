@@ -11,7 +11,7 @@
         </mat-card-header>
 
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
-            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
                 <input matInput formControlName="email" placeholder="beispiel@email.com" type="email"
                     style="color: black !important;">
@@ -19,7 +19,7 @@
                 <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="fullWidth custom-outline-field">
+            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
                 <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">

@@ -41,7 +41,6 @@ export class ChannelService {
     this.unsubChannelTree = this.subChannelList();
   }
 
-
   channelContent: Channel[] = [];
   channelTree: ChannelsNode[] = [];
   themes: any;
@@ -49,7 +48,6 @@ export class ChannelService {
   unsubChannelTree: any;
   unsubMessage: any;
   unsubChannelContent: any;
-
 
 
   ngOnDestroy() {
@@ -158,12 +156,12 @@ export class ChannelService {
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
       const docRef = this.getSingleDocRef('channels', channel.channelId);
-      const updatedChannelData = this.setChannelContentObj(channel, channel.channelId);
-      await updateDoc(docRef, updatedChannelData as any);
+      const plainChannelObject = channel.toJSON();
+      await updateDoc(docRef, plainChannelObject);
     } else {
       console.error("Channel ID is missing");
     }
-  }
+}
 
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
