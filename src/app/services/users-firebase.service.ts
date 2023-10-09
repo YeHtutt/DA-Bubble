@@ -31,7 +31,6 @@ export class UsersFirebaseService implements OnInit {
   constructor(private firestore: Firestore, private auth: Auth, private AngFirestore: AngularFirestore) { }
 
   ngOnInit() {
-    this.getUserData();
   }
 
   async addUserToFirebase(user: any, uid: string) {
@@ -75,7 +74,14 @@ export class UsersFirebaseService implements OnInit {
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
+    this.getCurrentUserData(user.name , user.email, user.photoURL);
     return user;
+  }
+
+  getCurrentUserData(name, email, photoURL) {
+    this.loggedInUserName = name;
+    this.loggedInUserEmail = email;
+    this.loggedInUserImg = photoURL;
   }
 
   
@@ -134,26 +140,11 @@ export class UsersFirebaseService implements OnInit {
     try {
       const userRef = doc(this.firestore, 'users', userID);
       await setDoc(userRef, formData, { merge: true }); // Mit { merge: true } werden vorhandene Daten beibehalten und nur die aktualisierten Felder überschrieben
-      this.getUserData();
+      this.getUser(userID);
     } catch (error) {
       throw error;
     }
   }
 
 
-  getUserData() {
-    if (this.loggedInUserID) {
-      const userDocRef = this.AngFirestore.collection('users').doc(this.loggedInUserID);
-      userDocRef.valueChanges().subscribe((userData: any) => {
-        if (userData) {
-          this.loggedInUserName = userData.name;
-          this.loggedInUserEmail = userData.email;
-          // Weitere Daten wie Bild können ebenfalls aktualisiert werden, falls benötigt
-        }
-      });
-    }
-  }
-
-
 }
-

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { UserProfile } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UsersFirebaseService } from '../../services/users-firebase.service';
+
 
 @Component({
   selector: 'app-user-profile-edit',
