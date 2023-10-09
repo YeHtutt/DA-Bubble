@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, expand, map, of } from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Observable, map, of } from 'rxjs';
 
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +29,7 @@ export class ChannelChatComponent implements OnInit {
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
   messages$: Observable<any[]> = of([]);
+  messages: any[] = [];
 
 
   constructor(
@@ -36,7 +37,8 @@ export class ChannelChatComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private userService: UsersFirebaseService) {
+    private userService: UsersFirebaseService,
+    private changeDetectorRef: ChangeDetectorRef) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
     
   }
@@ -46,8 +48,10 @@ export class ChannelChatComponent implements OnInit {
       this.channelId = params.get('channelId');
       this.messages$ = this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
         map((messages) => {
+          this.changeDetectorRef.detectChanges();
           return this.sortByDate(messages);
         }));
+        
       // Using the service method to fetch the document data
       this.channelService.getDocData('channels', this.channelId).then(channelData => {
         this.channel = channelData;

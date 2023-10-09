@@ -23,8 +23,8 @@ export class MessageService {
 
   sendMessage(message: Message, receiver: ReceiverType, newMessage: boolean) {
     if (receiver instanceof UserProfile) {
-      this.uploadMessage('users', receiver.id, 'message', message);
-      if (newMessage) this.router.navigateByUrl('/main/chat/' + receiver.id);
+      this.uploadMessage('direct-messages', receiver.id, 'message', message);
+      // if (newMessage) this.router.navigateByUrl('/main/chat/' + receiver.id);
     } else {
       this.uploadMessage('channels', receiver.channelId, 'channel-message', message);
       if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
@@ -38,8 +38,9 @@ export class MessageService {
 
 
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
-    console.log(mainColl, docId, message)
-    const docRef = addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
+    console.log('Absender',message.user[0].id)
+    console.log('Empfänger', docId)
+    addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
   }
 
   // GET MESSAGE
