@@ -2,7 +2,7 @@ import { UserProfile as User } from "./user-profile";
 
 export class Channel {
     channelId: string;
-    channelName: string ;
+    channelName: string;
     description: string | null;
     creationTime: any;
     creator: User;
@@ -26,5 +26,16 @@ export class Channel {
             creator: this.creator,
             usersData: this.usersData
         }
+    }
+
+    public static toObj(json: any): Channel {
+        return new Channel({
+            channelId: json.channelId,
+            channelName: json.channelName,
+            creator: json.creator,
+            description: json.description,
+            creationTime: json.creationTime,
+            usersData: json.usersData,
+        });
     }
 }

@@ -161,7 +161,7 @@ export class ChannelService {
     } else {
       console.error("Channel ID is missing");
     }
-}
+  }
 
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
@@ -176,16 +176,9 @@ export class ChannelService {
   }
 
   setChannelContentObj(obj: any, docId: string): Channel {
-    return new Channel({
-      channelId: docId,
-      channelName: obj.channelName,
-      creator: obj.creator,
-      description: obj.description,
-      creationTime: obj.creationTime,
-      usersData: obj.usersData,
-    });
+    const channelJSON = { ...obj, channelId: docId };
+    return Channel.toObj(channelJSON);
   }
-
 
   deleteChannel(channelId: string) {
 
