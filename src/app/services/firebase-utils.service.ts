@@ -36,7 +36,7 @@ export class FirebaseUtilsService {
     this.unsubMessages();
   }
 
-  
+
   async addColl(item: {}, ref: string, fieldId: string) {
     try {
       const docRef = await addDoc(this.getRef(ref), item);
@@ -84,7 +84,7 @@ export class FirebaseUtilsService {
   subMessage(coll: string, subId: string) {
     // Target the 'message' subcollection under the specified document ID
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
-    const q = query(ref, limit(100));
+    const q = query(ref, limit(100), orderBy('time'));
     return this.unsubMessages = onSnapshot(q, (list) => {
       this.messages = [];
       list.forEach((message) => {

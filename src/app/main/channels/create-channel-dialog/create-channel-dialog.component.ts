@@ -47,8 +47,8 @@ export class CreateChannelDialogComponent {
       creator: creator,
       usersData: [],
     };
+    this.firebaseUtils.addColl(this.channel, 'channels', 'channelId');
     this.openAddUserlDialog();
-    /*   this.firebaseUtils.addColl(this.channel, 'channels', 'channelId');  */
   }
 
 
