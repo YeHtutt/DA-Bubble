@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
 
   openSnackBar() {
     if(this.loginSuccess == true) {
-      this._snackBar.open('Login erfolgreich', 'Undo', {
+      this._snackBar.open('Login erfolgreich', 'Undo' , {
         duration: 2000
       });
     }else{

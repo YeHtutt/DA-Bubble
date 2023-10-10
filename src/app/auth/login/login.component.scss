@@ -12,7 +12,7 @@
 
 mat-card {
     width: 606px;
-    height: 769px;
+    height: auto;
     flex-shrink: 0;
     border-radius: 30px;
     display: flex;
@@ -27,11 +27,16 @@ mat-card-header {
     color: #444DF2;
     --mat-card-title-text-size: 46px;
     --mat-card-subtitle-text-size: 20px;
-    margin-bottom: 46px;
+    margin-bottom: 40px;
 }
 
 mat-card-title {
     margin-bottom: 30px;
+    font-family: 'Nunito', sans-serif !important;
+}
+
+mat-mdc-card-subtitle {
+    font-family: 'Nunito', sans-serif !important;
 }
 
 
@@ -189,7 +194,7 @@ form {
 .legals {
     flex-shrink: 0;
     position: absolute;
-    bottom: 5px;
+    bottom: 48px;
     display: flex;
     gap: 16px;
     color: #A4A8F7;
@@ -200,4 +205,8 @@ form {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+}
+
+::ng-deep .mdc-snackbar {
+    position: fixed !important;
 }
