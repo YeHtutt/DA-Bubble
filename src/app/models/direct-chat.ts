@@ -2,20 +2,23 @@ export class DirectChat {
 
     chatId: string;
     creationTime: any;
-    user: any[] = [];
+    user1: string = '';
+    user2: string = '';
 
     constructor(obj?: any) {
         this.chatId = obj ? obj.chatId : '';
         this.creationTime = obj ? obj.creationTime : '';
-        this.user = obj && obj.user ? obj.user : [];
+        this.user1 = obj ? obj.user1 : '';
+        this.user2 = obj ? obj.user2 : '';
       
     }
 
     public toJSON() {
         return {
             text: this.chatId,
-            time: this.creationTime,
-            user: this.user.map(user => user.toJSON()),        
+            time: this.creationTime,  
+            user1: this.user1,
+            user2: this.user2    
         };
     }
 }

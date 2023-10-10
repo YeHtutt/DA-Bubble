@@ -49,8 +49,9 @@ export class DirectMessageService {
   constructor(
     public channelService: ChannelService,
     private userService: UsersFirebaseService,
-    private route: ActivatedRoute
-    ) {
+    private route: ActivatedRoute,
+    private firestore: Firestore = inject(Firestore)
+  ) {
     this.unsubMessage = this.subMessageList();
   }
 

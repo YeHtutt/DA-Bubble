@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, map, of } from 'rxjs';
+import { DirectChat } from 'src/app/models/direct-chat';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
+import { DirectMessageService } from 'src/app/services/direct-message.service';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
@@ -12,7 +14,8 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-  userId: string | null = '';
+  chatId: string | null = '';
+  chat: DirectChat;
   text: string = '';
   message: Message = new Message();
   chatExists: boolean = false;
@@ -23,16 +26,19 @@ export class ChatComponent {
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private userService: UsersFirebaseService
+    private userService: UsersFirebaseService,
+
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
-      this.userId = params.get('id');
-      this.userService.getUser(this.userId).then((user: any) => { this.receiver = user });
-      this.messages$ = this.messageService.getChannelMessages('users', this.userId, 'message').pipe(
+      this.chatId = params.get('id');
+      this.chat = await this.messageService.getDirectChatDoc(this.chatId);
+      this.getDataOfReceiver();
+      this.userService.getUser(this.getDataOfReceiver()).then((user: any) => { this.receiver = user });
+      this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
         map((messages) => {
           if (messages.length > 0) this.chatExists = true;
           return this.sortByDate(messages);
@@ -49,9 +55,17 @@ export class ChatComponent {
   }
 
 
+  getDataOfReceiver() {
+    if (this.chat.user1 == this.currentUser.id) {
+      return this.chat.user2;
+    } else {
+      return this.chat.user1;
+    }
+  }
+
 
   send() {
-    this.messageService.sendMessage(this.createMessageObject(), this.receiver, false);
+    this.messageService.sendMessage(this.createMessageObject(), this.chatId, false, '');
     this.text = '';
   }
 
