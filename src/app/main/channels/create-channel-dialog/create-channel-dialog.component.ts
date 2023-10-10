@@ -43,7 +43,7 @@ export class CreateChannelDialogComponent {
     this.channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
-      creationTime: this.getCurrentTimestamp(),
+      creationTime: this.firebaseUtils.getDateTime(),
       creator: creator,
       usersData: [],
     };
@@ -66,10 +66,6 @@ export class CreateChannelDialogComponent {
     this.dialogRef.close();
   }
 
-
-  getCurrentTimestamp() {
-    return this.firebaseUtils.getDateTime();
-  }
 
   getCreatorId() {
     return this.userService.getFromLocalStorage();

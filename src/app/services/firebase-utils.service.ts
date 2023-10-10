@@ -5,7 +5,7 @@ import { Channel } from '../models/channel';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
-import { DirectMessage } from '../models/direct-message';
+import { Message } from '../models/message';
 
 import {
   Firestore, collection,
@@ -18,6 +18,7 @@ import {
   getDocs
 } from '@angular/fire/firestore';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +28,15 @@ export class FirebaseUtilsService {
   firestore: Firestore = inject(Firestore);
 
 
+  messages: Message[] = [];
+  unsubMessages: any;
+
+
+  ngOnDestroy() {
+    this.unsubMessages();
+  }
+
+  
   async addColl(item: {}, ref: string, fieldId: string) {
     try {
       const docRef = await addDoc(this.getRef(ref), item);
@@ -37,6 +47,8 @@ export class FirebaseUtilsService {
       console.log(err);
     }
   }
+
+
 
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
   getRef(ref: any) {
@@ -69,31 +81,40 @@ export class FirebaseUtilsService {
     return dateTime
   }
 
-  messages: DirectMessage[] = [];
-  unsubMessages: any;
-
   subMessage(coll: string, subId: string) {
-    let ref = collection(this.firestore, `${coll}/${subId}`)
+    // Target the 'message' subcollection under the specified document ID
+    let ref = collection(this.firestore, `${coll}/${subId}/message`);
     const q = query(ref, limit(100));
     return this.unsubMessages = onSnapshot(q, (list) => {
       this.messages = [];
       list.forEach((message) => {
-        this.messages.push(DirectMessage.fromJSON({ ...message.data(), messageId: message.id }));
+        this.messages.push(Message.fromJSON({ ...message.data(), messageId: message.id }));
       });
     });
   }
 
+
   async addMessageToCollection(coll: string, docId: string, message: {}) {
     // Get reference to the sub-collection inside the specified document
     let ref = collection(doc(this.firestore, coll, docId), 'message');
-
     // Add the new message to the sub-collection
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
       .then((docRef: any) => { console.log("Message written with ID", docRef?.id) });
   }
 
+  async getMessagesFromDoc(col: string, docId: string) {
+    // Create a reference to the 'message' subcollection under the specified document ID
+    let ref = collection(this.firestore, `${col}/${docId}/message`);
 
+    // Fetch the messages from the subcollection using getDocs
+    const querySnapshot = await getDocs(ref);
+
+    // Convert the messages to the Message[] format
+    const messages: Message[] = querySnapshot.docs.map(doc => Message.fromJSON({ ...doc.data(), messageId: doc.id }));
+
+    return messages;
+  }
 
 
 }

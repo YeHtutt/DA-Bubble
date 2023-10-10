@@ -18,9 +18,12 @@
         </div>
     </header>
 
-    <main>
-        <app-message></app-message>
-    </main>
+
+        <main>
+            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
+        </main>
+        
+   
     <div class="input_message_container">
         <textarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"></textarea>
         <div class="control_container">

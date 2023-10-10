@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
@@ -19,40 +19,33 @@ export class ChannelChatComponent {
 
   text: string = '';
   message: Message = new Message()
-  // messages$: Observable<any>;
   id: string = '';
   channelId: any = '';
   channel: any;
   ref: any;
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
-
-
+  messages: Message[] = [];
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private messageService: MessageService,
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
-      // Using the service method to fetch the document data
       this.firebaseUtils.getDocData('channels', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.receiver = new Channel(channelData);
+        this.firebaseUtils.subMessage('channels', this.channelId)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
     });
-  }
-
-  trackByMessageId(index: number, message: any): string {
-    return message.messageId;
   }
 
 
@@ -68,20 +61,32 @@ export class ChannelChatComponent {
 
 
   sendMessageTo(coll: string, docId: string) {
-    this.message = this.createMessageObject();
-    this.firebaseUtils.addMessageToCollection(coll, docId, this.message.toJSON());
+    this.createMessageObject().then(createdMessage => {
+      this.message = createdMessage;
+      this.firebaseUtils.addMessageToCollection(coll, docId, this.message.toJSON());
+    });
+    this.getAllMessages();
   }
 
 
-  createMessageObject() {
+  async createMessageObject() {
+    let creatorId = this.getCreatorId();
+    let messageCreator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
     return new Message({
       text: this.text,
-      time: new Date(),  
-      user: [this.currentUser]
+      time: new Date(),
+      user: messageCreator
     });
   }
 
 
-  getMessage() {}
+  getCreatorId() {
+    return this.userService.getFromLocalStorage();
+  }
+
+
+  getAllMessages() {
+    return this.firebaseUtils.messages
+  }
 
 }
