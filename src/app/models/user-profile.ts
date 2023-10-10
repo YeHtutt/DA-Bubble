@@ -8,7 +8,7 @@ export class UserProfile {
         this.name = obj ? obj.name : '';
         this.email = obj ? obj.email : '';
         this.id = obj ? obj.id : '';
-        this.photoURL = obj ? obj.photoURL : '';
+        this.photoURL = obj ? obj.photoURL : '../assets/img/avatar/person.png';
     }
 
     public toJSON() {
@@ -18,5 +18,14 @@ export class UserProfile {
             id: this.id,
             photoURL: this.photoURL,
         }
+    }
+
+    public static fromJSON(json: any): UserProfile {
+        return new UserProfile({
+            name: json.name,
+            email: json.email,
+            id: json.id,
+            photoURL: json.photoURL
+        });
     }
 }

@@ -3,7 +3,7 @@ import { CreateChannelDialogComponent } from './create-channel-dialog/create-cha
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Subscription } from 'rxjs';
-
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-channels',
@@ -17,6 +17,7 @@ export class ChannelsComponent {
   constructor(
     public dialog: MatDialog,
     public channelService: ChannelService,
+    public messageService: MessageService
   ) { }
 
   ngOnInit() {
