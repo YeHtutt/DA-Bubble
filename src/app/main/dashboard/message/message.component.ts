@@ -11,11 +11,12 @@ export class MessageComponent {
 
   @Input() message: any;
   public currentUser: string | null = '';
+  public updateMsg: boolean = false;
+  public update: boolean = false;
 
 
   constructor(private userService: UsersFirebaseService,) {
     this.currentUser = this.userService.getFromLocalStorage();
-
   }
 
   getTimeOfDate(timestamp: any) {
@@ -24,6 +25,15 @@ export class MessageComponent {
     const minutes = date.getMinutes();
     const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     return formattedTime;
+  }
+
+  openMenu() {
+    this.updateMsg = !this.updateMsg;
+    setTimeout(() => this.updateMsg = !this.updateMsg, 2000);
+  }
+
+  openEdit() {
+    this.update = !this.update
   }
 
 }

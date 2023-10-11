@@ -5,6 +5,7 @@ import { DirectChat } from 'src/app/models/direct-chat';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
 import { DirectMessageService } from 'src/app/services/direct-message.service';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
@@ -27,7 +28,7 @@ export class ChatComponent {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
-
+    private firebaseUtils: FirebaseUtilsService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -35,27 +36,42 @@ export class ChatComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       this.chatId = params.get('id') || '';
-      this.chat = await this.messageService.getDirectChatDoc(this.chatId);
-      this.getDataOfReceiver();
-      this.userService.getUser(this.getDataOfReceiver()).then((user: any) => { this.receiver = user });
-      this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
-        map((messages) => {
-          if (messages.length > 0) this.chatExists = true;
-          return this.sortByDate(messages);
-        }));
+      this.getReceiverData();
+      // this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
+      //   map((messages) => {
+      //     if (messages.length > 0) this.chatExists = true;
+      //     return this.sortByDate(messages);
+      //   }));
+      this.firebaseUtils.getDocData('direct-messages', this.chatId).then(chatData => {
+        // this.chat = chatData;
+        this.firebaseUtils.subMessage('direct-messages', this.chatId);
+      }).catch(err => {
+        console.error("Error fetching channel data:", err);
+      });
     });
   }
 
-  sortByDate(message: any) {
-    return message.sort((a: any, b: any) => {
-      const dateA = a.time.seconds * 1000;
-      const dateB = b.time.seconds * 1000;
-      return dateA - dateB;
-    });
+  getAllMessages() {
+    if (this.firebaseUtils.messages.length > 0) this.chatExists = true;
+    return this.firebaseUtils.messages
+  }
+
+  // sortByDate(message: any) {
+  //   return message.sort((a: any, b: any) => {
+  //     const dateA = a.time.seconds * 1000;
+  //     const dateB = b.time.seconds * 1000;
+  //     return dateA - dateB;
+  //   });
+  // }
+
+  async getReceiverData() {
+    this.chat = await this.messageService.getDirectChatDoc(this.chatId);
+    this.checkWhoReceiverIs();
+    this.userService.getUser(this.checkWhoReceiverIs()).then((user: any) => { this.receiver = user });
   }
 
 
-  getDataOfReceiver() {
+  checkWhoReceiverIs() {
     if (this.chat.user1 == this.currentUser.id) {
       return this.chat.user2;
     } else {
@@ -69,12 +85,13 @@ export class ChatComponent {
     this.text = '';
   }
 
+
   createMessageObject() {
     return new Message({
       text: this.text,
       time: new Date(),
       messageId: '',
-      user: [this.currentUser]
+      user: this.currentUser.toJSON()
     });
   }
 }

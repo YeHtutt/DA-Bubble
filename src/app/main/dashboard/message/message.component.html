@@ -1,6 +1,6 @@
-<div [ngClass]="{'message_container_reverse': this.currentUser == message.user.id}" class="message_container">
+<div *ngIf="!update" [ngClass]="{'message_container_reverse': this.currentUser == message.user.id}" class="message_container">
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
-    <div [ngClass]="{'content_container_reverse': currentUser == message.user.id}" class="content_container">
+    <div *ngIf="!update" [ngClass]="{'content_container_reverse': currentUser == message.user.id}" class="content_container">
         <div [ngClass]="{'creator_info_reverse': currentUser == message.user.id}" class="creator_info">
             <span>{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
@@ -10,6 +10,15 @@
     <div [ngClass]="{'reaction_container_reverse': currentUser == message.user.id}" class="reaction_container">
         <mat-icon>add_reaction</mat-icon>
         <mat-icon>comment</mat-icon>
-        <mat-icon>more_vert</mat-icon>
+        <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
+        <div class="menu_container">
+            <button (click)="openEdit()" *ngIf="updateMsg">Nachricht bearbeiten</button>
+        </div>
     </div>
+</div>
+<div *ngIf="update" class="edit_container">
+    <div class="edit_box">
+        <textarea [(ngModel)]="message.text"></textarea>
+    </div>
+    <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
 </div>

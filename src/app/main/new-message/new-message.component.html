@@ -9,7 +9,7 @@
                     <div class="user-box" *ngIf="filteredUser.length > 0">
                         <!-- <h3 class="headline">User</h3> -->
                         <div class="user" *ngFor="let user of filteredUser" (click)="selectReceiver(user)">
-                            <img src="assets/img/avatar/{{user.photoURL}}" alt="">
+                            <img src="{{user.photoURL}}" alt="">
                             <span>{{user.name}}</span>
                         </div>
                     </div>

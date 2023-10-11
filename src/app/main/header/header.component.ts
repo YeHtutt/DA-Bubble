@@ -61,13 +61,13 @@ export class HeaderComponent implements OnInit {
     this.searchOutput = !this.searchOutput;
   }
 
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
-  //     this.searchOutput = false;
-  //   }
-  // }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
+      this.searchOutput = false;
+    }
+  }
 
   openProfil(user: UserProfile) {
 

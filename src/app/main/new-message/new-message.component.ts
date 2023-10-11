@@ -65,7 +65,7 @@ export class NewMessageComponent {
       text: this.text,
       time: new Date(),
       messageId: '',
-      user: [this.currentUser]
+      user: this.currentUser.toJSON()
     });
   }
 
@@ -90,13 +90,13 @@ export class NewMessageComponent {
     this.searchOutput = !this.searchOutput;
   }
 
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('input') && !target.closest('.searchOutput')) {
-  //     this.searchOutput = false;
-  //   }
-  // }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('input') && !target.closest('.searchOutput')) {
+      this.searchOutput = false;
+    }
+  }
 
   // checkIfChatAlreadyExists() {
   //   if (this.receiver instanceof UserProfile) {

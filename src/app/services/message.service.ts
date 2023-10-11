@@ -23,14 +23,17 @@ export class MessageService {
   // SEND MESSAGE
 
   async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
+    // If a message is sent with new Message to a user & redirect to the chat
     if (receiver instanceof UserProfile) {
       const docId =  await this.createDirectChat(directChat);
       this.uploadMessage('direct-messages', docId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
+      // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
     } else if (receiver instanceof Channel) {
-      this.uploadMessage('channels', receiver.channelId, 'channel-message', message);
+      this.uploadMessage('channels', receiver.channelId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
     } else {
+      // if a message is sent inside a user chat
       this.uploadMessage('direct-messages', receiver, 'message', message);
     }
   }
@@ -42,12 +45,13 @@ export class MessageService {
 
 
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
-    console.log('Absender', message.user.id)
-    console.log('Empfänger', docId)
+    console.log(message)
     const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
     await updateDoc(docRef, { messageId: docRef.id });
   }
 
+
+  // creates a new direct chat 
   async createDirectChat(directChat: DirectChat) {
     const itemCollection = collection(this.firestore, 'direct-messages');
     const docRef = await addDoc(itemCollection, directChat.toJSON());
@@ -55,6 +59,7 @@ export class MessageService {
     return docRef.id;
   }
 
+  // gets a specific direct chat 
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, "direct-messages", docId);
     const chatDoc = (await getDoc(docRef)).data();

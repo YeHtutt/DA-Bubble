@@ -7,7 +7,7 @@
       <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutputHeader">
         <div class="user-box" *ngIf="filteredUser.length > 0">
           <div class="user" *ngFor="let user of filteredUser" (click)="openProfil(user)">
-            <img src="assets/img/avatar/{{user.photoURL}}" alt="">
+            <img src="{{user.photoURL}}" alt="">
             <span>{{user.name}}</span>
           </div>
         </div>
