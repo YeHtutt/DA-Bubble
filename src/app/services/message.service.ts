@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, query, updateDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
 import { collectionData } from 'rxfire/firestore';
+import { DirectChat } from '../models/direct-chat';
 
 type ReceiverType = UserProfile | Channel;
 
@@ -21,13 +22,16 @@ export class MessageService {
 
   // SEND MESSAGE
 
-  sendMessage(message: Message, receiver: ReceiverType, newMessage: boolean) {
+  async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
     if (receiver instanceof UserProfile) {
-      this.uploadMessage('direct-messages', receiver.id, 'message', message);
-      if (newMessage) this.router.navigateByUrl('/main/chat/' + receiver.id);
-    } else {
+      const docId =  await this.createDirectChat(directChat);
+      this.uploadMessage('direct-messages', docId, 'message', message);
+      if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
+    } else if (receiver instanceof Channel) {
       this.uploadMessage('channels', receiver.channelId, 'channel-message', message);
       if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
+    } else {
+      this.uploadMessage('direct-messages', receiver, 'message', message);
     }
   }
  
@@ -42,6 +46,19 @@ export class MessageService {
     console.log('Empfänger', docId)
     const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
     await updateDoc(docRef, { messageId: docRef.id });
+  }
+
+  async createDirectChat(directChat: DirectChat) {
+    const itemCollection = collection(this.firestore, 'direct-messages');
+    const docRef = await addDoc(itemCollection, directChat.toJSON());
+    await updateDoc(docRef, { chatId: docRef.id });
+    return docRef.id;
+  }
+
+  async getDirectChatDoc(docId: string) {
+    const docRef = doc(this.firestore, "direct-messages", docId);
+    const chatDoc = (await getDoc(docRef)).data();
+    return new DirectChat(chatDoc);
   }
 
   // GET MESSAGE

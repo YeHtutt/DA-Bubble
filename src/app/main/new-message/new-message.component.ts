@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 import { Channel } from 'src/app/models/channel';
+import { DirectChat } from 'src/app/models/direct-chat';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -42,8 +43,21 @@ export class NewMessageComponent {
   }
 
   send() {
-    this.messageService.sendMessage(this.createMessageObject(), this.receiver, true);
+    if (this.receiver instanceof UserProfile) {
+      this.messageService.sendMessage(this.createMessageObject(), this.receiver, true, this.createDirectChatObject(this.receiver),);
+    } else {
+      this.messageService.sendMessage(this.createMessageObject(), this.receiver, true, '');
+    }
     this.text = '';
+  }
+
+  createDirectChatObject(receiver: UserProfile): DirectChat {
+    return new DirectChat({
+      chatId: '',
+      creationTime: new Date(),
+      user1: this.currentUser.id,
+      user2: receiver.id
+    });
   }
 
   createMessageObject() {
@@ -68,6 +82,7 @@ export class NewMessageComponent {
     this.receiver = receiver;
     this.filteredChannel = [];
     this.filteredUser = [];
+    console.log(this.receiver)
     // this.checkIfChatAlreadyExists();
   }
 

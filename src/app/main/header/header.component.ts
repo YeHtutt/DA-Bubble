@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
   openUserProfile() {
     this.dialog.open(UserProfileViewComponent, {
       width: '500px',
-      height: '705px',
+      height: '623px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
     });
