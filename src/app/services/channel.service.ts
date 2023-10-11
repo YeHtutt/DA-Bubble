@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Channel } from '../models/channel';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
+import { FirebaseUtilsService } from './firebase-utils.service';
+
 import {
   Firestore, collection,
   doc, onSnapshot,
@@ -37,7 +38,7 @@ export class ChannelService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor() {
+  constructor( private firebaseUtils: FirebaseUtilsService,) {
     this.unsubChannelTree = this.subChannelList();
   }
 
@@ -56,46 +57,9 @@ export class ChannelService {
     this.unsubChannelContent();
   }
 
-  async addChannel(item: {}, ref: string) {
-    try {
-      const docRef = await addDoc(this.getRef(ref), item);
-      console.log("Document written with ID", docRef.id);
-
-      // Update the document with the ID
-      await updateDoc(docRef, { channelId: docRef.id });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
-  getRef(ref: any) {
-    return collection(this.firestore, ref);
-  }
-
-  getSingleDocRef(col: string, docId: string) {
-    return doc(collection(this.firestore, col), docId)
-  }
-
-
-  async getDocData(col: string, docId: string) {
-    let docRef = this.getSingleDocRef(col, docId);
-
-    // Fetch the actual document data using the getDoc method
-    const docSnapshot = await getDoc(docRef);
-
-    // Check if the document exists and print its data
-    if (docSnapshot.exists()) {
-      return docSnapshot.data();
-    } else {
-      return console.log("No such document!");
-    }
-  }
-
-
 
   getChannelContent(documentId: string) {
-    const docRef = doc(this.getRef('channels'), documentId);
+    const docRef = doc(this.firebaseUtils.getRef('channels'), documentId);
     return this.unsubChannel = onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         return this.setChannelContentObj(docSnapshot.data(), docSnapshot.id);
@@ -105,13 +69,6 @@ export class ChannelService {
     });
   }
 
-
-  getRefofSubCollection(colId: string, docId: string) { }
-
-
-  // getRefSubcollChannel() {
-  //   return collection(this.firestore, `channels/qWdWhJj21D3vBc2s2fsr/channel_messages`);
-  // }
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {
@@ -141,7 +98,7 @@ export class ChannelService {
 
 
   subChannelList() {
-    return this.unsubChannelTree = onSnapshot(this.getRef('channels'), (list: any) => {
+    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channels'), (list: any) => {
       this.channelTree = [];
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
@@ -153,9 +110,10 @@ export class ChannelService {
     });
   }
 
+
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
-      const docRef = this.getSingleDocRef('channels', channel.channelId);
+      const docRef = this.firebaseUtils.getSingleDocRef('channels', channel.channelId);
       const plainChannelObject = channel.toJSON();
       await updateDoc(docRef, plainChannelObject);
     } else {
@@ -175,21 +133,18 @@ export class ChannelService {
     });
   }
 
+
   setChannelContentObj(obj: any, docId: string): Channel {
     const channelJSON = { ...obj, channelId: docId };
     return Channel.fromJSON(channelJSON);
   }
+
 
   deleteChannel(channelId: string) {
 
 
   }
 
-
-  getDateTime() {
-    let dateTime = new Date();
-    return dateTime
-  }
 
   async getChannels() {
     const itemCollection = collection(this.firestore, 'channels');

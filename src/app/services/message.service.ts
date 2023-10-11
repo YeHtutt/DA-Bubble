@@ -18,7 +18,7 @@ export class MessageService {
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router
-  ) {}
+  ) { }
 
   // SEND MESSAGE
 
@@ -34,7 +34,7 @@ export class MessageService {
       this.uploadMessage('direct-messages', receiver, 'message', message);
     }
   }
-
+ 
 
   getRefSubcollChannel(mainColl: string, docId: string | null, subColl: string) {
     return collection(this.firestore, `${mainColl}/${docId}/${subColl}`);
@@ -42,7 +42,7 @@ export class MessageService {
 
 
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
-    console.log('Absender',message.user[0].id)
+    console.log('Absender', message.user.id)
     console.log('Empfänger', docId)
     const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
     await updateDoc(docRef, { messageId: docRef.id });
@@ -67,5 +67,12 @@ export class MessageService {
     const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
     return channelMessages$
   }
+
+  async addMessage() { }
+
+  displayMessage() {}
+
+
+
 
 }
