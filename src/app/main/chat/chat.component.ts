@@ -14,8 +14,8 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-  chatId: string | null = '';
-  chat: DirectChat;
+  chatId: string = '';
+  chat: any;
   text: string = '';
   message: Message = new Message();
   chatExists: boolean = false;
@@ -34,7 +34,7 @@ export class ChatComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
-      this.chatId = params.get('id');
+      this.chatId = params.get('id') || '';
       this.chat = await this.messageService.getDirectChatDoc(this.chatId);
       this.getDataOfReceiver();
       this.userService.getUser(this.getDataOfReceiver()).then((user: any) => { this.receiver = user });
