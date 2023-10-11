@@ -38,7 +38,7 @@ export class ChannelService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor( private firebaseUtils: FirebaseUtilsService,) {
+  constructor(private firebaseUtils: FirebaseUtilsService,) {
     this.unsubChannelTree = this.subChannelList();
   }
 
@@ -140,10 +140,7 @@ export class ChannelService {
   }
 
 
-  deleteChannel(channelId: string) {
-
-
-  }
+ 
 
 
   async getChannels() {

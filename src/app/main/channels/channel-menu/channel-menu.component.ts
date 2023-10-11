@@ -5,7 +5,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { FormControl, Validators } from '@angular/forms';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Channel } from 'src/app/models/channel';
-
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 
 @Component({
   selector: 'app-channel-menu',
@@ -22,7 +22,7 @@ export class ChannelMenuComponent {
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<ChannelMenuComponent>,
     public utilsService: UtilsService,
-
+    private firestoreUtils: FirebaseUtilsService,
   ) { }
 
   channel: Channel = new Channel(this.data.channel);
@@ -67,8 +67,9 @@ export class ChannelMenuComponent {
 
   deleteChannel() {
     if (this.currentUserId == this.channel.creator.id) {
-      this.channelService.deleteChannel(this.channel.creator.id);
+      this.firestoreUtils.deleteCollection('channels', this.channel.channelId);
     }
+    this.closeCreateChannelDialog();
   }
 
 
