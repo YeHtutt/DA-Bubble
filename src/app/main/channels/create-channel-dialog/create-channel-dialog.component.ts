@@ -6,6 +6,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-users-dialog.component';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 
 @Component({
   selector: 'app-create-channel-dialog',
@@ -20,7 +21,7 @@ export class CreateChannelDialogComponent {
 
 
   constructor(
-    private channelService: ChannelService,
+    private firebaseUtils: FirebaseUtilsService,
     public utilsService: UtilsService,
     private userService: UsersFirebaseService,
     public dialog: MatDialog,
@@ -42,12 +43,12 @@ export class CreateChannelDialogComponent {
     this.channel = {
       channelName: this.channelNameInput.value,
       description: this.channelDescription,
-      creationTime: this.getCurrentTimestamp(),
+      creationTime: this.firebaseUtils.getDateTime(),
       creator: creator,
       usersData: [],
     };
-    this.openAddUserlDialog(); 
-/*       this.channelService.addChannel(this.channel, 'channels');  */
+    this.firebaseUtils.addColl(this.channel, 'channels', 'channelId');
+    this.openAddUserlDialog();
   }
 
 
@@ -65,11 +66,6 @@ export class CreateChannelDialogComponent {
     this.dialogRef.close();
   }
 
-
-
-  getCurrentTimestamp() {
-    return this.channelService.getDateTime();
-  }
 
   getCreatorId() {
     return this.userService.getFromLocalStorage();

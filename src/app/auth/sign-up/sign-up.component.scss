@@ -109,8 +109,13 @@ form {
         border-color: lightgray !important;
     }
 
+    /*
     ::ng-deep .mdc-notched-outline>* {
         background-color: rgb(236, 238, 254, 0.3) !important;
+    }*/
+
+    ::ng-deep .mdc-text-field--outlined {
+        padding-right: max(0px, var(--mdc-outlined-text-field-container-shape));
     }
 
 }

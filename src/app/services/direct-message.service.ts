@@ -1,11 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { UserProfile } from '../models/user-profile';
-import { ChannelService } from 'src/app/services/channel.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ActivatedRoute } from '@angular/router';
+import { FirebaseUtilsService } from './firebase-utils.service';
+
 
 import {
   Firestore, collection,
@@ -47,7 +48,7 @@ export class DirectMessageService {
 
 
   constructor(
-    public channelService: ChannelService,
+    private firebaseUtils: FirebaseUtilsService,
     private userService: UsersFirebaseService,
     private route: ActivatedRoute,
     private firestore: Firestore = inject(Firestore)
@@ -91,7 +92,7 @@ export class DirectMessageService {
 
 
   subMessageList() {
-    return this.unsubMessage = onSnapshot(this.channelService.getRef('users'), (list: any) => {
+    return this.unsubMessage = onSnapshot(this.firebaseUtils.getRef('users'), (list: any) => {
       this.messageTree = [];
       list.forEach((element: any) => {
         const messageObj = this.setMessageObj(element.data(), element.id);
@@ -112,4 +113,12 @@ export class DirectMessageService {
       children: []
     });
   }
+
+
+
+
+
+
+
+  
 }

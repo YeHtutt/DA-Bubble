@@ -56,7 +56,7 @@ export class UsersFirebaseService implements OnInit {
     const currentUser = localStorage.getItem('currentUser');
     return currentUser;
   }
-  
+
 
   async getUsers() {
     const itemCollection = collection(this.firestore, 'users');
@@ -74,17 +74,17 @@ export class UsersFirebaseService implements OnInit {
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
-    this.getCurrentUserData(user.name , user.email, user.photoURL);
+    this.getCurrentUserData(user.name, user.email, user.photoURL);
     return user;
   }
 
-  getCurrentUserData(name, email, photoURL) {
+  getCurrentUserData(name: any, email: any, photoURL: any) {
     this.loggedInUserName = name;
     this.loggedInUserEmail = email;
     this.loggedInUserImg = photoURL;
   }
 
-  
+
   setUserObject(obj: any): User {
     return new UserProfile({
       name: obj.name || '',
@@ -102,20 +102,20 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
-  async saveUserPic(image: string, avatarPic:boolean) {
+  async saveUserPic(image: string, avatarPic: boolean) {
     this.user.photoURL = image;
     const docRef = doc(this.firestore, 'users', `${this.id}`);
-    if(avatarPic){
+    if (avatarPic) {
       await updateDoc(docRef, {
         photoURL: '../assets/img/avatar/' + image
       }
       );
-    }else {
+    } else {
       await updateDoc(docRef, {
         photoURL: image
       })
     }
-    
+
   }
 
 

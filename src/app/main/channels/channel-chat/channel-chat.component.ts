@@ -1,7 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
-
-import { ChannelService } from 'src/app/services/channel.service';
+import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,77 +8,46 @@ import { UserProfile } from 'src/app/models/user-profile';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Channel } from 'src/app/models/channel';
-
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
   styleUrls: ['./channel-chat.component.scss']
 })
-export class ChannelChatComponent implements OnInit {
+export class ChannelChatComponent {
 
   text: string = '';
   message: Message = new Message()
-  // messages$: Observable<any>;
   id: string = '';
   channelId: any = '';
   channel: any;
   ref: any;
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
-  messages$: Observable<any[]> = of([]);
-  messages: any[] = [];
-
+  messages: Message[] = [];
 
   constructor(
-    private channelService: ChannelService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private messageService: MessageService,
     private userService: UsersFirebaseService,
-    private changeDetectorRef: ChangeDetectorRef) {
+    private firebaseUtils: FirebaseUtilsService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
-    
   }
 
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(async (params) => {
+    this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
-      this.messages$ = this.messageService.getChannelMessages('channels', this.channelId, 'channel-message').pipe(
-        map((messages) => {
-          this.changeDetectorRef.detectChanges();
-          console.log(messages);
-          return this.sortByDate(messages);
-        }));
-      // Using the service method to fetch the document data
-      this.channelService.getDocData('channels', this.channelId).then(channelData => {
+      this.firebaseUtils.getDocData('channels', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.receiver = new Channel(channelData);
+        this.firebaseUtils.subMessage('channels', this.channelId);
+        console.log(this.currentUser)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
     });
   }
-
-  trackByMessageId(index: number, message: any): string {
-    return message.messageId;
-  }
-
-
-  getChannel() {
-
-  }
-
-  sortByDate(message: any) {
-    return message.sort((a: any, b: any) => {
-      const dateA = a.time.seconds * 1000;
-      const dateB = b.time.seconds * 1000;
-      return dateA - dateB;
-    });
-  }
-
-
-
 
 
   openChannelMenu() {
@@ -93,21 +60,34 @@ export class ChannelChatComponent implements OnInit {
     });
   }
 
-  // SEND MESSAGE
 
-  send() {
-    this.messageService.sendMessage(this.createMessageObject(), this.receiver, false, '');
-    this.text = '';
+  sendMessageTo(coll: string, docId: string) {
+    this.createMessageObject().then(createdMessage => {
+      this.message = createdMessage;
+      this.firebaseUtils.addMessageToCollection(coll, docId, this.message.toJSON());
+    });
+    this.getAllMessages();
   }
 
 
-  createMessageObject() {
+  async createMessageObject() {
+    let creatorId = this.getCreatorId();
+    let messageCreator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
     return new Message({
       text: this.text,
       time: new Date(),
-      messageId: '',
-      user: [this.currentUser]
+      user: messageCreator
     });
+  }
+
+
+  getCreatorId() {
+    return this.userService.getFromLocalStorage();
+  }
+
+
+  getAllMessages() {
+    return this.firebaseUtils.messages
   }
 
 }
