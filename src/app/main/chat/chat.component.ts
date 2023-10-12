@@ -42,9 +42,9 @@ export class ChatComponent {
       //     if (messages.length > 0) this.chatExists = true;
       //     return this.sortByDate(messages);
       //   }));
-      this.firebaseUtils.getDocData('direct-messages', this.chatId).then(chatData => {
+      this.firebaseUtils.getDocData('chat', this.chatId).then(chatData => {
         // this.chat = chatData;
-        this.firebaseUtils.subMessage('direct-messages', this.chatId);
+        this.firebaseUtils.subMessage('chat', this.chatId);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });

@@ -38,15 +38,15 @@ export class MessageService {
     // If a message is sent with new Message to a user & redirect to the chat
     if (receiver instanceof UserProfile) {
       const docId =  await this.createDirectChat(directChat);
-      this.uploadMessage('direct-messages', docId, 'message', message);
+      this.uploadMessage('chat', docId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
       // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
     } else if (receiver instanceof Channel) {
-      this.uploadMessage('channels', receiver.channelId, 'message', message);
+      this.uploadMessage('channel', receiver.channelId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
     } else {
       // if a message is sent inside a user chat
-      this.uploadMessage('direct-messages', receiver, 'message', message);
+      this.uploadMessage('chat', receiver, 'message', message);
     }
   }
  
@@ -76,7 +76,7 @@ export class MessageService {
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, "chat", docId);
     const chatDoc = (await getDoc(docRef)).data();
-    return new DirectChat(chatDoc);
+    return DirectChat.fromJSON(chatDoc);
   }
 
   async getMsgDocRef(msgId: string) {
