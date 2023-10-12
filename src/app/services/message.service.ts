@@ -14,11 +14,23 @@ type ReceiverType = UserProfile | Channel;
 })
 export class MessageService {
 
+  docId: string | undefined = '';
+  coll: string | undefined = '';
+
 
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router
-  ) { }
+  ) {
+    const url = this.router.url;
+    this.getRouteToMsgDoc(url);
+   }
+
+   getRouteToMsgDoc(url: string) {
+    let urlParts = url.split('/');
+    this.docId = urlParts.pop();
+    this.coll= urlParts.pop();
+  }
 
   // SEND MESSAGE
 
@@ -47,7 +59,6 @@ export class MessageService {
 
   // adds a message to a chat/channel
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
-    console.log(message)
     const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
     await updateDoc(docRef, { messageId: docRef.id });
   }
@@ -68,8 +79,8 @@ export class MessageService {
     return new DirectChat(chatDoc);
   }
 
-  async getMessageDocRef(coll: string, docId: string, subcoll: string, messageId: string) {
-    const docRef = doc(this.firestore, coll, docId, subcoll, messageId);
+  async getMsgDocRef(msgId: string) {
+    return doc(this.firestore, `${this.coll}/${this.docId}/message/${msgId}`);
   }
 
   // GET MESSAGE
@@ -81,8 +92,8 @@ export class MessageService {
 
   // UPDATE MESSAGE
 
-  // async updateMessage(docId: string, editedText: string) {
-  //   const docRef = await this.getDirectChatDoc(docId);
-  //   updateDoc(docRef, { text: editedText})
-  // }
+  async updateMessage(msgId: string, editedMsg: string) {
+    const msgRef = await this.getMsgDocRef(msgId);
+    updateDoc(msgRef, { text: editedMsg });
+  }
 }

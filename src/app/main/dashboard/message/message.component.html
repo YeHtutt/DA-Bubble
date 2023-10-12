@@ -20,8 +20,8 @@
     <div class="edit_box">
         <textarea [(ngModel)]="editMessage"></textarea>
         <div class="button_box">
-            <button class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
-            <button class="save_btn" mat-fab extended color="primary">Speichern</button>
+            <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
+            <button (click)="saveMessage(message.messageId)" class="save_btn" mat-fab extended color="primary">Speichern</button>
         </div>
     </div>
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
