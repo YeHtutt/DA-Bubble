@@ -144,7 +144,7 @@ export class ChannelService {
 
 
   async getChannels() {
-    const itemCollection = collection(this.firestore, 'channels');
+    const itemCollection = collection(this.firestore, 'channel');
     const channelArray: any[] = [];
     const querySnapshot = await getDocs(itemCollection);
     querySnapshot.forEach(doc => {

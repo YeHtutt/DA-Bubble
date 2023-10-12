@@ -22,7 +22,6 @@ export class ChatComponent {
   chatExists: boolean = false;
   currentUser: UserProfile = new UserProfile;
   public receiver: UserProfile = new UserProfile;
-  messages$: Observable<any[]> = of([]);
 
   constructor(
     private messageService: MessageService,
@@ -37,13 +36,7 @@ export class ChatComponent {
     this.route.paramMap.subscribe(async (params) => {
       this.chatId = params.get('id') || '';
       this.getReceiverData();
-      // this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
-      //   map((messages) => {
-      //     if (messages.length > 0) this.chatExists = true;
-      //     return this.sortByDate(messages);
-      //   }));
-      this.firebaseUtils.getDocData('chat', this.chatId).then(chatData => {
-        // this.chat = chatData;
+      this.firebaseUtils.getDocData('chat', this.chatId).then( () => {
         this.firebaseUtils.subMessage('chat', this.chatId);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
@@ -56,13 +49,6 @@ export class ChatComponent {
     return this.firebaseUtils.messages
   }
 
-  // sortByDate(message: any) {
-  //   return message.sort((a: any, b: any) => {
-  //     const dateA = a.time.seconds * 1000;
-  //     const dateB = b.time.seconds * 1000;
-  //     return dateA - dateB;
-  //   });
-  // }
 
   async getReceiverData() {
     this.chat = await this.messageService.getDirectChatDoc(this.chatId);
