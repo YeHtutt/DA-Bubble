@@ -39,11 +39,13 @@ export class MessageService {
   }
  
 
+  // returns reference 
   getRefSubcollChannel(mainColl: string, docId: string | null, subColl: string) {
     return collection(this.firestore, `${mainColl}/${docId}/${subColl}`);
   }
 
 
+  // adds a message to a chat/channel
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
     console.log(message)
     const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
@@ -51,9 +53,9 @@ export class MessageService {
   }
 
 
-  // creates a new direct chat 
+  // creates a new direct chat with user
   async createDirectChat(directChat: DirectChat) {
-    const itemCollection = collection(this.firestore, 'direct-messages');
+    const itemCollection = collection(this.firestore, 'chat');
     const docRef = await addDoc(itemCollection, directChat.toJSON());
     await updateDoc(docRef, { chatId: docRef.id });
     return docRef.id;
@@ -61,9 +63,13 @@ export class MessageService {
 
   // gets a specific direct chat 
   async getDirectChatDoc(docId: string) {
-    const docRef = doc(this.firestore, "direct-messages", docId);
+    const docRef = doc(this.firestore, "chat", docId);
     const chatDoc = (await getDoc(docRef)).data();
     return new DirectChat(chatDoc);
+  }
+
+  async getMessageDocRef(coll: string, docId: string, subcoll: string, messageId: string) {
+    const docRef = doc(this.firestore, coll, docId, subcoll, messageId);
   }
 
   // GET MESSAGE
@@ -73,11 +79,10 @@ export class MessageService {
     return channelMessages$
   }
 
-  async addMessage() { }
+  // UPDATE MESSAGE
 
-  displayMessage() {}
-
-
-
-
+  // async updateMessage(docId: string, editedText: string) {
+  //   const docRef = await this.getDirectChatDoc(docId);
+  //   updateDoc(docRef, { text: editedText})
+  // }
 }

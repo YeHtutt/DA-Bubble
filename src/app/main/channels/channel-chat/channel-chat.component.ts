@@ -39,9 +39,9 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
-      this.firebaseUtils.getDocData('channels', this.channelId).then(channelData => {
+      this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.firebaseUtils.subMessage('channels', this.channelId);
+        this.firebaseUtils.subMessage('channel', this.channelId);
         console.log(this.currentUser)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
@@ -76,7 +76,8 @@ export class ChannelChatComponent {
     return new Message({
       text: this.text,
       time: new Date(),
-      user: messageCreator
+      user: messageCreator,
+      messageId: ''
     });
   }
 

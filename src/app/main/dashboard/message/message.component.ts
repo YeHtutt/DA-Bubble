@@ -11,8 +11,9 @@ export class MessageComponent {
 
   @Input() message: any;
   public currentUser: string | null = '';
-  public updateMsg: boolean = false;
-  public update: boolean = false;
+  public checkIfEdit: boolean = false;
+  public showEdit: boolean = false;
+  editMessage: string = '';
 
 
   constructor(private userService: UsersFirebaseService,) {
@@ -28,12 +29,14 @@ export class MessageComponent {
   }
 
   openMenu() {
-    this.updateMsg = !this.updateMsg;
-    setTimeout(() => this.updateMsg = !this.updateMsg, 2000);
+    this.checkIfEdit = !this.checkIfEdit;
+    setTimeout(() => this.checkIfEdit = !this.checkIfEdit, 2000);
   }
 
-  openEdit() {
-    this.update = !this.update
+  openEdit(messageText: string) {
+    this.showEdit = !this.showEdit
+    this.editMessage = messageText;
+    console.log(messageText)
   }
 
 }

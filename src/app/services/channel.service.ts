@@ -59,7 +59,7 @@ export class ChannelService {
 
 
   getChannelContent(documentId: string) {
-    const docRef = doc(this.firebaseUtils.getRef('channels'), documentId);
+    const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
     return this.unsubChannel = onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         return this.setChannelContentObj(docSnapshot.data(), docSnapshot.id);
@@ -98,13 +98,13 @@ export class ChannelService {
 
 
   subChannelList() {
-    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channels'), (list: any) => {
+    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
       this.channelTree = [];
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channelTree.push(channelObj);
       });
-      this.themes = [{ channelName: 'Channels', children: this.channelTree }];
+      this.themes = [{ channelName: 'Channel', children: this.channelTree }];
       this.dataSource.data = this.themes;
       this.dataLoaded.next(true);  // Emit event when data is loaded
     });
@@ -113,7 +113,7 @@ export class ChannelService {
 
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
-      const docRef = this.firebaseUtils.getSingleDocRef('channels', channel.channelId);
+      const docRef = this.firebaseUtils.getSingleDocRef('channel', channel.channelId);
       const plainChannelObject = channel.toJSON();
       await updateDoc(docRef, plainChannelObject);
     } else {
