@@ -7,6 +7,7 @@ import { UserProfile } from 'src/app/models/user-profile';
 import { DirectMessageService } from 'src/app/services/direct-message.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { MessageService } from 'src/app/services/message.service';
+import { SearchService } from 'src/app/services/search.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
@@ -22,12 +23,15 @@ export class ChatComponent {
   chatExists: boolean = false;
   currentUser: UserProfile = new UserProfile;
   public receiver: UserProfile = new UserProfile;
+  allUsers: UserProfile[] = [];
+  showTagMenu: boolean = false;
 
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
-    private firebaseUtils: FirebaseUtilsService
+    private firebaseUtils: FirebaseUtilsService,
+    private searchService: SearchService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -79,5 +83,17 @@ export class ChatComponent {
       messageId: '',
       user: this.currentUser.toJSON()
     });
+  }
+
+  async openTagMenu() {
+    this.showTagMenu = !this.showTagMenu;
+    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    this.allUsers = searchResult.filteredUser;
+    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
+  }
+
+  tagUser(user: string) {
+    this.text = `@${user}`;
+    this.showTagMenu = !this.showTagMenu;
   }
 }

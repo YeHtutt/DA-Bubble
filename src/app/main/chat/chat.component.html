@@ -6,7 +6,6 @@
         </div>
     </header>
     <main>
-        <!-- <app-message *ngFor="let message of messages$ | async" [message]="message"></app-message> -->
         <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
         <div *ngIf="!chatExists" class="new_conversation_container">
             <div class="user_info_box">
@@ -23,10 +22,17 @@
                 <mat-icon class="action_btn_style">add</mat-icon>
                 <hr>
                 <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
-                <mat-icon class="action_btn_style">alternate_email</mat-icon>
+                <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
+                <div class="tagMenuOuterContainer">
+                    <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
+                        <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
+                            <img src="{{user.photoURL}}" alt="">
+                            <span>{{user.name}}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button [disabled]="text.length == 0" (click)="send()"><mat-icon
-                    class="send_btn">send</mat-icon></button>
+            <button [disabled]="text.length == 0" (click)="send()"><mat-icon class="send_btn">send</mat-icon></button>
         </div>
     </div>
 </section>
