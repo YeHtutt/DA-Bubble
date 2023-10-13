@@ -54,25 +54,19 @@ export class MessageService {
   // creates a new direct chat 
   async createDirectChat(directChat: DirectChat) {
     const itemCollection = collection(this.firestore, 'direct-messages');
-    const docRef = await addDoc(itemCollection, directChat.toJSON());
+      const docRef = await addDoc(itemCollection, directChat.toJSON());
     await updateDoc(docRef, { chatId: docRef.id });
     return docRef.id;
   }
 
   // gets a specific direct chat 
   async getDirectChatDoc(docId: string) {
-    const docRef = doc(this.firestore, "direct-messages", docId);
+    const docRef = doc(this.firestore, `direct-messages/${docId}`);
     const chatDoc = (await getDoc(docRef)).data();
     return new DirectChat(chatDoc);
   }
 
-  // GET MESSAGE
-
-  getChannelMessages(mainColl: string, docId: string | null, subColl: string) {
-    const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
-    return channelMessages$
-  }
-
+ 
   async addMessage() { }
 
   displayMessage() {}

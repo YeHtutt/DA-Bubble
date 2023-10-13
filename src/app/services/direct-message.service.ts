@@ -56,6 +56,9 @@ export class DirectMessageService {
     this.unsubMessage = this.subMessageList();
   }
 
+  ngOnDestroy() {
+    this.unsubMessage();
+  }
 
 
   //the following functions are for rendering the contacts in sidenav with a mat tree
@@ -100,6 +103,7 @@ export class DirectMessageService {
       });
       this.themes = [{ messageName: 'Messages', children: this.messageTree }];
       this.dataSource.data = this.themes;
+      this.dataLoaded.next(true);
     });
   }
 
@@ -120,5 +124,5 @@ export class DirectMessageService {
 
 
 
-  
+
 }

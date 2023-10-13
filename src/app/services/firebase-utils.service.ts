@@ -56,6 +56,12 @@ export class FirebaseUtilsService {
   }
 
 
+  /**
+   * @param col collection name
+   * @param docId id of the document
+   * @returns a reference to the doc
+   */
+
   getSingleDocRef(col: string, docId: string) {
     return doc(collection(this.firestore, col), docId)
   }
@@ -84,7 +90,7 @@ export class FirebaseUtilsService {
   subMessage(coll: string, subId: string) {
     // Target the 'message' subcollection under the specified document ID
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
-    const q = query(ref, limit(100), orderBy('time'));
+    const q = query(ref, orderBy('time'));
     return this.unsubMessages = onSnapshot(q, (list) => {
       this.messages = [];
       list.forEach((message) => {
@@ -102,6 +108,7 @@ export class FirebaseUtilsService {
       .catch((err) => { console.log(err) })
       .then((docRef: any) => { console.log("Message written with ID", docRef?.id) });
   }
+
 
   async getMessagesFromDoc(col: string, docId: string) {
     // Create a reference to the 'message' subcollection under the specified document ID

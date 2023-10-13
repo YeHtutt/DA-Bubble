@@ -51,9 +51,14 @@ export class ChannelMenuComponent {
 
   closeCreateChannelDialog() {
     this.dialogRef.close();
+    
   }
 
   leaveChannel() {
+    if (this.channel.channelName !== 'allgemein') {
+
+    }
+    if (this.channel.creator.id === this.currentUserId) { }
 
   }
 

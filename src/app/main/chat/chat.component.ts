@@ -36,20 +36,42 @@ export class ChatComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       this.chatId = params.get('id') || '';
-      this.getReceiverData();
-      // this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
-      //   map((messages) => {
-      //     if (messages.length > 0) this.chatExists = true;
-      //     return this.sortByDate(messages);
-      //   }));
-      this.firebaseUtils.getDocData('direct-messages', this.chatId).then(chatData => {
-        // this.chat = chatData;
-        this.firebaseUtils.subMessage('direct-messages', this.chatId);
-      }).catch(err => {
-        console.error("Error fetching channel data:", err);
-      });
-    });
+      /* this.getReceiverData() */
+    })
+  };
+
+
+  getUsers() {
+    this.firebaseUtils.getSingleDocRef('users', this.currentUser.id)
   }
+
+  // this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
+  //   map((messages) => {
+  //     if (messages.length > 0) this.chatExists = true;
+  //     return this.sortByDate(messages);
+  //   }));
+  /*       this.firebaseUtils.getDocData('direct-messages', this.chatId).then(chatData => {
+          // this.chat = chatData;
+          this.firebaseUtils.subMessage('direct-messages', this.chatId);
+        }).catch(err => {
+          console.error("Error fetching channel data:", err);
+        });
+      });
+      this.route.paramMap.subscribe((params) => {
+        this.channelId = params.get('channelId');
+        this.firebaseUtils.getDocData('channels', this.channelId).then(channelData => {
+          this.channel = channelData;
+          this.firebaseUtils.subMessage('channels', this.channelId);
+        
+        }).catch(err => {
+          console.error("Error fetching channel data:", err);
+        });
+      });
+  
+  
+      this.route.paramMap.subscribe(async (params) => {} */
+
+
 
   getAllMessages() {
     if (this.firebaseUtils.messages.length > 0) this.chatExists = true;
