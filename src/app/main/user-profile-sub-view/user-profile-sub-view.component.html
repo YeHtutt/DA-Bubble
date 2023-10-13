@@ -1,15 +1,14 @@
-<div class="userProfileViewContainer">
-    <div class="profileViewHeader">
+<div class="userProfileSubViewContainer">
+    <div class="profileSubViewHeader">
         <div mat-dialog-title>Profile</div>
         <mat-icon (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
     </div>
-    <div class="profileViewImg">
-        <img class="profileImg" src="{{ this.userFbService.loggedInUserImg }}" />
+    <div class="profileSubViewImg">
+        <img class="profileImg" [src]="userPhotoURL" />
     </div>
-    <div class="profileViewName">
+    <div class="profileSubViewName">
         <div class="profileEdit-container">
-            <div> {{ this.userFbService.loggedInUserName }} </div>
-            <a (click)="closeDialog(); openProfileEditDialog()" >Bearbeiten</a>
+            <div> {{ userName }} </div>
         </div>
         
         <div class="flexRow">
@@ -19,8 +18,15 @@
             <p *ngIf="!this.userFbService.loggedInUserID">Abwesend</p>
         </div>
     </div>
-    <div class="profileViewEmail">
+    <div class="profileSubViewEmail">
         <p><img src="assets/img/mail.png">E-Mail-Adresse</p>
-        <a href=""> {{this.userFbService.loggedInUserEmail}} </a>
+        <a href=""> {{ userEmail }} </a>
+    </div>
+    
+    <div mat-dialog-actions>
+        <button mat-fab extended color="primary" [mat-dialog-close]="">
+            <mat-icon>mode_comment</mat-icon>
+            Nachricht
+        </button>
     </div>
 </div>

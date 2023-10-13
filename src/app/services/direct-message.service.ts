@@ -25,6 +25,7 @@ interface MessagesNode {
   name: string;
   id: any;
   photoURL: any;
+  email: any,
   children?: MessagesNode[];
 }
 
@@ -69,6 +70,7 @@ export class DirectMessageService {
       id: node.id,
       photoURL: node.photoURL,
       level: level,
+      email: node.email,
     };
   };
 

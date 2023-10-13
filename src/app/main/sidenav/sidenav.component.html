@@ -25,7 +25,7 @@
         <!-- This is the tree node template for leaf nodes !IMPORTANT -->
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact" routerLink="chat/{{ node.id }}" routerLinkActive="router-link-active">
           <img class="profil-icon" src="{{ node.photoURL }}">
-          <div>{{node.name}}</div>
+          <div (click)="openProfileDialog(node)">{{node.name}}</div>
         </mat-tree-node>
         <mat-tree-node *matTreeNodeDef="let node;when: directMessageService.hasChild" class="highest-node">
           <div class="main-node">

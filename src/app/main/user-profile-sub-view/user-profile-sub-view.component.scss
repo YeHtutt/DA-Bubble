@@ -1,0 +1,120 @@
+.userProfileSubViewContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 45px 40px;
+    gap: 38px;
+
+    .profileSubViewHeader {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            color: var(--Black, #000);
+            font-family: Nunito;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+    }
+
+    .profileSubViewImg {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .profileImg {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 100%;
+            background-color: lightgray;
+        }
+    }
+
+    .profileSubViewName {
+        width: 100%;
+
+        div {
+            color: var(--Black, #000);
+            font-family: Nunito;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+
+        p {
+            color: var(--Text-gray, #686868);
+            font-family: Nunito;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin: unset;
+        }
+
+        .flexRow {
+            display: flex !important;
+            align-items: center !important;
+            gap: 15px;
+        }
+
+        .profileEdit-container {
+            display: flex;
+            justify-content: space-between;
+
+            a {
+                text-decoration: none;
+                font-family: Nunito;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                color: #1381FF;
+            }
+        }
+    }
+
+    .profileSubViewEmail {
+        width: 100%;
+
+        img {
+            padding-right: 20px !important;
+        }
+
+        p {
+            color: var(--Black, #000);
+            font-family: Nunito;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+
+        a {
+            color: #1381FF;
+            font-family: Nunito;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+
+    .dialogCloseButton {
+        border-radius: 100%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: lightgray;
+        }
+    }
+}
