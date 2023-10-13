@@ -15,8 +15,24 @@
         <div *ngIf="searchOutput && filteredUser?.length > 0" class="search-output-header">
             <div class="user-box">
                 <div class="user" *ngFor="let user of filteredUser" (click)="openProfile(user)">
-                    <img src="assets/img/avatar/{{user.photoURL}}" alt="">
+                    <img src="{{user.photoURL}}" alt="">
                     <span>{{user.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="control_container">
+            <div class="chat_action_box">
+                <mat-icon class="action_btn_style">add</mat-icon>
+                <hr>
+                <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
+              
+                <div class="tagMenuOuterContainer">
+                    <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
+                        <div class="user" *ngFor="let user of allUsers" (click)="addThisUser()">
+                            <img src="{{user.photoURL}}" alt="">
+                            <span>{{user.name}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

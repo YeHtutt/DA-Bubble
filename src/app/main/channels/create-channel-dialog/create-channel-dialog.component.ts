@@ -33,7 +33,7 @@ export class CreateChannelDialogComponent {
       this.utilsService.checkInputLength(this.channelNameInput);
       return;
     };
-    this.setChannelProperties();
+    this.setChannelProperties();  
   }
 
 
@@ -47,7 +47,6 @@ export class CreateChannelDialogComponent {
       creator: creator,
       usersData: [],
     };
-    this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     this.openAddUserlDialog();
   }
 
