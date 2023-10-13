@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,10 +17,13 @@ export class AuthenticationService {
   public userUID: any;
   public currentUser: any;
   user: UserProfile;
+  private isAuthenticated = false;
+
+   
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(private auth: Auth, private afAuth: AngularFireAuth, private userfbService: UsersFirebaseService, private router: Router, private usersFbService: UsersFirebaseService ) {
+  constructor(private auth: Auth, private afAuth: AngularFireAuth, private userfbService: UsersFirebaseService, private router: Router, private usersFbService: UsersFirebaseService) {
     this.user = new UserProfile(); // user initialisiert
   }
 
@@ -28,6 +32,7 @@ export class AuthenticationService {
   }
 
   logout() {
+    this.setIsAuthenticated(false);
     return from(this.auth.signOut().then(() => {
       this.userfbService.removeFromLocalStorage();
     }));
@@ -73,23 +78,34 @@ export class AuthenticationService {
             //neue User
             this.router.navigate([`/sign-up`]);
           } else {// existierende User }*/
-            const collRef = doc(this.firestore, 'users', result.user.uid);
-            this.userUID = result.user.uid;
-            this.currentUser = result.user;
-            this.user = new UserProfile({
-              id: result.user.uid,
-              name: result.user.displayName,
-              email: result.user.email,
-              photoURL: result.user.photoURL,
-            })
-            setDoc(collRef, this.user.toJSON());
-          }
-          this.usersFbService.saveToLocalStorage(result.user.uid);
-          this.router.navigate([`/main`]);
+          const collRef = doc(this.firestore, 'users', result.user.uid);
+          this.userUID = result.user.uid;
+          this.currentUser = result.user;
+          this.user = new UserProfile({
+            id: result.user.uid,
+            name: result.user.displayName,
+            email: result.user.email,
+            photoURL: result.user.photoURL,
+          })
+          setDoc(collRef, this.user.toJSON());
         }
+        this.usersFbService.saveToLocalStorage(result.user.uid);
+        this.router.navigate([`/main`]);
+      }
       ).catch((error) => {
         console.error(error)
       });
+  }
+
+
+  // Füge eine öffentliche Methode hinzu, um isAuthenticated abzurufen
+  getIsAuthenticated(): boolean {
+    return this.isAuthenticated;
+  }
+
+   // Füge eine öffentliche Methode hinzu, um isAuthenticated festzulegen
+   setIsAuthenticated(value: boolean) {
+    this.isAuthenticated = value;
   }
 
 }

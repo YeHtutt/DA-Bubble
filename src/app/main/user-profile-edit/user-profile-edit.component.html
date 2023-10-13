@@ -1,6 +1,15 @@
 <div class="profile-edit-contianer">
     <div class="title">Dein Profil bearbeiten</div>
-    <img class="user-img" src="../assets/img/avatar/person.png">
+    <div class="form-group"> 
+        <img class="user-img" src="{{ this.usersFbService.loggedInUserImg }}">
+        <label for="file"><mat-icon class="edit-icon">edit</mat-icon></label>
+        <input
+        type="file"
+        id="file"
+        style="display: none;"
+        (change)="onSelect($event)"
+        >
+    </div>
 
     <form [formGroup]="userEditForm" (ngSubmit)="onEdit()" class="name-email-container">
         <div class="name-container form-group">

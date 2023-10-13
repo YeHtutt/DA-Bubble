@@ -277,9 +277,19 @@ mat-toolbar {
   font-size: 16px;
   font-weight: 500;
 
-  img {
+  .profil-icon {
     width: 32px;
     height: 32px;
+    object-fit: cover;
+  }
+
+  .onlineStatus {
+    width: 12px;
+    height: 12px;
+    object-fit: cover;
+    position: relative;
+    left: -15px;
+    top: 9px;
   }
 
   &:hover {
@@ -309,3 +319,5 @@ mat-toolbar {
     }
   }
 }
+
+

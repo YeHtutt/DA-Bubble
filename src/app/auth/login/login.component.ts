@@ -56,10 +56,12 @@ export class LoginComponent implements OnInit {
           this.usersFbService.getLoggedInUser(user.uid);
           this.usersFbService.saveToLocalStorage(user.uid);
           this.loginSuccess = true;
+          this.authService.setIsAuthenticated(true);
           this.openSnackBar();
           this.router.navigate([`/main`]);
         } else {
           this.loginSuccess = false;
+          this.authService.setIsAuthenticated(false);
           this.openSnackBar();
           console.error('user is null.');
         }
@@ -87,10 +89,12 @@ export class LoginComponent implements OnInit {
         this.usersFbService.getLoggedInUser(user.uid);
         this.usersFbService.saveToLocalStorage(user.uid);
         this.loginSuccess = true;
+        this.authService.setIsAuthenticated(true);
         this.openSnackBar();
         this.router.navigate([`/main`]);
       } else {
         this.loginSuccess = false;
+        this.authService.setIsAuthenticated(false);
         this.openSnackBar();
         console.error('user is null.');
       }
@@ -100,6 +104,7 @@ export class LoginComponent implements OnInit {
   
   loginWithGoogle() {
     this.authService.signinWithGoogle();
+    this.authService.setIsAuthenticated(true);
   }
 
   openSnackBar() {

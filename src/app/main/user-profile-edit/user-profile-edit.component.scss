@@ -120,3 +120,14 @@
         }
     }
 }
+
+mat-icon {
+    position: relative;
+    left: -160px;
+    bottom: 0px;
+}
+
+::ng-deep .cdk-overlay-pane {
+    width: 500px !important;
+    height: max-content !important;
+}

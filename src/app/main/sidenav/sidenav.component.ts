@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
 import { UserProfileSubViewComponent } from '../user-profile-sub-view/user-profile-sub-view.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { UserProfileSubViewComponent } from '../user-profile-sub-view/user-profi
 export class SidenavComponent implements OnInit {
   showSidenav: boolean = true;
   @Input() channel_window: any;
+  isAuthenticated = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -25,10 +27,23 @@ export class SidenavComponent implements OnInit {
     public channelService: ChannelService,
     public directMessageService: DirectMessageService,
     public dialog: MatDialog,
-  ) { }
+    public authService: AuthenticationService
+  ) { 
+    
+  }
 
   //habe alles von channels übernommen das der tree standartmäßig geöffnet ist, klappt aber aus irgendeinem grund noch nicht
   ngOnInit() {
+     // Überwache den Authentifizierungsstatus und aktualisiere isAuthenticated entsprechend
+     this.isAuthenticated = this.authService.getIsAuthenticated();
+
+    if (this.isAuthenticated) {
+      // Benutzer ist eingeloggt
+    } else {
+      // Benutzer ist ausgeloggt
+    }
+    
+    // Restlicher Code...
     const sub = this.directMessageService.dataLoaded.subscribe(loaded => {
       if (loaded) {
         this.directMessageService.treeControl.expandAll();
@@ -40,7 +55,6 @@ export class SidenavComponent implements OnInit {
 
 
   toggleExpanded(node: any) {
-    // Code to toggle the expanded state of the node
     this.channelService.treeControl.toggle(node);
   }
 
@@ -73,10 +87,5 @@ export class SidenavComponent implements OnInit {
         email: userEmail
       }
     });
-    
-    console.log(userId);
-    console.log(userName);
-    console.log(userPhotoURL);
-    console.log(userEmail)
   }
 }
