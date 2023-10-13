@@ -31,6 +31,8 @@ export class NewMessageComponent {
   receiver: ReceiverType = new UserProfile;
   currentUser: UserProfile = new UserProfile;
   searchOutput: boolean = false;
+  allUsers: UserProfile[] = [];
+  showTagMenu: boolean = false;
 
 
   constructor(
@@ -109,4 +111,16 @@ export class NewMessageComponent {
   //     // this.router.navigateByUrl('/main/channel/' + this.receiver.channelId);
   //   }
   // }
+
+  async openTagMenu() {
+    this.showTagMenu = !this.showTagMenu;
+    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    this.allUsers = searchResult.filteredUser;
+    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
+  }
+
+  tagUser(user: string) {
+    this.text = `@${user}`;
+    this.showTagMenu = !this.showTagMenu;
+  }
 }

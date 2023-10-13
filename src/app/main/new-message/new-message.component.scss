@@ -170,3 +170,32 @@ main {
         background-color: #ECEEFE;
     }
 }
+
+// INPUT SECTION
+
+.tagMenuOuterContainer {
+    position: absolute;
+    bottom: 50px;
+    border-radius: 30px; 
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
+    background-color: white;
+}
+
+.tagMenuInnerContainer {
+    background: white;
+
+    padding: 12px;
+    height: 200px;
+    overflow: scroll;
+}
+
+.user {
+    display: flex;
+
+    img {
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+    }
+}

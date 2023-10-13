@@ -9,6 +9,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-channel-chat',
@@ -26,12 +27,15 @@ export class ChannelChatComponent {
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
   messages: Message[] = [];
+  allUsers: UserProfile[] = [];
+  showTagMenu: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
-    private firebaseUtils: FirebaseUtilsService) {
+    private firebaseUtils: FirebaseUtilsService,
+    private searchService: SearchService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -39,10 +43,10 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
-      this.firebaseUtils.getDocData('channels', this.channelId).then(channelData => {
+      this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.firebaseUtils.subMessage('channels', this.channelId);
-      
+        this.firebaseUtils.subMessage('channel', this.channelId);
+        console.log(this.currentUser)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
@@ -76,7 +80,8 @@ export class ChannelChatComponent {
     return new Message({
       text: this.text,
       time: new Date(),
-      user: messageCreator
+      user: messageCreator,
+      messageId: ''
     });
   }
 
@@ -88,6 +93,18 @@ export class ChannelChatComponent {
 
   getAllMessages() {
     return this.firebaseUtils.messages
+  }
+
+  async openTagMenu() {
+    this.showTagMenu = !this.showTagMenu;
+    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    this.allUsers = searchResult.filteredUser;
+    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
+  }
+
+  tagUser(user: string) {
+    this.text = `@${user}`;
+    this.showTagMenu = !this.showTagMenu;
   }
 
 }

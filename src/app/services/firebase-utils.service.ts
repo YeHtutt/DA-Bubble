@@ -106,7 +106,9 @@ export class FirebaseUtilsService {
     // Add the new message to the sub-collection
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
-      .then((docRef: any) => { console.log("Message written with ID", docRef?.id) });
+      .then((docRef: any) => { console.log("Message written with ID", docRef?.id) 
+      updateDoc(docRef, {messageId: docRef.id});
+    });
   }
 
 

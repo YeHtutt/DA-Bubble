@@ -14,11 +14,23 @@ type ReceiverType = UserProfile | Channel;
 })
 export class MessageService {
 
+  docId: string | undefined = '';
+  coll: string | undefined = '';
+
 
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router
-  ) { }
+  ) {
+    const url = this.router.url;
+    this.getRouteToMsgDoc(url);
+   }
+
+   getRouteToMsgDoc(url: string) {
+    let urlParts = url.split('/');
+    this.docId = urlParts.pop();
+    this.coll= urlParts.pop();
+  }
 
   // SEND MESSAGE
 
@@ -26,35 +38,36 @@ export class MessageService {
     // If a message is sent with new Message to a user & redirect to the chat
     if (receiver instanceof UserProfile) {
       const docId =  await this.createDirectChat(directChat);
-      this.uploadMessage('direct-messages', docId, 'message', message);
+      this.uploadMessage('chat', docId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
       // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
     } else if (receiver instanceof Channel) {
-      this.uploadMessage('channels', receiver.channelId, 'message', message);
+      this.uploadMessage('channel', receiver.channelId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
     } else {
       // if a message is sent inside a user chat
-      this.uploadMessage('direct-messages', receiver, 'message', message);
+      this.uploadMessage('chat', receiver, 'message', message);
     }
   }
  
 
+  // returns reference 
   getRefSubcollChannel(mainColl: string, docId: string | null, subColl: string) {
     return collection(this.firestore, `${mainColl}/${docId}/${subColl}`);
   }
 
 
+  // adds a message to a chat/channel
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
-    console.log(message)
     const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
     await updateDoc(docRef, { messageId: docRef.id });
   }
 
 
-  // creates a new direct chat 
+  // creates a new direct chat with user
   async createDirectChat(directChat: DirectChat) {
-    const itemCollection = collection(this.firestore, 'direct-messages');
-      const docRef = await addDoc(itemCollection, directChat.toJSON());
+    const itemCollection = collection(this.firestore, 'chat');
+    const docRef = await addDoc(itemCollection, directChat.toJSON());
     await updateDoc(docRef, { chatId: docRef.id });
     return docRef.id;
   }
@@ -63,15 +76,24 @@ export class MessageService {
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, `direct-messages/${docId}`);
     const chatDoc = (await getDoc(docRef)).data();
-    return new DirectChat(chatDoc);
+    return DirectChat.fromJSON(chatDoc);
   }
 
- 
-  async addMessage() { }
+  async getMsgDocRef(msgId: string) {
+    return doc(this.firestore, `${this.coll}/${this.docId}/message/${msgId}`);
+  }
 
-  displayMessage() {}
+  // GET MESSAGE
 
+  getChannelMessages(mainColl: string, docId: string | null, subColl: string) {
+    const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
+    return channelMessages$
+  }
 
+  // UPDATE MESSAGE
 
-
+  async updateMessage(msgId: string, editedMsg: string) {
+    const msgRef = await this.getMsgDocRef(msgId);
+    updateDoc(msgRef, { text: editedMsg });
+  }
 }

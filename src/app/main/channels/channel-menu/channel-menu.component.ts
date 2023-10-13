@@ -72,7 +72,7 @@ export class ChannelMenuComponent {
 
   deleteChannel() {
     if (this.currentUserId == this.channel.creator.id) {
-      this.firestoreUtils.deleteCollection('channels', this.channel.channelId);
+      this.firestoreUtils.deleteCollection('channel', this.channel.channelId);
     }
     this.closeCreateChannelDialog();
   }

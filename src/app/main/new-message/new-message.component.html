@@ -5,7 +5,8 @@
             <div class="input_container">
                 <input (click)="toggleSearchOutput()" (keyup)="searchData()" [(ngModel)]="search"
                     placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
-                <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
+                <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}"
+                    *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
                     <div class="user-box" *ngIf="filteredUser.length > 0">
                         <!-- <h3 class="headline">User</h3> -->
                         <div class="user" *ngFor="let user of filteredUser" (click)="selectReceiver(user)">
@@ -30,7 +31,15 @@
                 <mat-icon class="action_btn_style">add</mat-icon>
                 <hr>
                 <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
-                <mat-icon class="action_btn_style">alternate_email</mat-icon>
+                <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
+                <div class="tagMenuOuterContainer">
+                    <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
+                        <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
+                            <img src="{{user.photoURL}}" alt="">
+                            <span>{{user.name}}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button [disabled]="text.length == 0 || search.length <= 0" (click)="send()"><mat-icon
                     class="send_btn">send</mat-icon></button>

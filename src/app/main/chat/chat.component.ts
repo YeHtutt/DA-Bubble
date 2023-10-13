@@ -7,6 +7,7 @@ import { UserProfile } from 'src/app/models/user-profile';
 import { DirectMessageService } from 'src/app/services/direct-message.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { MessageService } from 'src/app/services/message.service';
+import { SearchService } from 'src/app/services/search.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
@@ -22,13 +23,15 @@ export class ChatComponent {
   chatExists: boolean = false;
   currentUser: UserProfile = new UserProfile;
   public receiver: UserProfile = new UserProfile;
-  messages$: Observable<any[]> = of([]);
+  allUsers: UserProfile[] = [];
+  showTagMenu: boolean = false;
 
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
-    private firebaseUtils: FirebaseUtilsService
+    private firebaseUtils: FirebaseUtilsService,
+    private searchService: SearchService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -36,55 +39,20 @@ export class ChatComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       this.chatId = params.get('id') || '';
-      /* this.getReceiverData() */
-    })
-  };
-
-
-  getUsers() {
-    this.firebaseUtils.getSingleDocRef('users', this.currentUser.id)
+      this.getReceiverData();
+      this.firebaseUtils.getDocData('chat', this.chatId).then( () => {
+        this.firebaseUtils.subMessage('chat', this.chatId);
+      }).catch(err => {
+        console.error("Error fetching channel data:", err);
+      });
+    });
   }
-
-  // this.messages$ = this.messageService.getChannelMessages('direct-messages', this.chatId, 'message').pipe(
-  //   map((messages) => {
-  //     if (messages.length > 0) this.chatExists = true;
-  //     return this.sortByDate(messages);
-  //   }));
-  /*       this.firebaseUtils.getDocData('direct-messages', this.chatId).then(chatData => {
-          // this.chat = chatData;
-          this.firebaseUtils.subMessage('direct-messages', this.chatId);
-        }).catch(err => {
-          console.error("Error fetching channel data:", err);
-        });
-      });
-      this.route.paramMap.subscribe((params) => {
-        this.channelId = params.get('channelId');
-        this.firebaseUtils.getDocData('channels', this.channelId).then(channelData => {
-          this.channel = channelData;
-          this.firebaseUtils.subMessage('channels', this.channelId);
-        
-        }).catch(err => {
-          console.error("Error fetching channel data:", err);
-        });
-      });
-  
-  
-      this.route.paramMap.subscribe(async (params) => {} */
-
-
 
   getAllMessages() {
     if (this.firebaseUtils.messages.length > 0) this.chatExists = true;
     return this.firebaseUtils.messages
   }
 
-  // sortByDate(message: any) {
-  //   return message.sort((a: any, b: any) => {
-  //     const dateA = a.time.seconds * 1000;
-  //     const dateB = b.time.seconds * 1000;
-  //     return dateA - dateB;
-  //   });
-  // }
 
   async getReceiverData() {
     this.chat = await this.messageService.getDirectChatDoc(this.chatId);
@@ -115,5 +83,17 @@ export class ChatComponent {
       messageId: '',
       user: this.currentUser.toJSON()
     });
+  }
+
+  async openTagMenu() {
+    this.showTagMenu = !this.showTagMenu;
+    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    this.allUsers = searchResult.filteredUser;
+    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
+  }
+
+  tagUser(user: string) {
+    this.text = `@${user}`;
+    this.showTagMenu = !this.showTagMenu;
   }
 }

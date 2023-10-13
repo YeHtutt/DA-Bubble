@@ -15,10 +15,19 @@ export class DirectChat {
 
     public toJSON() {
         return {
-            text: this.chatId,
-            time: this.creationTime,  
+            chatId: this.chatId,
+            creationTime: this.creationTime,  
             user1: this.user1,
             user2: this.user2    
         };
+    }
+
+    public static fromJSON(json: any): DirectChat {
+        return new DirectChat({
+            chatId: json.chatId,
+            creationTime: json.creationTime,
+            user1: json.user1,
+            user2: json.user2
+        });
     }
 }

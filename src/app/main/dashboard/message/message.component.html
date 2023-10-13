@@ -1,6 +1,6 @@
-<div *ngIf="!update" [ngClass]="{'message_container_reverse': this.currentUser == message.user.id}" class="message_container">
+<div *ngIf="!showEdit" [ngClass]="{'message_container_reverse': this.currentUser == message.user.id}" class="message_container">
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
-    <div *ngIf="!update" [ngClass]="{'content_container_reverse': currentUser == message.user.id}" class="content_container">
+    <div *ngIf="!showEdit" [ngClass]="{'content_container_reverse': currentUser == message.user.id}" class="content_container">
         <div [ngClass]="{'creator_info_reverse': currentUser == message.user.id}" class="creator_info">
             <span>{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
@@ -12,13 +12,17 @@
         <mat-icon>comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
-            <button (click)="openEdit()" *ngIf="updateMsg">Nachricht bearbeiten</button>
+            <button (click)="openEdit(message.text)" *ngIf="checkIfEdit">Nachricht bearbeiten</button>
         </div>
     </div>
 </div>
-<div *ngIf="update" class="edit_container">
+<div *ngIf="showEdit" class="edit_container">
     <div class="edit_box">
-        <textarea [(ngModel)]="message.text"></textarea>
+        <textarea [(ngModel)]="editMessage"></textarea>
+        <div class="button_box">
+            <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
+            <button (click)="saveMessage(message.messageId)" class="save_btn" mat-fab extended color="primary">Speichern</button>
+        </div>
     </div>
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
 </div>
