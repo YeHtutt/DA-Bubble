@@ -5,13 +5,6 @@
     display: none;
 }
 
-
-.search-box {
-    position: relative;
-}
-
-
-
 .invitation-dialog-container {
     padding: 40px;
     width: calc(90% - 80px);
@@ -36,4 +29,95 @@ span {
     display: flex;
     align-self: flex-end;
     justify-self: baseline;
+}
+
+
+// SEARCH 
+
+.searchOutput {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: fit-content;
+    max-height: 300px;
+    box-shadow: 0 4px 8px #0000004d;
+    background-color: white;
+    border-radius: 30px;
+    padding: 20px;
+    overflow-y: scroll;
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+}
+
+.user-box>.headline,
+.channelBox>.headline {
+    color: #535AF1;
+    margin-bottom: 16px !important;
+}
+
+.channel {
+
+    mat-icon {
+        font-weight: bold;
+        font-style: italic;
+        margin-left: 4px;
+    }
+
+    span {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+    }
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user,
+.channel {
+    padding: 4px 8px;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ECEEFE;
+    }
+}
+
+
+
+/* Input */
+
+.tagMenuOuterContainer {
+    position: absolute;
+    bottom: 50px;
+    border-radius: 30px; 
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
+    background-color: white;
+}
+
+.tagMenuInnerContainer {
+    background: white;
+
+    padding: 12px;
+    height: 200px;
+    overflow: scroll;
+}
+
+.user {
+    display: flex;
+
+    img {
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+    }
 }

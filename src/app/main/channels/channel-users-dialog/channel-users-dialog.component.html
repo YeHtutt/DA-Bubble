@@ -7,11 +7,8 @@
             hinzufügen</mat-radio-button>
         <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
     </mat-radio-group>
-    <div class="search-box">
-        <mat-form-field class="mat-form-field" *ngIf="inputOpened" appearance="outline">
-            <input matInput placeholder="Name eingeben" (click)="toggleSearchOutput()" (keyup)="searchData()"
-                [(ngModel)]="search">
-        </mat-form-field>
+    <!--    <div class="search-box">
+      
         <div *ngIf="searchOutput && filteredUser?.length > 0" class="search-output-header">
             <div class="user-box">
                 <div class="user" *ngFor="let user of filteredUser" (click)="openProfile(user)">
@@ -34,8 +31,24 @@
                         </div>
                     </div>
                 </div>
+            </div>-->
+    <div class="input_container">
+        <mat-form-field class="mat-form-field" *ngIf="inputOpened" appearance="outline">
+            <input matInput placeholder="Name eingeben" (click)="toggleSearchOutput()" (keyup)="searchData()"
+                [(ngModel)]="search">
+        </mat-form-field>
+        <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" class="search-output">
+            <div class="user-box" *ngIf="filteredUser.length > 0">
+                <!-- <h3 class="headline">User</h3> -->
+                <div class="user" *ngFor="let user of filteredUser" (click)="addThisUser()">
+                    <img src="{{user.photoURL}}" alt="">
+                    <span>{{user.name}}</span>
+                </div>
             </div>
         </div>
-        <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()">Erstellen</button>
     </div>
+    <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()">Erstellen</button>
 </div>
+
+<!--     </div>
+</div> -->
