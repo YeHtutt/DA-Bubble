@@ -1,37 +1,38 @@
-import { UserProfile as User } from "./user-profile";
-
 export class DirectMessage {
     messageId: string;
     content: string;
     timestamp: Date;
-    sender: User;
-    receiver: string;
+    beganToChat: boolean = false;
+    usersData: { email: string; id: string; name: string; photoUrl: string; } | undefined;
+    sharedId: string;
 
     constructor(obj?: any) {
         this.messageId = obj ? obj.messageId : '';
         this.content = obj ? obj.content : '';
-        this.timestamp = obj ? obj.timestamp : new Date();
-        this.sender = obj ? obj.sender : null;
-        this.receiver = obj ? obj.receiver : '';
+        this.timestamp = obj ? obj.timestamp : '';
+        this.beganToChat = obj ? obj.beganToChat : false;
+        this.sharedId = obj ? obj.sharedId : '';
     }
+
 
     public toJSON() {
         return {
             messageId: this.messageId,
             content: this.content,
             timestamp: this.timestamp,
-            sender: this.sender,
-            receiver: this.receiver
+            beganToChat: this.beganToChat,
+            sharedId: this.sharedId
         }
     }
+
 
     public static fromJSON(json: any): DirectMessage {
         return new DirectMessage({
             messageId: json.messageId,
             content: json.content,
             timestamp: json.timestamp,
-            sender: json.sender,
-            receiver: json.receiver
+            beganToChat: json.beganToChat,
+            sharedId: json.sharedId
         });
     }
 }

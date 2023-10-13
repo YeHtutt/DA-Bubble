@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { UserProfile } from '../models/user-profile';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseUtilsService } from './firebase-utils.service';
+import { UserProfile } from '../models/user-profile';
 
 
 import {
@@ -52,7 +52,7 @@ export class DirectMessageService {
     private firebaseUtils: FirebaseUtilsService,
     private userService: UsersFirebaseService,
     private route: ActivatedRoute,
-    private firestore: Firestore = inject(Firestore)
+    private firestore: Firestore = inject(Firestore),
   ) {
     this.unsubMessage = this.subMessageList();
   }
@@ -101,8 +101,9 @@ export class DirectMessageService {
       this.messageTree = [];
       list.forEach((element: any) => {
         const messageObj = this.setMessageObj(element.data(), element.id);
-        this.messageTree.push(messageObj);
-      });
+        let currentUser = this.userService.getFromLocalStorage();
+        if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
+          });
       this.themes = [{ messageName: 'Messages', children: this.messageTree }];
       this.dataSource.data = this.themes;
       this.dataLoaded.next(true);
@@ -121,10 +122,10 @@ export class DirectMessageService {
   }
 
 
-
-
-
-
-
-
+  /*  createDirectMessage(user1: UserProfile, user2: UserProfile) {
+     let sharedId = `${user1.id}_${user2.id}`;
+     const directMessageRef = doc(this.firestore, 'direct-messages', sharedId);
+ 
+   }
+  */
 }

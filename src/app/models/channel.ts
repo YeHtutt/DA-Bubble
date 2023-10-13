@@ -6,7 +6,7 @@ export class Channel {
     description: string | null;
     creationTime: any;
     creator: User;
-    usersData: { email: string; id: string; name: string; photoUrl: string; } | undefined;
+    usersData: {} | undefined;
 
     constructor(obj?: any) {
         this.creationTime = obj ? obj.creationTime : '';

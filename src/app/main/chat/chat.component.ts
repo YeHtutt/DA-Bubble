@@ -39,12 +39,12 @@ export class ChatComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       this.chatId = params.get('id') || '';
-      this.getReceiverData();
+ /*      this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then( () => {
         this.firebaseUtils.subMessage('chat', this.chatId);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
-      });
+      }); */
     });
   }
 

@@ -3,7 +3,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { SearchService } from 'src/app/services/search.service';
-
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { UserProfile } from 'src/app/models/user-profile';
 
 @Component({
   selector: 'app-channel-users-dialog',
@@ -19,7 +20,8 @@ export class ChannelUsersDialogComponent {
   public search: string = '';
   filteredUser: any = [];
   searchOutput: boolean = false;
-
+  text: string = '';
+  showTagMenu: boolean = false;
 
 
   constructor(
@@ -27,10 +29,10 @@ export class ChannelUsersDialogComponent {
     private usersService: UsersFirebaseService,
     private channelService: ChannelService,
     private searchService: SearchService,
-    ) { }
+    private firebaseUtils: FirebaseUtilsService,
+  ) { }
 
   ngOnInit() {
-
     this.getAllUsers();
   }
 
@@ -38,25 +40,27 @@ export class ChannelUsersDialogComponent {
     this.inputOpened = this.selectedOption === 'individual';
   }
 
-  async getAllUsers() {
-    this.allUsers = await this.usersService.getUsers();
-    console.log(this.allUsers);
-  }
-
-  pushAllUsersToChannel() {
-    this.allUsers.forEach((user: any) => this.channel.usersData.push(user));
-  }
-
-
   addUsers() {
     if (this.selectedOption === 'all') {
       this.pushAllUsersToChannel();
-      console.log(this.channel);
+      this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
   }
 
 
-  
+  async getAllUsers() {
+    this.allUsers = await this.usersService.getUsers();
+    this.addUsers();
+  }
+
+
+  pushAllUsersToChannel() {
+    this.allUsers.forEach((user: any) => {
+      const userObject = user instanceof UserProfile ? user.toJSON() : user;
+      this.channel.usersData.push(userObject);
+    });
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -74,6 +78,9 @@ export class ChannelUsersDialogComponent {
     this.searchOutput = !this.searchOutput;
   }
 
-  openProfile(user: any) {console.log(user);}
+  openProfile(user: any) { console.log(user); }
 
+  addThisUser() {}
+
+ 
 }

@@ -86,6 +86,9 @@ export class UsersFirebaseService implements OnInit {
 
 
   setUserObject(obj: any): User {
+    if (!obj) {
+      throw new Error('Provided object is undefined or null');
+    }
     return new UserProfile({
       name: obj.name || '',
       email: obj.email || '',
@@ -94,6 +97,7 @@ export class UsersFirebaseService implements OnInit {
     });
   }
 
+  
 
   async checkIfSubcollectionExists(documentPath: string): Promise<boolean> {
     const subcollectionRef = collection(this.firestore, documentPath);
