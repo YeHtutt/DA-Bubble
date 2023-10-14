@@ -160,6 +160,11 @@
     .deleteMsgBtn {
         bottom: -66px;
         background-color: rgb(236, 101, 101);
+
+        &:hover {
+            background-color: rgb(214, 17, 17);
+            color: white;
+        }
     }
 }
 

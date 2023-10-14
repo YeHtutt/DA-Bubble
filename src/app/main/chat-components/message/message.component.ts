@@ -39,7 +39,7 @@ export class MessageComponent {
 
   openMenu() {
     this.checkIfEdit = !this.checkIfEdit;
-    setTimeout(() => this.checkIfEdit = !this.checkIfEdit, 2000);
+    setTimeout(() => this.checkIfEdit = !this.checkIfEdit, 5000);
   }
 
   openEdit(messageText: string) {
