@@ -51,22 +51,22 @@ export class SidenavComponent implements OnInit {
     this.directMessageService.subMessageList();
 
 
-    this.afAuth.authState.subscribe(async user => {
-      if (user) {
-        this.user = user;
-        const db = getDatabase();
-        const userStatusRef = ref(db, `/status/${user.uid}`);
+    // this.afAuth.authState.subscribe(async user => {
+    //   if (user) {
+    //     this.user = user;
+    //     const db = getDatabase();
+    //     const userStatusRef = ref(db, `/status/${user.uid}`);
         
-        // Set user's online status to 'true' in Firestore and Realtime Database
-        await this.userService.updateUserOnlineStatus(user.uid, true);
-        set(userStatusRef, { isOnline: true });
+    //     // Set user's online status to 'true' in Firestore and Realtime Database
+    //     await this.userService.updateUserOnlineStatus(user.uid, true);
+    //     set(userStatusRef, { isOnline: true });
     
-        // Handle disconnection
-        onDisconnect(userStatusRef).set(async () => {
-          await this.userService.updateUserOnlineStatus(user.uid, false);
-        });
-      }
-    });
+    //     // Handle disconnection
+    //     onDisconnect(userStatusRef).set(async () => {
+    //       await this.userService.updateUserOnlineStatus(user.uid, false);
+    //     });
+    //   }
+    // });
   }
 
 
