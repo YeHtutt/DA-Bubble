@@ -16,6 +16,7 @@
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
             <button (click)="openEdit(message.text)" *ngIf="checkIfEdit">Nachricht bearbeiten</button>
+            <button class="deleteMsgBtn" (click)="deleteMessage(message.messageId)" *ngIf="checkIfEdit">Nachricht löschen</button>
         </div>
     </div>
 </div>

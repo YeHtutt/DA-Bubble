@@ -62,4 +62,9 @@ export class MessageComponent {
   cancelEdit() {
     this.showEdit = !this.showEdit
   }
+
+  deleteMessage(msgId: string) {
+    this.getMessagePath();
+    this.messageService.deleteMessageDoc(this.coll, this.docId, msgId)
+  }
 }

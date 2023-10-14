@@ -1,8 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc,
-  getDocs, orderBy, onSnapshot
-} from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
@@ -31,7 +28,7 @@ export class MessageService {
     private router: Router
   ) {}
 
-  // SEND MESSAGE
+  // SEND MESSAGE //
 
   async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
     // If a message is sent with new Message to a user & redirect to the chat
@@ -75,7 +72,7 @@ export class MessageService {
     return doc(this.firestore, `${coll}/${docId}/message/${msgId}`);
   }
 
-  // GET MESSAGE
+  // GET MESSAGE //
 
 
   // Gets messages from channel and chat
@@ -91,7 +88,7 @@ export class MessageService {
     });
   }
 
-  // DIRECT CHAT FUNKTIONS
+  // DIRECT CHAT FUNKTIONS //
 
   async getChats() {
     let chats: any[] = [];
@@ -138,7 +135,7 @@ export class MessageService {
     return docRef.id;
   }
 
-  // UPDATE MESSAGE
+  // UPDATE MESSAGE //
 
   // updates message document with new text
   async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string) {
@@ -157,5 +154,12 @@ export class MessageService {
         console.log("Message written with ID", docRef?.id)
         updateDoc(docRef, { messageId: docRef.id });
       });
+  }
+
+  // DELETE MESSAGE //*css*/`
+  
+  async deleteMessageDoc(coll: any, docId: any, msgId: string) {
+    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+    deleteDoc(msgRef);
   }
 }
