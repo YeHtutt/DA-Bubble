@@ -1,6 +1,6 @@
 import { Message } from './message';
 
-describe('DirectMessage', () => {
+describe('messageTree', () => {
   it('should create an instance', () => {
     expect(new Message()).toBeTruthy();
   });

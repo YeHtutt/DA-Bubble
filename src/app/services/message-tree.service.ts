@@ -42,7 +42,7 @@ interface ExampleFlatNode {
   providedIn: 'root'
 })
 
-export class DirectMessageService {
+export class MessageTreeService {
 
   messageTree: MessagesNode[] = [];
   themes: any;
@@ -108,8 +108,7 @@ export class DirectMessageService {
       });
       this.themes = [{ messageName: 'Messages', children: this.messageTree }];
       this.dataSource.data = this.themes;
-      this.dataLoaded.next(true);
-      
+      this.dataLoaded.next(true);      
     });
   }
 
@@ -126,9 +125,9 @@ export class DirectMessageService {
   }
 
 
-  /*  createDirectMessage(user1: UserProfile, user2: UserProfile) {
+  /*  createmessageTree(user1: UserProfile, user2: UserProfile) {
      let sharedId = `${user1.id}_${user2.id}`;
-     const directMessageRef = doc(this.firestore, 'direct-messages', sharedId);
+     const messageTreeRef = doc(this.firestore, 'direct-messages', sharedId);
  
    }
   */

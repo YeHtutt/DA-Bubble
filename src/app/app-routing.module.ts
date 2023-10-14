@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ChannelChatComponent } from './main/channels/channel-chat/channel-chat.component';
-import { NewMessageComponent } from './main/new-message/new-message.component';
+import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
+import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
 import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 import { AuthenticationService } from './services/authentication.service';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
-import { ChatComponent } from './main/chat/chat.component';
+import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 
 let docId: any;

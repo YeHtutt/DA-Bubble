@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
+import { UserProfileViewComponent } from '../users/user-profile-view/user-profile-view.component';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Auth } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';

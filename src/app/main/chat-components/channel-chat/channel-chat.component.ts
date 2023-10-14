@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
+import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
