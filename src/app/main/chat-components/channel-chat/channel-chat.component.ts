@@ -49,7 +49,6 @@ export class ChannelChatComponent {
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
-        console.log(this.currentUser)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });

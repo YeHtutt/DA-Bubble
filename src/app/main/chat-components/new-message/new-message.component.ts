@@ -67,7 +67,8 @@ export class NewMessageComponent {
       text: this.text,
       time: new Date(),
       messageId: '',
-      user: this.currentUser.toJSON()
+      user: this.currentUser.toJSON(),
+      textEdited: false
     });
   }
 
@@ -76,7 +77,6 @@ export class NewMessageComponent {
     const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
-    console.log(this.filteredChannel);
   }
 
   selectReceiver(receiver: any) {
@@ -84,8 +84,6 @@ export class NewMessageComponent {
     this.receiver = receiver;
     this.filteredChannel = [];
     this.filteredUser = [];
-    console.log(this.receiver)
-    // this.checkIfChatAlreadyExists();
   }
 
   toggleSearchOutput() {
@@ -100,17 +98,6 @@ export class NewMessageComponent {
     }
   }
 
-  // checkIfChatAlreadyExists() {
-  //   if (this.receiver instanceof UserProfile) {
-  //     this.userService.checkIfSubcollectionExists(`user/${this.receiver.id}/message`);
-  //     // this.router.navigateByUrl('/main/chat/' + this.receiver.id);
-  //     console.log(this.receiver.id)
-  //   }
-  //   if (this.receiver instanceof Channel) {
-  //     this.userService.checkIfSubcollectionExists(`channel/${this.receiver.channelId}/channel-message`);
-  //     // this.router.navigateByUrl('/main/channel/' + this.receiver.channelId);
-  //   }
-  // }
 
   async openTagMenu() {
     this.showTagMenu = !this.showTagMenu;

@@ -38,13 +38,13 @@ export class ChatComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
-      this.chatId = params.get('id') || '';
- /*      this.getReceiverData();
+      this.chatId = params.get('chatId') || '';
+      this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then( () => {
-        this.firebaseUtils.subMessage('chat', this.chatId);
+        this.messageService.subMessage('chat', this.chatId);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
-      }); */
+      }); 
     });
   }
 
@@ -81,7 +81,8 @@ export class ChatComponent {
       text: this.text,
       time: new Date(),
       messageId: '',
-      user: this.currentUser.toJSON()
+      user: this.currentUser.toJSON(),
+      textEdited: false
     });
   }
 

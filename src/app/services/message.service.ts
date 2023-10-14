@@ -7,7 +7,6 @@ import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
-import { collectionData } from 'rxfire/firestore';
 import { DirectChat } from '../models/direct-chat';
 
 
@@ -37,7 +36,7 @@ export class MessageService {
   async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
     // If a message is sent with new Message to a user & redirect to the chat
     if (receiver instanceof UserProfile) {
-      const docId = await this.createDirectChat(directChat);
+      const docId = await this.getChatDocId(directChat);
       this.uploadMessage('chat', docId, 'message', message);
       if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
       // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
@@ -63,17 +62,7 @@ export class MessageService {
     await updateDoc(docRef, { messageId: docRef.id });
   }
 
-
-  // creates a new direct chat with user
-  async createDirectChat(directChat: DirectChat) {
-    const itemCollection = collection(this.firestore, 'chat');
-    const docRef = await addDoc(itemCollection, directChat.toJSON());
-    await updateDoc(docRef, { chatId: docRef.id });
-    return docRef.id;
-  }
-
   
-
   // gets a specific direct chat 
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, "chat", docId);
@@ -88,10 +77,6 @@ export class MessageService {
 
   // GET MESSAGE
 
-  // getChannelMessages(mainColl: string, docId: string | null, subColl: string) {
-  //   const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
-  //   return channelMessages$
-  // }
 
   // Gets messages from channel and chat
   subMessage(coll: string, subId: string) {
@@ -104,6 +89,53 @@ export class MessageService {
         this.messages.push(Message.fromJSON({ ...message.data(), messageId: message.id }));
       });
     });
+  }
+
+  // DIRECT CHAT FUNKTIONS
+
+  async getChats() {
+    let chats: any[] = [];
+    const collref = collection(this.firestore, `chat`);
+    const querySnapshot = await getDocs(collref);
+    querySnapshot.forEach((doc) => {
+      chats.push(doc.data());
+    });
+    return chats;
+  }
+
+
+  async checkIfChatExists(directChat: DirectChat) {
+    const chats = await this.getChats();
+    let chatExists: boolean = false;
+    if (chats) {
+      chats.forEach(chat => {
+        if (chat.user1 == directChat.user1 || chat.user2 == directChat.user2) {
+          chatExists = chat.chatId;
+        } else {
+          chatExists = false;
+        }
+      });
+    } 
+    return chatExists;
+  }
+
+  async getChatDocId(directChat: DirectChat) {
+    let docId: any;
+    if (await this.checkIfChatExists(directChat) == false) {
+      docId = await this.createDirectChat(directChat);
+    } else {
+      docId = await this.checkIfChatExists(directChat);
+    }
+    return docId;
+  }
+
+
+  // creates a new direct chat with user
+  async createDirectChat(directChat: DirectChat) {
+    const itemCollection = collection(this.firestore, 'chat');
+    const docRef = await addDoc(itemCollection, directChat.toJSON());
+    await updateDoc(docRef, { chatId: docRef.id });
+    return docRef.id;
   }
 
   // UPDATE MESSAGE
