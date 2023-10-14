@@ -49,8 +49,8 @@ export class ChatComponent {
   }
 
   getAllMessages() {
-    if (this.firebaseUtils.messages.length > 0) this.chatExists = true;
-    return this.firebaseUtils.messages
+    if (this.messageService.messages.length > 0) this.chatExists = true;
+    return this.messageService.messages
   }
 
 
