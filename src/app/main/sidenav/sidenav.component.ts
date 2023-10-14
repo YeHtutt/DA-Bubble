@@ -45,6 +45,7 @@ export class SidenavComponent implements OnInit {
       }
     });
     this.subscriptions.push(sub);
+    this.directMessageService.subMessageList();
     }
 
 
