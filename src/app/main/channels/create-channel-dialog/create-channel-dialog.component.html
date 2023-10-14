@@ -7,7 +7,7 @@
         </div>
         <h3>Channel-Name</h3>
         <mat-form-field appearance="outline" class="mat-input">
-            <input [formControl]="channelNameInput" matInput placeholder="# e.g. marketing" (blur)="this.utilsService.checkInputLength(this.channelNameInput)">
+            <input [formControl]="channelNameInput" matInput placeholder="# e.g. marketing" (blur)="this.notificationService.checkInputLength(this.channelNameInput)">
         </mat-form-field>
         <h3>Beschreibung (optional)</h3>
         <mat-form-field appearance="outline" class="mat-input">

@@ -3,7 +3,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { UtilsService } from 'src/app/services/utils.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-users-dialog.component';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
@@ -22,7 +22,7 @@ export class CreateChannelDialogComponent {
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
-    public utilsService: UtilsService,
+    public notificationService: NotificationService,
     private userService: UsersFirebaseService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
@@ -30,7 +30,7 @@ export class CreateChannelDialogComponent {
 
   addChannel() {
     if (this.channelNameInput.invalid) {
-      this.utilsService.checkInputLength(this.channelNameInput);
+      this.notificationService.checkInputLength(this.channelNameInput);
       return;
     };
     this.setChannelProperties();  

@@ -84,6 +84,8 @@ export class MessageService {
     return docRef.id;
   }
 
+  
+
   // gets a specific direct chat 
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, "chat", docId);

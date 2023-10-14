@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { MessageTreeService } from './message-tree.service';
 
-import { UtilsService } from './utils.service';
-
-describe('UtilsService', () => {
-  let service: UtilsService;
+describe('messageTreeService', () => {
+  let service: MessageTreeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UtilsService);
+    service = TestBed.inject(MessageTreeService);
   });
 
   it('should be created', () => {
