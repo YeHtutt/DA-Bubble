@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DirectMessageService } from './direct-message.service';
+import { NotificationService } from './notification.service';
 
-describe('DirectMessageService', () => {
-  let service: DirectMessageService;
+describe('UtilsService', () => {
+  let service: NotificationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DirectMessageService);
+    service = TestBed.inject(NotificationService);
   });
 
   it('should be created', () => {

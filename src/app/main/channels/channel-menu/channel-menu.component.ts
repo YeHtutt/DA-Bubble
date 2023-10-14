@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FormControl, Validators } from '@angular/forms';
-import { UtilsService } from 'src/app/services/utils.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 
@@ -21,7 +21,7 @@ export class ChannelMenuComponent {
     private userService: UsersFirebaseService,
     private channelService: ChannelService,
     public dialogRef: MatDialogRef<ChannelMenuComponent>,
-    public utilsService: UtilsService,
+    public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
   ) { }
 

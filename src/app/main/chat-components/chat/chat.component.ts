@@ -4,7 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
-import { DirectMessageService } from 'src/app/services/direct-message.service';
+import { MessageTreeService } from 'src/app/services/message-tree.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -49,8 +49,8 @@ export class ChatComponent {
   }
 
   getAllMessages() {
-    if (this.firebaseUtils.messages.length > 0) this.chatExists = true;
-    return this.firebaseUtils.messages
+    if (this.messageService.messages.length > 0) this.chatExists = true;
+    return this.messageService.messages
   }
 
 

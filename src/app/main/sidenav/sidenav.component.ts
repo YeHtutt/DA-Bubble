@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelService } from 'src/app/services/channel.service';
-import { DirectMessageService } from 'src/app/services/direct-message.service';
+import { MessageTreeService } from 'src/app/services/message-tree.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
-import { UserProfileSubViewComponent } from '../user-profile-sub-view/user-profile-sub-view.component';
+import { UserProfileViewComponent } from '../users/user-profile-view/user-profile-view.component';
+import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ref, set, onDisconnect, getDatabase } from '@angular/fire/database';
@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit {
     private Route: ActivatedRoute,
     private router: Router,
     public channelService: ChannelService,
-    public directMessageService: DirectMessageService,
+    public messageTreeService: MessageTreeService,
     public dialog: MatDialog,
     public authService: AuthenticationService,
     public afAuth: AngularFireAuth,
@@ -42,33 +42,39 @@ export class SidenavComponent implements OnInit {
   //habe alles von channels übernommen das der tree standartmäßig geöffnet ist, klappt aber aus irgendeinem grund noch nicht
   ngOnInit() {
     // Restlicher Code...
-    const sub = this.directMessageService.dataLoaded.subscribe(loaded => {
+    const sub = this.messageTreeService.dataLoaded.subscribe(loaded => {
       if (loaded) {
-        this.directMessageService.treeControl.expandAll();
+        this.messageTreeService.treeControl.expandAll();
       }
     });
     this.subscriptions.push(sub);
-    this.directMessageService.subMessageList();
+    this.messageTreeService.subMessageList();
 
 
-    // this.afAuth.authState.subscribe(async user => {
-    //   if (user) {
-    //     this.user = user;
-    //     const db = getDatabase();
-    //     const userStatusRef = ref(db, `/status/${user.uid}`);
-        
-    //     // Set user's online status to 'true' in Firestore and Realtime Database
-    //     await this.userService.updateUserOnlineStatus(user.uid, true);
-    //     set(userStatusRef, { isOnline: true });
-    
-    //     // Handle disconnection
-    //     onDisconnect(userStatusRef).set(async () => {
-    //       await this.userService.updateUserOnlineStatus(user.uid, false);
-    //     });
-    //   }
-    // });
+
   }
 
+
+
+  ngOnDestroy() {
+    this.afAuth.authState.subscribe(async user => {
+      if (user) {
+        debugger
+        this.user = user;
+        const db = getDatabase();
+        const userStatusRef = ref(db, `/status/${user.uid}`);
+
+        // Set user's online status to 'true' in Firestore and Realtime Database
+        await this.userService.updateUserOnlineStatus(user.uid, true);
+        set(userStatusRef, { isOnline: true });
+
+        // Handle disconnection
+        onDisconnect(userStatusRef).set(async () => {
+          await this.userService.updateUserOnlineStatus(user.uid, false);
+        });
+      }
+    });
+  }
 
   toggleExpanded(node: any) {
     this.channelService.treeControl.toggle(node);

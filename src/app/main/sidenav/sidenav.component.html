@@ -21,7 +21,7 @@
 
       <app-channels></app-channels>
 
-      <mat-tree class="mat-tree" [dataSource]="directMessageService.dataSource" [treeControl]="directMessageService.treeControl">
+      <mat-tree class="mat-tree" [dataSource]="messageTreeService.dataSource" [treeControl]="messageTreeService.treeControl">
         <!-- This is the tree node template for leaf nodes !IMPORTANT -->
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact" routerLink="chat/{{ node.id }}" routerLinkActive="router-link-active">
           <img class="profil-icon" src="{{ node.photoURL }}">
@@ -32,14 +32,14 @@
       
 
         </mat-tree-node>
-        <mat-tree-node *matTreeNodeDef="let node;when: directMessageService.hasChild" class="highest-node">
+        <mat-tree-node *matTreeNodeDef="let node;when: messageTreeService.hasChild" class="highest-node">
           <div class="main-node">
             <div class="channel-headline">
               <div class="channel-head head-box" (click)="toggleExpanded(node)" matTreeNodeToggle
               [attr.aria-label]="'Toggle ' + node.name">
                 <button class="expand-channels-btn" mat-icon-button>
                   <mat-icon class="main-icon">
-                    {{ directMessageService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+                    {{ messageTreeService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
                   </mat-icon>
                 </button>
                 <div class="dm-headline">

@@ -39,25 +39,25 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ChannelsComponent } from './main/channels/channels.component';
 import { MainComponent } from './main/main.component';
-import { NewMessageComponent } from './main/new-message/new-message.component';
+import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
 import { HeaderComponent } from './main/header/header.component';
 import { SidenavComponent } from './main/sidenav/sidenav.component';
-import { ThreadsComponent } from './main/threads/threads.component';
+import { ThreadsComponent } from './main/chat-components/threads/threads.component';
 
 /* Module */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ChannelChatComponent } from './main/channels/channel-chat/channel-chat.component';
-import { MessageComponent } from './main/dashboard/message/message.component';
-import { ChatComponent } from './main/chat/chat.component';
+import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
+import { MessageComponent } from './main/chat-components/message/message.component';
+import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
-import { UserProfileViewComponent } from './main/user-profile-view/user-profile-view.component';
+import { UserProfileViewComponent } from './main/users/user-profile-view/user-profile-view.component';
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
-import { UserProfileEditComponent } from './main/user-profile-edit/user-profile-edit.component';
-import { UserProfileSubViewComponent } from './main/user-profile-sub-view/user-profile-sub-view.component';
+import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
+import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
 
 @NgModule({
   declarations: [

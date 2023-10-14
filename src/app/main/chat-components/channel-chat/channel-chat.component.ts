@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { ChannelMenuComponent } from '../channel-menu/channel-menu.component';
+import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
@@ -10,6 +10,8 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { SearchService } from 'src/app/services/search.service';
+
+
 
 @Component({
   selector: 'app-channel-chat',
@@ -35,7 +37,8 @@ export class ChannelChatComponent {
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
-    private searchService: SearchService) {
+    private searchService: SearchService,
+    private messageService: MessageService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -45,7 +48,7 @@ export class ChannelChatComponent {
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.firebaseUtils.subMessage('channel', this.channelId);
+        this.messageService.subMessage('channel', this.channelId);
         console.log(this.currentUser)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
@@ -68,7 +71,7 @@ export class ChannelChatComponent {
   sendMessageTo(coll: string, docId: string) {
     this.createMessageObject().then(createdMessage => {
       this.message = createdMessage;
-      this.firebaseUtils.addMessageToCollection(coll, docId, this.message.toJSON());
+      this.messageService.addMessageToCollection(coll, docId, this.message.toJSON());
     });
     this.getAllMessages();
   }
@@ -92,7 +95,7 @@ export class ChannelChatComponent {
 
 
   getAllMessages() {
-    return this.firebaseUtils.messages
+    return this.messageService.messages
   }
 
   async openTagMenu() {

@@ -1,4 +1,4 @@
-export class DirectMessage {
+export class messageTree {
     messageId: string;
     content: string;
     timestamp: Date;
@@ -26,8 +26,8 @@ export class DirectMessage {
     }
 
 
-    public static fromJSON(json: any): DirectMessage {
-        return new DirectMessage({
+    public static fromJSON(json: any): messageTree {
+        return new messageTree({
             messageId: json.messageId,
             content: json.content,
             timestamp: json.timestamp,

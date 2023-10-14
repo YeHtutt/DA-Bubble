@@ -1,7 +1,7 @@
-import { DirectMessage } from './direct-message';
+import { messageTree } from './direct-message';
 
 describe('DirectChat', () => {
   it('should create an instance', () => {
-    expect(new DirectMessage()).toBeTruthy();
+    expect(new messageTree()).toBeTruthy();
   });
 });
