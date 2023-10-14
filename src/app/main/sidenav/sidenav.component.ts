@@ -71,6 +71,7 @@ export class SidenavComponent implements OnInit {
     const userName = node.name; 
     const userPhotoURL = node.photoURL; 
     const userEmail = node.email;
+    const isOnline = node.isOnline;
 
     this.dialog.open(UserProfileSubViewComponent, {
       width: '500px',
@@ -81,7 +82,8 @@ export class SidenavComponent implements OnInit {
         id: userId,
         name: userName,
         photoURL: userPhotoURL,
-        email: userEmail
+        email: userEmail,
+        isOnline: isOnline
       }
     });
   }

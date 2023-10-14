@@ -28,6 +28,9 @@
           <img *ngIf="node.isOnline" class="onlineStatus" src="assets/img/Online.png">
           <img *ngIf="!node.isOnline" class="onlineStatus" src="assets/img/Offline.png">
           <div (click)="openProfileDialog(node)">{{node.name}}</div>
+         
+      
+
         </mat-tree-node>
         <mat-tree-node *matTreeNodeDef="let node;when: directMessageService.hasChild" class="highest-node">
           <div class="main-node">

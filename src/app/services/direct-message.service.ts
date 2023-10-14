@@ -25,7 +25,8 @@ interface MessagesNode {
   name: string;
   id: any;
   photoURL: any;
-  email: any,
+  email: any;
+  isOnline: boolean;
   children?: MessagesNode[];
 }
 
@@ -71,6 +72,7 @@ export class DirectMessageService {
       photoURL: node.photoURL,
       level: level,
       email: node.email,
+      isOnline: node.isOnline
     };
   };
 
@@ -103,10 +105,11 @@ export class DirectMessageService {
         const messageObj = this.setMessageObj(element.data(), element.id);
         let currentUser = this.userService.getFromLocalStorage();
         if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
-          });
+      });
       this.themes = [{ messageName: 'Messages', children: this.messageTree }];
       this.dataSource.data = this.themes;
       this.dataLoaded.next(true);
+      
     });
   }
 
