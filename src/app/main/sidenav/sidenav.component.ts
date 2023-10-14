@@ -9,7 +9,7 @@ import { UserProfileSubViewComponent } from '../user-profile-sub-view/user-profi
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ref, set, onDisconnect, getDatabase } from '@angular/fire/database';
-
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 
 
@@ -33,6 +33,7 @@ export class SidenavComponent implements OnInit {
     public dialog: MatDialog,
     public authService: AuthenticationService,
     public afAuth: AngularFireAuth,
+    private userService: UsersFirebaseService
 
   ) {
 
@@ -50,19 +51,22 @@ export class SidenavComponent implements OnInit {
     this.directMessageService.subMessageList();
 
 
-    this.afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe(async user => {
       if (user) {
+        this.user = user;
         const db = getDatabase();
         const userStatusRef = ref(db, `/status/${user.uid}`);
         
-        // Set user's online status to 'true'
+        // Set user's online status to 'true' in Firestore and Realtime Database
+        await this.userService.updateUserOnlineStatus(user.uid, true);
         set(userStatusRef, { isOnline: true });
-
+    
         // Handle disconnection
-        onDisconnect(userStatusRef).set({ isOnline: false });
+        onDisconnect(userStatusRef).set(async () => {
+          await this.userService.updateUserOnlineStatus(user.uid, false);
+        });
       }
     });
-  
   }
 
 
