@@ -49,9 +49,6 @@ export class SidenavComponent implements OnInit {
     });
     this.subscriptions.push(sub);
     this.messageTreeService.subMessageList();
-
-
-
   }
 
 

@@ -3,12 +3,10 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileViewComponent } from '../users/user-profile-view/user-profile-view.component';
+import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Auth } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SearchService } from 'src/app/services/search.service';
-import { UserProfile } from 'src/app/models/user-profile';
-import { Channel } from 'src/app/models/channel';
 
 @Component({
   selector: 'app-header',
@@ -23,24 +21,25 @@ export class HeaderComponent implements OnInit {
   usersAndChannels: any = [];
   searchOutput: boolean = false;
 
-  constructor(private authService: AuthenticationService, 
+  constructor(private authService: AuthenticationService,
     private afAuth: AngularFireAuth,
-    private router: Router, 
-    public dialog: MatDialog, 
-    public userFbService: UsersFirebaseService, 
-    private auth: Auth,
+    private router: Router,
+    public dialog: MatDialog,
+    public userFbService: UsersFirebaseService,
     private searchService: SearchService
-    ) {}
+  ) { }
 
-  
+
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
   }
+
 
   userLoggedout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 
   openUserProfile() {
     this.dialog.open(UserProfileViewComponent, {
@@ -51,15 +50,26 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+
   async searchData() {
     const searchResult = await this.searchService.searchUsersAndChannels(this.search)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
   }
 
+
+  deleteSearch() {
+    this.search = '';
+    this.filteredUser = [];
+    this.filteredChannel = [];
+    this.toggleSearchOutput();
+  }
+
+
   toggleSearchOutput() {
     this.searchOutput = !this.searchOutput;
   }
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -69,12 +79,27 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  openProfil(user: UserProfile) {
 
-  }
+  openProfileDialogInSearch(node: any) {
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
+    const userEmail = node.email;
+    const isOnline = node.isOnline;
 
-  openChannel(channel: Channel) {
-    
+    this.dialog.open(UserProfileSubViewComponent, {
+      width: '500px',
+      height: '727px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      data: {
+        id: userId,
+        name: userName,
+        photoURL: userPhotoURL,
+        email: userEmail,
+        isOnline: isOnline
+      }
+    });
   }
 
 }

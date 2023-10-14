@@ -6,13 +6,13 @@
       <img src="../assets/img/search.png">
       <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutputHeader">
         <div class="user-box" *ngIf="filteredUser.length > 0">
-          <div class="user" *ngFor="let user of filteredUser" (click)="openProfil(user)">
+          <div class="user" *ngFor="let user of filteredUser" (click)="openProfileDialogInSearch(user); deleteSearch()">
             <img src="{{user.photoURL}}" alt="">
             <span>{{user.name}}</span>
           </div>
         </div>
         <div class="channelBox" *ngIf="filteredChannel.length > 0">
-          <div class="channel" *ngFor="let channel of filteredChannel" (click)="openChannel(channel)">
+          <div class="channel" *ngFor="let channel of filteredChannel" [routerLink]="['channel/' + channel.channelId]" (click)="deleteSearch()">
             <span><mat-icon>tag</mat-icon>{{channel.channelName}}</span>
           </div>
         </div>
