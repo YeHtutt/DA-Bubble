@@ -8,6 +8,7 @@ import { UserProfileViewComponent } from '../user-profile-view/user-profile-view
 import { UserProfileSubViewComponent } from '../user-profile-sub-view/user-profile-sub-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ref, set, onDisconnect, getDatabase } from '@angular/fire/database';
 
 
 
@@ -31,9 +32,10 @@ export class SidenavComponent implements OnInit {
     public directMessageService: DirectMessageService,
     public dialog: MatDialog,
     public authService: AuthenticationService,
-    public afAuth: AngularFireAuth
-  ) { 
-    
+    public afAuth: AngularFireAuth,
+
+  ) {
+
   }
 
   //habe alles von channels übernommen das der tree standartmäßig geöffnet ist, klappt aber aus irgendeinem grund noch nicht
@@ -46,10 +48,23 @@ export class SidenavComponent implements OnInit {
     });
     this.subscriptions.push(sub);
     this.directMessageService.subMessageList();
-    }
 
 
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        const db = getDatabase();
+        const userStatusRef = ref(db, `/status/${user.uid}`);
+        
+        // Set user's online status to 'true'
+        set(userStatusRef, { isOnline: true });
+
+        // Handle disconnection
+        onDisconnect(userStatusRef).set({ isOnline: false });
+      }
+    });
   
+  }
+
 
   toggleExpanded(node: any) {
     this.channelService.treeControl.toggle(node);
@@ -67,9 +82,9 @@ export class SidenavComponent implements OnInit {
   }
 
   openProfileDialog(node: any) {
-    const userId = node.id; 
-    const userName = node.name; 
-    const userPhotoURL = node.photoURL; 
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
     const userEmail = node.email;
     const isOnline = node.isOnline;
 
