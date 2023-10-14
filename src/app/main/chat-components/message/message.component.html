@@ -5,7 +5,10 @@
             <span>{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
-        <div [ngClass]="{'message_reverse': currentUser == message.user.id}" class="message">{{message.text}}</div>
+        <div [ngClass]="{'message_reverse': currentUser == message.user.id}" class="message">
+            {{message.text}} 
+            <span *ngIf="message.textEdited" class="editedMsg">(bearbeitet)</span>
+        </div>
     </div>
     <div [ngClass]="{'reaction_container_reverse': currentUser == message.user.id}" class="reaction_container">
         <mat-icon>add_reaction</mat-icon>

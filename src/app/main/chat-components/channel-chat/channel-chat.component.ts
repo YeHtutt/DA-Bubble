@@ -84,7 +84,8 @@ export class ChannelChatComponent {
       text: this.text,
       time: new Date(),
       user: messageCreator,
-      messageId: ''
+      messageId: '',
+      textEdited: false
     });
   }
 

@@ -19,9 +19,6 @@ type ReceiverType = UserProfile | Channel;
 })
 export class MessageService {
 
-  docId: string | undefined = '';
-  coll: string | undefined = '';
-
   messages: Message[] = [];
   unsubMessages: any;
 
@@ -33,16 +30,7 @@ export class MessageService {
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router
-  ) {
-    const url = this.router.url;
-    this.getRouteToMsgDoc(url);
-  }
-
-  getRouteToMsgDoc(url: string) {
-    let urlParts = url.split('/');
-    this.docId = urlParts.pop();
-    this.coll = urlParts.pop();
-  }
+  ) {}
 
   // SEND MESSAGE
 
@@ -93,25 +81,19 @@ export class MessageService {
     return DirectChat.fromJSON(chatDoc);
   }
 
-  async getMsgDocRef(msgId: string) {
-    return doc(this.firestore, `${this.coll}/${this.docId}/message/${msgId}`);
+  // get reference of message document
+  async getMsgDocRef(coll: string, docId: string, msgId: string) {
+    return doc(this.firestore, `${coll}/${docId}/message/${msgId}`);
   }
 
   // GET MESSAGE
 
-  getChannelMessages(mainColl: string, docId: string | null, subColl: string) {
-    const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
-    return channelMessages$
-  }
+  // getChannelMessages(mainColl: string, docId: string | null, subColl: string) {
+  //   const channelMessages$ = collectionData(this.getRefSubcollChannel(mainColl, docId, subColl));
+  //   return channelMessages$
+  // }
 
-  // UPDATE MESSAGE
-
-  async updateMessage(msgId: string, editedMsg: string) {
-    const msgRef = await this.getMsgDocRef(msgId);
-    updateDoc(msgRef, { text: editedMsg });
-  }
-
-
+  // Gets messages from channel and chat
   subMessage(coll: string, subId: string) {
     // Target the 'message' subcollection under the specified document ID
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
@@ -122,6 +104,14 @@ export class MessageService {
         this.messages.push(Message.fromJSON({ ...message.data(), messageId: message.id }));
       });
     });
+  }
+
+  // UPDATE MESSAGE
+
+  // updates message document with new text
+  async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string) {
+    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+    updateDoc(msgRef, { text: editedMsg, textEdited: true });
   }
 
 

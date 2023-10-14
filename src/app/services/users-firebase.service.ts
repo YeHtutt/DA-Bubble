@@ -94,7 +94,8 @@ export class UsersFirebaseService implements OnInit {
       name: obj.name || '',
       email: obj.email || '',
       id: obj.id || '',
-      photoURL: obj.photoURL || ''
+      photoURL: obj.photoURL || '',
+      isOnline: obj.isOnline || false
     });
   }
 

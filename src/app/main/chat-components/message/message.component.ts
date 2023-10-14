@@ -16,11 +16,14 @@ export class MessageComponent {
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
   editMessage: string = '';
+  docId: string | undefined = '';
+  coll: string | undefined = '';
 
 
   constructor(
     private userService: UsersFirebaseService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.currentUser = this.userService.getFromLocalStorage();
   }
@@ -42,10 +45,18 @@ export class MessageComponent {
   openEdit(messageText: string) {
     this.showEdit = !this.showEdit
     this.editMessage = messageText;
+    this.getMessagePath();
+  }
+
+  getMessagePath() {
+    const url = this.router.url;
+    let urlParts = url.split('/');
+    this.docId = urlParts.pop();
+    this.coll = urlParts.pop();
   }
 
   saveMessage(msgId: string) {
-    this.messageService.updateMessage(msgId, this.editMessage);
+    this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
   }
 
   cancelEdit() {
