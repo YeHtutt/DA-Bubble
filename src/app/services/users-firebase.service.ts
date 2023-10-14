@@ -34,6 +34,7 @@ export class UsersFirebaseService implements OnInit {
   }
 
   async addUserToFirebase(user: any, uid: string) {
+    
     try {
       const userRef = doc(this.firestore, 'users', uid);
       await setDoc(userRef, user);
@@ -145,6 +146,15 @@ export class UsersFirebaseService implements OnInit {
       const userRef = doc(this.firestore, 'users', userID);
       await setDoc(userRef, formData, { merge: true }); // Mit { merge: true } werden vorhandene Daten beibehalten und nur die aktualisierten Felder überschrieben
       this.getUser(userID);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateUserOnlineStatus(userID: any, onlineStatus: boolean) {
+    try {
+      const userRef = doc(this.firestore, 'users', userID);
+      await updateDoc(userRef, { isOnline:  onlineStatus }); // Mit { merge: true } werden vorhandene Daten beibehalten und nur die aktualisierten Felder überschrieben
     } catch (error) {
       throw error;
     }

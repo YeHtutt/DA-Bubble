@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
 import { UserProfileSubViewComponent } from '../user-profile-sub-view/user-profile-sub-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
+
 
 
 @Component({
@@ -17,7 +20,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SidenavComponent implements OnInit {
   showSidenav: boolean = true;
   @Input() channel_window: any;
-  isAuthenticated = false;
+  user: any;
 
   private subscriptions: Subscription[] = [];
 
@@ -27,22 +30,14 @@ export class SidenavComponent implements OnInit {
     public channelService: ChannelService,
     public directMessageService: DirectMessageService,
     public dialog: MatDialog,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    public afAuth: AngularFireAuth
   ) { 
     
   }
 
   //habe alles von channels übernommen das der tree standartmäßig geöffnet ist, klappt aber aus irgendeinem grund noch nicht
   ngOnInit() {
-     // Überwache den Authentifizierungsstatus und aktualisiere isAuthenticated entsprechend
-     this.isAuthenticated = this.authService.getIsAuthenticated();
-
-    if (this.isAuthenticated) {
-      // Benutzer ist eingeloggt
-    } else {
-      // Benutzer ist ausgeloggt
-    }
-    
     // Restlicher Code...
     const sub = this.directMessageService.dataLoaded.subscribe(loaded => {
       if (loaded) {
@@ -50,9 +45,10 @@ export class SidenavComponent implements OnInit {
       }
     });
     this.subscriptions.push(sub);
-  }
+    }
 
 
+  
 
   toggleExpanded(node: any) {
     this.channelService.treeControl.toggle(node);

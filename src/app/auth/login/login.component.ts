@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
         if (user) {
           this.usersFbService.getLoggedInUser(user.uid);
           this.usersFbService.saveToLocalStorage(user.uid);
+          this.usersFbService.updateUserOnlineStatus(user.uid, true);
           this.loginSuccess = true;
           this.authService.setIsAuthenticated(true);
           this.openSnackBar();
@@ -88,6 +89,7 @@ export class LoginComponent implements OnInit {
       if (user) {
         this.usersFbService.getLoggedInUser(user.uid);
         this.usersFbService.saveToLocalStorage(user.uid);
+        this.usersFbService.updateUserOnlineStatus(user.uid, true);
         this.loginSuccess = true;
         this.authService.setIsAuthenticated(true);
         this.openSnackBar();

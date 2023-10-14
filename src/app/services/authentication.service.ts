@@ -23,7 +23,9 @@ export class AuthenticationService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(private auth: Auth, private afAuth: AngularFireAuth, private userfbService: UsersFirebaseService, private router: Router, private usersFbService: UsersFirebaseService) {
+  constructor(private auth: Auth, private afAuth: AngularFireAuth, 
+    private userfbService: UsersFirebaseService, private router: Router, 
+    private usersFbService: UsersFirebaseService) {
     this.user = new UserProfile(); // user initialisiert
   }
 
@@ -33,6 +35,7 @@ export class AuthenticationService {
 
   logout() {
     this.setIsAuthenticated(false);
+    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage() , false);
     return from(this.auth.signOut().then(() => {
       this.userfbService.removeFromLocalStorage();
     }));
