@@ -1,10 +1,11 @@
 import { Component, Inject, HostListener, } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { SearchService } from 'src/app/services/search.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { UserProfile } from 'src/app/models/user-profile';
+
 
 @Component({
   selector: 'app-channel-users-dialog',
@@ -17,12 +18,13 @@ export class ChannelUsersDialogComponent {
   selectedOption: string | undefined;
   inputOpened = false;
   allUsers: any;
-  public search: string = '';
   filteredUser: any = [];
+  public search: string = '';
   searchOutput: boolean = false;
   text: string = '';
   showTagMenu: boolean = false;
-  usersList = [];
+  addedUsers: UserProfile[] = [];
+  
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,6 +32,7 @@ export class ChannelUsersDialogComponent {
     private channelService: ChannelService,
     private searchService: SearchService,
     private firebaseUtils: FirebaseUtilsService,
+    private dialogRef: MatDialogRef<ChannelUsersDialogComponent>
   ) { }
 
   ngOnInit() {
@@ -46,8 +49,6 @@ export class ChannelUsersDialogComponent {
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
   }
-
-
 
   async getAllUsers() {
     this.allUsers = await this.usersService.getUsers();
@@ -82,8 +83,11 @@ export class ChannelUsersDialogComponent {
   openProfile(user: any) { console.log(user); }
 
   addThisUser(index: number) {
-  /*   this.firebaseUtils.addColl(user, 'channel', this.channel.channelId); */
+    this.addedUsers.push(this.filteredUser[index]);
+    console.log(this.addedUsers)
   }
 
-
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

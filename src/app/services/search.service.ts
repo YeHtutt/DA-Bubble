@@ -31,8 +31,8 @@ export class SearchService {
   }
 
   transformForFinalResult(array: any) {
-    array.filteredChannel.forEach((c: any) => {c.channelName = c.channelName.slice(1)});
-    array.filteredUser.forEach((u: any) => {u.name = u.name.slice(1)});
+    array.filteredChannel.forEach((c: any) => { c.channelName = c.channelName.slice(1) });
+    array.filteredUser.forEach((u: any) => { u.name = u.name.slice(1) });
   }
 
 
@@ -50,5 +50,8 @@ export class SearchService {
     const isChannelMatch = obj.channelName && obj.channelName.startsWith(search);
     return isUserMatch || isChannelMatch;
   }
+
+
+
 
 }

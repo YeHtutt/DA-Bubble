@@ -30,7 +30,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-
+import {MatChipsModule} from '@angular/material/chips'; 
 /* Components */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/login/login.component';
@@ -109,7 +109,8 @@ import { UserProfileSubViewComponent } from './main/user-profile-sub-view/user-p
     MatDividerModule,
     AngularFireAuthModule,
     MatSnackBarModule,
-    MatRadioModule
+    MatRadioModule,
+    MatChipsModule
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },

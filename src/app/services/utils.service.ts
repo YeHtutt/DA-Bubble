@@ -17,11 +17,15 @@ export class UtilsService {
     }
   }
 
+  /* Notification */
+
   showError(message: string): void {
     this.snackBar.open(message, '', {
-       duration: 3000, 
+      duration: 3000,
       panelClass: ['error-snackbar']
     });
   }
+
+
 
 }

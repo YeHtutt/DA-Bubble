@@ -22,7 +22,8 @@ span {
 }
 
 .mat-form-field {
-    width: 100%;
+    width: 90%;
+ 
 }
 
 .create-btn {
@@ -34,18 +35,18 @@ span {
 
 // SEARCH 
 
-.searchOutput {
+.search-output {
     position: absolute;
     left: 0;
-    width: 100%;
+    width: 90%;
     height: fit-content;
     max-height: 300px;
     box-shadow: 0 4px 8px #0000004d;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 0px 30px 30px 30px;
     padding: 20px;
     overflow-y: scroll;
-
+    z-index: 100;
     img {
         width: 40px;
         height: 40px;
@@ -53,8 +54,7 @@ span {
     }
 }
 
-.user-box>.headline,
-.channelBox>.headline {
+.user-box>.headline {
     color: #535AF1;
     margin-bottom: 16px !important;
 }
@@ -98,7 +98,7 @@ span {
 .tagMenuOuterContainer {
     position: absolute;
     bottom: 50px;
-    border-radius: 30px; 
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
     background-color: white;
@@ -120,4 +120,51 @@ span {
         height: 25px;
         border-radius: 100%;
     }
+}
+
+.user-thumbnail {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.mdc-list-item__primary-text {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center;
+}
+
+
+.invitation-dialog-container {
+    width: 300px;
+    padding: 20px;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-thumbnail {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.create-btn {
+    margin-top: 20px;
+}
+
+.mdc-list-item__primary-text {
+    display: flex !important;
+    align-items: center !important;
 }

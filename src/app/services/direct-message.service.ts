@@ -117,6 +117,7 @@ export class DirectMessageService {
       email: obj.email,
       id: docId,
       photoURL: obj.photoURL,
+      isOnline: obj.isOnline,
       children: []
     });
   }
