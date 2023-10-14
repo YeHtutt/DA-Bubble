@@ -130,6 +130,4 @@ export class FirebaseUtilsService {
     await deleteDoc(this.getSingleDocRef(colId, docId))
       .catch((err) => { console.log(err) })
   }
-
-
 }

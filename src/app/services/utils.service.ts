@@ -18,8 +18,8 @@ export class UtilsService {
   }
 
   showError(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
+    this.snackBar.open(message, '', {
+       duration: 3000, 
       panelClass: ['error-snackbar']
     });
   }

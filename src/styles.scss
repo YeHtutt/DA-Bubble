@@ -256,6 +256,7 @@ div {
 html {
   --mdc-outlined-text-field-outline-color: #ADB0D9;
   --mdc-outlined-text-field-hover-outline-color: #444DF2;
+  --mdc-snackbar-container-shape: 50% !important;
 }
 
 
@@ -379,4 +380,22 @@ button {
 * {
   scrollbar-width: thin;
   scrollbar-color: #444DF2;
+}
+
+
+/************************** GENERAL MATERIAL STYLES **********************/
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336 !important;
+
+  .mdc-snackbar__surface {
+    border-radius: 50px !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    display: flex !important;
+    justify-content: center;
+  }
+
+
 }

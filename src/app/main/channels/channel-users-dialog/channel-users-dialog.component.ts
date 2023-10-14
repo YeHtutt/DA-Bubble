@@ -22,7 +22,7 @@ export class ChannelUsersDialogComponent {
   searchOutput: boolean = false;
   text: string = '';
   showTagMenu: boolean = false;
-
+  usersList = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,6 +46,7 @@ export class ChannelUsersDialogComponent {
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
   }
+
 
 
   async getAllUsers() {
@@ -80,7 +81,9 @@ export class ChannelUsersDialogComponent {
 
   openProfile(user: any) { console.log(user); }
 
-  addThisUser() {}
+  addThisUser(index: number) {
+  /*   this.firebaseUtils.addColl(user, 'channel', this.channel.channelId); */
+  }
 
- 
+
 }
