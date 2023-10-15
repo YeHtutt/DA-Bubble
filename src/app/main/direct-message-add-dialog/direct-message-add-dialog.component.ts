@@ -34,8 +34,7 @@ export class DirectMessageAddDialogComponent {
     let creatorId = this.getCreatorId();
     let sender = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
     let receiver = (await this.userService.getUser(receiverId) as UserProfile).toJSON();
-    console.log(receiver, sender)
-  }
+    }
 
   getCreatorId() {
     return this.userService.getFromLocalStorage();

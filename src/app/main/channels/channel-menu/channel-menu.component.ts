@@ -39,8 +39,7 @@ export class ChannelMenuComponent {
   }
 
   ngOnInit() {
-    console.log(this.channel)
-    this.currentUserId = this.userService.getFromLocalStorage()
+      this.currentUserId = this.userService.getFromLocalStorage()
   }
 
   isOutlineVisible = true;
