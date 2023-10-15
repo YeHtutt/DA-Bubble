@@ -13,6 +13,8 @@ import { ChooseAvatarComponent } from 'src/app/auth/choose-avatar/choose-avatar.
 })
 export class UserProfileEditComponent {
   url = 'assets/img/avatar/';
+  currentPic = this.usersFbService.loggedInUserImg; //User current profile pic
+  avatarPic: boolean = false;
 
   constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService ) { 
     
@@ -29,6 +31,7 @@ export class UserProfileEditComponent {
     if (this.userEditForm.valid) {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
+      this.saveNewPic(this.currentPic, currentUserID);
       //console.log(currentUserID);
       
       if (currentUserID) {
@@ -58,11 +61,19 @@ export class UserProfileEditComponent {
     
       reader.onload = (event: any) => {
         this.url = event.target.result;
-        //this.setNewPic(this.url);
+        this.setNewPic(this.url);
         };
     } else {
       window.alert('Bitte nur png, jpg oder jpeg senden');
     }
+  }
+
+  setNewPic(image: any) {
+    this.currentPic = image;
+  }
+
+  async saveNewPic(image: any, currentUserId: any) {
+    this.usersFbService.saveUserPicFromDialog(image, this.avatarPic, currentUserId);
   }
 
 }
