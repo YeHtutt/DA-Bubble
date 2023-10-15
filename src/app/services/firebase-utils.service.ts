@@ -1,11 +1,5 @@
 
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Channel } from '../models/channel';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { BehaviorSubject } from 'rxjs';
-import { Message } from '../models/message';
 
 import {
   Firestore, collection,
@@ -84,4 +78,46 @@ export class FirebaseUtilsService {
     await deleteDoc(this.getSingleDocRef(colId, docId))
       .catch((err) => { console.log(err) })
   }
+
+
+  async chatExists(user1: string, user2: string): Promise<boolean> {
+    const chatCollection = collection(this.firestore, 'chat');
+    
+    // Query for user1 -> user2
+    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+    const result1 = await getDocs(query1);
+    
+    // Query for user2 -> user1
+    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+    const result2 = await getDocs(query2);
+    
+    // Return true if either query has results
+    return !result1.empty || !result2.empty;
+}
+
+async getExistingChatId(user1: string, user2: string): Promise<string> {
+  const chatCollection = collection(this.firestore, 'chat');
+  
+  // Query for user1 -> user2
+  const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+  const result1 = await getDocs(query1);
+  
+  // If found, return the chatId
+  if (!result1.empty) {
+      return result1.docs[0].id;
+  }
+  
+  // Query for user2 -> user1
+  const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+  const result2 = await getDocs(query2);
+
+  // If found, return the chatId
+  if (!result2.empty) {
+      return result2.docs[0].id;
+  }
+  
+  // If not found, return an empty string (or handle as needed)
+  return '';
+}
+
 }

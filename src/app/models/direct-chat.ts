@@ -31,7 +31,7 @@ export class DirectChat {
             creationTime: json.creationTime,
             user1: json.user1,
             user2: json.user2,
-          
+         
         });
     }
 }

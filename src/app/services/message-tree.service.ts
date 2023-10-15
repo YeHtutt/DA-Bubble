@@ -106,7 +106,6 @@ export class MessageTreeService {
         const messageObj = this.setDirectMessageObj(element.data(), element.id);
         let currentUser = this.userService.getFromLocalStorage();
         if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
-        console.log(messageObj)
       });
       this.themes = [{ name: 'Direktnachrichten', children: this.messageTree }];
       this.dataSource.data = this.themes;
@@ -142,10 +141,10 @@ export class MessageTreeService {
   }
 
 
-   createMessageTree(user1: UserProfile, user2: UserProfile) {
-     let sharedId = `${user1.id}_${user2.id}`;
-     const messageTreeRef = doc(this.firestore, 'direct-messages', sharedId);
- 
-   }
-  
+  createMessageTree(user1: UserProfile, user2: UserProfile) {
+    let sharedId = `${user1.id}_${user2.id}`;
+    const messageTreeRef = doc(this.firestore, 'direct-messages', sharedId);
+
+  }
+
 }

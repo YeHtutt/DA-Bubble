@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
