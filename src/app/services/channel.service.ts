@@ -151,4 +151,10 @@ export class ChannelService {
     });
     return channelArray;
   }
+
+  async getSingleChannel(docId: string) {
+    const docRef = doc(this.firestore, "channel", docId);
+    const channelDoc = (await getDoc(docRef)).data();
+    return Channel.fromJSON(channelDoc);
+  }
 }

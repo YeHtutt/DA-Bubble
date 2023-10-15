@@ -10,6 +10,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { SearchService } from 'src/app/services/search.service';
+import { ChannelService } from 'src/app/services/channel.service';
 
 
 
@@ -38,7 +39,8 @@ export class ChannelChatComponent {
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private channelService: ChannelService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -68,9 +70,10 @@ export class ChannelChatComponent {
 
 
   sendMessageTo(coll: string, docId: string) {
-    this.createMessageObject().then(createdMessage => {
+    this.createMessageObject().then(async createdMessage => {
       this.message = createdMessage;
-      this.messageService.addMessageToCollection(coll, docId, this.message.toJSON());
+      this.receiver = await this.channelService.getSingleChannel(docId)
+      this.messageService.sendMessage(this.message, this.receiver, false, '');
     });
     this.getAllMessages();
   }

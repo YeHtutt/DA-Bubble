@@ -144,17 +144,17 @@ export class MessageService {
   }
 
 
-  async addMessageToCollection(coll: string, docId: string, message: {}) {
-    // Get reference to the sub-collection inside the specified document
-    let ref = collection(doc(this.firestore, coll, docId), 'message');
-    // Add the new message to the sub-collection
-    await addDoc(ref, message)
-      .catch((err) => { console.log(err) })
-      .then((docRef: any) => {
-        console.log("Message written with ID", docRef?.id)
-        updateDoc(docRef, { messageId: docRef.id });
-      });
-  }
+  // async addMessageToCollection(coll: string, docId: string, message: {}) {
+  //   // Get reference to the sub-collection inside the specified document
+  //   let ref = collection(doc(this.firestore, coll, docId), 'message');
+  //   // Add the new message to the sub-collection
+  //   await addDoc(ref, message)
+  //     .catch((err) => { console.log(err) })
+  //     .then((docRef: any) => {
+  //       console.log("Message written with ID", docRef?.id)
+  //       updateDoc(docRef, { messageId: docRef.id });
+  //     });
+  // }
 
   // DELETE MESSAGE //*css*/`
   
