@@ -124,6 +124,24 @@ export class UsersFirebaseService implements OnInit {
 
   }
 
+  /**ändert das neue Bild des Benutzers mit dem dialog component -> user-profile-edit.component */
+  async saveUserPicFromDialog(image: string, avatarPic: boolean, currentUserID: any) {
+    this.user.photoURL = image;
+    console.log(this.getFromLocalStorage());
+    const docRef = doc(this.firestore, 'users', `${currentUserID}`);
+    if (avatarPic) {
+      await updateDoc(docRef, {
+        photoURL: '../assets/img/avatar/' + image
+      }
+      );
+    } else {
+      await updateDoc(docRef, {
+        photoURL: image
+      })
+    }
+
+  }
+
 
   async getLoggedInUser(currentUserID: any) {
     const docRef = doc(this.firestore, 'users', currentUserID);
