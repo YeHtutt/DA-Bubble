@@ -2,6 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfileEditComponent } from '../user-profile-edit/user-profile-edit.component';
+import { DirectChat } from 'src/app/models/direct-chat';
+import { MessageService } from 'src/app/services/message.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile-sub-view',
@@ -12,23 +15,47 @@ export class UserProfileSubViewComponent {
   userPhotoURL: string;
   userName: string;
   userEmail: string;
+  userId: string;
 
 
   ngOnInit() {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
   }
+  
 
   constructor(public dialog: MatDialog, public userFbService: UsersFirebaseService,
     public dialogRef: MatDialogRef<UserProfileSubViewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any, private messageService: MessageService,
+    private router: Router) {
     this.userPhotoURL = data.photoURL;
     this.userName = data.name;
     this.userEmail = data.email;
+    this.userId = data.id;
   }
+
 
   onNoClick() {
 
   }
+
+
+  async openChat() {
+    const directChat = this.createDirectChatObject();
+    const chatId = await this.messageService.createDirectChat(directChat);
+    this.router.navigateByUrl('/main/chat/' + chatId);
+  }
+
+
+  createDirectChatObject(): DirectChat {
+    const currentUser = this.userFbService.getFromLocalStorage();
+    return new DirectChat({
+      chatId: '',
+      creationTime: new Date(),
+      user1: currentUser,
+      user2: this.userId
+    });
+  }
+
 
   closeDialog() {
     this.dialog.closeAll();

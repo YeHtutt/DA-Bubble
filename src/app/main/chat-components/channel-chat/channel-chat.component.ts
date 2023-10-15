@@ -74,6 +74,7 @@ export class ChannelChatComponent {
       this.message = createdMessage;
       this.receiver = await this.channelService.getSingleChannel(docId)
       this.messageService.sendMessage(this.message, this.receiver, false, '');
+      this.text = '';
     });
     this.getAllMessages();
   }

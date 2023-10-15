@@ -5,6 +5,7 @@ import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
+import { NotificationService } from './notification.service';
 
 
 
@@ -25,8 +26,9 @@ export class MessageService {
 
   constructor(
     private firestore: Firestore = inject(Firestore),
-    private router: Router
-  ) {}
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
 
   // SEND MESSAGE //
 
@@ -55,11 +57,15 @@ export class MessageService {
 
   // adds a message to a chat/channel
   async uploadMessage(mainColl: string, docId: string, subColl: string, message: Message) {
-    const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
-    await updateDoc(docRef, { messageId: docRef.id });
+    try {
+      const docRef = await addDoc(this.getRefSubcollChannel(mainColl, docId, subColl), message.toJSON());
+      await updateDoc(docRef, { messageId: docRef.id });
+    } catch (error) {
+      this.notificationService.showError(`Nachricht konnte nicht gesendet werden`);
+    }
   }
 
-  
+
   // gets a specific direct chat 
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, "chat", docId);
@@ -112,7 +118,7 @@ export class MessageService {
           chatExists = false;
         }
       });
-    } 
+    }
     return chatExists;
   }
 
@@ -156,8 +162,8 @@ export class MessageService {
   //     });
   // }
 
-  // DELETE MESSAGE //*css*/`
-  
+  // DELETE MESSAGE //
+
   async deleteMessageDoc(coll: any, docId: any, msgId: string) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     deleteDoc(msgRef);
