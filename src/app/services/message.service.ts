@@ -33,25 +33,38 @@ export class MessageService {
   // SEND MESSAGE //
 
   async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
-    // If a message is sent with new Message to a user & redirect to the chat
-    if (receiver instanceof UserProfile) {
-      const docId = await this.getChatDocId(directChat);
-      this.uploadMessage('chat', docId, 'message', message);
-      if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
-      // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
-    } else if (receiver instanceof Channel) {
-      this.uploadMessage('channel', receiver.channelId, 'message', message);
-      if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
-    } else {
-      // if a message is sent inside a user chat
-      this.uploadMessage('chat', receiver, 'message', message);
+    try {
+      // If a message is sent with new Message to a user & redirect to the chat
+      if (receiver instanceof UserProfile) {
+        this.sendNewChatMessage(directChat, message, newMessage);
+        // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
+      } else if (receiver instanceof Channel) {
+        this.sendChannelMessage(receiver, message, newMessage);
+      } else {
+        // if a message is sent inside a user chat
+        this.sendExcistingChatMessage(receiver, message);
+      }
+    } catch (error) {
+      this.notificationService.showError(`Es ist ein Netzwerk Fehler aufgetreten: ${error}`);
     }
   }
 
 
-  // returns reference 
-  getRefSubcollChannel(mainColl: string, docId: string | null, subColl: string) {
-    return collection(this.firestore, `${mainColl}/${docId}/${subColl}`);
+  async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
+    const docId = await this.getChatDocId(directChat);
+    this.uploadMessage('chat', docId, 'message', message);
+    if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
+  }
+
+
+  async sendChannelMessage(receiver: any, message: Message, newMessage: boolean) {
+    this.uploadMessage('channel', receiver.channelId, 'message', message);
+    if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
+  }
+
+
+  sendExcistingChatMessage(receiver: string, message: Message) {
+    this.uploadMessage('chat', receiver, 'message', message);
   }
 
 
@@ -63,6 +76,13 @@ export class MessageService {
     } catch (error) {
       this.notificationService.showError(`Nachricht konnte nicht gesendet werden`);
     }
+  }
+
+  // GET DOC OR COLLECTION REF AND WHOLE DOCUMENTS
+
+  // returns reference 
+  getRefSubcollChannel(mainColl: string, docId: string | null, subColl: string) {
+    return collection(this.firestore, `${mainColl}/${docId}/${subColl}`);
   }
 
 
@@ -112,7 +132,7 @@ export class MessageService {
     let chatExists: boolean = false;
     if (chats) {
       chats.forEach(chat => {
-        if (chat.user1 == directChat.user1 || chat.user2 == directChat.user2) {
+        if (chat.user1 == directChat.user1 && chat.user2 == directChat.user2) {
           chatExists = chat.chatId;
         } else {
           chatExists = false;
