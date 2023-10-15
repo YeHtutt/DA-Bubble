@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,6 +31,9 @@ export class ChannelChatComponent {
   messages: Message[] = [];
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
+  isOpened = false;
+  @ViewChild('myTextarea') myTextarea: ElementRef | undefined;
+
 
   constructor(
     public dialog: MatDialog,
@@ -112,6 +114,17 @@ export class ChannelChatComponent {
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
+  }
+
+
+  toggleEmoji() {
+    this.isOpened = !this.isOpened;
+  }
+
+  addEmoji(emoji: string) {
+    const text = `${emoji}`;
+    this.text += text;
+    this.isOpened = false;
   }
 
 }

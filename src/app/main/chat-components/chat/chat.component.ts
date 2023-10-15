@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map, of } from 'rxjs';
-import { DirectChat } from 'src/app/models/direct-chat';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
-import { MessageTreeService } from 'src/app/services/message-tree.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -25,6 +22,8 @@ export class ChatComponent {
   public receiver: UserProfile = new UserProfile;
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
+  isOpened = false;
+  @ViewChild('myTextarea') myTextarea: ElementRef | undefined;
 
   constructor(
     private messageService: MessageService,
@@ -96,5 +95,16 @@ export class ChatComponent {
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
+  }
+
+
+  toggleEmoji() {
+    this.isOpened = !this.isOpened;
+  }
+
+  addEmoji(emoji: string) {
+    const text = `${emoji}`;
+    this.text += text;
+    this.isOpened = false;
   }
 }

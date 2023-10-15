@@ -3,6 +3,7 @@
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
 @import './custom-theme.scss';
+@import "node_modules/@ctrl/ngx-emoji-mart/picker.css";
 
 
 @font-face {
@@ -396,6 +397,11 @@ button {
     display: flex !important;
     justify-content: center;
   }
+}
 
-
+.emoji-mart,
+.emoji-mart-category-label span,
+.emoji-mart-dark {
+  background-color: #ffffff !important; /* Hintergrundfarbe */
+  color: #000000 !important; /* Textfarbe */
 }

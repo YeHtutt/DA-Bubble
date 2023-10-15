@@ -1,7 +1,7 @@
 <div class="userProfileSubViewContainer">
     <div class="profileSubViewHeader">
         <div mat-dialog-title>Profile</div>
-        <mat-icon (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
+        <mat-icon class="hoverStyle" (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
     </div>
     <div class="profileSubViewImg">
         <img class="profileImg" [src]="userPhotoURL" />
@@ -24,7 +24,7 @@
     </div>
     
     <div mat-dialog-actions>
-        <button (click)="openChat()" mat-fab extended color="primary" [mat-dialog-close]="">
+        <button class="hoverStyle" (click)="openChat()" mat-fab extended color="primary" [mat-dialog-close]="">
             <mat-icon>mode_comment</mat-icon>
             Nachricht
         </button>

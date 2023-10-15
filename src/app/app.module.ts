@@ -60,6 +60,8 @@ import { UserProfileEditComponent } from './main/users/user-profile-edit/user-pr
 import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
 import { DirectMessageAddDialogComponent } from './main/direct-message-add-dialog/direct-message-add-dialog.component';
 import { DirectMessageComponent } from './main/direct-message/direct-message.component';
+import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
+import { PickerModule } from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
   declarations: [
@@ -87,7 +89,8 @@ import { DirectMessageComponent } from './main/direct-message/direct-message.com
     UserProfileEditComponent,
     UserProfileSubViewComponent,
     DirectMessageAddDialogComponent,
-    DirectMessageComponent
+    DirectMessageComponent,
+    EmojiPickerComponent
 
   ],
   imports: [
@@ -116,7 +119,8 @@ import { DirectMessageComponent } from './main/direct-message/direct-message.com
     AngularFireAuthModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    PickerModule
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
