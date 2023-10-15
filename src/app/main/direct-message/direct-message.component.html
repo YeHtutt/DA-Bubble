@@ -1,0 +1,27 @@
+<mat-tree class="mat-tree" [dataSource]="messageTreeService.dataSource" [treeControl]="messageTreeService.treeControl">
+  <!-- This is the tree node template for leaf nodes !IMPORTANT -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact"
+    (click)="createChat(node.id)">
+    <img class="profil-icon" src="{{ node.photoURL }}">
+    <img *ngIf="node.isOnline" class="onlineStatus" src="assets/img/Online.png">
+    <img *ngIf="!node.isOnline" class="onlineStatus" src="assets/img/Offline.png">
+    <div>{{node.name}}</div>
+  </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node;when: messageTreeService.hasChild" class="highest-node">
+    <div class="main-node">
+      <div class="channel-headline">
+        <div class="channel-head" (click)="toggleExpanded(node)">
+          <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon class="main-icon">
+              {{ messageTreeService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+            </mat-icon>
+          </button>
+          <img src="../../../assets/img/account_circle.png">
+          <h3>{{node.name}}</h3>
+        </div>
+      </div>
+    </div>
+  </mat-tree-node>
+</mat-tree>
+<mat-icon mat-mini-fab color="primary" mat-raised-button (click)="openDirectMessageDialog()">add</mat-icon>

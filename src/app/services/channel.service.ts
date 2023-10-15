@@ -121,6 +121,7 @@ export class ChannelService {
     }
   }
 
+
   setChannelObj(obj: any, docId: string): ChannelsNode {
     return new Channel({
       channelId: docId,
@@ -138,9 +139,6 @@ export class ChannelService {
     const channelJSON = { ...obj, channelId: docId };
     return Channel.fromJSON(channelJSON);
   }
-
-
- 
 
 
   async getChannels() {

@@ -1,0 +1,16 @@
+<div class="create-channel-container">
+    <button class="basic-button close-btn" (click)="closeDirectMessageDialog()"><mat-icon>close</mat-icon></button>
+    <div>
+        <h2>Direkten Chat erstellen</h2>
+        <div>Hier kannst du mit deinen Kollegen und Freunden Nachrichten austauschen.
+        </div>
+        <h3>Benutzername</h3>
+        <mat-form-field appearance="outline" class="mat-input">
+            <input [formControl]="messageNameInput" matInput placeholder="# e.g. marketing" (blur)="this.notificationService.checkInputLength(this.messageNameInput)">
+        </mat-form-field>
+     </div>
+    <button class="create-btn" mat-fab extended color="primary" >
+        Erstellen
+    </button>
+</div>
+

@@ -58,6 +58,8 @@ import { UserProfileViewComponent } from './main/users/user-profile-view/user-pr
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
 import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
 import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
+import { DirectMessageAddDialogComponent } from './main/direct-message-add-dialog/direct-message-add-dialog.component';
+import { DirectMessageComponent } from './main/direct-message/direct-message.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/
     ChannelMenuComponent,
     ChannelUsersDialogComponent,
     UserProfileEditComponent,
-    UserProfileSubViewComponent
+    UserProfileSubViewComponent,
+    DirectMessageAddDialogComponent,
+    DirectMessageComponent
 
   ],
   imports: [

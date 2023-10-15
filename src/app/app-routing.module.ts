@@ -12,6 +12,9 @@ import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.compon
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
+import { DirectMessageComponent } from './main/direct-message/direct-message.component';
+
+
 
 let docId: any;
 
@@ -31,7 +34,8 @@ const routes: Routes = [
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'message', component: NewMessageComponent },
-      { path: 'chat/:chatId', component: ChatComponent }
+      { path: 'chat/:chatId', component: ChatComponent },
+      { path: 'directMessage/:directMessageId', component: DirectMessageComponent}
     ]
   },
 ];

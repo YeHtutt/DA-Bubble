@@ -55,11 +55,11 @@ export class MessageTreeService {
     private route: ActivatedRoute,
     private firestore: Firestore = inject(Firestore),
   ) {
-    this.unsubMessage = this.subMessageList();
+    this.unsubChat = this.subUserMessagesList();
   }
 
   ngOnDestroy() {
-    this.unsubMessage();
+    this.unsubChat();
   }
 
 
@@ -97,23 +97,40 @@ export class MessageTreeService {
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   public dataLoaded = new BehaviorSubject<boolean>(false);
 
+  unsubChat: any;
 
-  subMessageList() {
-    return this.unsubMessage = onSnapshot(this.firebaseUtils.getRef('users'), (list: any) => {
+  subUserMessagesList() {
+    return this.unsubChat = onSnapshot(this.firebaseUtils.getRef('users'), (list: any) => {
       this.messageTree = [];
       list.forEach((element: any) => {
-        const messageObj = this.setMessageObj(element.data(), element.id);
+        const messageObj = this.setDirectMessageObj(element.data(), element.id);
         let currentUser = this.userService.getFromLocalStorage();
         if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
+        console.log(messageObj)
       });
-      this.themes = [{ messageName: 'Messages', children: this.messageTree }];
+      this.themes = [{ name: 'Direktnachrichten', children: this.messageTree }];
       this.dataSource.data = this.themes;
-      this.dataLoaded.next(true);      
+      this.dataLoaded.next(true);
     });
   }
 
 
-  setMessageObj(obj: any, docId: string): MessagesNode {
+  getChannelContent(documentId: string) {
+    const docRef = doc(this.firebaseUtils.getRef('users'), documentId);
+    return this.unsubChat = onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        return this.setDirectMessageObj(docSnapshot.data(), docSnapshot.id);
+      } else {
+        return console.log('Document does not exist!');
+      }
+    });
+  }
+
+
+  subChatList() { }
+
+
+  setDirectMessageObj(obj: any, docId: string): MessagesNode {
     return new UserProfile({
       name: obj.name,
       email: obj.email,
@@ -125,10 +142,10 @@ export class MessageTreeService {
   }
 
 
-  /*  createmessageTree(user1: UserProfile, user2: UserProfile) {
+   createMessageTree(user1: UserProfile, user2: UserProfile) {
      let sharedId = `${user1.id}_${user2.id}`;
      const messageTreeRef = doc(this.firestore, 'direct-messages', sharedId);
  
    }
-  */
+  
 }
