@@ -17,13 +17,17 @@
     }
 }
 
+.width-100 {
+    width: 100%;
+}
+
 span {
     color: $accent-color;
 }
 
 .mat-form-field {
     width: 90%;
- 
+
 }
 
 .create-btn {
@@ -47,6 +51,7 @@ span {
     padding: 20px;
     overflow-y: scroll;
     z-index: 100;
+
     img {
         width: 40px;
         height: 40px;
@@ -136,11 +141,6 @@ span {
 }
 
 
-.invitation-dialog-container {
-    width: 300px;
-    padding: 20px;
-}
-
 .dialog-header {
     display: flex;
     justify-content: space-between;
@@ -167,4 +167,26 @@ span {
 .mdc-list-item__primary-text {
     display: flex !important;
     align-items: center !important;
+}
+
+.example-chip-list {
+    width: 100%;
+}
+
+.remove-btn {
+    min-width: 40px;
+}
+
+.chip-row {
+    .user-chip {
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 20px;
+            width: 20px;
+            margin-right: 8px;
+
+        }
+    }
 }

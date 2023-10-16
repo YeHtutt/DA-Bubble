@@ -7,47 +7,29 @@
             hinzufügen</mat-radio-button>
         <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
     </mat-radio-group>
-    <!--    <div class="search-box">
-      
-        <div *ngIf="searchOutput && filteredUser?.length > 0" class="search-output-header">
-            <div class="user-box">
-                <div class="user" *ngFor="let user of filteredUser" (click)="openProfile(user)">
-                    <img src="{{user.photoURL}}" alt="">
-                    <span>{{user.name}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="control_container">
-            <div class="chat_action_box">
-                <mat-icon class="action_btn_style">add</mat-icon>
-                <hr>
-                <mat-icon class="action_btn_style">sentiment_satisfied</mat-icon>
-              
-                <div class="tagMenuOuterContainer">
-                    <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
-                        <div class="user" *ngFor="let user of allUsers" (click)="addThisUser()">
-                            <img src="{{user.photoURL}}" alt="">
-                            <span>{{user.name}}</span>
-                        </div>
+    <form class="width-100">
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
+                <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">
+                    <div class="user-chip">
+                        <img  src="{{user.photoURL}}">
+                        <div>{{user.name}}</div>
                     </div>
-                </div>
-            </div>-->
-    <div class="input_container">
-        <mat-form-field class="mat-form-field" *ngIf="inputOpened" appearance="outline">
-            <input matInput placeholder="Name eingeben" (click)="toggleSearchOutput()" (keyup)="searchData()"
-                [(ngModel)]="search">
+                    <button class="remove-btn" matChipRemove [attr.aria-label]="'remove ' + user.name">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-chip-row>
+            </mat-chip-grid>
+            <input placeholder="Add User" #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid"
+                [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)" />
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+                    {{user.name}}
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
-        <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}" class="search-output">
-            <div class="user-box" *ngIf="filteredUser.length > 0">
-                <!-- <h3 class="headline">User</h3> -->
-                <div class="user" *ngFor="let user of filteredUser; index as userIndex" (click)="addThisUser(userIndex)">
-                    <img src="{{user.photoURL}}" alt="">
-                    <span>{{user.name}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+    </form>
+
     <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()">Erstellen</button>
 </div>
-

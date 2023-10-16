@@ -402,6 +402,46 @@ button {
 .emoji-mart,
 .emoji-mart-category-label span,
 .emoji-mart-dark {
-  background-color: #ffffff !important; /* Hintergrundfarbe */
-  color: #000000 !important; /* Textfarbe */
+  background-color: #ffffff !important;
+  /* Hintergrundfarbe */
+  color: #000000 !important;
+  /* Textfarbe */
+}
+
+
+.mat-mdc-standard-chip {
+  border-radius: var(--mdc-chip-container-shape-radius);
+
+  --mdc-chip-container-shape-family: rounded;
+  --mdc-chip-container-shape-radius: 35px 35px 35px 35px;
+  --mdc-chip-with-avatar-avatar-shape-family: rounded;
+  --mdc-chip-with-avatar-avatar-shape-radius: -1px 8px 6px 9px;
+  --mdc-chip-with-avatar-avatar-size: 28px;
+  --mdc-chip-with-icon-icon-size: 15px;
+  height: 30px !important;
+}
+
+
+.mat-mdc-standard-chip {
+  --mdc-chip-disabled-label-text-color: #ECEEFE;
+  --mdc-chip-elevated-container-color: #ECEEFE;
+  --mdc-chip-elevated-disabled-container-color: #e0e0e0;
+  --mdc-chip-focus-state-layer-color: #ECEEFE;
+  --mdc-chip-focus-state-layer-opacity: 0.12;
+  --mdc-chip-label-text-color: #212121;
+  --mdc-chip-with-icon-icon-color: #212121;
+  --mdc-chip-with-icon-disabled-icon-color: #212121;
+  --mdc-chip-with-icon-selected-icon-color: #212121;
+  --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: #212121;
+  --mdc-chip-with-trailing-icon-trailing-icon-color: #212121;
+}
+
+.mdc-evolution-chip-set__chips {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--trailing {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
