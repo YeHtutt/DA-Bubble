@@ -34,7 +34,7 @@ export class UsersFirebaseService implements OnInit {
   }
 
   async addUserToFirebase(user: any, uid: string) {
-
+    
     try {
       const userRef = doc(this.firestore, 'users', uid);
       await setDoc(userRef, user);
@@ -99,7 +99,7 @@ export class UsersFirebaseService implements OnInit {
     });
   }
 
-
+  
 
   async checkIfSubcollectionExists(documentPath: string): Promise<boolean> {
     const subcollectionRef = collection(this.firestore, documentPath);
@@ -127,6 +127,7 @@ export class UsersFirebaseService implements OnInit {
   /**ändert das neue Bild des Benutzers mit dem dialog component -> user-profile-edit.component */
   async saveUserPicFromDialog(image: string, avatarPic: boolean, currentUserID: any) {
     this.user.photoURL = image;
+    console.log(this.getFromLocalStorage());
     const docRef = doc(this.firestore, 'users', `${currentUserID}`);
     if (avatarPic) {
       await updateDoc(docRef, {
@@ -172,7 +173,7 @@ export class UsersFirebaseService implements OnInit {
   async updateUserOnlineStatus(userID: any, onlineStatus: boolean) {
     try {
       const userRef = doc(this.firestore, 'users', userID);
-      await updateDoc(userRef, { isOnline: onlineStatus }); // Mit { merge: true } werden vorhandene Daten beibehalten und nur die aktualisierten Felder überschrieben
+      await updateDoc(userRef, { isOnline:  onlineStatus }); // Mit { merge: true } werden vorhandene Daten beibehalten und nur die aktualisierten Felder überschrieben
     } catch (error) {
       throw error;
     }
