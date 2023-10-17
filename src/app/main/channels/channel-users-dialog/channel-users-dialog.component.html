@@ -7,7 +7,7 @@
             hinzufügen</mat-radio-button>
         <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
     </mat-radio-group>
-    <form class="width-100">
+    <form class="width-100" *ngIf="inputOpened">
         <mat-form-field class="example-chip-list" appearance="outline">
             <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
                 <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">

@@ -39,7 +39,6 @@ export class ChannelUsersDialogComponent {
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
 
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private usersService: UsersFirebaseService,
@@ -48,6 +47,7 @@ export class ChannelUsersDialogComponent {
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef
   ) {
+
 
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
@@ -60,9 +60,17 @@ export class ChannelUsersDialogComponent {
     this.getAllUsers();
   }
 
+
   openUsernameInput() {
     this.inputOpened = this.selectedOption === 'individual';
   }
+
+
+  async getAllUsers() {
+    this.allUsers = await this.usersService.getUsers();
+    console.log(this.allUsers)
+  }
+
 
   addUsers() {
     if (this.selectedOption === 'all') {
@@ -70,16 +78,21 @@ export class ChannelUsersDialogComponent {
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
     if (this.selectedOption === 'individual') {
+      this.pushCertainUsersToChannel();
+      this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
-  }
-  async getAllUsers() {
-    this.allUsers = await this.usersService.getUsers();
-    console.log(this.allUsers)
   }
 
 
   pushAllUsersToChannel() {
     this.allUsers.forEach((user: any) => {
+      const userObject = user instanceof UserProfile ? user.toJSON() : user;
+      this.channel.usersData.push(userObject);
+    });
+  }
+
+  pushCertainUsersToChannel() {
+    this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
       this.channel.usersData.push(userObject);
     });
@@ -98,11 +111,7 @@ export class ChannelUsersDialogComponent {
     this.users.push(selectedUser);
     this.userInput.nativeElement.value = '';
     this.userCtrl.setValue(null);
-
-    // Check the users after adding
     this.checkKnownUsers();
-
-    // Remove the selected user from the allUsers array
     const index = this.allUsers.findIndex((user: any) => user.name === selectedUser.name);
     if (index !== -1) {
       this.allUsers.splice(index, 1);
@@ -110,17 +119,17 @@ export class ChannelUsersDialogComponent {
   }
 
   checkKnownUsers(): void {
-    for(let user of this.users) {
-        if (!this.allUsers.some((knownUser: any) => knownUser.name === user.name) && 
-            !this.users.some((addedUser: any) => addedUser.name === user.name)) {
-            this.isKnownUser = false;
-            this.cdRef.detectChanges();
-            return;
-        }
+    for (let user of this.users) {
+      if (!this.allUsers.some((knownUser: any) => knownUser.name === user.name) &&
+        !this.users.some((addedUser: any) => addedUser.name === user.name)) {
+        this.isKnownUser = false;
+        this.cdRef.detectChanges();
+        return;
+      }
     }
     this.isKnownUser = true;
     this.cdRef.detectChanges();
-}
+  }
 
 
   private _filter(value: any): any[] {
@@ -139,24 +148,20 @@ export class ChannelUsersDialogComponent {
   validateInput(): void {
     const inputValue = this.userCtrl.value?.trim();
     if (!inputValue) {
-        this.isKnownUser = true;
-        this.cdRef.detectChanges();
-        return;
+      this.isKnownUser = true;
+      this.cdRef.detectChanges();
+      return;
     }
     this.isKnownUser = this.allUsers.some((user: any) => user.name === inputValue);
     this.cdRef.detectChanges();
-}
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value) {
-      this.users.push({ name: value }); // assuming name is the only required field
-      console.log('Added users:', this.users);
-      console.log('All users:', this.allUsers);
+      this.users.push({ name: value }); 
     }
-    event.chipInput!.clear();
-
-    // Validate users after adding the chip
+    event.chipInput!.clear(); 
     this.checkKnownUsers();
   }
 
