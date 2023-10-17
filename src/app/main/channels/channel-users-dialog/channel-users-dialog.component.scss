@@ -180,13 +180,22 @@ span {
 .chip-row {
     .user-chip {
         display: flex;
-        align-items: center;
-
-        img {
-            height: 20px;
-            width: 20px;
-            margin-right: 8px;
-
-        }
+        align-items: center;      
     }
+}
+
+
+
+img {
+    height: 20px;
+    width: 20px;
+    margin-right: 8px;
+    border-radius: 50%;
+}
+
+.user-chip-search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }

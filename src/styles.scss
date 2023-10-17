@@ -445,3 +445,8 @@ button {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+
+.mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+  min-width: 100%;
+  overflow: auto;
+}

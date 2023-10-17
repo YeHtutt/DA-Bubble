@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild, Inject} from '@angular/core';
+import { Component, ElementRef, ViewChild, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -11,7 +11,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/ma
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { A11yModule, LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-channel-users-dialog',
@@ -65,13 +65,19 @@ export class ChannelUsersDialogComponent {
       this.pushAllUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
+    if (this.selectedOption === 'individual') {
+
+    }
   }
 
   async getAllUsers() {
-    this.allUsers = await this.usersService.getUsers();  
-    console.log(this.allUsers) 
+    this.allUsers = await this.usersService.getUsers();
+    console.log(this.allUsers)
   }
 
+  pushCertainUsersToChannel() {
+
+  }
 
   pushAllUsersToChannel() {
     this.allUsers.forEach((user: any) => {
@@ -82,7 +88,6 @@ export class ChannelUsersDialogComponent {
 
   remove(name: string): void {
     const index = this.users.findIndex((user: any) => user.name === name);
-  
     if (index >= 0) {
       this.users.splice(index, 1);
       this.announcer.announce(`Removed ${name}`);
@@ -91,14 +96,17 @@ export class ChannelUsersDialogComponent {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
-    this.users.push(selectedUser);
-    this.userInput.nativeElement.value = '';
-    this.userCtrl.setValue(null);
-  
-    // Remove the selected user from the allUsers array
-    const index = this.allUsers.findIndex((user: any) => user.name === selectedUser.name);
-    if (index !== -1) {
-      this.allUsers.splice(index, 1);
+    // Check if the user is part of the allUsers array before adding
+    if (this.allUsers.some((user: any) => user.name === selectedUser.name)) {
+      this.users.push(selectedUser);
+      this.userInput.nativeElement.value = '';
+      this.userCtrl.setValue(null);
+
+      // Remove the selected user from the allUsers array
+      const index = this.allUsers.findIndex((user: any) => user.name === selectedUser.name);
+      if (index !== -1) {
+        this.allUsers.splice(index, 1);
+      }
     }
   }
 
@@ -108,10 +116,6 @@ export class ChannelUsersDialogComponent {
     }
     const filterValue = value.toLowerCase();
     return this.allUsers.filter((user: any) => user.name.toLowerCase().includes(filterValue));
-  }
-
-  toggleSearchOutput() {
-    this.searchOutput = !this.searchOutput;
   }
 
   openProfile(user: any) { console.log(user); }
@@ -126,6 +130,7 @@ export class ChannelUsersDialogComponent {
     // Add our fruit
     if (value) {
       this.users.push(value);
+      console.log(this.users)
     }
     // Clear the input value
     event.chipInput!.clear();
