@@ -7,7 +7,7 @@
             hinzufügen</mat-radio-button>
         <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
     </mat-radio-group>
-    <form class="width-100" >
+    <form class="width-100">
         <mat-form-field class="example-chip-list" appearance="outline">
             <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
                 <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">
@@ -22,7 +22,8 @@
             </mat-chip-grid>
             <input placeholder="Add User" #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid"
                 [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="add($event)" />
+                (matChipInputTokenEnd)="add($event)" (input)="validateInput()" />
+
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                 <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
                     <div class="user-chip-search">
@@ -33,6 +34,6 @@
             </mat-autocomplete>
         </mat-form-field>
     </form>
-
-    <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()">Erstellen</button>
+    <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()"
+        [disabled]="!isKnownUser">Erstellen</button>
 </div>

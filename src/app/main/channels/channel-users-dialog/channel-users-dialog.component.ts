@@ -12,6 +12,8 @@ import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { A11yModule, LiveAnnouncer } from '@angular/cdk/a11y';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-channel-users-dialog',
@@ -33,6 +35,7 @@ export class ChannelUsersDialogComponent {
   filteredUsers: Observable<any[]>;
   allUsers: any = [];
   users: any[] = [];
+  isKnownUser: boolean = false;
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
 
 
@@ -43,6 +46,7 @@ export class ChannelUsersDialogComponent {
     private firebaseUtils: FirebaseUtilsService,
     private dialogRef: MatDialogRef<ChannelUsersDialogComponent>,
     private announcer: LiveAnnouncer,
+    private cdRef: ChangeDetectorRef
   ) {
 
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
@@ -66,18 +70,13 @@ export class ChannelUsersDialogComponent {
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
     if (this.selectedOption === 'individual') {
-
     }
   }
-
   async getAllUsers() {
     this.allUsers = await this.usersService.getUsers();
     console.log(this.allUsers)
   }
 
-  pushCertainUsersToChannel() {
-
-  }
 
   pushAllUsersToChannel() {
     this.allUsers.forEach((user: any) => {
@@ -96,19 +95,33 @@ export class ChannelUsersDialogComponent {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
-    // Check if the user is part of the allUsers array before adding
-    if (this.allUsers.some((user: any) => user.name === selectedUser.name)) {
-      this.users.push(selectedUser);
-      this.userInput.nativeElement.value = '';
-      this.userCtrl.setValue(null);
+    this.users.push(selectedUser);
+    this.userInput.nativeElement.value = '';
+    this.userCtrl.setValue(null);
 
-      // Remove the selected user from the allUsers array
-      const index = this.allUsers.findIndex((user: any) => user.name === selectedUser.name);
-      if (index !== -1) {
-        this.allUsers.splice(index, 1);
-      }
+    // Check the users after adding
+    this.checkKnownUsers();
+
+    // Remove the selected user from the allUsers array
+    const index = this.allUsers.findIndex((user: any) => user.name === selectedUser.name);
+    if (index !== -1) {
+      this.allUsers.splice(index, 1);
     }
   }
+
+  checkKnownUsers(): void {
+    for(let user of this.users) {
+        if (!this.allUsers.some((knownUser: any) => knownUser.name === user.name) && 
+            !this.users.some((addedUser: any) => addedUser.name === user.name)) {
+            this.isKnownUser = false;
+            this.cdRef.detectChanges();
+            return;
+        }
+    }
+    this.isKnownUser = true;
+    this.cdRef.detectChanges();
+}
+
 
   private _filter(value: any): any[] {
     if (typeof value !== 'string') {
@@ -118,21 +131,41 @@ export class ChannelUsersDialogComponent {
     return this.allUsers.filter((user: any) => user.name.toLowerCase().includes(filterValue));
   }
 
-  openProfile(user: any) { console.log(user); }
-
 
   closeDialog() {
     this.dialogRef.close();
   }
 
+  validateInput(): void {
+    const inputValue = this.userCtrl.value?.trim();
+    if (!inputValue) {
+        this.isKnownUser = true;
+        this.cdRef.detectChanges();
+        return;
+    }
+    this.isKnownUser = this.allUsers.some((user: any) => user.name === inputValue);
+    this.cdRef.detectChanges();
+}
+
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    // Add our fruit
     if (value) {
-      this.users.push(value);
-      console.log(this.users)
+      this.users.push({ name: value }); // assuming name is the only required field
+      console.log('Added users:', this.users);
+      console.log('All users:', this.allUsers);
     }
-    // Clear the input value
     event.chipInput!.clear();
+
+    // Validate users after adding the chip
+    this.checkKnownUsers();
   }
+
+  // Function to check if a given name is part of allUsers
+  isUserKnown(name: string): boolean {
+    return this.allUsers.some((user: any) => user.name === name);
+  }
+
+
+
+
 }
