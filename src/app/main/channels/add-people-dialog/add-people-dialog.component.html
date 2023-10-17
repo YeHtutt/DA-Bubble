@@ -2,12 +2,7 @@
     <div>
         <h3>Leute hinzufügen</h3>
     </div>
-    <mat-radio-group class="flex-column" [(ngModel)]="selectedOption" (change)="onRadioChange()">
-        <mat-radio-button color="primary" value="all">Alle Mitglieder von <span>{{channel.channelName}}</span>
-            hinzufügen</mat-radio-button>
-        <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
-    </mat-radio-group>
-    <form class="width-100" *ngIf="inputOpened">
+    <form class="width-100">
         <mat-form-field class="example-chip-list" appearance="outline">
             <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
                 <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">
@@ -20,7 +15,7 @@
                     </button>
                 </mat-chip-row>
             </mat-chip-grid>
-            <input placeholder="Nutzer hinzufügen" #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid"
+            <input placeholder="Add User" #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid"
                 [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 (matChipInputTokenEnd)="add($event)" (input)="validateInput()" />
 

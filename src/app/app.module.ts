@@ -62,6 +62,7 @@ import { DirectMessageAddDialogComponent } from './main/direct-message-add-dialo
 import { DirectMessageComponent } from './main/direct-message/direct-message.component';
 import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
+import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { PickerModule } from "@ctrl/ngx-emoji-mart";
     UserProfileSubViewComponent,
     DirectMessageAddDialogComponent,
     DirectMessageComponent,
-    EmojiPickerComponent
+    EmojiPickerComponent,
+    AddPeopleDialogComponent
 
   ],
   imports: [

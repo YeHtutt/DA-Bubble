@@ -202,7 +202,7 @@ div {
       border-radius: 0% !important;
     }
 
-    .mat-mdc-button-touch-target {  
+    .mat-mdc-button-touch-target {
       position: absolute;
       height: 24px !important;
       width: 24px !important;
@@ -403,6 +403,19 @@ button {
 
 .error-snackbar {
   --mdc-snackbar-container-color: #f44336 !important;
+
+  .mdc-snackbar__surface {
+    border-radius: 50px !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    display: flex !important;
+    justify-content: center;
+  }
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #18e018 !important;
 
   .mdc-snackbar__surface {
     border-radius: 50px !important;
