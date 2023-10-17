@@ -26,6 +26,13 @@ export class NotificationService {
     });
   }
 
+  showSuccess(message: string): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+
+  }
 
 
 }

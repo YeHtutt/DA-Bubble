@@ -143,7 +143,7 @@ body {
 }
 
 $hover-effect-color: #ECEEFE;
-$material-size: 24px;
+$material-size: 24px !important;
 $main-color: #797EF3;
 $accent-color: #535AF1;
 $border-color: #ADB0D9;
@@ -179,29 +179,33 @@ div {
 }
 
 .mat-icon {
-  font-size: $material-size !important;
-  height: $material-size !important;
-  width: $material-size !important;
+  font-size: 24px !important;
+  height: 24px !important;
+  width: 24px !important;
 }
 
+.mat-mdc-unelevated-button>.mat-icon {
+  margin-left: 0px !important;
+  height: 24px !important;
+  width: 24px !important;
+  font-weight: 500;
+}
 
 .highest-node {
   .mat-mdc-icon-button {
     padding: 0px !important;
     border-radius: 4px !important;
-    --mdc-icon-button-state-layer-size: $material-size !important;
-    --mdc-icon-button-icon-size: $material-size !important;
+    --mdc-icon-button-state-layer-size: 24px !important;
+    --mdc-icon-button-icon-size: 24px !important;
 
     .mat-mdc-button-persistent-ripple {
       border-radius: 0% !important;
     }
 
     .mat-mdc-button-touch-target {
-      height: $material-size;
-      width: $material-size;
       position: absolute;
-      height: $material-size !important;
-      width: $material-size !important;
+      height: 24px !important;
+      width: 24px !important;
       transform: translate(-50%, -50%);
     }
   }
@@ -258,8 +262,19 @@ html {
   --mdc-outlined-text-field-outline-color: #ADB0D9;
   --mdc-outlined-text-field-hover-outline-color: #444DF2;
   --mdc-snackbar-container-shape: 50% !important;
+  --mat-standard-button-toggle-disabled-state-text-color: white !important;
+  --mat-standard-button-toggle-disabled-state-background-color: #686868 !important;
+  --mat-standard-button-toggle-disabled-selected-state-text-color: rgba(0, 0, 0, 0.87);
+  --mat-standard-button-toggle-disabled-selected-state-background-color: #bdbdbd;
 }
 
+
+.mat-mdc-fab[disabled],
+.mat-mdc-mini-fab[disabled] {
+  --mdc-fab-container-color: #686868 !important;
+  --mdc-fab-icon-color: white !important;
+  --mat-mdc-fab-color: white !important;
+}
 
 .mat-mdc-form-field-infix {
   display: flex;
@@ -399,9 +414,66 @@ button {
   }
 }
 
+.success-snackbar {
+  --mdc-snackbar-container-color: #18e018 !important;
+
+  .mdc-snackbar__surface {
+    border-radius: 50px !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    display: flex !important;
+    justify-content: center;
+  }
+}
+
 .emoji-mart,
 .emoji-mart-category-label span,
 .emoji-mart-dark {
-  background-color: #ffffff !important; /* Hintergrundfarbe */
-  color: #000000 !important; /* Textfarbe */
+  background-color: #ffffff !important;
+  /* Hintergrundfarbe */
+  color: #000000 !important;
+  /* Textfarbe */
+}
+
+
+.mat-mdc-standard-chip {
+  border-radius: var(--mdc-chip-container-shape-radius);
+  --mdc-chip-container-shape-family: rounded;
+  --mdc-chip-container-shape-radius: 35px 35px 35px 35px;
+  --mdc-chip-with-avatar-avatar-shape-family: rounded;
+  --mdc-chip-with-avatar-avatar-shape-radius: -1px 8px 6px 9px;
+  --mdc-chip-with-avatar-avatar-size: 28px;
+  --mdc-chip-with-icon-icon-size: 15px;
+  height: 30px !important;
+}
+
+
+.mat-mdc-standard-chip {
+  --mdc-chip-disabled-label-text-color: #ECEEFE;
+  --mdc-chip-elevated-container-color: #ECEEFE;
+  --mdc-chip-elevated-disabled-container-color: #e0e0e0;
+  --mdc-chip-focus-state-layer-color: #ECEEFE;
+  --mdc-chip-focus-state-layer-opacity: 0.12;
+  --mdc-chip-label-text-color: #212121;
+  --mdc-chip-with-icon-icon-color: #212121;
+  --mdc-chip-with-icon-disabled-icon-color: #212121;
+  --mdc-chip-with-icon-selected-icon-color: #212121;
+  --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: #212121;
+  --mdc-chip-with-trailing-icon-trailing-icon-color: #212121;
+}
+
+.mdc-evolution-chip-set__chips {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--trailing {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+  min-width: 100%;
+  overflow: auto;
 }

@@ -12,6 +12,7 @@ import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-direct-message',
   templateUrl: './direct-message.component.html',
@@ -62,18 +63,15 @@ export class DirectMessageComponent {
 
   async selectReceiver(receiverId: any) {
     const chatAlreadyExists = await this.firebaseUtils.chatExists(this.currentUser.id, receiverId);
-
     if (!chatAlreadyExists) {
       let newDirectChat = this.createDirectChatObject(receiverId).toJSON();
       this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
-    } else {
-      // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
-      const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);    
-      this.router.navigate(['/main/chat', chatId]);
     }
-  }
+    // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
+    const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
+    this.router.navigate(['/main/chat', chatId]);
 
-  setChatProperties() { }
+  }
 
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
@@ -98,22 +96,6 @@ export class DirectMessageComponent {
       user: this.currentUser.toJSON(),
       textEdited: false
     });
-  }
-
-
-  async getReceiverData() {
-    this.chat = await this.messageService.getDirectChatDoc(this.chatId);
-    this.checkWhoReceiverIs();
-    this.userService.getUser(this.checkWhoReceiverIs()).then((user: any) => { this.receiver = user });
-  }
-
-
-  checkWhoReceiverIs() {
-    if (this.chat.user1 == this.currentUser.id) {
-      return this.chat.user2;
-    } else {
-      return this.chat.user1;
-    }
   }
 
 

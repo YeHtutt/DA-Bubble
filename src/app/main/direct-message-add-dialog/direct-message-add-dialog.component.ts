@@ -29,13 +29,6 @@ export class DirectMessageAddDialogComponent {
   messageNameInput = new FormControl('', [Validators.required, Validators.minLength(3)]);
   closeDirectMessageDialog() { this.dialogRef.close(); }
 
-
-  async setChatProperties(receiverId: string) {
-    let creatorId = this.getCreatorId();
-    let sender = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
-    let receiver = (await this.userService.getUser(receiverId) as UserProfile).toJSON();
-    }
-
   getCreatorId() {
     return this.userService.getFromLocalStorage();
   }
