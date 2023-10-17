@@ -67,7 +67,6 @@ export class DirectMessageComponent {
       let newDirectChat = this.createDirectChatObject(receiverId).toJSON();
       this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
     } else {
-      console.log('Chat already exists between the users.');
       // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
       const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);    
       this.router.navigate(['/main/chat', chatId]);

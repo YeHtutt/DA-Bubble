@@ -37,6 +37,7 @@ export class ChatComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
+      this.chatExists = false;
       this.chatId = params.get('chatId') || '';
       this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then( () => {
