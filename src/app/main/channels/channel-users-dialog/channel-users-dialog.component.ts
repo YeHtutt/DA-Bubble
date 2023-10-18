@@ -66,26 +66,30 @@ export class ChannelUsersDialogComponent {
 
 
   async getAllUsers() {
-    this.allUsers = await this.usersService.getUsers();   
+    this.allUsers = await this.usersService.getUsers();
   }
 
 
   onRadioChange(): void {
     if (this.selectedOption === 'all') {
+      while (this.users.length > 0) {
+        this.remove(this.users[0].name);
+      }
+      console.log(this.users)
       this.isKnownUser = true;
     } else {
-      this.isKnownUser = false; 
+      this.isKnownUser = false;
     }
     this.openUsernameInput();
   }
 
 
   addUsers() {
-    if (this.selectedOption === 'all') {    
+    if (this.selectedOption === 'all') {
       this.pushAllUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
-    if (this.selectedOption === 'individual') {    
+    if (this.selectedOption === 'individual') {
       this.pushCertainUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
@@ -110,10 +114,13 @@ export class ChannelUsersDialogComponent {
   remove(name: string): void {
     const index = this.users.findIndex((user: any) => user.name === name);
     if (index >= 0) {
+      const removedUser = this.users[index]; // Capture the user before removing
       this.users.splice(index, 1);
+      this.allUsers.push(removedUser);
       this.announcer.announce(`Removed ${name}`);
     }
   }
+
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;

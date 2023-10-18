@@ -1,0 +1,48 @@
+@import "../../../../styles.scss";
+
+.invitation-dialog-container {
+    padding: 40px;
+    width: calc(90% - 80px);
+    height: auto;
+    @include flex-column;
+    margin: auto;
+
+    .flex-column {
+        @include flex-column
+    }
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.example-chip-list {
+    width: 100%;
+}
+
+.create-btn {
+    display: flex;
+    align-self: flex-end;
+    justify-self: baseline;
+}
+
+.chip-row {
+    .user-chip {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.user-chip-search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+img {
+    height: 20px;
+    width: 20px;
+    margin-right: 8px;
+    border-radius: 50%;
+}

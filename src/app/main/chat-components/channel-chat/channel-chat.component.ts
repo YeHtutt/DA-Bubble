@@ -10,6 +10,7 @@ import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ChannelService } from 'src/app/services/channel.service';
+import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 
 
 
@@ -72,6 +73,17 @@ export class ChannelChatComponent {
   }
 
 
+  openPeopleUserlDialog() {
+    this.dialog.open(AddPeopleDialogComponent, {
+      width: '710px',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      data: { channel: this.channel }
+    });
+  }
+
+
   sendMessageTo(coll: string, docId: string) {
     this.createMessageObject().then(async createdMessage => {
       this.message = createdMessage;
@@ -94,6 +106,9 @@ export class ChannelChatComponent {
       textEdited: false
     });
   }
+
+
+  addUser() {}
 
 
   getCreatorId() {

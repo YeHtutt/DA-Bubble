@@ -57,7 +57,9 @@ export class ChannelMenuComponent {
     if (this.channel.channelName !== 'allgemein') {
 
     }
-    if (this.channel.creator.id === this.currentUserId) { }
+    if (this.channel.creator.id === this.currentUserId) { 
+      
+    }
 
   }
 

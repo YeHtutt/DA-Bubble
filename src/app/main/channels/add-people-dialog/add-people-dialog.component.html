@@ -3,7 +3,7 @@
         <h3>Leute hinzufügen</h3>
     </div>
     <form class="width-100">
-        <mat-form-field class="example-chip-list" appearance="outline">
+        <mat-form-field class="width-100" appearance="outline">
             <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
                 <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">
                     <div class="user-chip">

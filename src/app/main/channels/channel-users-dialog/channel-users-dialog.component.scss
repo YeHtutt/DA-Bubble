@@ -34,30 +34,9 @@ span {
     display: flex;
     align-self: flex-end;
     justify-self: baseline;
+    margin-top: 20px;
 }
 
-
-// SEARCH 
-
-.search-output {
-    position: absolute;
-    left: 0;
-    width: 90%;
-    height: fit-content;
-    max-height: 300px;
-    box-shadow: 0 4px 8px #0000004d;
-    background-color: white;
-    border-radius: 0px 30px 30px 30px;
-    padding: 20px;
-    overflow-y: scroll;
-    z-index: 100;
-
-    img {
-        width: 40px;
-        height: 40px;
-        border-radius: 100%;
-    }
-}
 
 .user-box>.headline {
     color: #535AF1;
@@ -90,7 +69,6 @@ span {
     padding: 4px 8px;
     border-radius: 30px;
     cursor: pointer;
-
     &:hover {
         background-color: #ECEEFE;
     }
@@ -100,22 +78,6 @@ span {
 
 /* Input */
 
-.tagMenuOuterContainer {
-    position: absolute;
-    bottom: 50px;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
-    background-color: white;
-}
-
-.tagMenuInnerContainer {
-    background: white;
-
-    padding: 12px;
-    height: 200px;
-    overflow: scroll;
-}
 
 .user {
     display: flex;
@@ -160,9 +122,7 @@ span {
     margin-right: 10px;
 }
 
-.create-btn {
-    margin-top: 20px;
-}
+
 
 .mdc-list-item__primary-text {
     display: flex !important;
