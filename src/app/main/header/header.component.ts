@@ -7,6 +7,7 @@ import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SearchService } from 'src/app/services/search.service';
+import { UserProfile } from 'src/app/models/user-profile';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
   filteredChannel: any = [];
   usersAndChannels: any = [];
   searchOutput: boolean = false;
+  public currentUser: UserProfile = new UserProfile();
 
   constructor(private authService: AuthenticationService,
     private afAuth: AngularFireAuth,
@@ -32,6 +34,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
+    this.getCurrentUser();
+    
+  }
+
+  async getCurrentUser() {
+    const user = await this.userFbService.getUser(this.userFbService.getFromLocalStorage())
+    this.currentUser = new UserProfile(user);
   }
 
 
