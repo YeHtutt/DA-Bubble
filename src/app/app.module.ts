@@ -63,6 +63,7 @@ import { DirectMessageComponent } from './main/direct-message/direct-message.com
 import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
+import { ImprintComponent } from './main/imprint/imprint.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-
     DirectMessageAddDialogComponent,
     DirectMessageComponent,
     EmojiPickerComponent,
-    AddPeopleDialogComponent
+    AddPeopleDialogComponent,
+    ImprintComponent
 
   ],
   imports: [
