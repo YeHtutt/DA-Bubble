@@ -57,8 +57,7 @@ export class DirectMessageComponent {
         this.messageTreeService.treeControl.expandAll();
       }
     });
-    this.subscriptions.push(sub);
-    this.messageTreeService.subUserMessagesList();
+    this.subscriptions.push(sub);  
   }
 
   async selectReceiver(receiverId: any) {

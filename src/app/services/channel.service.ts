@@ -104,6 +104,7 @@ export class ChannelService {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channelTree.push(channelObj);
       });
+      this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
       this.themes = [{ channelName: 'Channel', children: this.channelTree }];
       this.dataSource.data = this.themes;
       this.dataLoaded.next(true);  // Emit event when data is loaded
