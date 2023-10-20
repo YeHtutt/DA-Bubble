@@ -66,7 +66,8 @@ export class NewMessageComponent {
       time: new Date(),
       messageId: '',
       user: this.currentUser.toJSON(),
-      textEdited: false
+      textEdited: false,
+      reactions: []
     });
   }
 

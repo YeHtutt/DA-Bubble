@@ -82,7 +82,8 @@ export class ChatComponent {
       time: new Date(),
       messageId: '',
       user: this.currentUser.toJSON(),
-      textEdited: false
+      textEdited: false,
+      reactions: []
     });
   }
 

@@ -102,7 +102,8 @@ export class ChannelChatComponent {
       time: new Date(),
       user: messageCreator,
       messageId: '',
-      textEdited: false
+      textEdited: false,
+      reactions: []
     });
   }
 
