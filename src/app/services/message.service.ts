@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
@@ -187,5 +187,19 @@ export class MessageService {
   async deleteMessageDoc(coll: any, docId: any, msgId: string) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     deleteDoc(msgRef);
+  }
+
+  // REACTIONS TO MESSAGES //
+
+  async getMessageReactons(coll: any, docId: any, msgId: string) {
+    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+    const msg = await getDoc(msgRef);
+    const msgObj = msg.data()
+    return new Message(msgObj);
+  }
+  
+  async updateReaction(coll: any, docId: any, msgId: string, reaction: []) {
+    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+    updateDoc(msgRef, {reactions: reaction})
   }
 }

@@ -18,7 +18,7 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-  threadIsOpen: boolean = false;  
+  threadIsOpen: boolean = false;
   isOpened: boolean = false;
   isReactionOpened: boolean = false;
 
@@ -88,11 +88,23 @@ export class MessageComponent {
     this.isReactionOpened = !this.isReactionOpened;
   }
 
-  addReaction(emoji: string) {
-    
+  async addReaction(emoji: string, msgId: string) {
+    this.getMessagePath();
+    let reaction = this.createReactionObject(emoji, this.currentUser)
+    // this.messageService.updateReaction(this.coll, this.docId, msgId, reaction);
+    const msg = await this.messageService.getMessageReactons(this.coll, this.docId, msgId);
+    // msg.reactions.forEach((rec: any, index) => {
+    //   if (rec.reactionEmoji === reaction.reactionEmoji && rec.users === reaction.users) {
+    //     console.log(index)
+    //   }
+    // });
+    // const newRecArray = msg.reactions.filter((rec: any) => rec.includes(reaction))
+    // const recExists: any = msg.reactions.some((rec: any) => rec.reactionEmoji === reaction.reactionEmoji && rec.users === reaction.users) 
+
+    // console.log(newRecArray)
   }
 
-  createReactionObject(emoji: string, user: string) {
+  createReactionObject(emoji: string, user: string | null) {
     let reaction: {};
     return reaction = {
       reactionEmoji: emoji,
