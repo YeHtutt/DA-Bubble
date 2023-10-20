@@ -6,10 +6,8 @@
 
 
 <mat-drawer-container class="mat-drawer-container" autosize>
-
   <mat-drawer #drawer [opened]="true" class="sidenav" mode="side">
     <div class="mat-drawer-box">
-
       <div class="sidenav-header">
         <img class="workspace-logo" src="../assets/img/workspace.png">
         <span>Code learning</span>
@@ -18,13 +16,11 @@
           <div class="bg-div"></div>
         </div>
       </div>
-
       <app-channels></app-channels>
       <app-direct-message></app-direct-message>
     </div>
   </mat-drawer>
-  <mat-drawer-content>
-    <!-- <app-dashboard [channel_window]="channel_window"></app-dashboard> -->
+  <mat-drawer-content>   
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

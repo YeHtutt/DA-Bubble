@@ -18,7 +18,7 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-
+  threadIsOpen: boolean = false;
 
   constructor(
     private userService: UsersFirebaseService,
@@ -67,4 +67,11 @@ export class MessageComponent {
     this.getMessagePath();
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId)
   }
+
+
+  openThread(messageId: string) {
+    this.threadIsOpen = true;
+
+  }
+
 }
