@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
@@ -18,7 +18,8 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-  threadIsOpen: boolean = false;
+  threadIsOpen: boolean = false;  isOpened: boolean = false;
+  
 
   constructor(
     private userService: UsersFirebaseService,
@@ -68,9 +69,7 @@ export class MessageComponent {
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId)
   }
 
-
   openThread(messageId: string) {
     this.threadIsOpen = true;
   }
-
 }

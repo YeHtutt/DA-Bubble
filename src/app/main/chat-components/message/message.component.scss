@@ -185,7 +185,6 @@
     width: 80%;
     border-radius: 20px;
     padding: 20px;
-    // min-height: 100px;
     height: fit-content;
     background-color: white;
 
@@ -205,8 +204,29 @@
 
 .button_box {
     display: flex;
-    justify-content: flex-end;
-    gap: 32px;
+    justify-content: space-between;
+    align-items: center;
+
+    .button_right {
+        display: flex;
+        gap: 32px;
+    }
+
+    mat-icon {
+        color: #686868;
+        cursor: pointer;
+        border-radius: 100%;
+
+        &:hover {
+            background-color: #ECEEFE;
+            color: #797EF3;
+        }
+    }
+}
+
+app-emoji-picker {
+    position: absolute;
+    left: 100px;
 }
 
 .cancel_btn {

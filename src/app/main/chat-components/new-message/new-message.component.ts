@@ -30,8 +30,7 @@ export class NewMessageComponent {
   searchOutput: boolean = false;
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
-  isOpened = false;
-  @ViewChild('myTextarea') myTextarea: ElementRef | undefined;
+  isOpened: boolean = false;
 
 
   constructor(
