@@ -71,7 +71,6 @@ export class MessageComponent {
 
   openThread(messageId: string) {
     this.threadIsOpen = true;
-
   }
 
 }
