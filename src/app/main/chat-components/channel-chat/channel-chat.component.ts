@@ -53,7 +53,6 @@ export class ChannelChatComponent {
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);  
-        console.log(this.channel)  
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
@@ -78,6 +77,7 @@ export class ChannelChatComponent {
       height: 'auto',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
       data: { channel: this.channel }
     });
   }

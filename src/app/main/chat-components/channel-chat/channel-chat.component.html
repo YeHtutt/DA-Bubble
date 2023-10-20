@@ -1,47 +1,51 @@
-<section>
-    <header>
-        <div class="channel_info_box">
-            <span (click)="openChannelMenu()">{{channel?.channelName}}</span>
-            <mat-icon>expand_more</mat-icon>
-        </div>
-        <div class="user_channel_info_box">
-            <div class="user_in_channel_box">
-                <div class="user_avatar_box">
-                    <img *ngFor="let user of channel?.usersData; let i = index;" 
-                         [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}"
-                         [src]="user.photoURL" 
-                         alt="">
-                </div>                
-                <div class="user_amount_box">{{channel?.usersData.length}}</div>
+<div class="dashboard">
+    <section class="message-section">
+        <header>
+            <div class="channel_info_box">
+                <span (click)="openChannelMenu()">{{channel?.channelName}}</span>
+                <mat-icon>expand_more</mat-icon>
             </div>
-            <div class="add_user" (click)="openPeopleUserlDialog()">
-                <mat-icon>person_add</mat-icon>
+            <div class="user_channel_info_box">
+                <div class="user_in_channel_box">
+                    <div class="user_avatar_box">
+                        <img *ngFor="let user of channel?.usersData; let i = index;"
+                        [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL" alt="">
+                    </div>
+                    <div class="user_amount_box">{{channel?.usersData.length}}</div>
+                </div>
+                <div class="add_user" (click)="openPeopleUserlDialog()">
+                    <mat-icon>person_add</mat-icon>
+                </div>
             </div>
-        </div>
-    </header>
-    <main>
-        <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
-    </main>
-    <div class="input_message_container">
-        <textarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"></textarea>
-        <div class="control_container">
-            <div class="chat_action_box">
-                <mat-icon class="action_btn_style">add</mat-icon>
-                <hr>
-                <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
-                <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
-                <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
-                <div class="tagMenuOuterContainer">
-                    <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
-                        <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
-                            <img src="{{user.photoURL}}" alt="">
-                            <span>{{user.name}}</span>
+        </header>
+        <main>
+            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
+        </main>
+        <div class="input_message_container">
+            <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"></textarea>
+            <div class="control_container">
+                <div class="chat_action_box">
+                    <mat-icon class="action_btn_style">add</mat-icon>
+                    <hr>
+                    <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
+                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
+                    <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
+                    <div class="tagMenuOuterContainer">
+                        <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
+                            <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
+                                <img src="{{user.photoURL}}" alt="">
+                                <span>{{user.name}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
+                <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
                     class="send_btn">send</mat-icon></button>
-        </div>
+                </div>
+            </div>
+        </section>
+        <section class="thread-section">
+            <app-threads></app-threads>
+        </section>
+        
     </div>
-</section>

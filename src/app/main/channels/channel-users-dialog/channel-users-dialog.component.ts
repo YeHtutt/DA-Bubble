@@ -75,8 +75,7 @@ export class ChannelUsersDialogComponent {
       while (this.users.length > 0) {
         this.remove(this.users[0].name);
       }
-      console.log(this.users)
-      this.isKnownUser = true;
+         this.isKnownUser = true;
     } else {
       this.isKnownUser = false;
     }

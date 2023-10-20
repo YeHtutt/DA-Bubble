@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { MessageTreeService } from 'src/app/services/message-tree.service';
+
 
 
 
@@ -29,9 +29,6 @@ export class SidenavComponent {
   ngOnDestroy() {
 
   }
-
- 
-
 
   toggleSidenav() {
     if (this.showSidenav) {

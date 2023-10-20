@@ -18,7 +18,7 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-  isOpened: boolean = false;
+  threadIsOpen: boolean = false;  isOpened: boolean = false;
   
 
   constructor(
@@ -67,16 +67,5 @@ export class MessageComponent {
   deleteMessage(msgId: string) {
     this.getMessagePath();
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId)
-  }
-
-
-  toggleEmoji() {
-    this.isOpened = !this.isOpened;
-  }
-
-  addEmoji(emoji: string) {
-    const text = `${emoji}`;
-    this.editMessage += text;
-    this.isOpened = false;
   }
 }

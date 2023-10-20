@@ -14,6 +14,7 @@ import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { DirectMessageComponent } from './main/direct-message/direct-message.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
+import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 
 
 
@@ -31,12 +32,12 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'choose-avatar', component: ChooseAvatarComponent},
   { path: 'imprint', component: ImprintComponent},
+  { path: 'data-privacy', component: DataPrivacyComponent},
 
   { path: 'main', component: MainComponent,
     children: [
-      { path: 'channel/:channelId', component: ChannelChatComponent },
-      { path: 'message', component: NewMessageComponent },
-      { path: 'chat/:chatId', component: ChatComponent }     
+      { path: 'channel/:channelId', component: ChannelChatComponent },     
+      { path: 'chat/:chatId', component: ChatComponent },
     ]
   },
 ];

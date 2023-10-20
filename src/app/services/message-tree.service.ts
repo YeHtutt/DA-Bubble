@@ -107,11 +107,13 @@ export class MessageTreeService {
         let currentUser = this.userService.getFromLocalStorage();
         if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
       });
+      this.messageTree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       this.themes = [{ name: 'Direktnachrichten', children: this.messageTree }];
       this.dataSource.data = this.themes;
       this.dataLoaded.next(true);
     });
   }
+
 
 
   getChannelContent(documentId: string) {
