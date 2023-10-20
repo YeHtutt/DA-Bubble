@@ -64,6 +64,7 @@ import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
+import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { ImprintComponent } from './main/imprint/imprint.component';
     DirectMessageComponent,
     EmojiPickerComponent,
     AddPeopleDialogComponent,
-    ImprintComponent
+    ImprintComponent,
+    DataPrivacyComponent
 
   ],
   imports: [
