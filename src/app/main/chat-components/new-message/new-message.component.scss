@@ -10,10 +10,12 @@ header {
     z-index: 5;
 }
 
+.message-section {
+    width: 100%;
+}
 
 .direct_message_info_box {
     position: relative;
-    ;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -176,7 +178,7 @@ main {
 .tagMenuOuterContainer {
     position: absolute;
     bottom: 50px;
-    border-radius: 30px; 
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
     background-color: white;
