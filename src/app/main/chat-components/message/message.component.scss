@@ -224,9 +224,17 @@
     }
 }
 
-app-emoji-picker {
+.edit_emoji {
     position: absolute;
     left: 100px;
+    z-index: 2;
+}
+
+.reaction_emoji {
+    position: absolute;
+    left: 0;
+    top: 32px;
+    z-index: 2;
 }
 
 .cancel_btn {

@@ -18,8 +18,9 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-  threadIsOpen: boolean = false;  isOpened: boolean = false;
-  
+  threadIsOpen: boolean = false;  
+  isOpened: boolean = false;
+  isReactionOpened: boolean = false;
 
   constructor(
     private userService: UsersFirebaseService,
@@ -71,5 +72,31 @@ export class MessageComponent {
 
   openThread(messageId: string) {
     this.threadIsOpen = true;
+  }
+
+  toggleEmoji() {
+    this.isOpened = !this.isOpened;
+  }
+
+  addEmoji(emoji: string) {
+    const text = `${emoji}`;
+    this.editMessage += text;
+    this.isOpened = false;
+  }
+
+  openReaction() {
+    this.isReactionOpened = !this.isReactionOpened;
+  }
+
+  addReaction(emoji: string) {
+    
+  }
+
+  createReactionObject(emoji: string, user: string) {
+    let reaction: {};
+    return reaction = {
+      reactionEmoji: emoji,
+      users: user
+    };
   }
 }

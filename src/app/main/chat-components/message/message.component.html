@@ -1,5 +1,3 @@
-
-
 <div *ngIf="!showEdit" [ngClass]="{'message_container_reverse': this.currentUser == message.user.id}"
     class="message_container">
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
@@ -15,7 +13,8 @@
         </div>
     </div>
     <div [ngClass]="{'reaction_container_reverse': currentUser == message.user.id}" class="reaction_container">
-        <mat-icon>add_reaction</mat-icon>
+        <mat-icon (click)="openReaction()">add_reaction</mat-icon>
+        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionOpened" (emojiSelectedEvent)="addReaction($event)"></app-emoji-picker>
         <mat-icon (click)="openThread(message.messageId)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
@@ -29,8 +28,13 @@
     <div class="edit_box">
         <textarea [(ngModel)]="editMessage"></textarea>
         <div class="button_box">
-            <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
-            <button (click)="saveMessage(message.messageId)" class="save_btn" mat-fab extended color="primary">Speichern</button>
+            <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
+            <app-emoji-picker class="edit_emoji" *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
+            <div class="button_right">
+                <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
+                <button (click)="saveMessage(message.messageId)" class="save_btn" mat-fab extended
+                    color="primary">Speichern</button>
+            </div>
         </div>
     </div>
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
