@@ -7,6 +7,12 @@
     min-height: 100vh;
     background-color: #ECEEFE;
     position: relative;
+
+    @media (max-width: 1200px) {
+        display: flex;
+        flex-direction: column !important;
+        margin-bottom: 30px;
+    }
 }
 
 
@@ -19,6 +25,11 @@ mat-card {
     flex-direction: column;
     align-items: center;
     padding: 50px 53px;
+
+
+    @media(max-width: 599px) {
+        width: 398px;
+    }
 }
 
 
@@ -28,6 +39,11 @@ mat-card-header {
     --mat-card-title-text-size: 46px;
     --mat-card-subtitle-text-size: 20px;
     margin-bottom: 40px;
+
+    @media(max-width: 599px) {
+        --mat-card-title-text-size: 32px;
+        --mat-card-subtitle-text-size: 17px;
+    }
 }
 
 mat-card-title {
@@ -62,18 +78,20 @@ form {
         padding: 18px 32px;
         gap: 30px;
 
-        /*
-        input {
-            outline: none;
-            border: none;
-            background-color: #ECEEFE;
-        }*/
+        @media (max-width: 599px) {
+            width: 358px;
+        }
+    }
+
+    a:-webkit-any-link {
+        text-decoration: none !important;
     }
 
     .forgetPassword {
         box-sizing: border-box;
         width: 100%;
         text-align: center;
+        text-decoration: none !important;
     }
 
 
@@ -172,6 +190,16 @@ form {
     ::ng-deep .mdc-text-field--focused .mdc-notched-outline>* {
         border-color: lightgray !important;
     }
+
+
+
+    @media (max-width: 599px) {
+        width: 358px;
+
+        ::ng-deep .mdc-text-field--outlined {
+            padding-right: max(0px, var(--mdc-outlined-text-field-container-shape)) !important;
+        }
+    }
 }
 
 /*Logo image after animation*/
@@ -188,6 +216,12 @@ form {
         object-fit: cover;
         position: relative;
     }
+
+    @media(max-width: 599px) {
+        position: static;
+        margin-bottom: 30px;
+        margin-top: 92px;
+    }
 }
 
 
@@ -199,6 +233,10 @@ form {
     gap: 16px;
     color: #A4A8F7;
     cursor: pointer;
+
+    @media(max-width: 599px) {
+        display: none;
+    }
 }
 
 .login-btns {
@@ -209,4 +247,32 @@ form {
 
 ::ng-deep .mdc-snackbar {
     position: fixed !important;
+}
+
+.topRight {
+    position: absolute; 
+    right: 75px; 
+    top: 75px; cursor: pointer; 
+    font-size: 18px; 
+    text-align: right;
+
+    @media(max-width: 599px) {
+        position: static;
+        margin-top: 30px;
+    }
+}
+
+.topRightRoute {
+    position: absolute; 
+    right: 65px; 
+    top: 110px; cursor: pointer;
+    display: inline-flex; 
+    padding: 10px 15px;
+    align-items: flex-start; 
+    gap: 10px; color: #797EF3;
+
+    @media(max-width: 599px) {
+        position: static;
+        
+    }
 }
