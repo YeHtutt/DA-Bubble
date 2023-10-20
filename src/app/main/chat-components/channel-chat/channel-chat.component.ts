@@ -78,6 +78,7 @@ export class ChannelChatComponent {
       height: 'auto',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
       data: { channel: this.channel }
     });
   }

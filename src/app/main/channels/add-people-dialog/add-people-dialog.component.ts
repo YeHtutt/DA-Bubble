@@ -12,6 +12,8 @@ import { map, startWith } from 'rxjs/operators';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ChangeDetectorRef } from '@angular/core';
 import { User } from '@angular/fire/auth';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -21,6 +23,7 @@ import { User } from '@angular/fire/auth';
 })
 export class AddPeopleDialogComponent {
 
+  private usersNotInChannelSubject: BehaviorSubject<UserProfile[]> = new BehaviorSubject<UserProfile[]>([]);
   channel = this.data.channel;
   selectedOption: string | undefined;
   inputOpened = false;
@@ -49,7 +52,11 @@ export class AddPeopleDialogComponent {
   ) {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
-      map((user: string | null) => (user ? this._filter(user) : this.usersNotInChannel.slice())),
+      switchMap((user: string | null) => {
+        return this.usersNotInChannelSubject.asObservable().pipe(
+          map(users => user ? this._filter(user) : users.slice())
+        );
+      })
     );
   }
 
@@ -62,8 +69,8 @@ export class AddPeopleDialogComponent {
   async getUsersNotInChannel() {
     this.allUsers = await this.usersService.getUsers();
     this.usersNotInChannel = this.filterUsersNotInChannel();
+    this.usersNotInChannelSubject.next(this.usersNotInChannel);
   }
-
 
   filterUsersNotInChannel() {
     let usersInChannel = this.channel.usersData.map((user: any) => UserProfile.fromJSON(user));
