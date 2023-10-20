@@ -68,4 +68,8 @@ export class MessageComponent {
     this.getMessagePath();
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId)
   }
+
+  openThread(messageId: string) {
+    this.threadIsOpen = true;
+  }
 }
