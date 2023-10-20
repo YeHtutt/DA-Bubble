@@ -6,6 +6,7 @@ export class Message {
     user: User;
     messageId: string;
     textEdited: false;
+    reactions: [];
 
     constructor(obj?: any) {
         this.text = obj ? obj.text : '';
@@ -13,6 +14,7 @@ export class Message {
         this.user = obj ? obj.user : '';
         this.messageId = obj ? obj.messageId : '';
         this.textEdited = obj ? obj.textEdited : false;
+        this.reactions = obj ? obj.reactions : [];
     }
 
     public toJSON() {
@@ -21,7 +23,8 @@ export class Message {
             time: this.time,
             user: this.user,
             messageId: this.messageId,
-            textEdited: this.textEdited
+            textEdited: this.textEdited,
+            reactions: this.reactions
         };
     }
 
@@ -31,7 +34,8 @@ export class Message {
             time: json.time,
             user: json.user,
             messageId: json.messageId,
-            textEdited: json.textEdited
+            textEdited: json.textEdited,
+            reactions: json.reactions
         });
     }
 }
