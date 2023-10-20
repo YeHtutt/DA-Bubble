@@ -22,8 +22,8 @@ export class ChatComponent {
   public receiver: UserProfile = new UserProfile;
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
-  isOpened = false;
-  @ViewChild('myTextarea') myTextarea: ElementRef | undefined;
+  isOpened: boolean = false;
+  
 
   constructor(
     private messageService: MessageService,

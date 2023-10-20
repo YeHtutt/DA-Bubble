@@ -32,8 +32,7 @@ export class ChannelChatComponent {
   messages: Message[] = [];
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
-  isOpened = false;
-  @ViewChild('myTextarea') myTextarea: ElementRef | undefined;
+  isOpened: boolean = false;
 
 
   constructor(
