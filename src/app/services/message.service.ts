@@ -206,7 +206,7 @@ export class MessageService {
     return new Message(msgObj);
   }
 
-  async updateReaction(coll: any, docId: any, msgId: string, reaction: []) {
+  async updateReaction(coll: any, docId: any, msgId: string, reaction: any) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
