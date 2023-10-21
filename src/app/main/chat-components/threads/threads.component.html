@@ -1,20 +1,24 @@
 <header>
-    <h3>Thread</h3>
+    <h2>Thread</h2>
     <button class="basic-button close-btn" (click)="this.threadService.closeThread()">
         <mat-icon>close</mat-icon>
     </button>
 </header>
 <main>
-    <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
-    <div [ngClass]="{'content_container_reverse': messageCreator == message.user.id}" class="content_container">
-        <div [ngClass]="{'creator_info_reverse': messageCreator == message.user.id}" class="creator_info">
-            <span>{{ message.user.name }}</span>
-            <span>{{getTimeOfDate(message.time)}} Uhr</span>
-        </div>
-        <div [ngClass]="{'message_reverse': messageCreator == message.user.id}" class="message">
-            {{message.text}}
-            <span *ngIf="message.textEdited" class="editedMsg">(bearbeitet)</span>
+    <div class="avatar-message-container">
+        <img class="avatar" src="{{ message.user.photoURL }}" alt="">
+        <div class="message-time">
+            <div class="name-time">
+                <h3>{{ message.user.name }}</h3>
+                <span>{{getTimeOfDate(message.time)}} Uhr</span>
+            </div>
+            <div class="message-bubble">
+                {{message.text}}
+            </div>
         </div>
     </div>
-    <mat-divider></mat-divider>
+    <div class="divider">
+        <div>Antworten</div>
+        <mat-divider></mat-divider>
+    </div>
 </main>

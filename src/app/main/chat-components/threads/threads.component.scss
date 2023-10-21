@@ -14,7 +14,7 @@ header {
     justify-content: space-between;
 }
 
-h3 {
+h2 {
     font-size: 22px;
     font-weight: 500;
 }
@@ -26,4 +26,66 @@ h3 {
 
 .user-name-time {
     display: flex;
+}
+
+
+.avatar-message-container {
+    padding-top: 30px;
+    display: flex;
+    gap: 20px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 40px;
+    border: 2px solid white;
+}
+
+h3 {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.name-time {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 8px;
+}
+
+span {
+    color: #686868;
+    font-family: Nunito;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+main {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.message-bubble {
+    border-radius: 0 30px 30px 30px;
+    padding: 15px;
+    background-color: #ECEEFE;
+    max-width: 85%;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    padding: 8px 0 8px 0;
+}
+
+.mat-divider {
+    width: calc(100% - 20px);
+    margin-left: 20px;
 }
