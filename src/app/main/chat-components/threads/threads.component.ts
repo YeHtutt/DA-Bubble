@@ -39,7 +39,6 @@ export class ThreadsComponent {
   }
 
 
-
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
     const hours = date.getHours();
@@ -47,6 +46,8 @@ export class ThreadsComponent {
     const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     return formattedTime;
   }
+
+
 
 
 }

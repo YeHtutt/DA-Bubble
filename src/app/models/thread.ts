@@ -3,7 +3,7 @@ export class Thread {
     text: string;
     time: any;
     user: User;
-    messageId: string;
+    threadId: string;
     textEdited: false;
     reactions: [];
 
@@ -11,7 +11,7 @@ export class Thread {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
         this.user = obj ? obj.user : '';
-        this.messageId = obj ? obj.messageId : '';
+        this.threadId = obj ? obj.threadId : '';
         this.textEdited = obj ? obj.textEdited : false;
         this.reactions = obj ? obj.reactions : [];
     }
@@ -21,7 +21,7 @@ export class Thread {
             text: this.text,
             time: this.time,
             user: this.user,
-            messageId: this.messageId,
+            messageId: this.threadId,
             textEdited: this.textEdited,
             reactions: this.reactions
         };
