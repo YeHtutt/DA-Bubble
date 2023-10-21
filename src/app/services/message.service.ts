@@ -6,6 +6,7 @@ import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
+import { Thread } from '../models/thread';
 
 
 
@@ -27,7 +28,7 @@ export class MessageService {
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) { }
 
   // SEND MESSAGE //
@@ -40,7 +41,9 @@ export class MessageService {
         // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
       } else if (receiver instanceof Channel) {
         this.sendChannelMessage(receiver, message, newMessage);
-      } else {
+      }
+      else if (receiver instanceof Thread) { this.sendThreadMessage(receiver, message) }
+      else {
         // if a message is sent inside a user chat
         this.sendExcistingChatMessage(receiver, message);
       }
@@ -60,6 +63,11 @@ export class MessageService {
   async sendChannelMessage(receiver: any, message: Message, newMessage: boolean) {
     this.uploadMessage('channel', receiver.channelId, 'message', message);
     if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
+  }
+
+
+  async sendThreadMessage(receiver: any, message: Thread) {
+    this.uploadMessage('chat', receiver, 'message', message);
   }
 
 
@@ -197,9 +205,9 @@ export class MessageService {
     const msgObj = msg.data()
     return new Message(msgObj);
   }
-  
+
   async updateReaction(coll: any, docId: any, msgId: string, reaction: []) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
-    updateDoc(msgRef, {reactions: reaction})
+    updateDoc(msgRef, { reactions: reaction })
   }
 }

@@ -6,6 +6,8 @@ import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ThreadService } from 'src/app/services/thread.service';
+
 
 @Component({
   selector: 'app-chat',
@@ -23,14 +25,15 @@ export class ChatComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
-  
+
 
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    public threadService: ThreadService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -40,11 +43,11 @@ export class ChatComponent {
       this.chatExists = false;
       this.chatId = params.get('chatId') || '';
       this.getReceiverData();
-      this.firebaseUtils.getDocData('chat', this.chatId).then( () => {
+      this.firebaseUtils.getDocData('chat', this.chatId).then(() => {
         this.messageService.subMessage('chat', this.chatId);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
-      }); 
+      });
     });
   }
 

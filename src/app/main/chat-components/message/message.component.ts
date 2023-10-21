@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-
+import { ThreadService } from 'src/app/services/thread.service';
 
 @Component({
   selector: 'app-message',
@@ -18,14 +18,15 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-  threadIsOpen: boolean = false;
+
   isOpened: boolean = false;
   isReactionOpened: boolean = false;
 
   constructor(
     private userService: UsersFirebaseService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    public threadService: ThreadService
   ) {
     this.currentUser = this.userService.getFromLocalStorage();
   }
@@ -70,9 +71,7 @@ export class MessageComponent {
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId)
   }
 
-  openThread(messageId: string) {
-    this.threadIsOpen = true;
-  }
+
 
   toggleEmoji() {
     this.isOpened = !this.isOpened;

@@ -1,4 +1,4 @@
-<div class="dashboard">
+<div class="dashboard" >
     <section class="message-section">
         <header>
             <div class="channel_info_box">
@@ -44,8 +44,7 @@
                 </div>
             </div>
         </section>
-        <section class="thread-section">
+        <section class="thread-section" *ngIf="this.threadService.threadIsOpen">
             <app-threads></app-threads>
-        </section>
-        
+        </section>    
     </div>

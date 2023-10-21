@@ -11,6 +11,7 @@ import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
+import { ThreadService } from 'src/app/services/thread.service';
 
 
 
@@ -42,7 +43,8 @@ export class ChannelChatComponent {
     private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
     private messageService: MessageService,
-    private channelService: ChannelService) {
+    private channelService: ChannelService,
+    public threadService: ThreadService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
