@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { Auth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private usersFbService: UsersFirebaseService,
-    private _snackBar: MatSnackBar,
-    ) {
+    private notificationService: NotificationService
+  ) {
   }
 
   loginForm = new FormGroup({
@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit {
   fillGuestForm() {
     const guestEmail = 'guest@user.com';
     const guestPassword = '123456';
-
     this.loginForm = this.formBuilder.group({
       email: [guestEmail],
       password: [guestPassword]
@@ -102,22 +101,18 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-  
-  
+
+
   loginWithGoogle() {
     this.authService.signinWithGoogle();
     this.authService.setIsAuthenticated(true);
   }
 
   openSnackBar() {
-    if(this.loginSuccess == true) {
-      this._snackBar.open('Login erfolgreich', 'Undo' , {
-        duration: 2000
-      });
-    }else{
-      this._snackBar.open('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', 'Undo', {
-        duration: 2000
-      });
+    if (this.loginSuccess == true) {
+      this.notificationService.showSuccess('Login erfolgreich');
+    } else {
+      this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.')
     }
   }
 }

@@ -3,13 +3,15 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { NotificationService } from 'src/app/services/notification.service';
+
 
 export function passwordsMatchValidator(): ValidatorFn {
-  return ( control: AbstractControl): ValidationErrors | null => {
+  return (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
 
-    if(password && confirmPassword && password !== confirmPassword){
+    if (password && confirmPassword && password !== confirmPassword) {
       return {
         passwordsDontMatch: true
       };
@@ -33,12 +35,12 @@ export class ResetPasswordComponent {
     private authService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private notificationService: NotificationService,
   ) {
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-    }, {validators: passwordsMatchValidator()});
+    }, { validators: passwordsMatchValidator() });
 
     this.route.queryParams.subscribe(params => {
       this.oobCode = params['oobCode'];
@@ -48,14 +50,14 @@ export class ResetPasswordComponent {
   onSubmit() {
     const password = this.resetPasswordForm.value.password;
     this.authService.confirmResetPassword(this.oobCode, password)
-    .then(() => {
-      this.resetPasswordSuccess = true;
-      this.openSnackBar();
-      console.log('password changed successfully!');
-    })
-    .catch(error => {
-      console.log('password change failed: ', error);
-    });
+      .then(() => {
+        this.resetPasswordSuccess = true;
+        this.openSnackBar();
+        console.log('password changed successfully!');
+      })
+      .catch(error => {
+        console.log('password change failed: ', error);
+      });
     setTimeout(() => {
       this.router.navigate(['/login'])
     }, 4000);
@@ -63,15 +65,10 @@ export class ResetPasswordComponent {
 
 
   openSnackBar() {
-    if(this.resetPasswordSuccess == true) {
-      this._snackBar.open('Passwort wurde erfolgreich zurückgesetzt', 'Undo', {
-        duration: 2000
-      });
-    }else{
-      this._snackBar.open('Passwortzurücksetzung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', 'Undo', {
-        duration: 2000
-      });
+    if (this.resetPasswordSuccess == true) {
+      this.notificationService.showSuccess('Passwort wurde erfolgreich zurückgesetzt');
+    } else {
+      this.notificationService.showError('Passwortzurücksetzung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
     }
   }
-
 }

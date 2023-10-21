@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ThreadService } from 'src/app/services/thread.service';
 
 @Component({
   selector: 'app-threads',
@@ -13,7 +13,8 @@ export class ThreadsComponent {
 
   currentId: string = ''
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+    public ThreadService : ThreadService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

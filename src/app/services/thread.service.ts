@@ -12,8 +12,10 @@ export class ThreadService {
 
   openThread(messageId: string) {
     this.threadIsOpen = true;
-    
+
   }
 
-
+  closeThread() {
+    this.threadIsOpen = false;
+  }
 }

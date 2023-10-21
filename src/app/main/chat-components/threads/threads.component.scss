@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+}
+
+
 header {
     height: 96px;
     padding: 25px 45px 25px 45px;
@@ -12,8 +17,4 @@ header {
 h3 {
     font-size: 22px;
     font-weight: 500;
-}
-
-* {
-    box-sizing: border-box;
 }

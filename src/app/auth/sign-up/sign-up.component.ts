@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { NotificationService } from 'src/app/services/notification.service';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -18,12 +20,12 @@ export class SignUpComponent {
   user: UserProfile = new UserProfile;
   sighUpSuccess: boolean | null = null;
 
-  constructor(private authService: AuthenticationService, 
-    private router: Router, 
-    private usersFbService: UsersFirebaseService, 
+  constructor(private authService: AuthenticationService,
+    private router: Router,
+    private usersFbService: UsersFirebaseService,
     private auth: Auth,
-    private _snackBar: MatSnackBar) {
-
+    private notificationService: NotificationService,
+  ) {
   }
 
   signUpForm: any = new FormGroup({
@@ -70,16 +72,11 @@ export class SignUpComponent {
 
 
   openSnackBar() {
-    if(this.sighUpSuccess == true) {
-      this._snackBar.open('Registrierung erfolgreich', 'Undo', {
-        duration: 2000
-      });
-    }else{
-      this._snackBar.open('Registrierung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', 'Undo', {
-        duration: 2000
-      });
+    if (this.sighUpSuccess == true) {
+      this.notificationService.showSuccess('Registrierung erfolgreich')
+    } else {
+      this.notificationService.showError('Registrierung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben')
     }
   }
-
 
 }

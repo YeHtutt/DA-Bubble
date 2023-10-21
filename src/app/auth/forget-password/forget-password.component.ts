@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -13,16 +14,16 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class ForgetPasswordComponent {
   forgetPasswordForm: FormGroup;
   sendEmailSuccess: boolean | null = null;
-  
-  constructor(private formBuilder: FormBuilder, 
+
+  constructor(private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    private afauth: AngularFireAuth,
-    private _snackBar: MatSnackBar
-    ) {
-      this.forgetPasswordForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]]
-      });
+    private afauth: AngularFireAuth, 
+    private notificationService: NotificationService
+  ) {
+    this.forgetPasswordForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
   onSubmit() {
@@ -34,16 +35,10 @@ export class ForgetPasswordComponent {
   }
 
   openSnackBar() {
-    if(this.sendEmailSuccess == true) {
-      this._snackBar.open('Email wurde erfolgreich gesendet', 'Undo', {
-        duration: 2000
-      });
-    }else{
-      this._snackBar.open('Emailsendung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', 'Undo', {
-        duration: 2000
-      });
+    if (this.sendEmailSuccess == true) {
+      this.notificationService.showSuccess('Email wurde erfolgreich gesendet');
+    } else {
+      this.notificationService.showError('Emailsendung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
     }
   }
-
-  
 }
