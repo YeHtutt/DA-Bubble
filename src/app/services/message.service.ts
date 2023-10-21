@@ -42,8 +42,7 @@ export class MessageService {
       } else if (receiver instanceof Channel) {
         this.sendChannelMessage(receiver, message, newMessage);
       }
-      else if (receiver instanceof Thread) { this.sendThreadMessage(receiver, message) }
-      else {
+       else {
         // if a message is sent inside a user chat
         this.sendExcistingChatMessage(receiver, message);
       }
@@ -65,10 +64,6 @@ export class MessageService {
     if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
   }
 
-
-  async sendThreadMessage(receiver: any, message: Thread) {
-    this.uploadMessage('chat', receiver, 'message', message);
-  }
 
 
   sendExcistingChatMessage(receiver: string, message: Message) {
