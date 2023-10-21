@@ -1,7 +1,8 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-threads',
@@ -10,11 +11,16 @@ import { ThreadService } from 'src/app/services/thread.service';
 })
 export class ThreadsComponent {
 
+  currentId: string = '';
+  messageCreator: any;
+  message: any;
+  private subscriptions = new Subscription();
 
-  currentId: string = ''
+
+
 
   constructor(private route: ActivatedRoute,
-    public ThreadService : ThreadService) { }
+    public threadService: ThreadService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -23,8 +29,19 @@ export class ThreadsComponent {
       if (channelId) this.currentId = channelId;
       else if (chatId) this.currentId = chatId;
     });
+
+    this.subscriptions.add(
+      this.threadService.message$.subscribe(message => {
+        this.messageCreator = message.user;
+        this.message = message
+      })
+    );
   }
 
 
+
+  getTimeOfDate(time: string) { 
+    
+  }
 
 }

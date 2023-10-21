@@ -17,7 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule, matSnackBarAnimations } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 
@@ -65,6 +65,7 @@ import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
+
 
 @NgModule({
   declarations: [
@@ -126,7 +127,7 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
     MatSnackBarModule,
     MatRadioModule,
     MatChipsModule,
-    PickerModule
+    PickerModule,
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
