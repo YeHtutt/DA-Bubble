@@ -7,11 +7,15 @@
     min-height: 100vh;
     background-color: #ECEEFE;
     position: relative;
+
+    @media(max-width: 599px) {
+        flex-direction: column;
+    }
 }
 
 mat-card {
     width: 606px;
-    height: 669px;
+    height: max-content;
     flex-shrink: 0;
     border-radius: 30px;
     display: flex;
@@ -35,6 +39,16 @@ mat-card {
         &:hover {
             background-color: rgba(0, 0, 0, 0.15);
         }
+
+        @media(max-width: 599px) {
+            top: 25px;
+            left: 20px;
+        }
+    }
+
+    @media(max-width: 599px) {
+        width: 398px;
+        padding: 26px 20px;
     }
 }
 
@@ -42,8 +56,13 @@ mat-card-title {
     font-size: 46px;
     font-style: normal;
     font-weight: 700;
+    text-align: center;
     color: var(--Purple-1, #444DF2);
-    /*margin-bottom: 15.5px;*/
+
+    @media(max-width: 599px) {
+        font-size: 32px;
+        width: 70%;
+    }
 }
 
 .profileImg {
@@ -55,12 +74,24 @@ mat-card-title {
     padding: 16px;
     background: var(--Purple-2, #797EF3);
     border-radius: 100px;
+
+    @media(max-width: 599px) {
+        height: 120px;
+        width: 120px;
+        padding: 16px;
+
+        img {
+            height: 120px;
+            width: 120px;
+            object-fit: cover;
+        }
+    }
 }
 
 .avatarContentBox {
     margin-top: 25.5px;
     width: 472px;
-    height: 448px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -104,6 +135,20 @@ mat-card-title {
             border-radius: 100%;
             padding: 4px;
             cursor: pointer;
+
+            &:hover {
+                background-color: lightgray;
+            }
+
+            @media(max-width: 599px) {
+                width: 56px;
+                height: 56px;
+                object-fit: cover;
+            }
+        }
+
+        @media(max-width: 599px) {
+            gap: 0;
         }
     }
 
@@ -132,14 +177,29 @@ mat-card-title {
                 cursor: pointer;
             }
 
+            &:hover {
+                background-color: lightgray;
+            }
+
+            @media(max-width: 599px) {
+                font-size: 14px;
+            }
+
         }
     }
 
     .buttonBox {
-        position: absolute;
+        /*position: absolute;
         right: 53px;
         bottom: 30px;
-        padding: 12px 25px;
+        padding: 12px 25px;*/
+        position: block;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        right: 53px;
+        bottom: 30px;
 
         button {
             width: 110px;
@@ -158,6 +218,10 @@ mat-card-title {
         }
     }
 
+    @media(max-width: 599px) {
+        width: 356px;
+    }
+
 }
 
 .legals {
@@ -168,6 +232,10 @@ mat-card-title {
     gap: 16px;
     color: #A4A8F7;
     cursor: pointer;
+
+    @media(max-width: 599px) {
+        display: none;
+    }
 }
 
 .logoContent-normal {
@@ -182,5 +250,16 @@ mat-card-title {
         width: auto;
         object-fit: cover;
         position: relative;
+    }
+
+    @media(max-width: 599px) {
+        position: static;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 }
