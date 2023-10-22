@@ -40,8 +40,8 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="text.length == 0" (click)="sendMessageTo('thread')"><mat-icon
-                        class="send_btn">send</mat-icon></button>
+                <button (click)="sendMessageTo(message.origin)"><mat-icon
+                        class="send-btn">send</mat-icon></button>
             </div>
         </div>
     </main>

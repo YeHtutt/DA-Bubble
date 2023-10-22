@@ -1,3 +1,4 @@
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -5,6 +6,7 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
+import { Thread } from 'src/app/models/thread';
 
 @Component({
   selector: 'app-threads',
@@ -17,13 +19,22 @@ export class ThreadsComponent {
   messageCreator: any;
   message: any;
   private subscriptions = new Subscription();
+  isOpened: boolean = false;
+  text: string = '';
+  showTagMenu: boolean = false;
+  allUsers: UserProfile[] = [];
+  currentUser: UserProfile = new UserProfile;
 
 
 
-
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     public threadService: ThreadService,
-    private searchService: SearchService) { }
+    private searchService: SearchService,
+    private userService: UsersFirebaseService,
+  ) {
+    this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -51,15 +62,6 @@ export class ThreadsComponent {
   }
 
 
-
-  isOpened: boolean = false;
-  text: string = '';
-  showTagMenu: boolean = false;
-  allUsers: UserProfile[] = [];
-
-
-
-
   async openTagMenu() {
     this.showTagMenu = !this.showTagMenu;
     const searchResult = await this.searchService.searchUsersAndChannels('@');
@@ -82,8 +84,25 @@ export class ThreadsComponent {
     this.isOpened = false;
   }
 
-  sendMessageTo(messageId: string) {
+  setReply() {
 
+  }
+
+
+  createMessageObject() {
+    return new Thread({
+      text: this.text,
+      time: new Date(),
+      threadId: '',
+      user: this.currentUser.toJSON(),
+      textEdited: false,
+      reactions: []
+    });
+  }
+
+
+  sendMessageTo(origin: string) {
+    /*  this.threadService.addMessageToCollection(origin, this.currentId, asd) */
   }
 
 }
