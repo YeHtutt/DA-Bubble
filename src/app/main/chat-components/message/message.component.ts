@@ -17,6 +17,7 @@ export class MessageComponent {
 
   @Input() message: any;
   public currentUser: string;
+  currentUserName: string = '';
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
   editMessage: string = '';
@@ -24,6 +25,7 @@ export class MessageComponent {
   coll: string | undefined = '';
 
   isOpened: boolean = false;
+  isReactionInputOpened: boolean = false;
   isReactionOpened: boolean = false;
 
   constructor(
@@ -33,6 +35,7 @@ export class MessageComponent {
     public threadService: ThreadService
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
+    this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
 
 
@@ -87,6 +90,10 @@ export class MessageComponent {
   }
 
   openReaction() {
+    this.isReactionInputOpened = !this.isReactionInputOpened;
+  }
+
+  openInReaction() {
     this.isReactionOpened = !this.isReactionOpened;
   }
 
@@ -111,20 +118,20 @@ export class MessageComponent {
   //   this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
   // }
 
-  async addReaction(emoji: string, msgId: string) {
+  async updateMessageReactions(emoji: string, msgId: string) {
     this.getMessagePath();
-    let reaction = this.createReactionObject(emoji, this.currentUser);
-    const msg = await this.messageService.getMessageReactons(this.coll, this.docId, msgId);
+    let reaction = this.createReactionObject(emoji, this.currentUserName);
+    const msg = await this.messageService.getMessageReactions(this.coll, this.docId, msgId);
     const existingReactions: { reactionEmoji: string; users: string[] }[] = msg.reactions ? [...msg.reactions] : [];
     const reacOfUserExists = existingReactions.findIndex((reac: Reaction) => reac.reactionEmoji === reaction.reactionEmoji && reac.users.includes(reaction.users[0]));
     const reactionExists = existingReactions.find((reac: Reaction) => reac.reactionEmoji === reaction.reactionEmoji);
     if (this.canDeleteReaction(reacOfUserExists, reactionExists, reaction)) {
       existingReactions.splice(reacOfUserExists, 1);
-    } else if(this.canAddNewReaction(reacOfUserExists, reactionExists)) {
+    } else if (this.canAddNewReaction(reacOfUserExists, reactionExists)) {
       existingReactions.push(reaction);
-    } else if(this.canAddUserToReaction(reactionExists, reaction)) {
+    } else if (this.canAddUserToReaction(reactionExists, reaction)) {
       reactionExists?.users.push(reaction.users[0])
-    } else if(this.canDeleteUserFromReaction(reactionExists, reaction)) {
+    } else if (this.canDeleteUserFromReaction(reactionExists, reaction)) {
       const userIndex = reactionExists ? reactionExists.users.indexOf(reaction.users[0]) : 0;
       reactionExists?.users.splice(userIndex, 1);
     }
@@ -154,4 +161,21 @@ export class MessageComponent {
       users: [user]
     };
   }
+
+  // getUserNamesForReaction(users: []) {
+  //   const userNames: string[] = [];
+  //   users.forEach((user: any) => {
+  //     this.userService.getUser(user).then((user) => {
+  //       userNames.push(user.name)
+  //     });
+  //   })
+  //   console.log(userNames)
+  //   return userNames;
+  // }
+
+  // getUserNameForReaction(userId: string) {
+  //   this.userService.getUser(userId).then((user) => {
+  //     return `${user.name}`;
+  //   });
+  // }
 }

@@ -42,7 +42,7 @@ export class MessageService {
       } else if (receiver instanceof Channel) {
         this.sendChannelMessage(receiver, message, newMessage);
       }
-       else {
+      else {
         // if a message is sent inside a user chat
         this.sendExcistingChatMessage(receiver, message);
       }
@@ -194,7 +194,7 @@ export class MessageService {
 
   // REACTIONS TO MESSAGES //
 
-  async getMessageReactons(coll: any, docId: any, msgId: string) {
+  async getMessageReactions(coll: any, docId: any, msgId: string) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     const msg = await getDoc(msgRef);
     const msgObj = msg.data()
@@ -205,4 +205,5 @@ export class MessageService {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
+
 }

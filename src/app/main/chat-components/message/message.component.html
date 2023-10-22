@@ -11,11 +11,36 @@
             {{message.text}}
             <span *ngIf="message.textEdited" class="editedMsg">(bearbeitet)</span>
         </div>
+        <div class="reactions_container">
+            <mat-icon (click)="openInReaction()">add_reaction</mat-icon>
+            <app-emoji-picker style="top: 150px;" class="reaction_emoji" *ngIf="isReactionOpened"
+                (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
+            <div class="reaction_btn" *ngFor="let reaction of message.reactions" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)">
+                <span class="reactionEmoji">{{reaction.reactionEmoji}}</span><span class="reactionCount">{{reaction.users.length}}</span>
+                <div class="hover_card_reactions">
+                    <span>{{reaction.reactionEmoji}}</span>
+                    <div class="reaction_users_box">
+                        <ng-container *ngIf="reaction.users.includes(currentUserName)">Du, </ng-container>
+                        <ng-container *ngIf="reaction.users.length == 2 && reaction.users.includes(currentUserName)">und </ng-container>
+                        <ng-container *ngFor="let name of reaction.users">
+                            <ng-container *ngIf="name !== currentUserName">{{ name }}, </ng-container>
+                        </ng-container>
+
+                        <!-- <ng-container *ngIf="reaction.users.length > 3">
+                            und {{reaction.users.length - 2}} weitere
+                        </ng-container> -->
+                        
+                        <!-- <span *ngFor="let user of reaction.users">{{user}}</span> -->
+                    </div>
+                    <span>haben reagiert</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div [ngClass]="{'reaction_container_reverse': currentUser == message.user.id}" class="reaction_container">
+    <div [ngClass]="{'interaction_container_reverse': currentUser == message.user.id}" class="interaction_container">
         <mat-icon (click)="openReaction()">add_reaction</mat-icon>
-        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionOpened"
-            (emojiSelectedEvent)="addReaction($event, message.messageId)"></app-emoji-picker>
+        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened"
+            (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
         <mat-icon (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
