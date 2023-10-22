@@ -89,7 +89,7 @@ export class ThreadsComponent {
   }
 
 
-  createMessageObject() {
+  createReplyObject() {
     return new Thread({
       text: this.text,
       time: new Date(),
@@ -102,7 +102,7 @@ export class ThreadsComponent {
 
 
   sendMessageTo(origin: string) {
-    /*  this.threadService.addMessageToCollection(origin, this.currentId, asd) */
+    this.threadService.addMessageToCollection(origin, this.currentId, this.message.messageId, this.createReplyObject().toJSON())
   }
 
 }

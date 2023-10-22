@@ -48,9 +48,9 @@ export class ThreadService {
   }
 
 
-  async addMessageToCollection(coll: string, docId: string, message: {}) {
+  async addMessageToCollection(coll: string, docId: string, messageId: string, message: {}) {
     // Get reference to the sub-collection inside the specified document
-    let ref = collection(doc(this.firestore, coll, docId), 'thread');
+    let ref = collection(this.firestore, `${coll}/${docId}/message/${messageId}/thread`);
     // Add the new message to the sub-collection
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
@@ -60,7 +60,7 @@ export class ThreadService {
       });
   }
 
-  
+
   subMessage(coll: string, subId: string) {
     // Target the 'message' subcollection under the specified document ID
     let ref = collection(this.firestore, `${coll}/${subId}/message/messageId/thread`);
