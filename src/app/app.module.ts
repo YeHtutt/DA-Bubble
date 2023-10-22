@@ -30,7 +30,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import {MatChipsModule} from '@angular/material/chips'; 
+import { MatChipsModule } from '@angular/material/chips';
 
 
 /* Components */
@@ -65,7 +65,7 @@ import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
-import { ThreadChatComponent } from './main/chat-components/thread-chat/thread-chat.component';
+
 
 
 
@@ -100,7 +100,7 @@ import { ThreadChatComponent } from './main/chat-components/thread-chat/thread-c
     AddPeopleDialogComponent,
     ImprintComponent,
     DataPrivacyComponent,
-    ThreadChatComponent,
+
 
 
   ],

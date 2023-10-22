@@ -3,6 +3,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
+import { SearchService } from 'src/app/services/search.service';
+import { UserProfile } from 'src/app/models/user-profile';
 
 @Component({
   selector: 'app-threads',
@@ -20,7 +22,8 @@ export class ThreadsComponent {
 
 
   constructor(private route: ActivatedRoute,
-    public threadService: ThreadService) { }
+    public threadService: ThreadService,
+    private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -49,5 +52,38 @@ export class ThreadsComponent {
 
 
 
+  isOpened: boolean = false;
+  text: string = '';
+  showTagMenu: boolean = false;
+  allUsers: UserProfile[] = [];
+
+
+
+
+  async openTagMenu() {
+    this.showTagMenu = !this.showTagMenu;
+    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    this.allUsers = searchResult.filteredUser;
+    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
+  }
+
+  tagUser(user: string) {
+    this.text = `@${user}`;
+    this.showTagMenu = !this.showTagMenu;
+  }
+
+  toggleEmoji() {
+    this.isOpened = !this.isOpened;
+  }
+
+  addEmoji(emoji: string) {
+    const text = `${emoji}`;
+    this.text += text;
+    this.isOpened = false;
+  }
+
+  sendMessageTo(messageId: string) {
+
+  }
 
 }
