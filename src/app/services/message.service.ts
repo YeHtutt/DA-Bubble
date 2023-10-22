@@ -6,7 +6,7 @@ import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
-import { Thread } from '../models/thread';
+
 
 
 

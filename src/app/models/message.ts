@@ -33,6 +33,7 @@ export class Message {
 
     public static fromJSON(json: any): Message {
         return new Message({
+            origin: json.origin,
             text: json.text,
             time: json.time,
             user: json.user,

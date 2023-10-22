@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Message } from '../models/message';
 import { BehaviorSubject } from 'rxjs';
 import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion } from '@angular/fire/firestore';
-
+import { Thread } from '../models/thread';
 
 
 
@@ -13,8 +13,15 @@ import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc
 
 export class ThreadService {
 
-  firestore: Firestore = inject(Firestore);
-  constructor() { }
+
+  constructor(private firestore: Firestore = inject(Firestore)) { }
+
+  unsubThread: any;
+  thread: Thread[] = [];
+
+  ngOnDestroy() {
+    this.unsubThread();
+  }
 
   threadIsOpen: boolean = false;
 
@@ -41,9 +48,9 @@ export class ThreadService {
   }
 
 
-  async addMessageToCollection(coll: string, docId: string, message: {}) {
+  async addMessageToCollection(coll: string, docId: string, messageId: string, message: {}) {
     // Get reference to the sub-collection inside the specified document
-    let ref = collection(doc(this.firestore, coll, docId), 'thread');
+    let ref = collection(this.firestore, `${coll}/${docId}/message/${messageId}/thread`);
     // Add the new message to the sub-collection
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
@@ -53,5 +60,17 @@ export class ThreadService {
       });
   }
 
+
+  subMessage(coll: string, subId: string) {
+    // Target the 'message' subcollection under the specified document ID
+    let ref = collection(this.firestore, `${coll}/${subId}/message/messageId/thread`);
+    const q = query(ref, orderBy('time'));
+    return this.unsubThread = onSnapshot(q, (list) => {
+      this.thread = [];
+      list.forEach((message) => {
+        this.thread.push(Thread.fromJSON({ ...message.data(), messageId: message.id }));
+      });
+    });
+  }
 
 }
