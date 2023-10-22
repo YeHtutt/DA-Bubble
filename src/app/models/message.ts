@@ -1,6 +1,7 @@
 import { UserProfile as User } from "./user-profile";
 
 export class Message {
+    origin: string = '';
     text: string;
     time: any;
     user: User;
@@ -9,6 +10,7 @@ export class Message {
     reactions: [];
 
     constructor(obj?: any) {
+        this.origin = obj ? obj.origin : '';
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
         this.user = obj ? obj.user : '';
@@ -19,6 +21,7 @@ export class Message {
 
     public toJSON() {
         return {
+            origin: this.origin,
             text: this.text,
             time: this.time,
             user: this.user,

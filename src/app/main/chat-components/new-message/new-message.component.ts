@@ -44,9 +44,11 @@ export class NewMessageComponent {
 
   send() {
     if (this.receiver instanceof UserProfile) {
-      this.messageService.sendMessage(this.createMessageObject(), this.receiver, true, this.createDirectChatObject(this.receiver),);
+      let origin = 'chat';
+      this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true, this.createDirectChatObject(this.receiver),);
     } else {
-      this.messageService.sendMessage(this.createMessageObject(), this.receiver, true, '');
+      let origin = 'channel';
+      this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true, '');
     }
     this.text = '';
   }
@@ -60,8 +62,9 @@ export class NewMessageComponent {
     });
   }
 
-  createMessageObject() {
+  createMessageObject(origin: string) {
     return new Message({
+      origin: origin,
       text: this.text,
       time: new Date(),
       messageId: '',

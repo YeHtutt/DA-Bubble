@@ -81,6 +81,7 @@ export class ChatComponent {
 
   createMessageObject() {
     return new Message({
+      origin: 'chat',
       text: this.text,
       time: new Date(),
       messageId: '',

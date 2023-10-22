@@ -76,7 +76,6 @@ export class MessageComponent {
   }
 
 
-
   toggleEmoji() {
     this.isOpened = !this.isOpened;
   }

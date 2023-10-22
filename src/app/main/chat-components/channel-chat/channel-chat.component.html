@@ -1,4 +1,4 @@
-<div class="dashboard" >
+<div class="dashboard">
     <section class="message-section">
         <header>
             <div class="channel_info_box">
@@ -9,7 +9,7 @@
                 <div class="user_in_channel_box">
                     <div class="user_avatar_box">
                         <img *ngFor="let user of channel?.usersData; let i = index;"
-                        [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL" alt="">
+                            [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL" alt="">
                     </div>
                     <div class="user_amount_box">{{channel?.usersData.length}}</div>
                 </div>
@@ -21,6 +21,7 @@
         <main>
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
         </main>
+
         <div class="input_message_container">
             <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"></textarea>
             <div class="control_container">
@@ -40,11 +41,11 @@
                     </div>
                 </div>
                 <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
-                    class="send_btn">send</mat-icon></button>
-                </div>
+                        class="send_btn">send</mat-icon></button>
             </div>
-        </section>
-        <section class="thread-section" *ngIf="this.threadService.threadIsOpen">
-            <app-threads></app-threads>
-        </section>    
-    </div>
+        </div>
+    </section>
+    <section class="thread-section" *ngIf="this.threadService.threadIsOpen">
+        <app-threads></app-threads>
+    </section>
+</div>

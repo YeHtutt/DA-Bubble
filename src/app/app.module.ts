@@ -42,7 +42,7 @@ import { MainComponent } from './main/main.component';
 import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
 import { HeaderComponent } from './main/header/header.component';
 import { SidenavComponent } from './main/sidenav/sidenav.component';
-import { ThreadsComponent } from './main/chat-components/threads/threads.component';
+import { ThreadsComponent } from './main/threads/threads.component';
 
 /* Module */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -65,6 +65,8 @@ import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
+import { ThreadChatComponent } from './main/chat-components/thread-chat/thread-chat.component';
+
 
 
 @NgModule({
@@ -97,7 +99,9 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
     EmojiPickerComponent,
     AddPeopleDialogComponent,
     ImprintComponent,
-    DataPrivacyComponent
+    DataPrivacyComponent,
+    ThreadChatComponent,
+
 
   ],
   imports: [

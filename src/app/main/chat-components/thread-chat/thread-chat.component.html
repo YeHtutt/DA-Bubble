@@ -1,0 +1,22 @@
+<div class="input-message-container">
+    <textarea #myTextarea>Antworten...</textarea>
+    <div class="control-container">
+        <div class="chat-action-box">
+            <mat-icon class="action-btn-style">add</mat-icon>
+            <hr>
+            <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
+            <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
+            <mat-icon (click)="openTagMenu()" class="action-btn-style">alternate_email</mat-icon>
+            <div class="tag-menu-outer-container">
+                <div *ngIf="showTagMenu" class="tag-menu-inner-container">
+                    <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
+                        <img src="{{user.photoURL}}" alt="">
+                        <span>{{user.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button [disabled]="text.length == 0" (click)="sendMessageTo('thread')"><mat-icon
+                class="send_btn">send</mat-icon></button>
+    </div>
+</div>

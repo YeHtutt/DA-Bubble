@@ -100,6 +100,7 @@ export class ChannelChatComponent {
     let creatorId = this.getCreatorId();
     let messageCreator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
     return new Message({
+      origin: 'channel',
       text: this.text,
       time: new Date(),
       user: messageCreator,
