@@ -121,8 +121,7 @@ export class MessageComponent {
   async updateMessageReactions(emoji: string, msgId: string) {
     this.getMessagePath();
     let reaction = this.createReactionObject(emoji, this.currentUserName);
-    const msg = await this.messageService.getMessageReactions(this.coll, this.docId, msgId);
-    const existingReactions: { reactionEmoji: string; users: string[] }[] = msg.reactions ? [...msg.reactions] : [];
+    const existingReactions: { reactionEmoji: string; users: string[] }[] = this.message.reactions ? [...this.message.reactions] : [];
     const reacOfUserExists = existingReactions.findIndex((reac: Reaction) => reac.reactionEmoji === reaction.reactionEmoji && reac.users.includes(reaction.users[0]));
     const reactionExists = existingReactions.find((reac: Reaction) => reac.reactionEmoji === reaction.reactionEmoji);
     if (this.canDeleteReaction(reacOfUserExists, reactionExists, reaction)) {
@@ -161,21 +160,4 @@ export class MessageComponent {
       users: [user]
     };
   }
-
-  // getUserNamesForReaction(users: []) {
-  //   const userNames: string[] = [];
-  //   users.forEach((user: any) => {
-  //     this.userService.getUser(user).then((user) => {
-  //       userNames.push(user.name)
-  //     });
-  //   })
-  //   console.log(userNames)
-  //   return userNames;
-  // }
-
-  // getUserNameForReaction(userId: string) {
-  //   this.userService.getUser(userId).then((user) => {
-  //     return `${user.name}`;
-  //   });
-  // }
 }
