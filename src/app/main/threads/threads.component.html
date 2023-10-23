@@ -22,8 +22,9 @@
             <div>Antworten</div>
             <mat-divider></mat-divider>
         </div>
+        <app-message *ngFor="let thread of getAllThreads()" [message]="thread"></app-message>
         <div class="input-message-container">
-            <textarea #myTextarea placeholder="Antworten..."></textarea>
+            <textarea  [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
                     <mat-icon class="action-btn-style">add</mat-icon>
@@ -40,8 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <button (click)="sendMessageTo(message.origin)"><mat-icon
-                        class="send-btn">send</mat-icon></button>
+                <button (click)="sendMessageTo(message.origin)"><mat-icon class="send-btn">send</mat-icon></button>
             </div>
         </div>
     </main>

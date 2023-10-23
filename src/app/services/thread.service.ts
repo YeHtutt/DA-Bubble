@@ -17,7 +17,7 @@ export class ThreadService {
   constructor(private firestore: Firestore = inject(Firestore)) { }
 
   unsubThread: any;
-  thread: Thread[] = [];
+  threads: Thread[] = [];
 
   ngOnDestroy() {
     this.unsubThread();
@@ -37,13 +37,27 @@ export class ThreadService {
     this.threadIsOpen = false;
   }
 
-  async getThreadFromDoc(col: string, docId: string) {
+  subThread(col: string, docId: string, messageId: string) {
+   console.log(col)
     // Create a reference to the 'message' subcollection under the specified document ID
-    let ref = collection(this.firestore, `${col}/${docId}/message/thread`);
+    let ref = collection(this.firestore, `${col}/${docId}/message/${messageId}/thread`);
+
+    // Listen for real-time updates to the specified query
+    this.unsubThread = onSnapshot(ref, (querySnapshot) => {
+      const threads: Thread[] = querySnapshot.docs.map(doc => Thread.fromJSON({ ...doc.data(), threadId: doc.id }));
+      // Here you'd typically update a local state variable or call another function 
+      // For now, let's just log the threads to the console
+      console.log(threads);
+    });
+  }
+
+  async getThreadFromDoc(col: string, docId: string, messageId: string) {
+    // Create a reference to the 'message' subcollection under the specified document ID
+    let ref = collection(this.firestore, `${col}/${docId}/message/${messageId}/thread`);
     // Fetch the messages from the subcollection using getDocs
     const querySnapshot = await getDocs(ref);
     // Convert the messages to the Message[] format
-    const thread: Message[] = querySnapshot.docs.map(doc => Message.fromJSON({ ...doc.data(), threadId: doc.id }));
+    const thread: Thread[] = querySnapshot.docs.map(doc => Thread.fromJSON({ ...doc.data(), threadId: doc.id }));
     return thread;
   }
 
@@ -61,16 +75,6 @@ export class ThreadService {
   }
 
 
-  subMessage(coll: string, subId: string) {
-    // Target the 'message' subcollection under the specified document ID
-    let ref = collection(this.firestore, `${coll}/${subId}/message/messageId/thread`);
-    const q = query(ref, orderBy('time'));
-    return this.unsubThread = onSnapshot(q, (list) => {
-      this.thread = [];
-      list.forEach((message) => {
-        this.thread.push(Thread.fromJSON({ ...message.data(), messageId: message.id }));
-      });
-    });
-  }
+
 
 }

@@ -24,9 +24,6 @@ export class ThreadsComponent {
   showTagMenu: boolean = false;
   allUsers: UserProfile[] = [];
   currentUser: UserProfile = new UserProfile;
-
-
-
   constructor(
     private route: ActivatedRoute,
     public threadService: ThreadService,
@@ -43,11 +40,11 @@ export class ThreadsComponent {
       if (channelId) this.currentId = channelId;
       else if (chatId) this.currentId = chatId;
     });
-
     this.subscriptions.add(
       this.threadService.message$.subscribe(message => {
         this.messageCreator = message.user;
         this.message = message
+        this.threadService.subThread(this.message.origin, this.currentId, this.message.messageId);
       })
     );
   }
@@ -88,6 +85,10 @@ export class ThreadsComponent {
 
   }
 
+
+  getAllThreads() {
+    return this.threadService.threads
+  }
 
   createReplyObject() {
     return new Thread({

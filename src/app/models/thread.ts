@@ -21,7 +21,7 @@ export class Thread {
             text: this.text,
             time: this.time,
             user: this.user,
-            messageId: this.threadId,
+            threadId: this.threadId,
             textEdited: this.textEdited,
             reactions: this.reactions
         };
@@ -32,7 +32,7 @@ export class Thread {
             text: json.text,
             time: json.time,
             user: json.user,
-            messageId: json.messageId,
+            threadId: json.threadId,
             textEdited: json.textEdited,
             reactions: json.reactions
         });
