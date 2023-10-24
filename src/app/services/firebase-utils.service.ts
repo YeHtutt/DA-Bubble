@@ -67,10 +67,8 @@ export class FirebaseUtilsService {
 
   async getDocData(col: string, docId: string) {
     let docRef = this.getSingleDocRef(col, docId);
-
     // Fetch the actual document data using the getDoc method
     const docSnapshot = await getDoc(docRef);
-
     // Check if the document exists and print its data
     if (docSnapshot.exists()) {
       return docSnapshot.data();
@@ -78,6 +76,8 @@ export class FirebaseUtilsService {
       return console.log("No such document!");
     }
   }
+
+  
 
 
   getDateTime() {

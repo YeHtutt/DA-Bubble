@@ -73,11 +73,15 @@ export class ThreadService {
 
   async updateReply(path: string, reply: Reply) {
     if (reply.replyId) {
+      console.log(path, reply)
       let docRef = this.firebaseService.getSingleDocRef(`${path}`, reply.replyId);
       await updateDoc(docRef, reply.toJSON())
-        .catch((err) => { console.log(err); })
-        .then(() => { });
+    } else {
+      console.error("Channel ID is missing");
     }
   }
-
 }
+
+
+
+

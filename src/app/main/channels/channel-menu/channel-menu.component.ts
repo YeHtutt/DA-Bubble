@@ -39,7 +39,7 @@ export class ChannelMenuComponent {
   }
 
   ngOnInit() {
-      this.currentUserId = this.userService.getFromLocalStorage()
+    this.currentUserId = this.userService.getFromLocalStorage()
   }
 
   isOutlineVisible = true;
@@ -50,15 +50,15 @@ export class ChannelMenuComponent {
 
   closeCreateChannelDialog() {
     this.dialogRef.close();
-    
+
   }
 
   leaveChannel() {
     if (this.channel.channelName !== 'allgemein') {
 
     }
-    if (this.channel.creator.id === this.currentUserId) { 
-      
+    if (this.channel.creator.id === this.currentUserId) {
+
     }
 
   }
@@ -80,7 +80,6 @@ export class ChannelMenuComponent {
 
 
   saveChannelName() {
-    debugger
     this.channel.channelName = this.channelNameInput.value || '';
     this.channelService.updateChannel(this.channel);
     this.toggleDescriptionInput();

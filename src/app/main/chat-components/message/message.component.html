@@ -76,7 +76,9 @@
                 (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
             <div class="button_right">
                 <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
-                <button (click)="saveMessage(message.messageId)" class="save_btn" mat-fab extended
+                <button *ngIf="message.type === 'message'" (click)="saveMessage(message.messageId)" class="save_btn"
+                    mat-fab extended color="primary">Speichern</button>
+                <button *ngIf="message.type === 'reply'" (click)="saveReply(collPath)" class="save_btn" mat-fab extended
                     color="primary">Speichern</button>
             </div>
         </div>

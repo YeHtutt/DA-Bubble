@@ -22,9 +22,9 @@
             <div>Antworten</div>
             <mat-divider></mat-divider>
         </div>
-        <app-message *ngFor="let thread of getAllReplies()" [message]="thread" [messageId]="message.messageId"></app-message>
+        <app-message *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
         <div class="input-message-container">
-            <textarea  [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
+            <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
                     <mat-icon class="action-btn-style">add</mat-icon>
