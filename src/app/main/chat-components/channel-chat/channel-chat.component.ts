@@ -54,7 +54,7 @@ export class ChannelChatComponent {
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.messageService.subMessage('channel', this.channelId);  
+        this.messageService.subMessage('channel', this.channelId);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
@@ -106,12 +106,13 @@ export class ChannelChatComponent {
       user: messageCreator,
       messageId: '',
       textEdited: false,
+      type: 'message',
       reactions: []
     });
   }
 
 
-  addUser() {}
+  addUser() { }
 
 
   getCreatorId() {

@@ -16,6 +16,7 @@ interface Reaction {
 })
 export class MessageComponent {
 
+  @Input() collPath: any;
   @Input() message: any;
   public currentUser: string;
   currentUserName: string = '';
@@ -24,21 +25,23 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-  public reactionsToShow: [] = [];
-
   isOpened: boolean = false;
   isReactionInputOpened: boolean = false;
   isReactionOpened: boolean = false;
 
+
+
   constructor(
     private userService: UsersFirebaseService,
     private messageService: MessageService,
+    public threadService: ThreadService,
     private router: Router,
-    public threadService: ThreadService
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
+
+
 
 
   getTimeOfDate(timestamp: any) {
@@ -136,8 +139,14 @@ export class MessageComponent {
       const userIndex = reactionExists ? reactionExists.users.indexOf(reaction.users[0]) : 0;
       reactionExists?.users.splice(userIndex, 1);
     }
-    this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
+    if (this.message.type === 'message') {
+      this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
+    }
+    if (this.message.type === 'reply') {
+      this.saveReply(this.collPath)
+    }
   }
+
 
   canDeleteReaction(reacOfUserExists: number, reactionExists: Reaction | undefined, reaction: Reaction) {
     return reacOfUserExists !== -1 && reactionExists && reactionExists.users.includes(reaction.users[0]) && reactionExists.users.length === 1;
@@ -162,4 +171,15 @@ export class MessageComponent {
       users: [user]
     };
   }
+
+
+  /* Thread(Reply) functions */
+
+  saveReply(path: any) {
+    this.message.text = this.editMessage || '';
+    this.threadService.updateReply(path, this.message);
+  }
+
+  deleteReply() { }
+
 }

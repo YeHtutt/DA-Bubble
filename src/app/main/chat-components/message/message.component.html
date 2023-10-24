@@ -40,9 +40,9 @@
     </div>
     <div [ngClass]="{'interaction_container_reverse': currentUser == message.user.id}" class="interaction_container">
         <mat-icon (click)="openReaction()">add_reaction</mat-icon>
-        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened"
+        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened" #pick
             (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
-        <mat-icon (click)="this.threadService.openThread(message)">comment</mat-icon>
+        <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
             <button (click)="openEdit(message.text)" *ngIf="checkIfEdit">Nachricht bearbeiten</button>
@@ -60,7 +60,9 @@
                 (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
             <div class="button_right">
                 <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
-                <button (click)="saveMessage(message.messageId)" class="save_btn" mat-fab extended
+                <button *ngIf="message.type === 'message'" (click)="saveMessage(message.messageId)" class="save_btn"
+                    mat-fab extended color="primary">Speichern</button>
+                <button *ngIf="message.type === 'reply'" (click)="saveReply(collPath)" class="save_btn" mat-fab extended
                     color="primary">Speichern</button>
             </div>
         </div>

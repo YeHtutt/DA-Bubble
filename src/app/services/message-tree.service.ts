@@ -143,10 +143,4 @@ export class MessageTreeService {
   }
 
 
-  createMessageTree(user1: UserProfile, user2: UserProfile) {
-    let sharedId = `${user1.id}_${user2.id}`;
-    const messageTreeRef = doc(this.firestore, 'direct-messages', sharedId);
-
-  }
-
 }

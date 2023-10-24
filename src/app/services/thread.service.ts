@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Message } from '../models/message';
 import { BehaviorSubject } from 'rxjs';
 import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion } from '@angular/fire/firestore';
-import { Thread } from '../models/thread';
-
+import { Reply } from '../models/thread';
+import { FirebaseUtilsService } from './firebase-utils.service';
 
 
 @Injectable({
@@ -14,13 +14,16 @@ import { Thread } from '../models/thread';
 export class ThreadService {
 
 
-  constructor(private firestore: Firestore = inject(Firestore)) { }
+  constructor(
+    private firestore: Firestore = inject(Firestore),
+    private firebaseService: FirebaseUtilsService
+  ) { }
 
-  unsubThread: any;
-  threads: Thread[] = [];
+  unsubReplies: any;
+  replies: Reply[] = [];
 
   ngOnDestroy() {
-    this.unsubThread();
+    this.unsubReplies();
   }
 
   threadIsOpen: boolean = false;
@@ -37,44 +40,48 @@ export class ThreadService {
     this.threadIsOpen = false;
   }
 
-  subThread(col: string, docId: string, messageId: string) {
-   console.log(col)
-    // Create a reference to the 'message' subcollection under the specified document ID
-    let ref = collection(this.firestore, `${col}/${docId}/message/${messageId}/thread`);
-
-    // Listen for real-time updates to the specified query
-    this.unsubThread = onSnapshot(ref, (querySnapshot) => {
-      const threads: Thread[] = querySnapshot.docs.map(doc => Thread.fromJSON({ ...doc.data(), threadId: doc.id }));
-      // Here you'd typically update a local state variable or call another function 
-      // For now, let's just log the threads to the console
-      console.log(threads);
+  subReplies(path: string) {
+    let ref = collection(this.firestore, path);
+    const q = query(ref, orderBy('time'));
+    return this.unsubReplies = onSnapshot(q, (list) => {
+      this.replies = [];
+      list.forEach((reply) => {
+        this.replies.push(Reply.fromJSON({ ...reply.data(), replyId: reply.id }));
+      });
     });
   }
 
-  async getThreadFromDoc(col: string, docId: string, messageId: string) {
-    // Create a reference to the 'message' subcollection under the specified document ID
-    let ref = collection(this.firestore, `${col}/${docId}/message/${messageId}/thread`);
-    // Fetch the messages from the subcollection using getDocs
-    const querySnapshot = await getDocs(ref);
-    // Convert the messages to the Message[] format
-    const thread: Thread[] = querySnapshot.docs.map(doc => Thread.fromJSON({ ...doc.data(), threadId: doc.id }));
-    return thread;
-  }
 
+  deleteReply() { }
 
-  async addMessageToCollection(coll: string, docId: string, messageId: string, message: {}) {
+  /*  
+  ref `${coll}/${docId}/message/${messageId}/thread`
+  */
+
+  async addReplyToCollection(path: string, message: {}) {
     // Get reference to the sub-collection inside the specified document
-    let ref = collection(this.firestore, `${coll}/${docId}/message/${messageId}/thread`);
+    let ref = collection(this.firestore, path);
     // Add the new message to the sub-collection
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
       .then((docRef: any) => {
         console.log("Thread written with ID", docRef?.id)
-        updateDoc(docRef, { threadId: docRef.id });
+        updateDoc(docRef, { replyId: docRef.id });
       });
   }
 
 
-
-
+  async updateReply(path: string, reply: Reply) {
+    if (reply.replyId) {
+      console.log(path, reply)
+      let docRef = this.firebaseService.getSingleDocRef(`${path}`, reply.replyId);
+      await updateDoc(docRef, reply.toJSON())
+    } else {
+      console.error("Channel ID is missing");
+    }
+  }
 }
+
+
+
+

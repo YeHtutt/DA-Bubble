@@ -92,6 +92,7 @@ export class DirectMessageComponent {
       time: new Date(),
       messageId: '',
       user: this.currentUser.toJSON(),
+      type: 'message',
       textEdited: false
     });
   }
