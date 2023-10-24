@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import { Observable } from 'rxjs';
 
 interface Reaction {
   reactionEmoji: string,
@@ -30,7 +31,6 @@ export class MessageComponent {
   isReactionOpened: boolean = false;
 
 
-
   constructor(
     private userService: UsersFirebaseService,
     private messageService: MessageService,
@@ -40,9 +40,7 @@ export class MessageComponent {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
-
-
-
+  
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);

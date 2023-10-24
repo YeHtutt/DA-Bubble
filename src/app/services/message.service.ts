@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion, collectionData } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
-
 
 
 
@@ -30,7 +29,7 @@ export class MessageService {
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) { }
 
   // SEND MESSAGE //
@@ -102,6 +101,7 @@ export class MessageService {
   async getMsgDocRef(coll: string, docId: string, msgId: string) {
     return doc(this.firestore, `${coll}/${docId}/message/${msgId}`);
   }
+
 
   // GET MESSAGE //
 
@@ -196,12 +196,13 @@ export class MessageService {
 
   // REACTIONS TO MESSAGES //
 
-  async getMessageReactions(coll: any, docId: any, msgId: string) {
-    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
-    const msg = await getDoc(msgRef);
-    const msgObj = msg.data()
-    return new Message(msgObj);
-  }
+  // async getMessageReactions(coll: any, docId: any, msgId: string) {
+  //   const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+  //   const msg = await getDoc(msgRef);
+  //   const msgObj = msg.data()
+  //   return new Message(msgObj);
+  // }
+
 
   async updateReaction(coll: any, docId: any, msgId: string, reaction: any) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
