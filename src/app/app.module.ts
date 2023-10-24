@@ -65,6 +65,7 @@ import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
+import { FilterPipe } from './filter.pipe';
 
 
 
@@ -100,6 +101,7 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
     AddPeopleDialogComponent,
     ImprintComponent,
     DataPrivacyComponent,
+    FilterPipe,
 
 
 
