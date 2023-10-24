@@ -49,6 +49,10 @@ export class ThreadsComponent {
     );
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);

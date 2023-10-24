@@ -23,7 +23,6 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
-
   isOpened: boolean = false;
   isReactionInputOpened: boolean = false;
   isReactionOpened: boolean = false;
