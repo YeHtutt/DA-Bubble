@@ -8,6 +8,7 @@ interface Reaction {
   reactionEmoji: string,
   users: string[]
 }
+
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -23,6 +24,7 @@ export class MessageComponent {
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
+  public reactionsToShow: [] = [];
 
   isOpened: boolean = false;
   isReactionInputOpened: boolean = false;

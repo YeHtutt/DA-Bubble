@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion, collectionData } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
@@ -19,10 +19,12 @@ export class MessageService {
 
   messages: Message[] = [];
   unsubMessages: any;
+  unsubReactions: any
 
 
   ngOnDestroy() {
     this.unsubMessages();
+    this.unsubReactions();
   }
 
   constructor(
@@ -205,5 +207,4 @@ export class MessageService {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
-
 }
