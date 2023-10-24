@@ -1,18 +1,20 @@
 import { UserProfile as User } from "./user-profile";
-export class Thread {
-    text: string;
+export class Reply {
+    text: string = '';
     time: any;
     user: User;
-    threadId: string;
-    textEdited: false;
-    reactions: [];
+    replyId: string = '';
+    textEdited: boolean = false;
+    type: string = '';
+    reactions: any[] = [];
 
     constructor(obj?: any) {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
         this.user = obj ? obj.user : '';
-        this.threadId = obj ? obj.threadId : '';
+        this.replyId = obj ? obj.replyId : '';
         this.textEdited = obj ? obj.textEdited : false;
+        this.type = obj ? obj.type : '';
         this.reactions = obj ? obj.reactions : [];
     }
 
@@ -21,19 +23,22 @@ export class Thread {
             text: this.text,
             time: this.time,
             user: this.user,
-            threadId: this.threadId,
+            replyId: this.replyId,
             textEdited: this.textEdited,
+            type: this.type,
             reactions: this.reactions
         };
     }
 
-    public static fromJSON(json: any): Thread {
-        return new Thread({
+    public static fromJSON(json: any): Reply {
+        if (!json) return new Reply(); // return an empty instance or handle as you see fit
+        return new Reply({
             text: json.text,
             time: json.time,
             user: json.user,
-            threadId: json.threadId,
+            replyId: json.replyId,
             textEdited: json.textEdited,
+            type: json.type,
             reactions: json.reactions
         });
     }

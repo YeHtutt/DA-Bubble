@@ -7,6 +7,7 @@ export class Message {
     user: User;
     messageId: string;
     textEdited: false;
+    type = '';
     reactions: [];
 
     constructor(obj?: any) {
@@ -16,6 +17,7 @@ export class Message {
         this.user = obj ? obj.user : '';
         this.messageId = obj ? obj.messageId : '';
         this.textEdited = obj ? obj.textEdited : false;
+        this.type = obj ? obj.type : '';
         this.reactions = obj ? obj.reactions : [];
     }
 
@@ -27,11 +29,13 @@ export class Message {
             user: this.user,
             messageId: this.messageId,
             textEdited: this.textEdited,
+            type: this.type,
             reactions: this.reactions
         };
     }
 
     public static fromJSON(json: any): Message {
+        if (!json) return new Message(); // return an empty instance or handle as you see fit
         return new Message({
             origin: json.origin,
             text: json.text,
@@ -39,6 +43,7 @@ export class Message {
             user: json.user,
             messageId: json.messageId,
             textEdited: json.textEdited,
+            type: json.type,
             reactions: json.reactions
         });
     }

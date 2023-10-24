@@ -22,7 +22,7 @@
             <div>Antworten</div>
             <mat-divider></mat-divider>
         </div>
-        <app-message *ngFor="let thread of getAllThreads()" [message]="thread"></app-message>
+        <app-message *ngFor="let thread of getAllReplies()" [message]="thread"></app-message>
         <div class="input-message-container">
             <textarea  [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
             <div class="control-container">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <button (click)="sendMessageTo(message.origin)"><mat-icon class="send-btn">send</mat-icon></button>
+                <button (click)="sendReplyTo(message.origin)"><mat-icon class="send-btn">send</mat-icon></button>
             </div>
         </div>
     </main>

@@ -70,6 +70,7 @@ export class NewMessageComponent {
       messageId: '',
       user: this.currentUser.toJSON(),
       textEdited: false,
+      type: 'message',
       reactions: []
     });
   }

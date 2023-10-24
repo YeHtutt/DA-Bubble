@@ -36,6 +36,18 @@ export class FirebaseUtilsService {
   }
 
 
+
+
+  async updateDoc(path: string, docId: string, obj: any) {
+    let docRef = this.getSingleDocRef(path, docId);
+    await updateDoc(docRef, obj.toJSON())
+      .catch((err) => { console.log(err) })
+      .then(() => { })
+  }
+
+
+
+
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
   getRef(ref: any) {
     return collection(this.firestore, ref);
@@ -43,13 +55,13 @@ export class FirebaseUtilsService {
 
 
   /**
-   * @param col collection name
+   * @param path path to the collection or sub-collection
    * @param docId id of the document
    * @returns a reference to the doc
    */
 
-  getSingleDocRef(col: string, docId: string) {
-    return doc(collection(this.firestore, col), docId)
+  getSingleDocRef(path: string, docId: string) {
+    return doc(collection(this.firestore, path), docId)
   }
 
 
@@ -72,9 +84,9 @@ export class FirebaseUtilsService {
     let dateTime = new Date();
     return dateTime
   }
-           
 
- async deleteCollection(colId: string, docId: string) {
+
+  async deleteCollection(colId: string, docId: string) {
     await deleteDoc(this.getSingleDocRef(colId, docId))
       .catch((err) => { console.log(err) })
   }
@@ -82,42 +94,42 @@ export class FirebaseUtilsService {
 
   async chatExists(user1: string, user2: string): Promise<boolean> {
     const chatCollection = collection(this.firestore, 'chat');
-    
+
     // Query for user1 -> user2
     const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
     const result1 = await getDocs(query1);
-    
+
     // Query for user2 -> user1
     const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
     const result2 = await getDocs(query2);
-    
+
     // Return true if either query has results
     return !result1.empty || !result2.empty;
-}
+  }
 
-async getExistingChatId(user1: string, user2: string): Promise<string> {
-  const chatCollection = collection(this.firestore, 'chat');
-  
-  // Query for user1 -> user2
-  const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
-  const result1 = await getDocs(query1);
-  
-  // If found, return the chatId
-  if (!result1.empty) {
+  async getExistingChatId(user1: string, user2: string): Promise<string> {
+    const chatCollection = collection(this.firestore, 'chat');
+
+    // Query for user1 -> user2
+    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+    const result1 = await getDocs(query1);
+
+    // If found, return the chatId
+    if (!result1.empty) {
       return result1.docs[0].id;
-  }
-  
-  // Query for user2 -> user1
-  const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
-  const result2 = await getDocs(query2);
+    }
 
-  // If found, return the chatId
-  if (!result2.empty) {
+    // Query for user2 -> user1
+    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+    const result2 = await getDocs(query2);
+
+    // If found, return the chatId
+    if (!result2.empty) {
       return result2.docs[0].id;
+    }
+
+    // If not found, return an empty string (or handle as needed)
+    return '';
   }
-  
-  // If not found, return an empty string (or handle as needed)
-  return '';
-}
 
 }

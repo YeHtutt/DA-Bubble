@@ -58,7 +58,7 @@
         <mat-icon (click)="openReaction()">add_reaction</mat-icon>
         <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened"
             (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
-        <mat-icon (click)="this.threadService.openThread(message)">comment</mat-icon>
+        <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
             <button (click)="openEdit(message.text)" *ngIf="checkIfEdit">Nachricht bearbeiten</button>

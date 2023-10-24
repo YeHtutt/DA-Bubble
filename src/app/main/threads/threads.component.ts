@@ -1,12 +1,12 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
-import { Thread } from 'src/app/models/thread';
+import { Reply } from 'src/app/models/thread';
+
 
 @Component({
   selector: 'app-threads',
@@ -24,6 +24,8 @@ export class ThreadsComponent {
   showTagMenu: boolean = false;
   allUsers: UserProfile[] = [];
   currentUser: UserProfile = new UserProfile;
+  collPath = '';
+
   constructor(
     private route: ActivatedRoute,
     public threadService: ThreadService,
@@ -32,6 +34,8 @@ export class ThreadsComponent {
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
+
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -44,10 +48,14 @@ export class ThreadsComponent {
       this.threadService.message$.subscribe(message => {
         this.messageCreator = message.user;
         this.message = message
-        this.threadService.subThread(this.message.origin, this.currentId, this.message.messageId);
+        this.collPath = `${message.origin}/${this.currentId}/message/${message.messageId}/thread`
+        this.threadService.subReplies(this.collPath);
       })
     );
   }
+
+
+
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -85,29 +93,25 @@ export class ThreadsComponent {
     this.isOpened = false;
   }
 
-  setReply() {
-
-  }
-
-
-  getAllThreads() {
-    return this.threadService.threads
+  getAllReplies() {
+    return this.threadService.replies
   }
 
   createReplyObject() {
-    return new Thread({
+    return new Reply({
       text: this.text,
       time: new Date(),
-      threadId: '',
+      replyId: '',
       user: this.currentUser.toJSON(),
       textEdited: false,
+      type: 'reply',
       reactions: []
     });
   }
 
 
-  sendMessageTo(origin: string) {
-    this.threadService.addMessageToCollection(origin, this.currentId, this.message.messageId, this.createReplyObject().toJSON())
+  sendReplyTo(origin: string) {
+    this.threadService.addReplyToCollection(this.collPath, this.createReplyObject().toJSON())
   }
 
 }
