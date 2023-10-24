@@ -56,7 +56,7 @@
     </div>
     <div [ngClass]="{'interaction_container_reverse': currentUser == message.user.id}" class="interaction_container">
         <mat-icon (click)="openReaction()">add_reaction</mat-icon>
-        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened"
+        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened" #pick
             (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
         <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>

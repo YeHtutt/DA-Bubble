@@ -15,6 +15,7 @@ interface Reaction {
 })
 export class MessageComponent {
 
+  @Input() messageId: any;
   @Input() message: any;
   public currentUser: string;
   currentUserName: string = '';
@@ -30,8 +31,8 @@ export class MessageComponent {
   constructor(
     private userService: UsersFirebaseService,
     private messageService: MessageService,
+    public threadService: ThreadService,
     private router: Router,
-    public threadService: ThreadService
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
@@ -133,7 +134,12 @@ export class MessageComponent {
       const userIndex = reactionExists ? reactionExists.users.indexOf(reaction.users[0]) : 0;
       reactionExists?.users.splice(userIndex, 1);
     }
-    this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
+    if (this.message.type === 'message') {
+       this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions); }
+    if (this.message.type === 'reply') {
+      let path = `${this.coll}/${this.docId}/message/${this.messageId}/thread`
+      this.threadService.updateReply(path, this.message)
+    }
   }
 
   canDeleteReaction(reacOfUserExists: number, reactionExists: Reaction | undefined, reaction: Reaction) {

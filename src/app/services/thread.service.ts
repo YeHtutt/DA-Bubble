@@ -71,9 +71,9 @@ export class ThreadService {
   }
 
 
-  async updateReply(reply: Reply, coll: string, docId: string, messageId: string) {
+  async updateReply(path: string, reply: Reply) {
     if (reply.replyId) {
-      let docRef = this.firebaseService.getSingleDocRef(`${coll}/${docId}/message/${messageId}/thread`, reply.replyId);
+      let docRef = this.firebaseService.getSingleDocRef(`${path}`, reply.replyId);
       await updateDoc(docRef, reply.toJSON())
         .catch((err) => { console.log(err); })
         .then(() => { });
