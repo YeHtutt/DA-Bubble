@@ -61,11 +61,14 @@ export class ChannelMenuComponent {
 
     }
     if (this.channel.creator.id !== this.currentUserId) {
-
+      this.notificationService.showConfirmation(
+        'Bist du sicher, dass du diesen Channel verlassen möchtest?',
+        this.leaveTheChannel.bind(this)
+      );
     }
   }
 
-  leaveTheChannel() { }
+  leaveTheChannel() { console.log(this.currentUserId)  }
   closeSnackbar() { }
 
   toggleDescriptionInput() {

@@ -41,10 +41,16 @@ export class NotificationService {
     });
   }
 
-  showConfirmation(title: string, message: string): void {
-    this.dialog.open(CustomSnackbarComponent, {
-      width: '250px',
-      data: { title, message }
+  showConfirmation(message: string, acceptCallback: () => void): void {
+    const dialogRef = this.dialog.open(CustomSnackbarComponent, {
+      width: '300px',
+      data: { message: message }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // if the result is true, meaning the "Accept" button was clicked
+        acceptCallback();
+      }
     });
   }
 
