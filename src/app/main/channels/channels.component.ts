@@ -22,9 +22,7 @@ export class ChannelsComponent {
 
   ngOnInit() {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
-      if (loaded) {
-        this.channelService.treeControl.expandAll();
-      }
+      if (loaded) this.channelService.treeControl.expandAll();
     });
     this.subscriptions.push(sub);
   }

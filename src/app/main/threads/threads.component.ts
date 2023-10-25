@@ -5,7 +5,8 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
-import { Reply } from 'src/app/models/thread';
+import { Message } from 'src/app/models/message';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class ThreadsComponent {
   constructor(
     private route: ActivatedRoute,
     public threadService: ThreadService,
+    private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
     private userService: UsersFirebaseService,
   ) {
@@ -94,21 +96,22 @@ export class ThreadsComponent {
     return this.threadService.replies
   }
 
-  createReplyObject() {
-    return new Reply({
+  createMessageObject() {
+    return new Message({
       text: this.text,
       time: new Date(),
-      replyId: '',
+      messageId: '',
       user: this.currentUser.toJSON(),
       textEdited: false,
       type: 'reply',
+      origin: '',
       reactions: []
     });
   }
 
 
   sendReplyTo() {
-    this.threadService.addReplyToCollection(this.collPath, this.createReplyObject().toJSON())
+    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON())
   }
 
 }

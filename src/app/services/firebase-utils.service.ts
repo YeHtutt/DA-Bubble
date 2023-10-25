@@ -36,15 +36,41 @@ export class FirebaseUtilsService {
   }
 
 
-
-
-  async updateDoc(path: string, docId: string, obj: any) {
-    let docRef = this.getSingleDocRef(path, docId);
-    await updateDoc(docRef, obj.toJSON())
-      .catch((err) => { console.log(err) })
-      .then(() => { })
+  /**
+   * Adds an item to a Firestore collection and then updates the added item with its ID.
+   * 
+   * @async
+   * @param {string} path - The path to the collection in Firestore.
+   * @param {string} fieldId - The name of the field where the document ID should be stored.
+   * @param {Object} item - The item to be added to the Firestore collection.
+   * 
+   * @throws {Error} If there is an error in the process.
+   */
+  async addCollWithPath(path: string, fieldId: string, item: {}) {
+    try {
+      // Add the document to the specified collection
+      const docRef = await addDoc(this.getRef(path), item);
+      console.log("Document written with ID", docRef.id);
+      // Update the document with the ID
+      await updateDoc(docRef, { [fieldId]: docRef.id });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   }
 
+  /* UPDATE */
+
+
+  async updateDoc(path: string, doc: any, idField: string) {
+    if (doc[idField]) {
+      let docRef = this.getSingleDocRef(path, doc[idField]);
+      await updateDoc(docRef, doc.toJSON());
+    } else {
+      console.error("ID is missing");
+      throw new Error("ID is missing");
+    }
+  }
 
 
 
@@ -77,7 +103,7 @@ export class FirebaseUtilsService {
     }
   }
 
-  
+
 
 
   getDateTime() {
@@ -92,10 +118,7 @@ export class FirebaseUtilsService {
   }
 
 
-  async updateCollection(path: string, docId: string) {
-    await deleteDoc(this.getSingleDocRef(path, docId))
-      .catch((err) => { console.log(err) })
-  }
+
 
 
   async chatExists(user1: string, user2: string): Promise<boolean> {

@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Message } from '../models/message';
 import { BehaviorSubject } from 'rxjs';
 import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion } from '@angular/fire/firestore';
-import { Reply } from '../models/thread';
 import { FirebaseUtilsService } from './firebase-utils.service';
 
 
@@ -20,7 +19,7 @@ export class ThreadService {
   ) { }
 
   unsubReplies: any;
-  replies: Reply[] = [];
+  replies: Message[] = [];
 
   ngOnDestroy() {
     this.unsubReplies();
@@ -46,7 +45,7 @@ export class ThreadService {
     return this.unsubReplies = onSnapshot(q, (list) => {
       this.replies = [];
       list.forEach((reply) => {
-        this.replies.push(Reply.fromJSON({ ...reply.data(), replyId: reply.id }));
+        this.replies.push(Message.fromJSON({ ...reply.data(), replyId: reply.id }));
       });
     });
   }
@@ -69,10 +68,10 @@ export class ThreadService {
   }
 
 
-  async updateReply(path: string, reply: Reply) {
-    if (reply.replyId) {
+  async updateReply(path: string, reply: Message) {
+    if (reply.messageId) {
       console.log(path, reply)
-      let docRef = this.firebaseService.getSingleDocRef(`${path}`, reply.replyId);
+      let docRef = this.firebaseService.getSingleDocRef(`${path}`, reply.messageId);
       await updateDoc(docRef, reply.toJSON())
     } else {
       console.error("Channel ID is missing");

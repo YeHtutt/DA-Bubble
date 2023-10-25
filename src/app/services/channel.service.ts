@@ -40,6 +40,7 @@ export class ChannelService {
 
   constructor(private firebaseUtils: FirebaseUtilsService,) {
     this.unsubChannelTree = this.subChannelList();
+
   }
 
   channelContent: Channel[] = [];
@@ -58,16 +59,6 @@ export class ChannelService {
   }
 
 
-  getChannelContent(documentId: string) {
-    const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
-    return this.unsubChannel = onSnapshot(docRef, (docSnapshot) => {
-      if (docSnapshot.exists()) {
-        return this.setChannelContentObj(docSnapshot.data(), docSnapshot.id);
-      } else {
-        return console.log('Document does not exist!');
-      }
-    });
-  }
 
 
   private _transformer = (node: ChannelsNode, level: number) => {
@@ -111,6 +102,18 @@ export class ChannelService {
     });
   }
 
+  subChannelContent(documentId: string, callback: (channelData: any) => void) {
+    const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
+    return onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        callback(docSnapshot.data());
+      } else {
+        console.log('Document does not exist!');
+      }
+    });
+}
+
+
 
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
@@ -138,6 +141,7 @@ export class ChannelService {
 
   setChannelContentObj(obj: any, docId: string): Channel {
     const channelJSON = { ...obj, channelId: docId };
+    console.log(channelJSON);
     return Channel.fromJSON(channelJSON);
   }
 
@@ -152,6 +156,7 @@ export class ChannelService {
     });
     return channelArray;
   }
+
 
   async getSingleChannel(docId: string) {
     const docRef = doc(this.firestore, "channel", docId);

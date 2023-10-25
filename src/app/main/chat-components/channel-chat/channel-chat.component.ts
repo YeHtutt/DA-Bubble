@@ -1,17 +1,23 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
+import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
+import { Subscription } from 'rxjs';
+/* Models */
+
 import { Message } from 'src/app/models/message';
+import { Channel } from 'src/app/models/channel';
 import { UserProfile } from 'src/app/models/user-profile';
+
+/* Services */
+
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { SearchService } from 'src/app/services/search.service';
-import { ChannelService } from 'src/app/services/channel.service';
-import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { ThreadService } from 'src/app/services/thread.service';
+import { ChannelService } from 'src/app/services/channel.service';
 
 
 
@@ -55,10 +61,17 @@ export class ChannelChatComponent {
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
+        this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
+          this.channel = channelData;
+        });
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.channelService.unsubChannel();
   }
 
 

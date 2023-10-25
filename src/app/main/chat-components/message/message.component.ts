@@ -4,7 +4,6 @@ import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { Reply } from 'src/app/models/thread';
 import { Observable } from 'rxjs';
 
 interface Reaction {
@@ -177,11 +176,11 @@ export class MessageComponent {
 
   saveReply(path: any) {
     this.message.text = this.editMessage || '';
-    this.threadService.updateDoc(path, this.message, 'replyId');
+    this.threadService.updateDoc(path, this.message, 'messageId');
   }
 
   deleteReply(path: string) {
-    this.firebaseUtils.deleteCollection(path, this.message.replyId)
+    this.firebaseUtils.deleteCollection(path, this.message.messageId)
   }
 
 }
