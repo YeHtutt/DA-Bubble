@@ -5,11 +5,13 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { Reply } from 'src/app/models/thread';
+import { Observable } from 'rxjs';
 
 interface Reaction {
   reactionEmoji: string,
   users: string[]
 }
+
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -31,7 +33,6 @@ export class MessageComponent {
   isReactionOpened: boolean = false;
 
 
-
   constructor(
     private userService: UsersFirebaseService,
     private messageService: MessageService,
@@ -42,9 +43,7 @@ export class MessageComponent {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
-
-
-
+  
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);

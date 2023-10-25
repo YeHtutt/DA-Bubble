@@ -22,34 +22,18 @@
                 <div class="hover_card_reactions">
                     <span>{{reaction.reactionEmoji}}</span>
                     <div class="reaction_users_box">
-                        <!-- <ng-container *ngIf="reaction.users.includes(currentUserName)">Du<ng-container *ngIf="reaction.users.length > 2">, </ng-container></ng-container> -->
-                        <!-- <ng-container *ngIf="reaction.users.length == 2 && reaction.users.includes(currentUserName)">und </ng-container> -->
-                        <ng-container *ngFor="let name of reaction.users; let i = index ">
-                            <ng-container *ngIf="currentUserName === name; else showName">
-                                Du
-                            </ng-container>
-                            <ng-template #showName>
-                                {{name}}
-                            </ng-template>
-                            <ng-container *ngIf="i == reaction.users.length - 2 && reaction.users.length == 2"> und
-                            </ng-container>
-                            <ng-container *ngIf="i === reaction.users.length - 2 && reaction.users.length > 2"> und
-                            </ng-container>
+                        <ng-container *ngFor="let name of reaction.users | filterBy: currentUserName; let i = index ">
+                            <ng-container *ngIf="currentUserName === name; else showName">Du</ng-container>
+                            <ng-template #showName>{{ name }}</ng-template>
+                            <ng-container *ngIf="i === reaction.users.length - 2 && reaction.users.length == 2"> und </ng-container>
+                            <ng-container *ngIf="i === reaction.users.length - 2 && reaction.users.length > 2"> und </ng-container>
+                            <ng-container *ngIf="i < reaction.users.length - 2">, </ng-container>
                         </ng-container>
-                        <!-- <ng-container *ngIf="reaction.users.length > 3">
-                            und {{reaction.users.length - 3}} weitere
-                        </ng-container> -->
-
-                        <!-- <span *ngFor="let user of reaction.users">{{user}}</span> -->
                     </div>
-                    <ng-container *ngIf="reaction.users.length > 1 && reaction.users.includes(currentUserName)">haben
-                        reagiert</ng-container>
-                    <ng-container *ngIf="reaction.users.length > 1 && !reaction.users.includes(currentUserName)">haben
-                        reagiert</ng-container>
-                    <ng-container *ngIf="reaction.users.length == 1 && reaction.users.includes(currentUserName)">hast
-                        reagiert</ng-container>
-                    <ng-container *ngIf="reaction.users.length == 1 && !reaction.users.includes(currentUserName)">hat
-                        reagiert</ng-container>
+                    <span class="small_letters" *ngIf="reaction.users.length > 1 && reaction.users.includes(currentUserName)">haben reagiert</span>
+                    <span class="small_letters" *ngIf="reaction.users.length > 1 && !reaction.users.includes(currentUserName)">haben reagiert</span>
+                    <span class="small_letters" *ngIf="reaction.users.length == 1 && reaction.users.includes(currentUserName)">hast reagiert</span>
+                    <span class="small_letters" *ngIf="reaction.users.length == 1 && !reaction.users.includes(currentUserName)">hat reagiert</span>
                 </div>
             </div>
         </div>
