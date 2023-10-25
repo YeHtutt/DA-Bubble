@@ -66,6 +66,7 @@ import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-
 import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 import { FilterPipe } from './main/pipes/filter.pipe';
+import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 
 
 
@@ -102,7 +103,8 @@ import { FilterPipe } from './main/pipes/filter.pipe';
     AddPeopleDialogComponent,
     ImprintComponent,
     DataPrivacyComponent,
-    FilterPipe
+    FilterPipe,
+    CustomSnackbarComponent
 
 
 
