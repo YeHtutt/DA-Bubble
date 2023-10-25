@@ -55,10 +55,21 @@ export class ChannelMenuComponent {
 
   leaveChannel() {
     if (this.channel.channelName !== 'allgemein') {
+      this.notificationService.showError('Der allgemeine Channel kann nicht verlassen werden.')
     }
     if (this.channel.creator.id === this.currentUserId) {
+
+    }
+    if (this.channel.creator.id !== this.currentUserId) {
+      this.notificationService.showConfirmation(
+        'Bist du sicher, dass du diesen Channel verlassen möchtest?',
+        this.leaveTheChannel.bind(this)
+      );
     }
   }
+
+  leaveTheChannel() { console.log(this.currentUserId)  }
+  closeSnackbar() { }
 
   toggleDescriptionInput() {
     this.editChannelName = !this.editChannelName;
