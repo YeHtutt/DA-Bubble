@@ -18,7 +18,7 @@
                 </div>
             </div>
         </header>
-        <main>
+        <main #chatWindow>
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
         </main>
 

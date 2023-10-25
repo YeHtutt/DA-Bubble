@@ -40,6 +40,7 @@ export class ChannelChatComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
+  @ViewChild('chatWindow') chatWindow: ElementRef | any;
 
 
   constructor(
@@ -72,6 +73,10 @@ export class ChannelChatComponent {
 
   ngOnDestroy() {
     this.channelService.unsubChannel();
+  }
+
+  ngAfterViewInit() {
+    this.chatWindow.scrollTop = this.chatWindow.scrollHeight;
   }
 
 

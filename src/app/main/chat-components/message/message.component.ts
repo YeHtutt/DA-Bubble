@@ -171,6 +171,11 @@ export class MessageComponent {
     };
   }
 
+  getHighestReactions() {
+    const sortedReactions = this.message.reactions.sort((a: any, b: any) => b.users.length - a.users.length);
+    return sortedReactions;
+  }
+
 
   /* Thread(Reply) functions */
 

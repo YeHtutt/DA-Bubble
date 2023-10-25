@@ -11,9 +11,9 @@
             {{message.text}}
             <span *ngIf="message.textEdited" class="editedMsg">(bearbeitet)</span>
         </div>
-        <div class="reactions_container">
+        <div *ngIf="message.reactions.length > 0" class="reactions_container">
             <mat-icon (click)="openInReaction()">add_reaction</mat-icon>
-            <app-emoji-picker style="top: 150px;" class="reaction_emoji" *ngIf="isReactionOpened"
+            <app-emoji-picker class="reaction_emoji_inside" *ngIf="isReactionOpened"
                 (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
             <div class="reaction_btn" *ngFor="let reaction of message.reactions"
                 (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)">
@@ -22,7 +22,7 @@
                 <div class="hover_card_reactions">
                     <span>{{reaction.reactionEmoji}}</span>
                     <div class="reaction_users_box">
-                        <ng-container *ngFor="let name of reaction.users | filterBy: currentUserName; let i = index ">
+                        <ng-container *ngFor="let name of reaction.users | filterBy: currentUserName; let i = index">
                             <ng-container *ngIf="currentUserName === name; else showName">Du</ng-container>
                             <ng-template #showName>{{ name }}</ng-template>
                             <ng-container *ngIf="i === reaction.users.length - 2 && reaction.users.length == 2"> und </ng-container>
@@ -39,8 +39,12 @@
         </div>
     </div>
     <div [ngClass]="{'interaction_container_reverse': currentUser == message.user.id}" class="interaction_container">
+        <ng-container *ngFor="let reaction of getHighestReactions(); let i = index">
+            <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)" *ngIf="i === 0">{{reaction.reactionEmoji}}</span>
+            <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)" *ngIf="i === 1">{{reaction.reactionEmoji}}</span>
+        </ng-container>
         <mat-icon (click)="openReaction()">add_reaction</mat-icon>
-        <app-emoji-picker class="reaction_emoji" *ngIf="isReactionInputOpened" #pick
+        <app-emoji-picker [ngClass]="{'reaction_emoji_reverse': currentUser !== message.user.id}" class="reaction_emoji" *ngIf="isReactionInputOpened" #pick
             (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
         <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
