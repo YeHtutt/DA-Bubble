@@ -7,7 +7,7 @@ export class Message {
     user: User;
     messageId: string;
     textEdited: false;
-    type = '';
+    type = 'message';
     reactions: [];
 
     constructor(obj?: any) {

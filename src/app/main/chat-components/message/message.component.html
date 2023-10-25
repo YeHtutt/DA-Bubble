@@ -62,7 +62,10 @@
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
             <button (click)="openEdit(message.text)" *ngIf="checkIfEdit">Nachricht bearbeiten</button>
-            <button class="deleteMsgBtn" (click)="deleteMessage(message.messageId)" *ngIf="checkIfEdit">Nachricht
+            <button class="deleteMsgBtn"
+            
+            (click)="message.type === 'message' ? deleteMessage(message.messageId) : deleteReply(collPath)"
+            *ngIf="checkIfEdit">Nachricht
                 löschen</button>
         </div>
     </div>
@@ -76,12 +79,12 @@
                 (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
             <div class="button_right">
                 <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
-                <button *ngIf="message.type === 'message'" (click)="saveMessage(message.messageId)" class="save_btn"
-                    mat-fab extended color="primary">Speichern</button>
-                <button *ngIf="message.type === 'reply'" (click)="saveReply(collPath)" class="save_btn" mat-fab extended
-                    color="primary">Speichern</button>
+                <button (click)="message.type === 'message' ? saveMessage(message.messageId) : saveReply(collPath)"
+                    class="save_btn" mat-fab extended color="primary">Speichern</button>
             </div>
         </div>
+
+        <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
     </div>
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
 </div>

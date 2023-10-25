@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { Reply } from 'src/app/models/thread';
 
 interface Reaction {
   reactionEmoji: string,
@@ -34,6 +36,7 @@ export class MessageComponent {
     private userService: UsersFirebaseService,
     private messageService: MessageService,
     public threadService: ThreadService,
+    private firebaseUtils: FirebaseUtilsService,
     private router: Router,
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
@@ -124,50 +127,49 @@ export class MessageComponent {
 
   async updateMessageReactions(emoji: string, msgId: string) {
     this.getMessagePath();
-    let reaction = this.createReactionObject(emoji, this.currentUserName);
-    const existingReactions: { reactionEmoji: string; users: string[] }[] = this.message.reactions ? [...this.message.reactions] : [];
-    const reacOfUserExists = existingReactions.findIndex((reac: Reaction) => reac.reactionEmoji === reaction.reactionEmoji && reac.users.includes(reaction.users[0]));
-    const reactionExists = existingReactions.find((reac: Reaction) => reac.reactionEmoji === reaction.reactionEmoji);
-    if (this.canDeleteReaction(reacOfUserExists, reactionExists, reaction)) {
-      existingReactions.splice(reacOfUserExists, 1);
-    } else if (this.canAddNewReaction(reacOfUserExists, reactionExists)) {
+    const reaction = this.createReactionObject(emoji);
+    const existingReactions = this.message.reactions || [];
+    const userReactionIndex = existingReactions.findIndex((r: any) => r.reactionEmoji === emoji && r.users.includes(this.currentUserName));
+    const existingReaction = existingReactions.find((r: any) => r.reactionEmoji === emoji);
+
+    if (this.canDeleteReaction(userReactionIndex, existingReaction)) {
+      existingReactions.splice(userReactionIndex, 1);
+    } else if (this.canAddNewReaction(userReactionIndex, existingReaction)) {
       existingReactions.push(reaction);
-    } else if (this.canAddUserToReaction(reactionExists, reaction)) {
-      reactionExists?.users.push(reaction.users[0])
-    } else if (this.canDeleteUserFromReaction(reactionExists, reaction)) {
-      const userIndex = reactionExists ? reactionExists.users.indexOf(reaction.users[0]) : 0;
-      reactionExists?.users.splice(userIndex, 1);
+    } else if (this.canAddUserToReaction(existingReaction)) {
+      existingReaction?.users.push(this.currentUserName);
+    } else if (this.canRemoveUserFromReaction(existingReaction)) {
+      const userIndex = existingReaction.users.indexOf(this.currentUserName);
+      existingReaction?.users.splice(userIndex, 1);
     }
+
     if (this.message.type === 'message') {
       this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
+    } else if (this.message.type === 'reply') {
+      this.saveReply(this.collPath);
     }
-    if (this.message.type === 'reply') {
-      this.saveReply(this.collPath)
-    }
   }
 
-
-  canDeleteReaction(reacOfUserExists: number, reactionExists: Reaction | undefined, reaction: Reaction) {
-    return reacOfUserExists !== -1 && reactionExists && reactionExists.users.includes(reaction.users[0]) && reactionExists.users.length === 1;
+  canDeleteReaction(index: number, reaction: Reaction | undefined) {
+    return index !== -1 && reaction?.users.length === 1;
   }
 
-  canAddNewReaction(reacOfUserExists: number, reactionExists: Reaction | undefined) {
-    return reacOfUserExists === -1 && !reactionExists;
+  canAddNewReaction(index: number, reaction: Reaction | undefined) {
+    return index === -1 && !reaction;
   }
 
-  canAddUserToReaction(reactionExists: Reaction | undefined, reaction: Reaction) {
-    return reactionExists && !reactionExists.users.includes(reaction.users[0]);
+  canAddUserToReaction(reaction: Reaction | undefined) {
+    return reaction && !reaction.users.includes(this.currentUserName);
   }
 
-  canDeleteUserFromReaction(reactionExists: Reaction | undefined, reaction: Reaction) {
-    return reactionExists && reactionExists.users.includes(reaction.users[0]);
+  canRemoveUserFromReaction(reaction: Reaction | undefined) {
+    return reaction && reaction.users.includes(this.currentUserName);
   }
 
-  createReactionObject(emoji: string, user: string) {
-    let reaction: Reaction;
-    return reaction = {
+  createReactionObject(emoji: string) {
+    return {
       reactionEmoji: emoji,
-      users: [user]
+      users: [this.currentUserName]
     };
   }
 
@@ -179,6 +181,8 @@ export class MessageComponent {
     this.threadService.updateReply(path, this.message);
   }
 
-  deleteReply() { }
+  deleteReply(path: string) {
+    this.firebaseUtils.deleteCollection(path, this.message.replyId)
+  }
 
 }

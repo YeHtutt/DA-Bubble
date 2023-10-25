@@ -5,7 +5,7 @@ export class Reply {
     user: User;
     replyId: string = '';
     textEdited: boolean = false;
-    type: string = '';
+    type: string = 'reply';
     reactions: any[] = [];
 
     constructor(obj?: any) {

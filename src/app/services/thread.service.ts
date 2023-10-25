@@ -52,7 +52,7 @@ export class ThreadService {
   }
 
 
-  deleteReply() { }
+  deleteReply(path: string) { }
 
   /*  
   ref `${coll}/${docId}/message/${messageId}/thread`

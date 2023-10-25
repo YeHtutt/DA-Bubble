@@ -86,8 +86,8 @@ export class FirebaseUtilsService {
   }
 
 
-  async deleteCollection(colId: string, docId: string) {
-    await deleteDoc(this.getSingleDocRef(colId, docId))
+  async deleteCollection(path: string, docId: string) {
+    await deleteDoc(this.getSingleDocRef(path, docId))
       .catch((err) => { console.log(err) })
   }
 
