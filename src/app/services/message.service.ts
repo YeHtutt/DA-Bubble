@@ -175,18 +175,6 @@ export class MessageService {
   }
 
 
-  // async addMessageToCollection(coll: string, docId: string, message: {}) {
-  //   // Get reference to the sub-collection inside the specified document
-  //   let ref = collection(doc(this.firestore, coll, docId), 'message');
-  //   // Add the new message to the sub-collection
-  //   await addDoc(ref, message)
-  //     .catch((err) => { console.log(err) })
-  //     .then((docRef: any) => {
-  //       console.log("Message written with ID", docRef?.id)
-  //       updateDoc(docRef, { messageId: docRef.id });
-  //     });
-  // }
-
   // DELETE MESSAGE //
 
   async deleteMessageDoc(coll: any, docId: any, msgId: string) {
@@ -195,13 +183,6 @@ export class MessageService {
   }
 
   // REACTIONS TO MESSAGES //
-
-  // async getMessageReactions(coll: any, docId: any, msgId: string) {
-  //   const msgRef = await this.getMsgDocRef(coll, docId, msgId);
-  //   const msg = await getDoc(msgRef);
-  //   const msgObj = msg.data()
-  //   return new Message(msgObj);
-  // }
 
 
   async updateReaction(coll: any, docId: any, msgId: string, reaction: any) {

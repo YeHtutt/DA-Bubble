@@ -40,7 +40,9 @@ export class ChannelChatComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
-  @ViewChild('chatWindow') chatWindow: ElementRef | any;
+  scrollElement: any;
+  @ViewChild('scroller', {static: false}) scroller?: ElementRef;
+  
 
 
   constructor(
@@ -69,14 +71,23 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
+    
   }
 
   ngOnDestroy() {
     this.channelService.unsubChannel();
   }
 
-  ngAfterViewInit() {
-    this.chatWindow.scrollTop = this.chatWindow.scrollHeight;
+
+  getAllMessages() {
+    this.scrollToBottom();
+    return this.messageService.messages
+  }
+
+  scrollToBottom() {
+    if(this.scroller) {
+      this.scroller.nativeElement.scrollIntoView(); 
+    }
   }
 
 
@@ -136,11 +147,6 @@ export class ChannelChatComponent {
 
   getCreatorId() {
     return this.userService.getFromLocalStorage();
-  }
-
-
-  getAllMessages() {
-    return this.messageService.messages
   }
 
   async openTagMenu() {

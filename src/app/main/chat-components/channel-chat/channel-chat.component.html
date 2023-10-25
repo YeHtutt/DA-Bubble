@@ -18,8 +18,9 @@
                 </div>
             </div>
         </header>
-        <main #chatWindow>
+        <main id="scroller">
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
+            <div #scroller></div>
         </main>
 
         <div class="input_message_container">

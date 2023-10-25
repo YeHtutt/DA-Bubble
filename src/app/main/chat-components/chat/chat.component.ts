@@ -25,6 +25,7 @@ export class ChatComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
+  @ViewChild('scroller', {static: false}) scroller?: ElementRef;
 
 
   constructor(
@@ -51,8 +52,15 @@ export class ChatComponent {
     });
   }
 
+  scrollToBottom() {
+    if(this.scroller) {
+      this.scroller.nativeElement.scrollIntoView(); 
+    }
+  }
+
   getAllMessages() {
     if (this.messageService.messages.length > 0) this.chatExists = true;
+    this.scrollToBottom();
     return this.messageService.messages
   }
 
