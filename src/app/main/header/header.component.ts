@@ -56,6 +56,7 @@ export class HeaderComponent implements OnInit {
       height: '623px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
     });
   }
 
@@ -101,6 +102,7 @@ export class HeaderComponent implements OnInit {
       height: '727px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
       data: {
         id: userId,
         name: userName,

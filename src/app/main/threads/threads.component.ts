@@ -54,9 +54,6 @@ export class ThreadsComponent {
     );
   }
 
-
-
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -110,7 +107,7 @@ export class ThreadsComponent {
   }
 
 
-  sendReplyTo(origin: string) {
+  sendReplyTo() {
     this.threadService.addReplyToCollection(this.collPath, this.createReplyObject().toJSON())
   }
 

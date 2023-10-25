@@ -32,6 +32,7 @@ export class UserProfileViewComponent implements OnInit {
       height: '716px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe(result => {

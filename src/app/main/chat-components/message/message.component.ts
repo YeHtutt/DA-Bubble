@@ -43,7 +43,7 @@ export class MessageComponent {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
-  
+
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
@@ -177,7 +177,7 @@ export class MessageComponent {
 
   saveReply(path: any) {
     this.message.text = this.editMessage || '';
-    this.threadService.updateReply(path, this.message);
+    this.threadService.updateDoc(path, this.message, 'replyId');
   }
 
   deleteReply(path: string) {

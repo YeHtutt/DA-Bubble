@@ -63,10 +63,12 @@
         </div>
     </div>
     <div>
-        <button mat-fab extended color="warn" (click)="deleteChannel()">
+        <button mat-fab extended color="warn" (click)="deleteChannel()"
+            [disabled]="channel.creator.id !== currentUserId">
             Channel löschen
         </button>
-        <button mat-fab extended color="primary" (click)="leaveChannel()">
+
+        <button mat-fab extended color="primary" (click)="leaveChannel()" [disabled]="">
             Channel verlassen
         </button>
     </div>

@@ -41,6 +41,7 @@ export class ChannelsComponent {
       height: '514px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
     });
   }
 

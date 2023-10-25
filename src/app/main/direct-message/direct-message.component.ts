@@ -47,7 +47,7 @@ export class DirectMessageComponent {
       height: '514px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
-
+      autoFocus: false,
     });
   }
 
@@ -57,7 +57,7 @@ export class DirectMessageComponent {
         this.messageTreeService.treeControl.expandAll();
       }
     });
-    this.subscriptions.push(sub);  
+    this.subscriptions.push(sub);
   }
 
   async selectReceiver(receiverId: any) {

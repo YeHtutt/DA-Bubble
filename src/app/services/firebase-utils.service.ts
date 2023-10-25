@@ -92,6 +92,12 @@ export class FirebaseUtilsService {
   }
 
 
+  async updateCollection(path: string, docId: string) {
+    await deleteDoc(this.getSingleDocRef(path, docId))
+      .catch((err) => { console.log(err) })
+  }
+
+
   async chatExists(user1: string, user2: string): Promise<boolean> {
     const chatCollection = collection(this.firestore, 'chat');
 

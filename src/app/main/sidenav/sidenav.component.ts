@@ -52,6 +52,7 @@ export class SidenavComponent {
       height: '727px',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
+      autoFocus: false,
       data: {
         id: userId,
         name: userName,

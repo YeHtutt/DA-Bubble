@@ -55,12 +55,9 @@ export class ChannelMenuComponent {
 
   leaveChannel() {
     if (this.channel.channelName !== 'allgemein') {
-
     }
     if (this.channel.creator.id === this.currentUserId) {
-
     }
-
   }
 
   toggleDescriptionInput() {

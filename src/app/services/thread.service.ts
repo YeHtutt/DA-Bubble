@@ -52,8 +52,6 @@ export class ThreadService {
   }
 
 
-  deleteReply(path: string) { }
-
   /*  
   ref `${coll}/${docId}/message/${messageId}/thread`
   */
@@ -78,6 +76,17 @@ export class ThreadService {
       await updateDoc(docRef, reply.toJSON())
     } else {
       console.error("Channel ID is missing");
+    }
+  }
+
+
+  async updateDoc(path: string, doc: any, idField: string) {
+    if (doc[idField]) {
+      console.log(path, doc);
+      let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
+      await updateDoc(docRef, doc.toJSON());
+    } else {
+      console.error("ID is missing");
     }
   }
 }
