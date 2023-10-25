@@ -23,34 +23,36 @@ export class ChannelUsersDialogComponent {
   channel = this.data.channel;
   selectedOption: string | undefined;
   inputOpened = false;
-  public search: string = '';
-  searchOutput: boolean = false;
   text: string = '';
-  showTagMenu: boolean = false;
-  addedUsers: UserProfile[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   userCtrl = new FormControl('');
   filteredUsers: Observable<any[]>;
   allUsers: any = [];
   users: any[] = [];
+  addedUsers: UserProfile[] = [];
   isKnownUser: boolean = false;
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
-
+  currentUserId: string | null = '';
+  channelCreator = this.channel.creator
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private usersService: UsersFirebaseService,
+    private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
     private dialogRef: MatDialogRef<ChannelUsersDialogComponent>,
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef,
     private notification: NotificationService,
+
   ) {
 
 
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
-      map((user: string | null) => (user ? this._filter(user) : this.allUsers.slice())),
+      map((user: string | null) => {
+        let usersToShow = this.allUsers.filter((u: any) => u.id !== this.channelCreator.id);
+        return user ? this._filter(user) : usersToShow;
+      }),
     );
 
   }
@@ -66,7 +68,7 @@ export class ChannelUsersDialogComponent {
 
 
   async getAllUsers() {
-    this.allUsers = await this.usersService.getUsers();
+    this.allUsers = await this.userService.getUsers();
   }
 
 
@@ -75,7 +77,7 @@ export class ChannelUsersDialogComponent {
       while (this.users.length > 0) {
         this.remove(this.users[0].name);
       }
-         this.isKnownUser = true;
+      this.isKnownUser = true;
     } else {
       this.isKnownUser = false;
     }
@@ -106,6 +108,7 @@ export class ChannelUsersDialogComponent {
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
+      this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.channel.usersData.push(userObject);
     });
   }
