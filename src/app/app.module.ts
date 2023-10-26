@@ -32,6 +32,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { MatChipsModule } from '@angular/material/chips';
 
+/* FireStorage */
+import { getStorage, provideStorage } from '@angular/fire/storage';
+
 
 /* Components */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -67,8 +70,6 @@ import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
-
-
 
 
 
@@ -116,6 +117,7 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -136,7 +138,8 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     MatSnackBarModule,
     MatRadioModule,
     MatChipsModule,
-    PickerModule,
+    PickerModule
+    
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },

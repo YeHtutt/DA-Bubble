@@ -70,7 +70,7 @@ export class MessageComponent {
   }
 
   saveMessage(msgId: string) {
-    this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
+    this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage, {});
   }
 
   cancelEdit() {

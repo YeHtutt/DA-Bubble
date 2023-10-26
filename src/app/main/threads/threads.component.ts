@@ -105,7 +105,8 @@ export class ThreadsComponent {
       textEdited: false,
       type: 'reply',
       origin: '',
-      reactions: []
+      reactions: [],
+      fileUpload: []
     });
   }
 

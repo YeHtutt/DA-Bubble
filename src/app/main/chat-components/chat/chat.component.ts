@@ -96,7 +96,8 @@ export class ChatComponent {
       user: this.currentUser.toJSON(),
       textEdited: false,
       type: 'message',
-      reactions: []
+      reactions: [],
+      fileUpload: []
     });
   }
 

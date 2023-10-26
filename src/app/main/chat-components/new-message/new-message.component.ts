@@ -71,7 +71,8 @@ export class NewMessageComponent {
       user: this.currentUser.toJSON(),
       textEdited: false,
       type: 'message',
-      reactions: []
+      reactions: [],
+      fileUpload: []
     });
   }
 

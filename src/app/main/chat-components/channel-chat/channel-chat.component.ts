@@ -18,6 +18,8 @@ import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { ChannelService } from 'src/app/services/channel.service';
+import { FileStorageService } from 'src/app/services/file-storage.service';
+import { FileUpload } from 'src/app/models/file-upload';
 
 
 
@@ -54,7 +56,8 @@ export class ChannelChatComponent {
     private searchService: SearchService,
     private messageService: MessageService,
     private channelService: ChannelService,
-    public threadService: ThreadService) {
+    public threadService: ThreadService,
+    private fileService: FileStorageService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -137,7 +140,8 @@ export class ChannelChatComponent {
       messageId: '',
       textEdited: false,
       type: 'message',
-      reactions: []
+      reactions: [],
+      fileUpload: []
     });
   }
 
@@ -170,6 +174,14 @@ export class ChannelChatComponent {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
+  }
+
+  // Upload File
+
+  onUpload(event: any) {
+    const file = new FileUpload(event.target.files[0]);
+    const fileUploaded = this.fileService.uploadFile(file)
+    console.log(fileUploaded)
   }
 
 }

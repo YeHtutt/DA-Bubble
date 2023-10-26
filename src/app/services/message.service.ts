@@ -6,6 +6,7 @@ import { Channel } from '../models/channel';
 import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
+import { FileUpload } from '../models/file-upload';
 
 
 
@@ -169,9 +170,10 @@ export class MessageService {
   // UPDATE MESSAGE //
 
   // updates message document with new text
-  async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string) {
+  async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string, file: {}) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
-    updateDoc(msgRef, { text: editedMsg, textEdited: true });
+    if(editedMsg) updateDoc(msgRef, { text: editedMsg, textEdited: true });
+    if(file) updateDoc(msgRef, { fileUpload: file});
   }
 
 

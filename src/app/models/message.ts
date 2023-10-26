@@ -9,6 +9,7 @@ export class Message {
     textEdited: false;
     type = '';
     reactions: [];
+    fileUpload: [];
 
     constructor(obj?: any) {
         this.origin = obj ? obj.origin : '';
@@ -19,6 +20,7 @@ export class Message {
         this.textEdited = obj ? obj.textEdited : false;
         this.type = obj ? obj.type : '';
         this.reactions = obj ? obj.reactions : [];
+        this.fileUpload = obj ? obj.fileUpload : [];
     }
 
     public toJSON() {
@@ -30,7 +32,8 @@ export class Message {
             messageId: this.messageId,
             textEdited: this.textEdited,
             type: this.type,
-            reactions: this.reactions
+            reactions: this.reactions,
+            fileUpload: this.fileUpload
         };
     }
 
@@ -44,7 +47,8 @@ export class Message {
             messageId: json.messageId,
             textEdited: json.textEdited,
             type: json.type,
-            reactions: json.reactions
+            reactions: json.reactions,
+            fileUpload: json.fileUpload
         });
     }
 }
