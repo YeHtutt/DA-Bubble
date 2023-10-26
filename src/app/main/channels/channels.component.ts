@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+
 
 @Component({
   selector: 'app-channels',
@@ -13,18 +15,29 @@ import { MessageService } from 'src/app/services/message.service';
 export class ChannelsComponent {
 
   private subscriptions: Subscription[] = [];
+  currentUserId: string | null = '';
 
   constructor(
     public dialog: MatDialog,
     public channelService: ChannelService,
-    public messageService: MessageService
-  ) { }
+    public messageService: MessageService,
+    private userService: UsersFirebaseService
+  ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   ngOnInit() {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.treeControl.expandAll();
     });
     this.subscriptions.push(sub);
+  }
+
+
+  userExistsInChannel(node: any) {
+/* 
+    return node.usersData?.some((user: any) => {
+      user.id === this.currentUserId
+
+    }) ?? false; */
   }
 
 
