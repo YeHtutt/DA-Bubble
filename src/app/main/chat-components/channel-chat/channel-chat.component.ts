@@ -42,6 +42,7 @@ export class ChannelChatComponent {
   isOpened: boolean = false;
   scrollElement: any;
   @ViewChild('scroller', {static: false}) scroller?: ElementRef;
+  messageCount: any;
   
 
 
@@ -71,7 +72,6 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
-    
   }
 
   ngOnDestroy() {

@@ -115,7 +115,7 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateX(-100px);
+        transform: translateX(-50px);
     }
 
     to {
@@ -127,7 +127,7 @@
 @keyframes fadeInReverse {
     from {
         opacity: 0;
-        transform: translateX(100px);
+        transform: translateX(50px);
     }
 
     to {
@@ -143,11 +143,11 @@
 
     button {
         position: absolute;
-        right: -16px;
-        bottom: -35px;
+        right: -125px;
+        bottom: -10px;
         width: max-content;
         border: 1px solid #ADB0D9;
-        border-radius: 25px 0 25px 25px;
+        border-radius: 0 25px 25px 25px;
         padding: 5px;
         background-color: white;
 
@@ -158,7 +158,7 @@
     }
 
     .deleteMsgBtn {
-        bottom: -66px;
+        bottom: -40px;
         background-color: rgb(236, 101, 101);
 
         &:hover {
@@ -281,6 +281,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
+    mat-icon {
+        cursor: pointer;
+        border-radius: 100%;
+
+        &:hover {
+            background-color: white;
+            color: #797EF3;
+        }
+    }
 }
 
 .reaction_btn {
@@ -333,6 +343,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    z-index: 3;
+    line-height: 0px;
 
     &:hover {
         background-color: #EDEEFE;

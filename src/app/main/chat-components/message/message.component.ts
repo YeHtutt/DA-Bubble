@@ -1,10 +1,9 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { Observable } from 'rxjs';
 
 interface Reaction {
   reactionEmoji: string,
