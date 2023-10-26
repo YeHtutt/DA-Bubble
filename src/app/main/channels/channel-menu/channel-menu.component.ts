@@ -6,6 +6,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { UserProfile } from 'src/app/models/user-profile';
+
 
 @Component({
   selector: 'app-channel-menu',
@@ -54,12 +56,10 @@ export class ChannelMenuComponent {
   }
 
   leaveChannel() {
-    if (this.channel.channelName !== 'allgemein') {
+    if (this.channel.channelName === 'allgemein') {
       this.notificationService.showError('Der allgemeine Channel kann nicht verlassen werden.')
     }
-    if (this.channel.creator.id === this.currentUserId) {
-
-    }
+    console.log(this.channel.creator.id + this.currentUserId)
     if (this.channel.creator.id !== this.currentUserId) {
       this.notificationService.showConfirmation(
         'Bist du sicher, dass du diesen Channel verlassen möchtest?',
@@ -68,7 +68,15 @@ export class ChannelMenuComponent {
     }
   }
 
-  leaveTheChannel() { console.log(this.currentUserId)  }
+  async leaveTheChannel() {
+    // Wait for the promise to resolve before casting
+    let currentUser = await this.userService.getUser(this.currentUserId);
+    let creator = (currentUser as UserProfile).toJSON();
+console.log(this.channel.usersData)
+
+  }
+
+
   closeSnackbar() { }
 
   toggleDescriptionInput() {

@@ -143,7 +143,7 @@ export class MessageComponent {
     if (this.message.type === 'message') {
       this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
     } else if (this.message.type === 'reply') {
-      this.saveReply(this.collPath);
+      this.saveReaction(this.collPath);
     }
   }
 
@@ -180,6 +180,10 @@ export class MessageComponent {
 
   saveReply(path: any) {
     this.message.text = this.editMessage || '';
+    this.threadService.updateDoc(path, this.message, 'messageId');
+  }
+
+  saveReaction(path: any) {
     this.threadService.updateDoc(path, this.message, 'messageId');
   }
 

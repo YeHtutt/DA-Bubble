@@ -1,7 +1,8 @@
 <div class="channels-section">
-  <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
+  <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl" 
+>
      <mat-tree-node class="child-node" *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
-      <button mat-flat-button class="child-node-btn" [routerLink]="['channel/' + node.channelId]">
+      <button mat-flat-button class="child-node-btn" [routerLink]="['channel/' + node.channelId]" >
         <mat-icon class="tag">tag</mat-icon>
         <div>{{node.channelName}}</div>
       </button>

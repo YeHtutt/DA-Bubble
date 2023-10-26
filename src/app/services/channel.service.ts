@@ -4,6 +4,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { FirebaseUtilsService } from './firebase-utils.service';
+import { UsersFirebaseService } from './users-firebase.service';
 
 import {
   Firestore, collection,
@@ -38,7 +39,9 @@ export class ChannelService {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(private firebaseUtils: FirebaseUtilsService,) {
+  constructor(
+    private firebaseUtils: FirebaseUtilsService,
+    private userService: UsersFirebaseService) {
     this.unsubChannelTree = this.subChannelList();
 
   }
@@ -111,7 +114,7 @@ export class ChannelService {
         console.log('Document does not exist!');
       }
     });
-}
+  }
 
 
 
