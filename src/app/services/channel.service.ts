@@ -95,14 +95,13 @@ export class ChannelService {
 
 
   subChannelList() {
-    let weitereChannels: ChannelsNode[] = [];
 
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
       this.channelTree = [];
+      let weitereChannels: ChannelsNode[] = [];
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
         const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
-
         if (containsCurrentUser) {
           this.channelTree.push(channelObj);
         } else {
@@ -110,24 +109,15 @@ export class ChannelService {
         }
       });
       this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
-
-      const mainTree: ChannelsNode[] = [
-        {
-          channelName: 'Channel',
-          channelId: 'channel-id',  // Give this a unique ID, or adjust as needed
-          children: this.channelTree
-        }
-      ];
-
-      if (weitereChannels.length && mainTree[0].children !== undefined) {
-        mainTree[0].children.push({
+      if (weitereChannels.length) {
+        this.channelTree.push({
           channelName: 'Weitere',
-          channelId: 'weitere-id',  // Optional, added an id for the Weitere node. Adjust as needed.
-          children: weitereChannels
+          children: weitereChannels,
+          channelId: 'weitere-id'
         });
       }
-
-      this.dataSource.data = mainTree;
+      this.themes = [{ channelName: 'Channel', children: this.channelTree }];
+      this.dataSource.data = this.themes;
       this.dataLoaded.next(true);  // Emit event when data is loaded
     });
   }

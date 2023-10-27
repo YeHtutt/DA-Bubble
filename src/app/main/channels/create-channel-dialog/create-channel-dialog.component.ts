@@ -46,7 +46,9 @@ export class CreateChannelDialogComponent {
       creationTime: this.firebaseUtils.getDateTime(),
       creator: creator,
       usersData: [],
+      
     };
+    
     this.openAddUserlDialog();
   }
 

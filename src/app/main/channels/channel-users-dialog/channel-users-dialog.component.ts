@@ -94,7 +94,8 @@ export class ChannelUsersDialogComponent {
       this.pushCertainUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     }
-    this.notification.showSuccess('Channel has been added')
+    this.notification.showSuccess('Channel has been added');
+
   }
 
 
