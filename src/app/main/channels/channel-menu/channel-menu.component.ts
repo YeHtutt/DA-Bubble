@@ -72,7 +72,7 @@ export class ChannelMenuComponent {
     // Wait for the promise to resolve before casting
     let currentUser = await this.userService.getUser(this.currentUserId);
     let creator = (currentUser as UserProfile).toJSON();
-console.log(this.channel.usersData)
+    console.log(this.channel.usersData)
 
   }
 

@@ -1,14 +1,13 @@
 <div class="channels-section">
-  <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl" 
->
-     <mat-tree-node class="child-node" *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
-      <button mat-flat-button class="child-node-btn" [routerLink]="['channel/' + node.channelId]" >
-        <mat-icon class="tag">tag</mat-icon>
+  <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
+    <mat-tree-node class="child-node" *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
+      <button mat-flat-button class="child-node-btn" [routerLink]="['channel/' + node.channelId]">
+        <mat-icon class="tag" >tag</mat-icon>
         <div>{{node.channelName}}</div>
       </button>
     </mat-tree-node>
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
-      <div class="main-node">
+      <div class="main-node" *ngIf="node.channelName === 'Channel'">
         <div class="channel-headline">
           <div class="channel-head" (click)="toggleExpanded(node)">
             <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
@@ -21,6 +20,19 @@
             <h3>{{node.channelName}}</h3>
           </div>
           <mat-icon mat-mini-fab color="primary" mat-raised-button (click)="openCreateChannelDialog()">add</mat-icon>
+        </div>
+      </div>
+      <div class="main-node" *ngIf="node.channelName === 'Weitere'">
+        <div class="channel-headline">
+          <div class="channel-head" (click)="toggleExpanded(node)">
+            <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
+              [attr.aria-label]="'Toggle ' + node.channelName">
+              <mat-icon class="main-icon">
+                {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+              </mat-icon>
+            </button>
+            <div>{{node.channelName}}</div>
+          </div>
         </div>
       </div>
     </mat-tree-node>

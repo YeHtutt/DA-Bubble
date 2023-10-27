@@ -5,6 +5,8 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { BehaviorSubject } from 'rxjs';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { UsersFirebaseService } from './users-firebase.service';
+import { NotificationService } from './notification.service';
+
 
 import {
   Firestore, collection,
@@ -41,9 +43,9 @@ export class ChannelService {
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
-    private userService: UsersFirebaseService) {
+    private userService: UsersFirebaseService,
+    private notificationService: NotificationService) {
     this.unsubChannelTree = this.subChannelList();
-
   }
 
   channelContent: Channel[] = [];
@@ -53,7 +55,7 @@ export class ChannelService {
   unsubChannelTree: any;
   unsubMessage: any;
   unsubChannelContent: any;
-
+  currentUserId = this.userService.getFromLocalStorage()
 
   ngOnDestroy() {
     this.unsubChannelTree();
@@ -65,8 +67,9 @@ export class ChannelService {
 
 
   private _transformer = (node: ChannelsNode, level: number) => {
+    const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
-      expandable: !!node.children && node.children.length > 0,
+      expandable: isExpandable,
       channelName: node.channelName,
       channelId: node.channelId,
       level: level,
@@ -92,18 +95,44 @@ export class ChannelService {
 
 
   subChannelList() {
+    let weitereChannels: ChannelsNode[] = [];
+
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
       this.channelTree = [];
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
-        this.channelTree.push(channelObj);
+        const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
+
+        if (containsCurrentUser) {
+          this.channelTree.push(channelObj);
+        } else {
+          weitereChannels.push(channelObj);
+        }
       });
       this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
-      this.themes = [{ channelName: 'Channel', children: this.channelTree }];
-      this.dataSource.data = this.themes;
+
+      const mainTree: ChannelsNode[] = [
+        {
+          channelName: 'Channel',
+          channelId: 'channel-id',  // Give this a unique ID, or adjust as needed
+          children: this.channelTree
+        }
+      ];
+
+      if (weitereChannels.length && mainTree[0].children !== undefined) {
+        mainTree[0].children.push({
+          channelName: 'Weitere',
+          channelId: 'weitere-id',  // Optional, added an id for the Weitere node. Adjust as needed.
+          children: weitereChannels
+        });
+      }
+
+      this.dataSource.data = mainTree;
       this.dataLoaded.next(true);  // Emit event when data is loaded
     });
   }
+
+
 
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
     const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
@@ -129,7 +158,7 @@ export class ChannelService {
   }
 
 
-  setChannelObj(obj: any, docId: string): ChannelsNode {
+  setChannelObj(obj: any, docId: string): any {
     return new Channel({
       channelId: docId,
       channelName: obj.channelName,

@@ -27,18 +27,14 @@ export class ChannelsComponent {
   ngOnInit() {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.treeControl.expandAll();
+      console.log(this.channelService.channelTree)
     });
     this.subscriptions.push(sub);
   }
 
 
-  userExistsInChannel(node: any) {
-/* 
-    return node.usersData?.some((user: any) => {
-      user.id === this.currentUserId
-
-    }) ?? false; */
-  }
+  /*   if (!this.channelTree.includes(channelObj.channelName)) {
+      this.notificationService.showError('Ein Channel mit diesem Namen existiert bereits'); */
 
 
   ngOnDestroy() {
