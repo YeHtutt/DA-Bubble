@@ -122,6 +122,14 @@ export class ChannelService {
     });
   }
 
+  expandChannels() {
+    const firstNode = this.treeControl.dataNodes[0];
+    if (firstNode) {
+      this.treeControl.expand(firstNode);
+    }
+  }
+
+
 
 
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
