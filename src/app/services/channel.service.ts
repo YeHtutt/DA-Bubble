@@ -95,32 +95,48 @@ export class ChannelService {
 
 
   subChannelList() {
-
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
-      this.channelTree = [];
-      let weitereChannels: ChannelsNode[] = [];
-      list.forEach((element: any) => {
+        this.initializeChannelTree();
+        this.populateChannelsAndMore(list);
+        this.updateDataSource();
+        this.dataLoaded.next(true);
+    });
+}
+
+initializeChannelTree() {
+    this.channelTree = [];
+}
+
+populateChannelsAndMore(list: any) {
+    let weitereChannels: ChannelsNode[] = [];
+    list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
         const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
-        if (containsCurrentUser) {
-          this.channelTree.push(channelObj);
-        } else {
-          weitereChannels.push(channelObj);
-        }
-      });
-      this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
-      if (weitereChannels.length) {
-        this.channelTree.push({
-          channelName: 'Weitere',
-          children: weitereChannels,
-          channelId: 'weitere-id'
-        });
-      }
-      this.themes = [{ channelName: 'Channel', children: this.channelTree }];
-      this.dataSource.data = this.themes;
-      this.dataLoaded.next(true);  // Emit event when data is loaded
+        if (containsCurrentUser) this.channelTree.push(channelObj);
+        else weitereChannels.push(channelObj);
     });
-  }
+    this.sortChannelTree();
+    this.appendMoreChannels(weitereChannels);
+}
+
+sortChannelTree() {
+    this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
+}
+
+appendMoreChannels(moreChannels: ChannelsNode[]) {
+    if (moreChannels.length) {
+        this.channelTree.push({
+            channelName: 'Weitere',
+            children: moreChannels,
+            channelId: 'weitere-id'
+        });
+    }
+}
+
+updateDataSource() {
+    this.themes = [{ channelName: 'Channel', children: this.channelTree }];
+    this.dataSource.data = this.themes;
+}
 
   expandChannels() {
     const firstNode = this.treeControl.dataNodes[0];
