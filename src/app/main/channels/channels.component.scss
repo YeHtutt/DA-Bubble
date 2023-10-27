@@ -44,6 +44,7 @@
     display: flex;
     justify-content: flex-start;
     border-radius: 30px;
+
     &:hover {
         cursor: pointer;
         background-color: #ECEEFE;
@@ -129,4 +130,21 @@
 
 .each-channel {
     font-family: Nunito;
+}
+
+
+.node[data-parent="Channel"] .tag {
+    display: inline-block;
+}
+
+.node[data-parent="Channel"] .lock {
+    display: none;
+}
+
+.node[data-parent="Weitere"] .tag {
+    display: none;
+}
+
+.node[data-parent="Weitere"] .lock {
+    display: inline-block;
 }

@@ -27,9 +27,9 @@ export class ChannelsComponent {
   ngOnInit() {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.expandChannels();
-      console.log(this.channelService.channelTree)
     });
     this.subscriptions.push(sub);
+    
   }
 
 

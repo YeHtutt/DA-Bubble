@@ -1,9 +1,10 @@
 <div class="channels-section">
   <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
-    <mat-tree-node class="child-node" *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px">
+    <mat-tree-node class="child-node" *matTreeNodeDef="let node; let level = level" matTreeNodePaddingIndent="0px">
       <button mat-flat-button class="child-node-btn" [routerLink]="['channel/' + node.channelId]">
-        <mat-icon class="tag" >tag</mat-icon>
         <div>{{node.channelName}}</div>
+        <mat-icon *ngIf="level == 1">tag</mat-icon>
+        <mat-icon *ngIf="level == 2">lock</mat-icon>
       </button>
     </mat-tree-node>
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
@@ -22,11 +23,11 @@
           <mat-icon mat-mini-fab color="primary" mat-raised-button (click)="openCreateChannelDialog()">add</mat-icon>
         </div>
       </div>
-      <div class="main-node" *ngIf="node.channelName === 'Weitere'">
+      <div class="main-node others" *ngIf="node.channelName === 'Weitere'"
+        [ngClass]="{'others-node': node.channelName === 'Weitere'}">
         <div class="channel-headline">
           <div class="channel-head" (click)="toggleExpanded(node)">
-            <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
-              [attr.aria-label]="'Toggle ' + node.channelName">
+            <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle>
               <mat-icon class="main-icon">
                 {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
               </mat-icon>

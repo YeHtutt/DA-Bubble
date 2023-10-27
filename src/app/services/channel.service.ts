@@ -88,6 +88,8 @@ export class ChannelService {
     node => node.children,
   );
 
+
+  
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -96,47 +98,48 @@ export class ChannelService {
 
   subChannelList() {
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
-        this.initializeChannelTree();
-        this.populateChannelsAndMore(list);
-        this.updateDataSource();
-        this.dataLoaded.next(true);
+      this.initializeChannelTree();
+      this.populateChannelsAndMore(list);
+      this.updateDataSource();
+      this.dataLoaded.next(true);
     });
-}
+  }
 
-initializeChannelTree() {
+  initializeChannelTree() {
     this.channelTree = [];
-}
+  }
 
-populateChannelsAndMore(list: any) {
+
+  populateChannelsAndMore(list: any) {
     let weitereChannels: ChannelsNode[] = [];
     list.forEach((element: any) => {
-        const channelObj = this.setChannelObj(element.data(), element.id);
-        const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
-        if (containsCurrentUser) this.channelTree.push(channelObj);
-        else weitereChannels.push(channelObj);
+      const channelObj = this.setChannelObj(element.data(), element.id);
+      const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
+      if (containsCurrentUser) this.channelTree.push(channelObj);
+      else weitereChannels.push(channelObj);
     });
     this.sortChannelTree();
     this.appendMoreChannels(weitereChannels);
-}
+  }
 
-sortChannelTree() {
+  sortChannelTree() {
     this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
-}
+  }
 
-appendMoreChannels(moreChannels: ChannelsNode[]) {
+  appendMoreChannels(moreChannels: ChannelsNode[]) {
     if (moreChannels.length) {
-        this.channelTree.push({
-            channelName: 'Weitere',
-            children: moreChannels,
-            channelId: 'weitere-id'
-        });
+      this.channelTree.push({
+        channelName: 'Weitere',
+        children: moreChannels,
+        channelId: 'weitere-id'
+      });
     }
-}
+  }
 
-updateDataSource() {
+  updateDataSource() {
     this.themes = [{ channelName: 'Channel', children: this.channelTree }];
     this.dataSource.data = this.themes;
-}
+  }
 
   expandChannels() {
     const firstNode = this.treeControl.dataNodes[0];
@@ -145,7 +148,17 @@ updateDataSource() {
     }
   }
 
+  processNodes(nodes: any[], parentName: string = ''): void {
+    nodes.forEach(node => {
+      if (parentName) {
+        node.parentName = parentName;
+      }
 
+      if (node.children) {
+        this.processNodes(node.children, node.channelName);
+      }
+    });
+  }
 
 
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
