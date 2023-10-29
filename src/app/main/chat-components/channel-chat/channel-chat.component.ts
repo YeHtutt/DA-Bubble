@@ -20,6 +20,7 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { FileUpload } from 'src/app/models/file-upload';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 
@@ -43,9 +44,10 @@ export class ChannelChatComponent {
   showTagMenu: boolean = false;
   isOpened: boolean = false;
   scrollElement: any;
-  @ViewChild('scroller', {static: false}) scroller?: ElementRef;
+  @ViewChild('scroller', { static: false }) scroller?: ElementRef;
   messageCount: any;
-  
+  fileUpload?: FileUpload;
+
 
 
   constructor(
@@ -57,7 +59,8 @@ export class ChannelChatComponent {
     private messageService: MessageService,
     private channelService: ChannelService,
     public threadService: ThreadService,
-    private fileService: FileStorageService) {
+    private fileService: FileStorageService,
+    private notificationService: NotificationService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -88,8 +91,8 @@ export class ChannelChatComponent {
   }
 
   scrollToBottom() {
-    if(this.scroller) {
-      this.scroller.nativeElement.scrollIntoView(); 
+    if (this.scroller) {
+      this.scroller.nativeElement.scrollIntoView();
     }
   }
 
@@ -180,8 +183,11 @@ export class ChannelChatComponent {
 
   onUpload(event: any) {
     const file = new FileUpload(event.target.files[0]);
-    const fileUploaded = this.fileService.uploadFile(file)
-    console.log(fileUploaded)
+    if (file.file.size < 1500 * 1024 && file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+      this.fileService.uploadFile(file).then(file => this.fileUpload = file)
+    } else {
+      this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+    }
   }
 
 }
