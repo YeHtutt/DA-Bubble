@@ -11,6 +11,9 @@
             {{message.text}}
             <span *ngIf="message.textEdited" class="editedMsg">(bearbeitet)</span>
         </div>
+        <div *ngIf="message.fileUpload !== []" class="show_attachement">
+            <a href="{{message.fileUpload.url}}" target="_blank"><img *ngIf="message.fileUpload" src="{{message.fileUpload.url}}" style="max-width: 350px;"></a>
+        </div>
         <div *ngIf="message.reactions.length > 0" class="reactions_container">
             <mat-icon (click)="openInReaction()">add_reaction</mat-icon>
             <app-emoji-picker class="reaction_emoji_inside" *ngIf="isReactionOpened"

@@ -47,6 +47,7 @@ export class ChannelChatComponent {
   @ViewChild('scroller', { static: false }) scroller?: ElementRef;
   messageCount: any;
   fileUpload?: FileUpload;
+  fileType: string = '';
 
 
 
@@ -127,6 +128,7 @@ export class ChannelChatComponent {
       this.receiver = await this.channelService.getSingleChannel(docId)
       this.messageService.sendMessage(this.message, this.receiver, false, '');
       this.text = '';
+      this.fileUpload = undefined;
     });
     this.getAllMessages();
   }
@@ -144,7 +146,7 @@ export class ChannelChatComponent {
       textEdited: false,
       type: 'message',
       reactions: [],
-      fileUpload: []
+      fileUpload: this.fileUpload?.toJSON()
     });
   }
 
@@ -183,11 +185,28 @@ export class ChannelChatComponent {
 
   onUpload(event: any) {
     const file = new FileUpload(event.target.files[0]);
-    if (file.file.size < 1500 * 1024 && file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
-      this.fileService.uploadFile(file).then(file => this.fileUpload = file)
-    } else {
+    const maxSize = 1500 * 1024;
+    this.setFileType(file.file.type);
+    if (file.file.size > maxSize) {
       this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+      return;
+    } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+      this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
+      return;
+    } else {
+      this.fileService.uploadFile(file).then(file => this.fileUpload = file);
     }
+  }
+
+  setFileType(type: string) {
+    if(type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
+    if(type.includes('png')) this.fileType = 'assets/img/icons/png.png';
+    if(type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
+  }
+
+  onDelete(filePath: string) {
+    this.fileService.deleteFile(filePath);
+    this.fileUpload = undefined;
   }
 
 }

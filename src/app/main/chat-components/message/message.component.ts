@@ -29,6 +29,7 @@ export class MessageComponent {
   isOpened: boolean = false;
   isReactionInputOpened: boolean = false;
   isReactionOpened: boolean = false;
+  fileType: string = '/image\/(png|jpeg|jpg)|application\/pdf/)';
 
 
   constructor(
@@ -70,7 +71,7 @@ export class MessageComponent {
   }
 
   saveMessage(msgId: string) {
-    this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage, {});
+    this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
   }
 
   cancelEdit() {

@@ -170,10 +170,9 @@ export class MessageService {
   // UPDATE MESSAGE //
 
   // updates message document with new text
-  async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string, file: {}) {
+  async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
-    if(editedMsg) updateDoc(msgRef, { text: editedMsg, textEdited: true });
-    if(file) updateDoc(msgRef, { fileUpload: file});
+    updateDoc(msgRef, { text: editedMsg, textEdited: true });
   }
 
 

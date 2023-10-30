@@ -24,7 +24,7 @@ export class FileStorageService {
 
   async uploadFile(fileUpload: FileUpload): Promise<FileUpload> {
     try {
-      const filePath = `uploads/${new Date().getTime()}_${fileUpload.file.name}`;
+      const filePath = `uploads/${new Date().getTime()}_${fileUpload.file?.name}`;
       const fileRef = this.storage.ref(filePath);
       const uploadTask = this.storage.upload(filePath, fileUpload.file);
 

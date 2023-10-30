@@ -25,7 +25,6 @@
 
         <div class="input_message_container">
             <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"></textarea>
-            <img *ngIf="fileUpload" src="{{fileUpload.url}}" alt="">
             <div class="control_container">
                 <div class="chat_action_box">
                     <div class="file_upload_button">
@@ -38,6 +37,10 @@
                     <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
                     <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
+                    <div *ngIf="fileUpload" class="file_to_upload">
+                        <mat-icon (click)="onDelete(fileUpload.path)" class="delete_btn">close</mat-icon>
+                        <img style="height: 45px;" src="{{fileType}}" alt="">
+                    </div>
                     <div class="tagMenuOuterContainer">
                         <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
                             <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
@@ -47,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
+                <button [disabled]="text.length == 0 || fileUpload == undefined" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
                         class="send_btn">send</mat-icon></button>
             </div>
         </div>
