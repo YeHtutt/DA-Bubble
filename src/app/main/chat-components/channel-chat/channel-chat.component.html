@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="text.length == 0 || fileUpload == undefined" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
+                <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
                         class="send_btn">send</mat-icon></button>
             </div>
         </div>
