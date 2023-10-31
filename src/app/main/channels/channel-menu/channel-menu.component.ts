@@ -52,8 +52,11 @@ export class ChannelMenuComponent {
 
   closeCreateChannelDialog() {
     this.dialogRef.close();
-
   }
+
+/*   getAllChannels() {
+    this.channelService.getAllChannels();
+  } */
 
   leaveChannel() {
     if (this.channel.channelName === 'allgemein') {
@@ -68,12 +71,14 @@ export class ChannelMenuComponent {
     }
   }
 
+  
+
+
   async leaveTheChannel() {
     // Wait for the promise to resolve before casting
     let currentUser = await this.userService.getUser(this.currentUserId);
     let creator = (currentUser as UserProfile).toJSON();
     console.log(this.channel.usersData)
-
   }
 
 

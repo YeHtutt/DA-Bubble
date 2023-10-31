@@ -26,6 +26,7 @@ export class ThreadsComponent {
   allUsers: UserProfile[] = [];
   currentUser: UserProfile = new UserProfile;
   collPath = '';
+thread: any;
 
   constructor(
     private route: ActivatedRoute,

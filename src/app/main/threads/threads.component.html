@@ -22,7 +22,7 @@
             <div>Antworten</div>
             <mat-divider></mat-divider>
         </div>
-        <app-message *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
+        <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
         <div class="input-message-container">
             <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
             <div class="control-container">

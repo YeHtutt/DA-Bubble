@@ -114,6 +114,7 @@ export class MessageComponent {
 
 
   async updateMessageReactions(emoji: string, msgId: string) {
+
     this.getMessagePath();
     const reaction = this.createReactionObject(emoji);
     const existingReactions = this.message.reactions || [];
@@ -130,11 +131,11 @@ export class MessageComponent {
       const userIndex = existingReaction.users.indexOf(this.currentUserName);
       existingReaction?.users.splice(userIndex, 1);
     }
-
+    const updateObject = { reactions: existingReactions };
     if (this.message.type === 'message') {
       this.messageService.updateReaction(this.coll, this.docId, msgId, existingReactions);
     } else if (this.message.type === 'reply') {
-      this.saveReaction(this.collPath);
+      this.saveReaction(this.collPath, updateObject);
     }
   }
 
@@ -170,12 +171,12 @@ export class MessageComponent {
   /* Thread(Reply) functions */
 
   saveReply(path: any) {
-    this.message.text = this.editMessage || '';
-    this.threadService.updateDoc(path, this.message, 'messageId');
+    const updatedFields = { text: this.editMessage || '' };
+    this.threadService.updateDoc(path, this.message, 'messageId', updatedFields);
   }
 
-  saveReaction(path: any) {
-    this.threadService.updateDoc(path, this.message, 'messageId');
+  saveReaction(path: any, updateObject: any) {
+    this.threadService.updateDoc(path, this.message, 'messageId', updateObject);
   }
 
   deleteReply(path: string) {
@@ -185,7 +186,7 @@ export class MessageComponent {
   // UPLOADED FILES
 
   async getPDFurl() {
-    if (this.message.fileUpload) {
+    if (this.message.fileUpload && this.message.fileUpload.name) {
       if (this.message.fileUpload.name.includes('pdf')) {
         this.isPDF = true;
         this.pdfFile = this.message.fileUpload;

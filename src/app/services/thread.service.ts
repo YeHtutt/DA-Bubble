@@ -79,15 +79,18 @@ export class ThreadService {
   }
 
 
-  async updateDoc(path: string, doc: any, idField: string) {
-    if (doc[idField]) {
-      console.log(path, doc);
-      let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
-      await updateDoc(docRef, doc.toJSON());
-    } else {
-      console.error("ID is missing");
-    }
+   // Inside ThreadService
+
+async updateDoc(path: string, doc: any, idField: string, updatedFields: any) {
+  if (doc[idField]) {
+    console.log(path, doc);
+    let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
+    await updateDoc(docRef, { ...updatedFields }); // Updating only the specified fields
+  } else {
+    console.error("ID is missing");
   }
+}
+
 }
 
 

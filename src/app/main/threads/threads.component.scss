@@ -73,10 +73,13 @@ span {
 }
 
 main {
-    margin-left: 20px;
-    margin-right: 20px;
-    position: relative;
+    overflow-y: scroll;
+    padding-left: 20px;
+    padding-right: 20px;
+
     height: calc(100% - 96px);
+    padding-bottom: 120px;
+
 }
 
 .message-bubble {
@@ -109,13 +112,11 @@ main {
     border: 1px solid #ADB0D9;
     z-index: 2;
     background-color: white;
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    width: calc(100% - 40px);
+    padding: 20px;
     position: absolute;
     bottom: 25px;
-    padding-left: 20px;
-    padding-right: 20px;
+
 
     &:hover {
         border: 1px solid #535AF1;
@@ -222,3 +223,4 @@ app-emoji-picker {
     position: absolute;
     bottom: 50px;
 }
+
