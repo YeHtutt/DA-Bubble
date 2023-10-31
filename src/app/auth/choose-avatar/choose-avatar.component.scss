@@ -266,11 +266,13 @@ mat-card-title {
 }
 
 .logoContent-normal {
-    position: absolute;
-
-    left: 50px;
-    top: 30px;
     display: flex;
+    width: 100vw;
+    max-width: 1280px;
+    justify-content: flex-start;
+    margin-top: 75px;
+    margin-left: 75px;
+    margin-bottom: 77px;
 
     img {
         height: 70px;
@@ -280,19 +282,27 @@ mat-card-title {
     }
 
     @media(max-width: 1200px) {
-        position: static;
-        margin-top: 50px;
+        position: relative;
+        left: -250px;
+        width: unset;
         margin-bottom: 50px;
     }
 
     @media(max-width: 650px) {
         position: static;
-        box-sizing: border-box;
-        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 30px;
         margin-bottom: 30px;
+        margin-left: 0;
     }
+}
+
+.backgroundContainer {
+    width: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: #ECEEFE;
 }

@@ -232,11 +232,13 @@ form {
 
 /*Logo image after animation*/
 .logoContent-normal {
-    position: absolute;
-
-    left: 50px;
-    top: 30px;
     display: flex;
+    width: 100vw;
+    max-width: 1280px;
+    justify-content: flex-start;
+    margin-top: 75px;
+    margin-left: 75px;
+    margin-bottom: 11px;
 
     img {
         height: 70px;
@@ -246,15 +248,20 @@ form {
     }
 
     @media(max-width: 1200px) {
-        position: static;
+        position: relative;
+        left: -250px;
+        width: unset;
         margin-bottom: 50px;
-        margin-top: 50px;
     }
 
     @media(max-width: 650px) {
         position: static;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-bottom: 30px;
         margin-top: 30px;
+        margin-left: 0;
     }
 }
 
@@ -285,15 +292,16 @@ form {
 }
 
 .topRight {
-    position: absolute; 
-    right: 75px; 
-    top: 75px; cursor: pointer; 
-    font-size: 18px; 
+    position: absolute;
+    right: 75px;
+    top: 75px;
+    cursor: pointer;
+    font-size: 18px;
     text-align: right;
 
     a {
         text-decoration: none;
-        color: #797EF3; 
+        color: #797EF3;
     }
 
     @media(max-width: 1060px) {
@@ -307,4 +315,12 @@ form {
         position: static;
         margin-top: 30px;
     }
+}
+
+.backgroundContainer {
+    width: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: #ECEEFE;
 }
