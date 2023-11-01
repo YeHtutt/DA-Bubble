@@ -52,6 +52,7 @@ export class SidenavComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.checkScreenSize();
+    if(!this.isMobile && window.innerWidth > 750) this.drawer?.open();
   }
 
   checkScreenSize() {

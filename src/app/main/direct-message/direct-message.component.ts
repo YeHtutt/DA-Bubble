@@ -5,12 +5,11 @@ import { DirectMessageAddDialogComponent } from '../direct-message-add-dialog/di
 import { Subscription } from 'rxjs';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfile } from 'src/app/models/user-profile';
-import { MessageService } from 'src/app/services/message.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 @Component({
@@ -24,9 +23,9 @@ export class DirectMessageComponent {
     public messageTreeService: MessageTreeService,
     public dialog: MatDialog,
     private userService: UsersFirebaseService,
-    private messageService: MessageService,
     private router: Router,
     private firebaseUtils: FirebaseUtilsService,
+    public drawerService: DrawerService
   ) { this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user }); }
 
   private subscriptions: Subscription[] = [];
@@ -69,6 +68,7 @@ export class DirectMessageComponent {
     // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
     const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
+    this.drawerService.close();
   }
 
   createDirectChatObject(receiver: string): DirectChat {

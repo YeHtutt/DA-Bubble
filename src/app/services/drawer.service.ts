@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 
 @Injectable({
@@ -19,14 +19,27 @@ export class DrawerService {
   }
 
   open() {
-    this.drawer?.open();
+    if(this.checkScreenSize()) this.drawer?.open();
   }
 
   close() {
-    this.drawer?.close();
+    if(this.checkScreenSize()) this.drawer?.close();
   }
 
   toggle() {
     this.drawer?.toggle();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    if(window.innerWidth < 750) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -350,3 +350,14 @@
         background-color: #EDEEFE;
     }
 }
+
+@media (max-width: 500px) {
+
+    .message_container_reverse {
+        padding-right: 15px;
+    }
+
+    .message_container {
+        padding-left: 15px;
+    }
+}
