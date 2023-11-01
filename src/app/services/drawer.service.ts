@@ -1,5 +1,6 @@
 import { HostListener, Injectable } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ import { MatDrawer } from '@angular/material/sidenav';
 export class DrawerService {
 
   drawer?: MatDrawer;
+  drawerSub: Subscription = new Subscription()
+  isDrawerOpen: boolean = false;
 
   constructor() { }
 
@@ -14,8 +17,18 @@ export class DrawerService {
 
   }
 
+  initDrawerListener() {
+    if (this.drawer) {
+      this.drawerSub = this.drawer.openedChange.subscribe((isOpen: boolean) => {
+        this.isDrawerOpen = isOpen;
+        console.log(this.isDrawerOpen)
+      });
+    }
+  }
+
   setDrawer(drawer: MatDrawer) {
     this.drawer = drawer;
+    this.initDrawerListener();
   }
 
   open() {
