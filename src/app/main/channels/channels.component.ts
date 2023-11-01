@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class ChannelsComponent {
     public dialog: MatDialog,
     public channelService: ChannelService,
     public messageService: MessageService,
-    private userService: UsersFirebaseService
+    private userService: UsersFirebaseService,
+    public drawerService: DrawerService
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   ngOnInit() {

@@ -70,6 +70,7 @@ import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { SearchBarComponent } from './main/search-bar/search-bar.component';
 
 
 
@@ -105,7 +106,8 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     ImprintComponent,
     DataPrivacyComponent,
     FilterPipe,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    SearchBarComponent
 
 
 

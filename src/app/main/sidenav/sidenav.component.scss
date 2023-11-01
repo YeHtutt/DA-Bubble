@@ -1,7 +1,7 @@
 @import 'src/app/main/channels/channels.component.scss';
 
 .toolbar {
-  background-color:#ECEEFE;
+  background-color: #ECEEFE;
 }
 
 mat-drawer {
@@ -13,7 +13,7 @@ mat-drawer {
 
 .mat-drawer-container {
   height: calc(100vh - 100px);
-  background-color:#ECEEFE;
+  background-color: #ECEEFE;
 }
 
 .mat-drawer-box {
@@ -73,6 +73,7 @@ mat-drawer {
 
   &:hover {
     cursor: pointer;
+
     img {
       filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
     }
@@ -112,7 +113,8 @@ mat-drawer {
   }
 }
 
-mat-toolbar, mat-toolbar-row {
+mat-toolbar,
+mat-toolbar-row {
   min-height: 56px;
   height: 56px;
 }
@@ -137,7 +139,7 @@ mat-toolbar {
     position: relative;
 
     &:hover {
-      background-color: rgba(0,0,0,0.04);
+      background-color: rgba(0, 0, 0, 0.04);
     }
 
     &:focus {
@@ -164,7 +166,7 @@ mat-toolbar {
 
     &:hover {
       cursor: pointer;
-      color:#535AF1;
+      color: #535AF1;
 
       img {
         filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
@@ -253,9 +255,11 @@ mat-toolbar {
 
   &:hover {
     cursor: pointer;
+
     img {
       filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
     }
+
     span {
       color: #535AF1;
     }
@@ -313,6 +317,7 @@ mat-toolbar {
       img {
         filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
       }
+
       span {
         color: #535AF1;
       }
@@ -320,4 +325,37 @@ mat-toolbar {
   }
 }
 
+.side_nav_mobile {
+  width: 100%;
+  margin-left: 0;
+  margin-bottom: 0;
+  height: 100%;
+  border-radius: 0;
+}
 
+// MOBIL-SEARCH-BAR
+
+app-search-bar {
+  display: none !important;
+  border: 1px solid #DCDFFD;
+  border-radius: 30px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+// MEDIA-QUERIES
+
+@media (max-width: 750px) {
+
+  app-search-bar {
+    display: flex !important;
+  }
+
+  .sidenav-header {
+    display: none !important;
+  }
+
+  .toggle-box {
+    display: none;
+  }
+}

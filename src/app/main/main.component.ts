@@ -10,9 +10,12 @@ import { Auth } from '@angular/fire/auth';
 })
 export class MainComponent implements OnInit {
 
+
   ngOnInit(): void {
   }
 
   constructor(private Route: ActivatedRoute, private router: Router, private userFbService: UsersFirebaseService, private auth:Auth) {}
+
+
 
 }

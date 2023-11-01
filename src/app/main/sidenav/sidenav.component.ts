@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { MatDrawer } from '@angular/material/sidenav';
+import { Subscription } from 'rxjs';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 
@@ -13,31 +16,47 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
-  showSidenav: boolean = true;
+  // showSidenav: boolean = true;
   user: any;
+  @ViewChild(MatDrawer) drawer?: MatDrawer;
+  isDrawerOpen: boolean = true;
+  drawerSub: Subscription = new Subscription;
+  isMobile: boolean = false;
 
   constructor(
 
     public dialog: MatDialog,
     public authService: AuthenticationService,
     public afAuth: AngularFireAuth,
+    private drawerService: DrawerService
 
-  ) {
+  ) {}
 
+  ngOnInit() {
+    this.checkScreenSize();
+  }
+
+  ngAfterViewInit() {
+    if (this.drawer) {
+      this.drawerSub = this.drawer.openedChange.subscribe((isOpen: boolean) => {
+        this.isDrawerOpen = isOpen;
+      });
+      this.drawerService.setDrawer(this.drawer);
+    }
   }
 
   ngOnDestroy() {
-
+    this.drawerSub.unsubscribe();
   }
 
-  toggleSidenav() {
-    if (this.showSidenav) {
-      this.showSidenav = false;
-      console.log('true');
-    } else {
-      this.showSidenav = true;
-      console.log('false');
-    }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    if(window.innerWidth < 750) this.isMobile = true;
+    if(window.innerWidth > 750) this.isMobile = false;
   }
 
   openProfileDialog(node: any) {
