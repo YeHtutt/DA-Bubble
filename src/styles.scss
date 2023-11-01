@@ -119,10 +119,13 @@
 }
 
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 30px !important;
 }
-
 
 html,
 body {
