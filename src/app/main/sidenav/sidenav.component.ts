@@ -16,7 +16,6 @@ import { DrawerService } from 'src/app/services/drawer.service';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
-  // showSidenav: boolean = true;
   user: any;
   @ViewChild(MatDrawer) drawer?: MatDrawer;
   isDrawerOpen: boolean = true;

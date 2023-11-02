@@ -1,7 +1,6 @@
 <img class="toggle-box" (click)="drawer.toggle()"
   src="{{isDrawerOpen ? '../assets/img/close-sidenav.png' : '../assets/img/open-sidenav.png'}}">
 
-
 <mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer [class.side_nav_mobile]="isMobile" #drawer [opened]="true" class="sidenav" mode="side">
     <div class="mat-drawer-box">
@@ -17,6 +16,9 @@
       <app-channels></app-channels>
       <app-direct-message></app-direct-message>
     </div>
+    <button (click)="drawer.close()" [routerLink]="['message']" *ngIf="isDrawerOpen && isMobile" mat-fab color="primary" class="new_msg_mobile_button">
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>
