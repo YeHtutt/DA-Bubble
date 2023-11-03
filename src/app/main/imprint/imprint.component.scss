@@ -1,9 +1,10 @@
 .imprint-Container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    max-width: 100%;
+    max-width: 1280px;
     min-height: 100vh;
     background-color: #ECEEFE;
     position: relative;
@@ -11,17 +12,30 @@
 
 /*Logo image after animation*/
 .logoContent-normal {
-    position: absolute;
-
-    left: 50px;
-    top: 30px;
     display: flex;
+    width: 100vw;
+    max-width: 1280px;
+    justify-content: flex-start;
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-bottom: 150px;
 
     img {
         height: 70px;
         width: auto;
         object-fit: cover;
         position: relative;
+
+        @media(max-width: 750px) {
+            height: 60px;
+        }
+    }
+
+    @media(max-width: 750px) {
+        justify-content: center;
+        align-items: center;
+        margin-left: 0px;
+        margin-bottom: 50px;
     }
 }
 
@@ -58,6 +72,10 @@ mat-card {
         font-weight: 700;
         line-height: 120%;
         margin-bottom: 16px;
+
+        @media(max-width: 750px) {
+            font-size: 32px;
+        }
     }
 
     .header2 {
@@ -77,5 +95,27 @@ mat-card {
         font-style: normal;
         font-weight: 400;
         line-height: 120%;
+
+        @media(max-width: 750px) {
+            font-size: 18px;
+        }
     }
+
+    @media(max-width: 750px) {
+        width: 400px;
+        padding: 15px 30px;
+    }
+
+    @media(max-width: 415px) {
+        width: 280px;
+        padding: 15px 25px;
+    }
+}
+
+.backgroundContainer {
+    width: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: #ECEEFE;
 }

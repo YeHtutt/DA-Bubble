@@ -2,9 +2,51 @@
     padding: 50px;
     font-family: 'Nunito', sans-serif !important;
     background-color: #ECEEFE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media(max-width: 750px) {
+        padding: 0;
+    }
 }
 
 mat-card {
     padding: 50px;
     border-radius: 30px;
+
+    @media(max-width: 750px) {
+        width: 400px;
+        padding: 30px;
+
+        a {
+            display: inline-block; 
+            max-width: 50%; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+        }
+    }
+
+    @media(max-width: 450px) {
+        width: 280px;
+        padding: 20px;
+
+        a {
+            display: inline-block; 
+            max-width: 50%; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+        }
+
+        h1 {
+            font-size: 1.2em;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+    }
 }
+
