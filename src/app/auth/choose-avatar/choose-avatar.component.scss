@@ -72,13 +72,21 @@ mat-card-title {
 
 .profileImg {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
     width: 136px;
     height: 136px;
     padding: 16px;
-    background: var(--Purple-2, #797EF3);
+    //background: var(--Purple-2, #797EF3);
     border-radius: 100px;
+
+    img {
+        width: 152px;
+        height: 152px;
+        object-fit: cover;
+        border-radius: 100px;
+    }
 
     @media(max-width: 650px) {
         height: 120px;
@@ -86,8 +94,8 @@ mat-card-title {
         padding: 16px;
 
         img {
-            height: 120px;
-            width: 120px;
+            height: 136px;
+            width: 136px;
             object-fit: cover;
         }
     }
@@ -97,8 +105,8 @@ mat-card-title {
         height: 90px;
 
         img {
-            height: 90px;
-            width: 90px;
+            height: 106px;
+            width: 106px;
             object-fit: cover;
         }
     }
