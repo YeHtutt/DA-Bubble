@@ -61,7 +61,6 @@ import { UserProfileViewComponent } from './main/users/user-profile-view/user-pr
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
 import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
 import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
-import { DirectMessageAddDialogComponent } from './main/direct-message-add-dialog/direct-message-add-dialog.component';
 import { DirectMessageComponent } from './main/direct-message/direct-message.component';
 import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
@@ -99,7 +98,7 @@ import { SearchBarComponent } from './main/search-bar/search-bar.component';
     ChannelUsersDialogComponent,
     UserProfileEditComponent,
     UserProfileSubViewComponent,
-    DirectMessageAddDialogComponent,
+
     DirectMessageComponent,
     EmojiPickerComponent,
     AddPeopleDialogComponent,
@@ -141,7 +140,7 @@ import { SearchBarComponent } from './main/search-bar/search-bar.component';
     MatRadioModule,
     MatChipsModule,
     PickerModule
-    
+
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
