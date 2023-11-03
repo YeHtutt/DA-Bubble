@@ -50,7 +50,6 @@ export class MessageComponent {
 
   ngOnInit() {
     this.getPDFurl();
-    this.getMessagePath();
   }
 
 
@@ -107,6 +106,15 @@ export class MessageComponent {
 
   openReaction() {
     this.isReactionInputOpened = !this.isReactionInputOpened;
+    setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
+  }
+
+  getStyles(condition: string) {
+    const value = condition === 'channel';
+    return {
+      left: value ? 'auto' : null,
+      right: value ? 0 : null
+    }
   }
 
   openInReaction() {

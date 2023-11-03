@@ -168,6 +168,18 @@
     }
 }
 
+.edit_msg_btn_channel_style {
+    right: 0 !important;
+    bottom: -33px !important;
+    border-radius: 25px 0 25px 25px !important;
+}
+
+.delete_msg_btn_channel_style {
+    right: 0 !important;
+    bottom: -63px !important;
+    border-radius: 25px 0 25px 25px !important;
+}
+
 .edit_container {
     width: 100%;
     background-color: #ECEEFE;
@@ -358,6 +370,6 @@
     }
 
     .message_container {
-        padding-left: 15px;
+        padding: 0 15px;
     }
 }
