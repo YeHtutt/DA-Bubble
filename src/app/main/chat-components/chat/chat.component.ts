@@ -7,6 +7,8 @@ import { MessageService } from 'src/app/services/message.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -34,7 +36,8 @@ export class ChatComponent {
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+    public dialog: MatDialog
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -122,5 +125,28 @@ export class ChatComponent {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
+  }
+
+  openProfileDialogInSearch(node: any) {
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
+    const userEmail = node.email;
+    const isOnline = node.isOnline;
+
+    this.dialog.open(UserProfileSubViewComponent, {
+      width: '500px',
+      height: '727px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+      data: {
+        id: userId,
+        name: userName,
+        photoURL: userPhotoURL,
+        email: userEmail,
+        isOnline: isOnline
+      }
+    });
   }
 }

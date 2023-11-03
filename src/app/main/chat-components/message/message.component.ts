@@ -50,6 +50,7 @@ export class MessageComponent {
 
   ngOnInit() {
     this.getPDFurl();
+    this.getMessagePath();
   }
 
 

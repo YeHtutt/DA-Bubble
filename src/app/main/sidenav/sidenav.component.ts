@@ -18,7 +18,7 @@ import { DrawerService } from 'src/app/services/drawer.service';
 export class SidenavComponent {
   user: any;
   @ViewChild(MatDrawer) drawer?: MatDrawer;
-  isDrawerOpen: boolean = true;
+  isDrawerOpen: boolean = false;
   drawerSub: Subscription = new Subscription;
   isMobile: boolean = false;
 
@@ -42,6 +42,10 @@ export class SidenavComponent {
       });
       this.drawerService.setDrawer(this.drawer);
     }
+  }
+
+  ngOnChange() {
+    
   }
 
   ngOnDestroy() {

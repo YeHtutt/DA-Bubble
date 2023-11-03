@@ -1,7 +1,7 @@
 <div class="dashboard">
     <section class="message-section">
         <header>
-            <div class="user_avatar_container">
+            <div (click)="openProfileDialogInSearch(receiver)" class="user_avatar_container">
                 <img src="{{receiver.photoURL}}" alt="">
                 <span>{{receiver.name}}</span>
             </div>
