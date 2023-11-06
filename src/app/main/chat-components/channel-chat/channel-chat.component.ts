@@ -208,5 +208,4 @@ export class ChannelChatComponent {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
   }
-
 }
