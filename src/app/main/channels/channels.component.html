@@ -1,7 +1,7 @@
 <div class="channels-section">
   <mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
     <mat-tree-node class="child-node" *matTreeNodeDef="let node; let level = level" matTreeNodePaddingIndent="0px">
-      <button mat-flat-button class="child-node-btn" (click)="this.drawerService.close()" [routerLink]="['channel/' + node.channelId]">
+      <button mat-flat-button class="child-node-btn" (click)="this.drawerService.close(); this.threadService.closeThread()" [routerLink]="['channel/' + node.channelId]">
         <div>{{node.channelName}}</div>
         <mat-icon *ngIf="level == 1">tag</mat-icon>
         <mat-icon *ngIf="level == 2">lock</mat-icon>

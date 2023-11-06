@@ -39,6 +39,10 @@ export class DrawerService {
     if(this.checkScreenSize()) this.drawer?.close();
   }
 
+  closeWithoutCondition() {
+    this.drawer?.close();
+  }
+
   toggle() {
     this.drawer?.toggle();
   }

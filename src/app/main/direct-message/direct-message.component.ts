@@ -9,6 +9,7 @@ import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
 import { DrawerService } from 'src/app/services/drawer.service';
+import { ThreadService } from 'src/app/services/thread.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class DirectMessageComponent {
     private userService: UsersFirebaseService,
     private router: Router,
     private firebaseUtils: FirebaseUtilsService,
-    public drawerService: DrawerService
+    private drawerService: DrawerService,
+    private threadService: ThreadService
   ) { this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user }); }
 
   private subscriptions: Subscription[] = [];
@@ -60,6 +62,7 @@ export class DirectMessageComponent {
     const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
     this.drawerService.close();
+    this.threadService.closeThread();
   }
 
   createDirectChatObject(receiver: string): DirectChat {

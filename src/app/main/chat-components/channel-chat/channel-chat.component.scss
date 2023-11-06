@@ -309,6 +309,16 @@ app-emoji-picker {
 
 // MEDIA-QUERIES 
 
+@media (max-width: 960px) {
+
+    .thread-section {
+        position: absolute;
+        left: 25px;
+        right: 25px;
+        margin-right: 0;
+    }
+}
+
 @media (max-width: 750px) {
     .message-section {
         margin: 0;

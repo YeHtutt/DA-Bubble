@@ -35,12 +35,12 @@ export class ThreadService {
   openThread(message: Message) {
     this.threadIsOpen = true;
     this._message.next(message);
-    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForThread()) this.drawerService.toggle();
+    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForThread()) this.drawerService.closeWithoutCondition();
   }
 
   closeThread() {
     this.threadIsOpen = false;
-    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForThread()) this.drawerService.toggle();
+    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForThread()) this.drawerService.closeWithoutCondition();
   }
 
   subReplies(path: string) {
