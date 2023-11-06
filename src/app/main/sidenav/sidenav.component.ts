@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 import { DrawerService } from 'src/app/services/drawer.service';
+import { ThreadService } from 'src/app/services/thread.service';
 
 
 
@@ -27,7 +28,8 @@ export class SidenavComponent {
     public dialog: MatDialog,
     public authService: AuthenticationService,
     public afAuth: AngularFireAuth,
-    private drawerService: DrawerService
+    private drawerService: DrawerService,
+    private threadService: ThreadService
 
   ) {}
 
@@ -44,10 +46,6 @@ export class SidenavComponent {
     }
   }
 
-  ngOnChange() {
-    
-  }
-
   ngOnDestroy() {
     this.drawerSub.unsubscribe();
   }
@@ -56,6 +54,7 @@ export class SidenavComponent {
   onResize(event: Event) {
     this.checkScreenSize();
     if(!this.isMobile && window.innerWidth > 750) this.drawer?.open();
+    if(window.innerWidth < 1440 && this.threadService.threadIsOpen) this.drawer?.close();
   }
 
   checkScreenSize() {

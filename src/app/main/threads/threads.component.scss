@@ -4,11 +4,12 @@
 
 .thread-container {
     height: 100%;
+    min-width: 400px;
+    max-width: 400px;
 }
 
 header {
-    height: 96px;
-    padding: 25px 45px 25px 45px;
+    padding: 20px 45px 20px 45px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.0784313725);
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
@@ -35,7 +36,7 @@ h2 {
 
 
 .avatar-message-container {
-    padding-top: 30px;
+    padding: 30px 15px 0 15px;
     display: flex;
     gap: 20px;
 }
@@ -74,25 +75,23 @@ span {
 
 main {
     overflow-y: scroll;
-    padding-left: 20px;
-    padding-right: 20px;
-
+    // padding-left: 20px;
+    // padding-right: 20px;
     height: calc(100% - 96px);
     padding-bottom: 120px;
-
 }
 
 .message-bubble {
     border-radius: 0 30px 30px 30px;
     padding: 15px;
     background-color: #ECEEFE;
-    max-width: 85%;
+    // max-width: 85%;
 }
 
 .divider {
     display: flex;
     align-items: center;
-    padding: 8px 0 8px 0;
+    padding: 8px 15px 8px 15px;
 }
 
 .mat-divider {
@@ -224,3 +223,25 @@ app-emoji-picker {
     bottom: 50px;
 }
 
+@media (max-width: 750px) {
+
+    .thread-container {
+        max-width: none;
+    }
+
+    .input-message-container {
+        bottom: 0;
+    }
+
+    header {
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 500px) {
+
+    header {
+        height: 60px;
+        padding: 10px 25px;
+    }
+}

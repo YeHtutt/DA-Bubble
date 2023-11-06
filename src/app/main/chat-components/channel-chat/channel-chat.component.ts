@@ -1,9 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { Subscription } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 /* Models */
 
 import { Message } from 'src/app/models/message';
@@ -27,7 +28,18 @@ import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
-  styleUrls: ['./channel-chat.component.scss']
+  styleUrls: ['./channel-chat.component.scss'],
+  animations: [
+    trigger('slide', [
+      transition(':enter', [
+        style({transform: 'translateX(100%)'}), 
+        animate('300ms ease-out', style({transform: 'translateX(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({transform: 'translateX(100%)'}))  
+      ])
+    ])
+  ]
 })
 export class ChannelChatComponent {
 

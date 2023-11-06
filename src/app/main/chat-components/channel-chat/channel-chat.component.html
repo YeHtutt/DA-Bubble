@@ -58,7 +58,7 @@
             </div>
         </div>
     </section>
-    <section class="thread-section" *ngIf="this.threadService.threadIsOpen">
+    <section [@slide] class="thread-section" *ngIf="this.threadService.threadIsOpen">
         <app-threads></app-threads>
     </section>
 </div>

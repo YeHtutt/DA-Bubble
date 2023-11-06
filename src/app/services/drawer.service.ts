@@ -55,4 +55,12 @@ export class DrawerService {
       return false;
     }
   }
+
+  checkScreenSizeForThread() {
+    if(window.innerWidth < 1440) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

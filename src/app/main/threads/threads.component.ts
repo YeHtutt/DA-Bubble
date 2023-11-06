@@ -7,6 +7,9 @@ import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { Message } from 'src/app/models/message';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { FileStorageService } from 'src/app/services/file-storage.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { FileUpload } from 'src/app/models/file-upload';
 
 
 @Component({
@@ -26,7 +29,10 @@ export class ThreadsComponent {
   allUsers: UserProfile[] = [];
   currentUser: UserProfile = new UserProfile;
   collPath = '';
-thread: any;
+  thread: any;
+  fileUploadThread?: FileUpload;
+  fileTypeThread: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +40,8 @@ thread: any;
     private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
     private userService: UsersFirebaseService,
+    private fileService: FileStorageService,
+    private notificationService: NotificationService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -107,13 +115,43 @@ thread: any;
       type: 'reply',
       origin: '',
       reactions: [],
-      fileUpload: []
+      fileUpload: this.fileUploadThread?.toJSON() || []
     });
   }
 
 
   sendReplyTo() {
-    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON())
+    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON());
+    this.text = '';
+    this.fileUploadThread = undefined;
   }
 
+
+    // Upload File
+
+    onUploadThread(event: any) {
+      const file = new FileUpload(event.target.files[0]);
+      const maxSize = 1500 * 1024;
+      this.setFileType(file.file.type);
+      if (file.file.size > maxSize) {
+        this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+        return;
+      } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+        this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
+        return;
+      } else {
+        this.fileService.uploadFile(file).then(file => this.fileUploadThread = file);
+      }
+    }
+  
+    setFileType(type: string) {
+      if(type.includes('jpeg' || 'jpg')) this.fileTypeThread = 'assets/img/icons/jpg.png';
+      if(type.includes('png')) this.fileTypeThread = 'assets/img/icons/png.png';
+      if(type.includes('pdf')) this.fileTypeThread = 'assets/img/icons/pdf.png';
+    }
+  
+    onDelete(filePath: string) {
+      this.fileService.deleteFile(filePath);
+      this.fileUploadThread = undefined;
+    }
 }

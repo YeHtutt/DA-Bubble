@@ -12,12 +12,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { FileUpload } from 'src/app/models/file-upload';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
+  animations: [
+    trigger('slide', [
+      transition(':enter', [
+        style({transform: 'translateX(100%)'}), 
+        animate('300ms ease-out', style({transform: 'translateX(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({transform: 'translateX(100%)'}))  
+      ])
+    ])
+  ]
 })
 export class ChatComponent {
   chatId: string = '';

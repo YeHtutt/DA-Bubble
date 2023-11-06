@@ -55,7 +55,7 @@
 
 .message_container_reverse {
     flex-direction: row-reverse;
-    padding: 10px 45px 10px 0;
+    padding: 10px 45px 10px 10px;
 
     &:hover {
         background-color: #ECEEFE;
@@ -360,6 +360,17 @@
 
     &:hover {
         background-color: #EDEEFE;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .message_container_reverse {
+        padding-right: 15px;
+    }
+
+    .message_container {
+        padding: 0 15px;
     }
 }
 
