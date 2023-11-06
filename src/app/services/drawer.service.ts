@@ -21,7 +21,6 @@ export class DrawerService {
     if (this.drawer) {
       this.drawerSub = this.drawer.openedChange.subscribe((isOpen: boolean) => {
         this.isDrawerOpen = isOpen;
-        console.log(this.isDrawerOpen)
       });
     }
   }
