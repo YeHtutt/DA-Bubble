@@ -21,7 +21,6 @@ export class DrawerService {
     if (this.drawer) {
       this.drawerSub = this.drawer.openedChange.subscribe((isOpen: boolean) => {
         this.isDrawerOpen = isOpen;
-        console.log(this.isDrawerOpen)
       });
     }
   }
@@ -37,6 +36,10 @@ export class DrawerService {
 
   close() {
     if(this.checkScreenSize()) this.drawer?.close();
+  }
+
+  closeWithoutCondition() {
+    this.drawer?.close();
   }
 
   toggle() {

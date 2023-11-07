@@ -93,13 +93,18 @@ export class ChannelChatComponent {
     });
   }
 
+
   ngOnDestroy() {
     this.channelService.unsubChannel();
   }
 
+  ngAfterContentChecked() {
+    this.messageCount = this.messageService.messages.length;
+  }
+
 
   getAllMessages() {
-    this.scrollToBottom();
+    // if(this.messageCount < this.messageService.messages.length) this.scrollToBottom();
     return this.messageService.messages
   }
 

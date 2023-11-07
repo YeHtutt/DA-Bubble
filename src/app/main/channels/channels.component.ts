@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { DrawerService } from 'src/app/services/drawer.service';
+import { ThreadService } from 'src/app/services/thread.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class ChannelsComponent {
     public channelService: ChannelService,
     public messageService: MessageService,
     private userService: UsersFirebaseService,
-    public drawerService: DrawerService
+    public drawerService: DrawerService,
+    public threadService: ThreadService
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   ngOnInit() {

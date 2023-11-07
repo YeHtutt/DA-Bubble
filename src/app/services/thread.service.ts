@@ -40,7 +40,7 @@ export class ThreadService {
 
   closeThread() {
     this.threadIsOpen = false;
-    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForThread()) this.drawerService.toggle();
+    if(this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForThread()) this.drawerService.toggle();
   }
 
   subReplies(path: string) {

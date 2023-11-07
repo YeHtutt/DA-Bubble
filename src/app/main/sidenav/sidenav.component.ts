@@ -22,6 +22,7 @@ export class SidenavComponent {
   isDrawerOpen: boolean = false;
   drawerSub: Subscription = new Subscription;
   isMobile: boolean = false;
+  windowWidth: any;
 
   constructor(
 
@@ -55,6 +56,7 @@ export class SidenavComponent {
     this.checkScreenSize();
     if(!this.isMobile && window.innerWidth > 750) this.drawer?.open();
     if(window.innerWidth < 1440 && this.threadService.threadIsOpen) this.drawer?.close();
+    this.windowWidth = window.innerWidth;
   }
 
   checkScreenSize() {
