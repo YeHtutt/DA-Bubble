@@ -81,7 +81,6 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
-      this.messagesLoaded = 0;
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
@@ -101,15 +100,13 @@ export class ChannelChatComponent {
 
 
   getAllMessages() {
+    if(this.messagesLoaded > this.messageService.messages.length) this.messagesLoaded = 0;
     if(this.messagesLoaded < this.messageService.messages.length) this.scrollToBottom();
     return this.messageService.messages
   }
 
   scrollToBottom() {
-    if (this.scroller) {
-      this.scroller.nativeElement.scrollIntoView();
-      this.messagesLoaded = 0;
-    }
+    if (this.scroller) this.scroller.nativeElement.scrollIntoView();
   }
 
   onMessageLoaded() {

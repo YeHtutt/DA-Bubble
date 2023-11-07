@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -32,6 +32,8 @@ export class ThreadsComponent {
   thread: any;
   fileUploadThread?: FileUpload;
   fileTypeThread: string = '';
+  messagesLoaded: number = 0;
+  @ViewChild('scroller', { static: false }) scroller?: ElementRef;
 
 
   constructor(
@@ -69,6 +71,16 @@ export class ThreadsComponent {
     this.subscriptions.unsubscribe();
   }
 
+  scrollToBottom() {
+    if (this.scroller) this.scroller.nativeElement.scrollIntoView();
+  }
+
+  onMessageLoaded() {
+    this.messagesLoaded++;
+    if(this.messagesLoaded == this.threadService.replies.length) {
+     this.scrollToBottom();
+    }
+  }
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
@@ -102,6 +114,8 @@ export class ThreadsComponent {
   }
 
   getAllReplies() {
+    if(this.messagesLoaded > this.threadService.replies.length) this.messagesLoaded = 0;
+    if(this.messagesLoaded < this.threadService.replies.length) this.scrollToBottom();
     return this.threadService.replies
   }
 
