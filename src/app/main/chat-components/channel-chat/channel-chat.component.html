@@ -21,9 +21,8 @@
                 </div>
             </div>
         </header>
-        <main id="scroller">
-            <app-message *ngFor="let msg of getAllMessages()" [message]="msg" (messageLoaded)="onMessageLoaded()"></app-message>
-            <div #scroller></div>
+        <main id="scroller" [appScrollBottom]="getAllMessages()">
+            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
         </main>
 
         <div class="input_message_container">

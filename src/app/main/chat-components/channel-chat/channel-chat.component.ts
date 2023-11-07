@@ -60,7 +60,6 @@ export class ChannelChatComponent {
   messageCount: any;
   fileUpload?: FileUpload;
   fileType: string = '';
-  messagesLoaded: number = 0;
 
 
   constructor(
@@ -99,21 +98,9 @@ export class ChannelChatComponent {
   }
 
 
+
   getAllMessages() {
-    if(this.messagesLoaded > this.messageService.messages.length) this.messagesLoaded = 0;
-    if(this.messagesLoaded < this.messageService.messages.length) this.scrollToBottom();
     return this.messageService.messages
-  }
-
-  scrollToBottom() {
-    if (this.scroller) this.scroller.nativeElement.scrollIntoView();
-  }
-
-  onMessageLoaded() {
-    this.messagesLoaded++;
-    if(this.messagesLoaded == this.messageService.messages.length) {
-     this.scrollToBottom();
-    }
   }
 
 

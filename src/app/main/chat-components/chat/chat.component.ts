@@ -45,7 +45,6 @@ export class ChatComponent {
   @ViewChild('scroller', {static: false}) scroller?: ElementRef;
   fileUpload?: FileUpload;
   fileType: string = '';
-  messagesLoaded: number = 0;
 
 
   constructor(
@@ -75,21 +74,9 @@ export class ChatComponent {
     });
   }
 
-  onMessageLoaded() {
-    this.messagesLoaded++;
-    if(this.messagesLoaded == this.messageService.messages.length) {
-     this.scrollToBottom();
-    }
-  }
-
-  scrollToBottom() {
-    if (this.scroller) this.scroller.nativeElement.scrollIntoView();
-  }
 
   getAllMessages() {
     if (this.messageService.messages.length > 0) this.chatExists = true;
-    if(this.messagesLoaded > this.messageService.messages.length) this.messagesLoaded = 0;
-    if(this.messagesLoaded < this.messageService.messages.length) this.scrollToBottom();
     return this.messageService.messages
   }
 

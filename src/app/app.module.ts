@@ -71,6 +71,7 @@ import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
 import { NewChatDialogComponent } from './main/direct-message/new-chat-dialog/new-chat-dialog.component';
+import { ScrollBottomDirective } from './scroll-bottom.directive';
 
 
 
@@ -108,7 +109,8 @@ import { NewChatDialogComponent } from './main/direct-message/new-chat-dialog/ne
     FilterPipe,
     CustomSnackbarComponent,
     SearchBarComponent,
-    NewChatDialogComponent
+    NewChatDialogComponent,
+    ScrollBottomDirective
 
 
 

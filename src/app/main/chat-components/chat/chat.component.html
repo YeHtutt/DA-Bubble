@@ -6,8 +6,8 @@
                 <span>{{receiver.name}}</span>
             </div>
         </header>
-        <main>
-            <app-message *ngFor="let msg of getAllMessages()" [message]="msg" (messageLoaded)="onMessageLoaded()"></app-message>
+        <main id="scroller" [appScrollBottom]="getAllMessages()">
+            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
             <div #scroller></div>
             <div *ngIf="!chatExists" class="new_conversation_container">
                 <div class="user_info_box">
