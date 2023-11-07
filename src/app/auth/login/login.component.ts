@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -114,5 +114,12 @@ export class LoginComponent implements OnInit {
     } else {
       this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.')
     }
+  }
+
+  isScreenAbove750px = window.innerWidth > 750;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.isScreenAbove750px = event.target.innerWidth > 750;
   }
 }

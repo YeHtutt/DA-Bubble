@@ -106,7 +106,6 @@ export class ChannelService {
         this.channels.push(channelObj);
       });
       this.dataSource.data
-      console.log(this.channels)
       this.dataLoaded.next(true);
     });
 
@@ -114,28 +113,25 @@ export class ChannelService {
 
   subChannelList() {
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
-      this.initializeChannelTree();
+      this.channelTree = [];
       this.populateChannelsAndMore(list);
       this.updateDataSource();
       this.dataLoaded.next(true);
     });
   }
 
-  initializeChannelTree() {
-    this.channelTree = [];
-  }
 
 
   populateChannelsAndMore(list: any) {
-    let weitereChannels: ChannelsNode[] = [];
+    let moreChannels: ChannelsNode[] = [];
     list.forEach((element: any) => {
       const channelObj = this.setChannelObj(element.data(), element.id);
       const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
       if (containsCurrentUser) this.channelTree.push(channelObj);
-      else weitereChannels.push(channelObj);
+      else moreChannels.push(channelObj);
     });
     this.sortChannelTree();
-    this.appendMoreChannels(weitereChannels);
+    this.appendMoreChannels(moreChannels);
   }
 
   sortChannelTree() {
@@ -165,8 +161,6 @@ export class ChannelService {
   }
 
 
-
-
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
     const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
     return onSnapshot(docRef, (docSnapshot) => {
@@ -177,8 +171,6 @@ export class ChannelService {
       }
     });
   }
-
-
 
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
