@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
-
+72
 type ReceiverType = UserProfile | Channel;
 
 @Component({
@@ -66,7 +66,8 @@ export class NewMessageComponent {
       chatId: '',
       creationTime: new Date(),
       user1: this.currentUser.id,
-      user2: receiver.id
+      user2: receiver.id,
+      splittedId: `${this.currentUser.id}_${receiver.id}`
     });
   }
 

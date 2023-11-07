@@ -104,11 +104,12 @@ export class ChannelUsersDialogComponent {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
       this.channel.usersData.push(userObject);
     });
-  }
+      }
 
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
+     
       this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.channel.usersData.push(userObject);
     });

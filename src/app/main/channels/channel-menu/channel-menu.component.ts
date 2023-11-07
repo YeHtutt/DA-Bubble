@@ -54,32 +54,43 @@ export class ChannelMenuComponent {
     this.dialogRef.close();
   }
 
-/*   getAllChannels() {
-    this.channelService.getAllChannels();
-  } */
-
   leaveChannel() {
     if (this.channel.channelName === 'allgemein') {
       this.notificationService.showError('Der allgemeine Channel kann nicht verlassen werden.')
     }
-    console.log(this.channel.creator.id + this.currentUserId)
-    if (this.channel.creator.id !== this.currentUserId) {
-      this.notificationService.showConfirmation(
-        'Bist du sicher, dass du diesen Channel verlassen möchtest?',
-        this.leaveTheChannel.bind(this)
-      );
-    }
+
+    else this.leaveTheChannel();
   }
 
-  
+
 
 
   async leaveTheChannel() {
-    // Wait for the promise to resolve before casting
-    let currentUser = await this.userService.getUser(this.currentUserId);
-    let creator = (currentUser as UserProfile).toJSON();
-    console.log(this.channel.usersData)
+    try {
+      if (this.channel && this.currentUserId && this.channel.usersData) {
+        // Find the index of the current user in the usersData array
+
+        const userIndex = this.channel.usersData.findIndex((user: any) => {
+          user.id === this.currentUserId
+                 });
+        
+        if (userIndex > -1) {
+          this.channel.usersData.splice(userIndex, 1);
+          await this.channelService.updateChannel(this.channel);
+          this.notificationService.showSuccess('Sie haben den Channel verlassen.');
+        } else {
+          this.notificationService.showError('Sie sind nicht Teil dieses Channels.');
+        }
+      }
+    } catch (error) {
+      // Handle any errors that occur during the process
+      this.notificationService.showError('Ein Fehler ist aufgetreten beim Verlassen des Channels.');
+      console.error(error);
+    }
   }
+
+
+
 
 
   closeSnackbar() { }

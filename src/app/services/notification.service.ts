@@ -43,18 +43,7 @@ export class NotificationService {
     });
   }
 
-  showConfirmation(message: string, acceptCallback: () => void): void {
-    const dialogRef = this.dialog.open(CustomSnackbarComponent, {
-      width: '300px',
-      data: { message: message }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) { // if the result is true, meaning the "Accept" button was clicked
-        acceptCallback();
-      }
-    });
-  }
+ 
 
 }
 

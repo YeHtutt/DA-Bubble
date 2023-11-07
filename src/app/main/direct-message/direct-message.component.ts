@@ -9,7 +9,7 @@ import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
 import { DrawerService } from 'src/app/services/drawer.service';
-
+import { NewChatDialogComponent } from './new-chat-dialog/new-chat-dialog.component';
 
 @Component({
   selector: 'app-direct-message',
@@ -67,7 +67,8 @@ export class DirectMessageComponent {
       chatId: '',
       creationTime: new Date(),
       user1: this.currentUser.id,
-      user2: receiver
+      user2: receiver,
+      splittedId: `${this.currentUser.id}_${receiver}`
     });
   }
 
@@ -93,9 +94,16 @@ export class DirectMessageComponent {
     return this.userService.getFromLocalStorage();
   }
 
-  startDirectChat() {
+  openNewChatDialog() {
 
-
+    this.dialog.open(NewChatDialogComponent, {
+      width: '880px',
+      height: '514px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+    });
   }
 
 }
+
