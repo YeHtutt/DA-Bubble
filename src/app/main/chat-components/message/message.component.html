@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div [ngClass]="{'interaction_container_reverse': currentUser == message.user.id && message.origin === 'chat'}" class="interaction_container">
+    <div [ngClass]="{'interaction_container_reverse': currentUser === message.user.id && message.origin === 'chat'}" class="interaction_container">
         <ng-container *ngFor="let reaction of getHighestReactions(); let i = index">
             <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)" *ngIf="i === 0">{{reaction.reactionEmoji}}</span>
             <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)" *ngIf="i === 1">{{reaction.reactionEmoji}}</span>

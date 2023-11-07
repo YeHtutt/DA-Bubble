@@ -75,8 +75,7 @@ span {
 
 main {
     overflow-y: scroll;
-    // padding-left: 20px;
-    // padding-right: 20px;
+    overflow-x: hidden;
     height: calc(100% - 96px);
     padding-bottom: 120px;
 }
@@ -85,7 +84,6 @@ main {
     border-radius: 0 30px 30px 30px;
     padding: 15px;
     background-color: #ECEEFE;
-    // max-width: 85%;
 }
 
 .divider {

@@ -229,8 +229,9 @@ main {
     max-height: 100%;
     width: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
     position: absolute;
-    top: 96px;
+    top: 82px;
     bottom: 177px;
     padding-top: 20px;
 }

@@ -111,15 +111,7 @@ export class MessageComponent {
 
   openReaction() {
     this.isReactionInputOpened = !this.isReactionInputOpened;
-    setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
-  }
-
-  getStyles(condition: string) {
-    const value = condition === 'channel';
-    return {
-      left: value ? 'auto' : null,
-      right: value ? 0 : null
-    }
+    // setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
   }
 
   openInReaction() {
@@ -215,6 +207,14 @@ export class MessageComponent {
   }
 
   // SCSS CLASS CHECKUP FUNKTIONS
+
+  getStyles(condition: string) {
+    const value = condition === 'channel' || condition === '';
+    return {
+      left: value ? 'auto' : null,
+      right: value ? 0 : null
+    }
+  }
 
   messageClasses(message: any) {
     return {

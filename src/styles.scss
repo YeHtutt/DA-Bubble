@@ -186,11 +186,11 @@ div {
   height: 24px !important;
   width: 24px !important;
 
-  @media(max-width: 400px) {
-    font-size: 18px !important;
-    height: 18px !important;
-    width: 18px !important;
-  }
+  // @media(max-width: 400px) {
+  //   font-size: 18px !important;
+  //   height: 18px !important;
+  //   width: 18px !important;
+  // }
 }
 
 .mat-mdc-unelevated-button>.mat-icon {

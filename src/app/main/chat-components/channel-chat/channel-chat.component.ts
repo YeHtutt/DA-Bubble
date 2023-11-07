@@ -99,10 +99,6 @@ export class ChannelChatComponent {
     this.channelService.unsubChannel();
   }
 
-  // ngAfterContentChecked() {
-  //   this.messageCount = this.messageService.messages.length;
-  // }
-
 
   getAllMessages() {
     if(this.messagesLoaded < this.messageService.messages.length) this.scrollToBottom();
@@ -112,6 +108,7 @@ export class ChannelChatComponent {
   scrollToBottom() {
     if (this.scroller) {
       this.scroller.nativeElement.scrollIntoView();
+      this.messagesLoaded = 0;
     }
   }
 
