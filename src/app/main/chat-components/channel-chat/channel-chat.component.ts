@@ -60,7 +60,7 @@ export class ChannelChatComponent {
   messageCount: any;
   fileUpload?: FileUpload;
   fileType: string = '';
-
+  messagesLoaded: number = 0;
 
 
   constructor(
@@ -81,6 +81,7 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
+      this.messagesLoaded = 0;
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
@@ -98,19 +99,26 @@ export class ChannelChatComponent {
     this.channelService.unsubChannel();
   }
 
-  ngAfterContentChecked() {
-    this.messageCount = this.messageService.messages.length;
-  }
+  // ngAfterContentChecked() {
+  //   this.messageCount = this.messageService.messages.length;
+  // }
 
 
   getAllMessages() {
-    // if(this.messageCount < this.messageService.messages.length) this.scrollToBottom();
+    if(this.messagesLoaded < this.messageService.messages.length) this.scrollToBottom();
     return this.messageService.messages
   }
 
   scrollToBottom() {
     if (this.scroller) {
       this.scroller.nativeElement.scrollIntoView();
+    }
+  }
+
+  onMessageLoaded() {
+    this.messagesLoaded++;
+    if(this.messagesLoaded == this.messageService.messages.length) {
+     this.scrollToBottom();
     }
   }
 

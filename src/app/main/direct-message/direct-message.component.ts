@@ -62,7 +62,7 @@ export class DirectMessageComponent {
     const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
     this.drawerService.close();
-    this.threadService.closeThread();
+    if(this.threadService.threadIsOpen)this.threadService.closeThread();
   }
 
   createDirectChatObject(receiver: string): DirectChat {

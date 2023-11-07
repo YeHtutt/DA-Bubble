@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
@@ -34,6 +34,7 @@ export class MessageComponent {
   isPDF: boolean = false;
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
+  @Output() messageLoaded = new EventEmitter<boolean>();
 
 
   constructor(
@@ -50,6 +51,10 @@ export class MessageComponent {
 
   ngOnInit() {
     this.getPDFurl();
+  }
+
+  ngAfterViewInit() {
+    this.messageLoaded.emit(true); 
   }
 
 
@@ -207,5 +212,22 @@ export class MessageComponent {
 
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
+  }
+
+  // SCSS CLASS CHECKUP FUNKTIONS
+
+  messageClasses(message: any) {
+    return {
+      'message_reverse': this.isUserAuthor(message),
+      'message_channel_current_user': this.isChannelMessageFromCurrentUser(message)
+    };
+  }
+  
+  isUserAuthor(message: any) {
+    return message.user.id === this.currentUser && message.origin === 'chat';
+  } 
+  
+  isChannelMessageFromCurrentUser(message: any) {
+    return message.user.id === this.currentUser && message.origin === 'channel';
   }
 }
