@@ -70,10 +70,9 @@ export class ChannelMenuComponent {
       if (this.channel && this.currentUserId && this.channel.usersData) {
         // Find the index of the current user in the usersData array
 
-        const userIndex = this.channel.usersData.findIndex((user: any) => {
-          user.id === this.currentUserId
-                 });
-        
+        const userIndex = this.channel.usersData.findIndex((user: any) => this.currentUserId === user.id);
+
+        console.log(userIndex)
         if (userIndex > -1) {
           this.channel.usersData.splice(userIndex, 1);
           await this.channelService.updateChannel(this.channel);
@@ -89,7 +88,7 @@ export class ChannelMenuComponent {
     }
   }
 
-
+  checkUsers() { }
 
 
 
