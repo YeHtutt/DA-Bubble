@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <section class="message-section">
+    <section class="message-section" [ngStyle]="{'margin-right' : this.threadService.threadIsOpen ? '25px' : ''}">
         <header>
             <div class="channel_info_box">
                 <span (click)="openChannelMenu()">{{channel?.channelName}}</span>

@@ -1,9 +1,8 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
-import { Subscription } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 /* Models */
 
@@ -22,6 +21,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { FileUpload } from 'src/app/models/file-upload';
 import { NotificationService } from 'src/app/services/notification.service';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 
@@ -72,7 +72,8 @@ export class ChannelChatComponent {
     private channelService: ChannelService,
     public threadService: ThreadService,
     private fileService: FileStorageService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    public drawerService: DrawerService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 

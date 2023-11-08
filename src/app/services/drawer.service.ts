@@ -17,6 +17,10 @@ export class DrawerService {
 
   }
 
+  ngOnDestroy() {
+    this.drawerSub.unsubscribe();
+  }
+
   initDrawerListener() {
     if (this.drawer) {
       this.drawerSub = this.drawer.openedChange.subscribe((isOpen: boolean) => {
@@ -59,8 +63,8 @@ export class DrawerService {
     }
   }
 
-  checkScreenSizeForThread() {
-    if(window.innerWidth < 1440) {
+  checkScreenSizeForResponsive(width: number) {
+    if(window.innerWidth < width) {
       return true;
     } else {
       return false;

@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FileUpload } from 'src/app/models/file-upload';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class ThreadsComponent {
     private searchService: SearchService,
     private userService: UsersFirebaseService,
     private fileService: FileStorageService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public drawerService: DrawerService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }

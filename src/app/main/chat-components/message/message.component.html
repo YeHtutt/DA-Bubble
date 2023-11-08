@@ -52,8 +52,8 @@
         <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">
-            <button (click)="openEdit(message.text)" *ngIf="checkIfEdit" [ngClass]="{'edit_msg_btn_channel_style' : message.origin === 'channel'}">Nachricht bearbeiten</button>
-            <button class="deleteMsgBtn"  [ngClass]="{'delete_msg_btn_channel_style' : message.origin === 'channel'}"
+            <button (click)="openEdit(message.text)" *ngIf="checkIfEdit" [ngClass]="{'edit_msg_btn_channel_style' : message.origin === 'channel' || message.origin === ''}">Nachricht bearbeiten</button>
+            <button class="deleteMsgBtn"  [ngClass]="{'delete_msg_btn_channel_style' : message.origin === 'channel' || message.origin === ''}"
             
             (click)="message.type === 'message' ? deleteMessage(message.messageId, message.fileUpload.path) : deleteReply(collPath)"
             *ngIf="checkIfEdit">Nachricht
@@ -61,7 +61,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="showEdit" class="edit_container">
+<div *ngIf="showEdit" class="edit_container" [ngClass]="{'edit_container_thread_style' : message.origin === ''}">
     <div class="edit_box">
         <textarea [(ngModel)]="editMessage"></textarea>
         <div class="button_box">

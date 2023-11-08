@@ -230,4 +230,5 @@ export class MessageComponent {
   isChannelMessageFromCurrentUser(message: any) {
     return message.user.id === this.currentUser && message.origin === 'channel';
   }
+  
 }

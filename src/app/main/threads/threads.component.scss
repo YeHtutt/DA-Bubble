@@ -228,6 +228,7 @@ app-emoji-picker {
 
     .thread-container {
         max-width: none;
+        min-width: auto;
     }
 
     .input-message-container {
@@ -236,10 +237,6 @@ app-emoji-picker {
 }
 
 @media (max-width: 750px) {
-
-    .thread-container {
-        max-width: none;
-    }
 
     .input-message-container {
         bottom: 0;
