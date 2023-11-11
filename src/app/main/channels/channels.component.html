@@ -3,7 +3,7 @@
     <mat-tree-node class="child-node" *matTreeNodeDef="let node; let level = level" matTreeNodePaddingIndent="0px">
       <button mat-flat-button class="child-node-btn" [routerLink]="['channel/' + node.channelId]">
         <div>{{node.channelName}}</div>
-        <mat-icon *ngIf="level == 1">tag</mat-icon>
+        <mat-icon *ngIf="level == 1" class="tag">tag</mat-icon>
         <mat-icon *ngIf="level == 2">lock</mat-icon>
       </button>
     </mat-tree-node>
