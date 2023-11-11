@@ -1,70 +1,81 @@
-<div class="logInPage-Container">
-    <div class="logoContent-normal">
-        <img src="./assets/img/logo+text.png">
-    </div>
+<div class="backgroundContainer">
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Anmeldung</mat-card-title>
-            <mat-card-subtitle>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeite
-                verwendest</mat-card-subtitle>
-        </mat-card-header>
+    <div class="logInPage-Container">
+        <div class="logoContent-normal">
+            <img src="./assets/img/logo+text.png">
 
-        <form [formGroup]="loginForm" (ngSubmit)="submit()">
-            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
-                <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
-                <input matInput formControlName="email" placeholder="beispiel@email.com" type="email"
-                    style="color: black !important;">
-                <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email eingeben</mat-error>
-                <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
-            </mat-form-field>
+            <div class="toSignUpTop" [ngClass]="{'hide-under-750px': !isScreenAbove750px}">
+                <div>Neu bei Bubble? </div>
+                <a [routerLink]="'/sign-up'">Konto Erstellen</a>
+            </div>
+        </div>
 
-            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
-                <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
-                <input matInput placeholder="Password" formControlName="password" type="password" style="
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Anmeldung</mat-card-title>
+                <mat-card-subtitle>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
+                    verwendest</mat-card-subtitle>
+            </mat-card-header>
+
+            <form [formGroup]="loginForm" (ngSubmit)="submit()">
+                <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+                    <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
+                    <input matInput formControlName="email" placeholder="beispiel@email.com" type="email"
+                        style="color: black !important;">
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email eingeben</mat-error>
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+                    <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
+                    <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
-                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password eingeben</mat-error>
-                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Mindestens 6 Zeichen
-                    eingeben</mat-error>
-            </mat-form-field>
+                    <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password eingeben</mat-error>
+                    <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Mindestens 6 Zeichen
+                        eingeben</mat-error>
+                </mat-form-field>
 
-            <div class="forgetPassword">
-                <a [routerLink]="'/forget-password'">Password vergessen?</a>
-            </div>
-
-
-            <div class="divider">
-                <div class="line"></div>
-                <div class="text">ODER</div>
-                <div class="line"></div>
-            </div>
-
-
-            <div class="input-field-container" (click)="loginWithGoogle()">
-                <div class="googleLoginBtn">
-                    <img src="./assets/img/Google.png">
-                    <span>Anmelden mit Google</span>
+                <div class="forgetPassword">
+                    <a [routerLink]="'/forget-password'">Password vergessen?</a>
                 </div>
-            </div>
 
-            <div class="login-btns">
-                <button type="submit" [disabled]="loginForm.invalid" mat-fab extended color="primary">
-                    Anmelden
-                </button>
-                <button (click)="loginAsGuest()" mat-fab extended class="unfilled-text-btn">
-                    Gäste Login
-                </button>
-            </div>
-        </form>
-    </mat-card>
 
-    <div class="topRight">Neu
-        bei Bubble? </div>
-    <div class="topRightRoute" [routerLink]="'/sign-up'">Konto Erstellen</div>
+                <div class="divider">
+                    <div class="line"></div>
+                    <div class="text">ODER</div>
+                    <div class="line"></div>
+                </div>
 
-    <div class="legals">
-        <div routerLink="/imprint">Impressum</div>
-        <div routerLink="/data-privacy">Datenschutz</div>
+
+                <div class="input-field-container" (click)="loginWithGoogle()">
+                    <div class="googleLoginBtn">
+                        <img src="./assets/img/Google.png">
+                        <span>Anmelden mit Google</span>
+                    </div>
+                </div>
+
+                <div class="login-btns">
+                    <button type="submit" [disabled]="loginForm.invalid" mat-fab extended color="primary">
+                        Anmelden
+                    </button>
+                    <button (click)="loginAsGuest()" mat-fab extended class="unfilled-text-btn">
+                        Gäste Login
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+
+        <div class="toSignUpBelow" [ngClass]="{'hide-above-750px': isScreenAbove750px}">
+            <div>Neu bei Bubble? </div>
+            <a [routerLink]="'/sign-up'">Konto Erstellen</a>
+        </div>
+
+
+        <div class="legals">
+            <div routerLink="/imprint">Impressum</div>
+            <div routerLink="/data-privacy">Datenschutz</div>
+        </div>
+
     </div>
 
 </div>

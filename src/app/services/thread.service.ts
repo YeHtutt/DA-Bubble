@@ -3,6 +3,7 @@ import { Message } from '../models/message';
 import { BehaviorSubject } from 'rxjs';
 import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion } from '@angular/fire/firestore';
 import { FirebaseUtilsService } from './firebase-utils.service';
+import { DrawerService } from './drawer.service';
 
 
 @Injectable({
@@ -15,7 +16,8 @@ export class ThreadService {
 
   constructor(
     private firestore: Firestore = inject(Firestore),
-    private firebaseService: FirebaseUtilsService
+    private firebaseService: FirebaseUtilsService,
+    private drawerService: DrawerService
   ) { }
 
   unsubReplies: any;
@@ -33,10 +35,12 @@ export class ThreadService {
   openThread(message: Message) {
     this.threadIsOpen = true;
     this._message.next(message);
+    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForResponsive(1200) && this.threadIsOpen) this.drawerService.closeWithoutCondition();
   }
 
   closeThread() {
     this.threadIsOpen = false;
+    if(!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForResponsive(1440) && !this.drawerService.isDrawerOpen && !this.threadIsOpen) this.drawerService.toggle();
   }
 
   subReplies(path: string) {
@@ -79,15 +83,18 @@ export class ThreadService {
   }
 
 
-  async updateDoc(path: string, doc: any, idField: string) {
-    if (doc[idField]) {
-      console.log(path, doc);
-      let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
-      await updateDoc(docRef, doc.toJSON());
-    } else {
-      console.error("ID is missing");
-    }
+   // Inside ThreadService
+
+async updateDoc(path: string, doc: any, idField: string, updatedFields: any) {
+  if (doc[idField]) {
+    console.log(path, doc);
+    let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
+    await updateDoc(docRef, { ...updatedFields }); // Updating only the specified fields
+  } else {
+    console.error("ID is missing");
   }
+}
+
 }
 
 

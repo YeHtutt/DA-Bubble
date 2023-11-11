@@ -118,11 +118,13 @@
   src: url('assets/fonts/Nunito-Black.woff') format('woff');
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 30px !important;
 }
-
 
 html,
 body {
@@ -135,6 +137,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
 }
 
 
@@ -182,6 +185,12 @@ div {
   font-size: 24px !important;
   height: 24px !important;
   width: 24px !important;
+
+  // @media(max-width: 400px) {
+  //   font-size: 18px !important;
+  //   height: 18px !important;
+  //   width: 18px !important;
+  // }
 }
 
 .mat-mdc-unelevated-button>.mat-icon {

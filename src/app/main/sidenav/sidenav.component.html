@@ -1,26 +1,26 @@
-<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="showSidenav"
-  src="../assets/img/close-sidenav.png">
-<img class="toggle-box" (click)="drawer.toggle()" (click)="toggleSidenav()" *ngIf="!showSidenav"
-  src="../assets/img/open-sidenav.png">
-
-
+<img class="toggle-box" (click)="drawer.toggle()"
+  src="{{isDrawerOpen ? '../assets/img/close-sidenav.png' : '../assets/img/open-sidenav.png'}}">
 
 <mat-drawer-container class="mat-drawer-container" autosize>
-  <mat-drawer #drawer [opened]="true" class="sidenav" mode="side">
+  <mat-drawer [class.side_nav_mobile]="isMobile" #drawer [opened]="true" class="sidenav" mode="side">
     <div class="mat-drawer-box">
       <div class="sidenav-header">
         <img class="workspace-logo" src="../assets/img/workspace.png">
         <span>Code learning</span>
-        <div  [routerLink]="['message']" class="edit-div">
+        <div [routerLink]="['message']" class="edit-div">
           <img class="edit-icon" src="../assets/img/edit_square.png">
           <div class="bg-div"></div>
         </div>
       </div>
+      <app-search-bar [isMobile]="true"></app-search-bar>
       <app-channels></app-channels>
       <app-direct-message></app-direct-message>
     </div>
+    <button (click)="drawer.close()" [routerLink]="['message']" *ngIf="isDrawerOpen && isMobile" mat-fab color="primary" class="new_msg_mobile_button">
+      <mat-icon>edit_square</mat-icon>
+    </button>
   </mat-drawer>
-  <mat-drawer-content>   
+  <mat-drawer-content [style.margin-left]>
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

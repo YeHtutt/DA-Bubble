@@ -17,12 +17,14 @@ export class NotificationService {
   ) { }
 
 
+
   checkInputLength(inputField: any): void {
     if (inputField.hasError('required')) {
       this.showError('Channel name is required!');
     } else if (inputField.hasError('minlength')) {
       this.showError('Input should have at least 3 letters!');
     }
+   
   }
 
   /* Notification */
@@ -41,18 +43,7 @@ export class NotificationService {
     });
   }
 
-  showConfirmation(message: string, acceptCallback: () => void): void {
-    const dialogRef = this.dialog.open(CustomSnackbarComponent, {
-      width: '300px',
-      data: { message: message }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) { // if the result is true, meaning the "Accept" button was clicked
-        acceptCallback();
-      }
-    });
-  }
+ 
 
 }
 

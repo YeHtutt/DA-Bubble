@@ -5,7 +5,7 @@
             <mat-icon>close</mat-icon>
         </button>
     </header>
-    <main>
+    <main id="scroller" [appScrollBottom]="getAllReplies()">
         <div class="avatar-message-container">
             <img class="avatar" src="{{ message.user.photoURL }}" alt="">
             <div class="message-time">
@@ -22,16 +22,26 @@
             <div>Antworten</div>
             <mat-divider></mat-divider>
         </div>
-        <app-message *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
+        <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
+        <div #scroller></div>
         <div class="input-message-container">
             <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
-                    <mat-icon class="action-btn-style">add</mat-icon>
+                    <div class="file_upload_button">
+                        <label for="fileUpload">
+                            <mat-icon class="action_btn_style">add</mat-icon>
+                        </label>
+                        <input type="file" style="display:none;" id="fileUploadThread" (change)="onUploadThread($event)">
+                    </div>
                     <hr>
                     <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
                     <mat-icon (click)="openTagMenu()" class="action-btn-style">alternate_email</mat-icon>
+                    <div *ngIf="fileUploadThread" class="file_to_upload">
+                        <mat-icon (click)="onDelete(fileUploadThread.path)" class="delete_btn">close</mat-icon>
+                        <img style="height: 45px;" src="{{fileTypeThread}}" alt="">
+                    </div>
                     <div class="tag-menu-outer-container">
                         <div *ngIf="showTagMenu" class="tag-menu-inner-container">
                             <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">

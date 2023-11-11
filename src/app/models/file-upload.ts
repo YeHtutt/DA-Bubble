@@ -1,6 +1,7 @@
 export class FileUpload {
     name: string = '';
     url: string = '';
+    path: string = '';
     file: File;
 
     constructor(file: File) {
@@ -11,7 +12,7 @@ export class FileUpload {
         return {
             name: this.name,
             url: this.url,
-            file: this.file
+            path: this.path
         };
     }
 }

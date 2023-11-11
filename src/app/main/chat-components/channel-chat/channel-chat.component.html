@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <section class="message-section">
+    <section class="message-section" [ngStyle]="{'margin-right' : this.threadService.threadIsOpen ? '25px' : ''}">
         <header>
             <div class="channel_info_box">
                 <span (click)="openChannelMenu()">{{channel?.channelName}}</span>
@@ -8,8 +8,11 @@
             <div class="user_channel_info_box">
                 <div class="user_in_channel_box">
                     <div class="user_avatar_box">
-                        <img *ngFor="let user of channel?.usersData; let i = index;"
-                            [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL" alt="">
+                        <div *ngFor="let user of channel?.usersData;let i=index;">
+                            <img *ngIf="i < 3" [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL"
+                                alt="User image">
+                            <!-- Display the "+number" if there are more than three users -->
+                        </div>
                     </div>
                     <div class="user_amount_box">{{channel?.usersData.length}}</div>
                 </div>
@@ -18,9 +21,8 @@
                 </div>
             </div>
         </header>
-        <main id="scroller">
+        <main id="scroller" [appScrollBottom]="getAllMessages()">
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
-            <div #scroller></div>
         </main>
 
         <div class="input_message_container">
@@ -37,6 +39,10 @@
                     <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
                     <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
+                    <div *ngIf="fileUpload" class="file_to_upload">
+                        <mat-icon (click)="onDelete(fileUpload.path)" class="delete_btn">close</mat-icon>
+                        <img style="height: 45px;" src="{{fileType}}" alt="">
+                    </div>
                     <div class="tagMenuOuterContainer">
                         <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
                             <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
@@ -51,7 +57,7 @@
             </div>
         </div>
     </section>
-    <section class="thread-section" *ngIf="this.threadService.threadIsOpen">
+    <section [@slide] class="thread-section" *ngIf="this.threadService.threadIsOpen">
         <app-threads></app-threads>
     </section>
 </div>

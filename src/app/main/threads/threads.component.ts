@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -7,6 +7,10 @@ import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { Message } from 'src/app/models/message';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { FileStorageService } from 'src/app/services/file-storage.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { FileUpload } from 'src/app/models/file-upload';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 @Component({
@@ -26,6 +30,10 @@ export class ThreadsComponent {
   allUsers: UserProfile[] = [];
   currentUser: UserProfile = new UserProfile;
   collPath = '';
+  thread: any;
+  fileUploadThread?: FileUpload;
+  fileTypeThread: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +41,9 @@ export class ThreadsComponent {
     private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
     private userService: UsersFirebaseService,
+    private fileService: FileStorageService,
+    private notificationService: NotificationService,
+    public drawerService: DrawerService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -60,6 +71,16 @@ export class ThreadsComponent {
     this.subscriptions.unsubscribe();
   }
 
+  // scrollToBottom() {
+  //   if (this.scroller) this.scroller.nativeElement.scrollIntoView();
+  // }
+
+  // onMessageLoaded() {
+  //   this.messagesLoaded++;
+  //   if(this.messagesLoaded == this.threadService.replies.length) {
+  //    this.scrollToBottom();
+  //   }
+  // }
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
@@ -106,13 +127,43 @@ export class ThreadsComponent {
       type: 'reply',
       origin: '',
       reactions: [],
-      fileUpload: []
+      fileUpload: this.fileUploadThread?.toJSON() || []
     });
   }
 
 
   sendReplyTo() {
-    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON())
+    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON());
+    this.text = '';
+    this.fileUploadThread = undefined;
   }
 
+
+    // Upload File
+
+    onUploadThread(event: any) {
+      const file = new FileUpload(event.target.files[0]);
+      const maxSize = 1500 * 1024;
+      this.setFileType(file.file.type);
+      if (file.file.size > maxSize) {
+        this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+        return;
+      } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+        this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
+        return;
+      } else {
+        this.fileService.uploadFile(file).then(file => this.fileUploadThread = file);
+      }
+    }
+  
+    setFileType(type: string) {
+      if(type.includes('jpeg' || 'jpg')) this.fileTypeThread = 'assets/img/icons/jpg.png';
+      if(type.includes('png')) this.fileTypeThread = 'assets/img/icons/png.png';
+      if(type.includes('pdf')) this.fileTypeThread = 'assets/img/icons/pdf.png';
+    }
+  
+    onDelete(filePath: string) {
+      this.fileService.deleteFile(filePath);
+      this.fileUploadThread = undefined;
+    }
 }

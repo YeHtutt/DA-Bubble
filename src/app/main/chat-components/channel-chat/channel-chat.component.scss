@@ -12,25 +12,24 @@
     background-color: white;
     height: calc(100% - 25px);
     border-radius: 30px;
-    margin: 0 25px 0 50px;
+    margin: 0 12px 0 25px;
     position: relative;
     width: 100%;
 }
 
 .thread-section {
-    width: 35%;
     background-color: white;
     height: calc(100% - 25px);
     border-radius: 30px;
     margin-right: 25px;
+    position: relative;
 }
 
 
 // HEADER SECTION
 
 header {
-    height: 96px;
-    padding: 25px 45px 25px 45px;
+    padding: 20px 45px 20px 45px;
     box-shadow: 0px 2px 10px 0px #00000014;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
@@ -188,9 +187,12 @@ header {
 .chat_action_box {
     display: flex;
     gap: 5px;
+    align-items: center;
+    position: relative;
 
     hr {
         margin: 0;
+        min-height: 30px;
     }
 }
 
@@ -226,8 +228,9 @@ main {
     max-height: 100%;
     width: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
     position: absolute;
-    top: 96px;
+    top: 82px;
     bottom: 177px;
     padding-top: 20px;
 }
@@ -272,5 +275,93 @@ app-emoji-picker {
         width: 25px;
         height: 25px;
         border-radius: 100%;
+    }
+}
+
+// FILE UPLOAD
+
+.file_to_upload {
+    cursor: pointer;
+
+    &:hover {
+        .delete_btn {
+            display: flex !important;
+        }
+    }
+}
+
+.delete_btn {
+    cursor: pointer;
+    display: none !important;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-radius: 100%;
+    background: grey;
+    color: white;
+    font-size: 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+// MEDIA-QUERIES 
+
+@media (min-width: 960px) {
+
+    .thread-section {
+        left: 0px;
+        margin-right: 12px;
+    }
+}
+
+@media (max-width: 960px) {
+
+    .thread-section {
+        position: absolute;
+        left: 25px;
+        right: 22px;
+        margin-right: 0;
+        z-index: 5;
+    }
+
+    // .message-section {
+    //     margin-right: 25px;
+    // }
+}
+
+@media (max-width: 750px) {
+    .message-section {
+        margin: 0;
+        border-radius: 0;
+        height: 100%;
+    }
+
+    .user_in_channel_box {
+        display: none;
+    }
+
+    .thread-section {
+        border-radius: 0;
+        margin-right: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+@media (max-width: 500px) {
+
+    header {
+        height: 60px;
+        padding: 10px 25px;
+    }
+
+    main {
+        top: 60px;
     }
 }

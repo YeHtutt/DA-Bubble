@@ -50,8 +50,10 @@ export class ChannelService {
 
   channelContent: Channel[] = [];
   channelTree: ChannelsNode[] = [];
+  channels: Channel[] = [];
   themes: any;
   unsubChannel: any;
+  unsubChannels: any;
   unsubChannelTree: any;
   unsubMessage: any;
   unsubChannelContent: any;
@@ -61,6 +63,7 @@ export class ChannelService {
     this.unsubChannelTree();
     this.unsubChannel();
     this.unsubChannelContent();
+    this.unsubChannels();
   }
 
 
@@ -89,37 +92,46 @@ export class ChannelService {
   );
 
 
-  
+
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   public dataLoaded = new BehaviorSubject<boolean>(false);
 
 
+  getAllChannels() {
+    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
+      list.forEach((element: any) => {
+        const channelObj = this.setChannelObj(element.data(), element.id);
+        this.channels.push(channelObj);
+      });
+      this.dataSource.data
+      this.dataLoaded.next(true);
+    });
+
+  }
+
   subChannelList() {
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
-      this.initializeChannelTree();
+      this.channelTree = [];
       this.populateChannelsAndMore(list);
       this.updateDataSource();
       this.dataLoaded.next(true);
     });
   }
 
-  initializeChannelTree() {
-    this.channelTree = [];
-  }
 
 
   populateChannelsAndMore(list: any) {
-    let weitereChannels: ChannelsNode[] = [];
+    let moreChannels: ChannelsNode[] = [];
     list.forEach((element: any) => {
       const channelObj = this.setChannelObj(element.data(), element.id);
       const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
       if (containsCurrentUser) this.channelTree.push(channelObj);
-      else weitereChannels.push(channelObj);
+      else moreChannels.push(channelObj);
     });
     this.sortChannelTree();
-    this.appendMoreChannels(weitereChannels);
+    this.appendMoreChannels(moreChannels);
   }
 
   sortChannelTree() {
@@ -148,18 +160,6 @@ export class ChannelService {
     }
   }
 
-  processNodes(nodes: any[], parentName: string = ''): void {
-    nodes.forEach(node => {
-      if (parentName) {
-        node.parentName = parentName;
-      }
-
-      if (node.children) {
-        this.processNodes(node.children, node.channelName);
-      }
-    });
-  }
-
 
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
     const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
@@ -171,8 +171,6 @@ export class ChannelService {
       }
     });
   }
-
-
 
   async updateChannel(channel: Channel) {
     if (channel.channelId) {

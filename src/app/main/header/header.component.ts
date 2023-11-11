@@ -8,6 +8,8 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
+import { DrawerService } from 'src/app/services/drawer.service';
+import { ThreadService } from 'src/app/services/thread.service';
 
 @Component({
   selector: 'app-header',
@@ -28,14 +30,15 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     public userFbService: UsersFirebaseService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    public drawerService: DrawerService,
+    public threadService: ThreadService
   ) { }
 
 
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
-    this.getCurrentUser();
-    
+    this.getCurrentUser(); 
   }
 
   async getCurrentUser() {

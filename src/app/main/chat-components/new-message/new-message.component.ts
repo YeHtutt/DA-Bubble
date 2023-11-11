@@ -1,13 +1,16 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Channel } from 'src/app/models/channel';
 import { DirectChat } from 'src/app/models/direct-chat';
+import { FileUpload } from 'src/app/models/file-upload';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
+import { FileStorageService } from 'src/app/services/file-storage.service';
 import { MessageService } from 'src/app/services/message.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
-
+72
 type ReceiverType = UserProfile | Channel;
 
 @Component({
@@ -31,12 +34,16 @@ export class NewMessageComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
+  fileUpload?: FileUpload;
+  fileType: string = '';
 
 
   constructor(
     private userService: UsersFirebaseService,
     private messageService: MessageService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private fileService: FileStorageService,
+    private notificationService: NotificationService
 
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
@@ -51,6 +58,7 @@ export class NewMessageComponent {
       this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true, '');
     }
     this.text = '';
+    this.fileUpload = undefined;
   }
 
   createDirectChatObject(receiver: UserProfile): DirectChat {
@@ -58,7 +66,8 @@ export class NewMessageComponent {
       chatId: '',
       creationTime: new Date(),
       user1: this.currentUser.id,
-      user2: receiver.id
+      user2: receiver.id,
+      splittedId: `${this.currentUser.id}_${receiver.id}`
     });
   }
 
@@ -72,7 +81,7 @@ export class NewMessageComponent {
       textEdited: false,
       type: 'message',
       reactions: [],
-      fileUpload: []
+      fileUpload: this.fileUpload?.toJSON() || []
     });
   }
 
@@ -123,5 +132,34 @@ export class NewMessageComponent {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
+  }
+
+
+  // Upload File
+
+  onUpload(event: any) {
+    const file = new FileUpload(event.target.files[0]);
+    const maxSize = 1500 * 1024;
+    this.setFileType(file.file.type);
+    if (file.file.size > maxSize) {
+      this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+      return;
+    } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+      this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
+      return;
+    } else {
+      this.fileService.uploadFile(file).then(file => this.fileUpload = file);
+    }
+  }
+
+  setFileType(type: string) {
+    if(type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
+    if(type.includes('png')) this.fileType = 'assets/img/icons/png.png';
+    if(type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
+  }
+
+  onDelete(filePath: string) {
+    this.fileService.deleteFile(filePath);
+    this.fileUpload = undefined;
   }
 }

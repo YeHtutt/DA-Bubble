@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageTreeService } from 'src/app/services/message-tree.service';
-import { DirectMessageAddDialogComponent } from '../direct-message-add-dialog/direct-message-add-dialog.component';
 import { Subscription } from 'rxjs';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfile } from 'src/app/models/user-profile';
-import { MessageService } from 'src/app/services/message.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
+import { DrawerService } from 'src/app/services/drawer.service';
+import { NewChatDialogComponent } from './new-chat-dialog/new-chat-dialog.component';
+import { ThreadService } from 'src/app/services/thread.service';
 
 
 @Component({
@@ -24,9 +24,10 @@ export class DirectMessageComponent {
     public messageTreeService: MessageTreeService,
     public dialog: MatDialog,
     private userService: UsersFirebaseService,
-    private messageService: MessageService,
     private router: Router,
     private firebaseUtils: FirebaseUtilsService,
+    private drawerService: DrawerService,
+    private threadService: ThreadService
   ) { this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user }); }
 
   private subscriptions: Subscription[] = [];
@@ -41,15 +42,7 @@ export class DirectMessageComponent {
   filteredUser: any = [];
 
 
-  openDirectMessageDialog() {
-    this.dialog.open(DirectMessageAddDialogComponent, {
-      width: '880px',
-      height: '514px',
-      hasBackdrop: true,
-      panelClass: 'dialog-main-style',
-      autoFocus: false,
-    });
-  }
+
 
   ngOnInit() {
     const sub = this.messageTreeService.dataLoaded.subscribe(loaded => {
@@ -69,6 +62,8 @@ export class DirectMessageComponent {
     // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
     const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
+    this.drawerService.close();
+    if(this.threadService.threadIsOpen)this.threadService.closeThread();
   }
 
   createDirectChatObject(receiver: string): DirectChat {
@@ -76,7 +71,8 @@ export class DirectMessageComponent {
       chatId: '',
       creationTime: new Date(),
       user1: this.currentUser.id,
-      user2: receiver
+      user2: receiver,
+      splittedId: `${this.currentUser.id}_${receiver}`
     });
   }
 
@@ -102,9 +98,16 @@ export class DirectMessageComponent {
     return this.userService.getFromLocalStorage();
   }
 
-  startDirectChat() {
+  openNewChatDialog() {
 
-
+    this.dialog.open(NewChatDialogComponent, {
+      width: '880px',
+      height: '514px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+    });
   }
 
 }
+

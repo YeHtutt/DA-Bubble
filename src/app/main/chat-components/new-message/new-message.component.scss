@@ -1,24 +1,21 @@
 @import 'src/app/main/chat-components/channel-chat/channel-chat.component.scss';
 
+
 // HEADER
 
 header {
     height: fit-content;
     background-color: white;
     position: inherit;
-    padding: 32px 45px 20px 45px;
-    z-index: 5;
-}
-
-.message-section {
-    width: 100%;
+    padding: 20px 45px 20px 45px;
+    // z-index: 5;
 }
 
 .direct_message_info_box {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
     span {
         color: black;
@@ -66,6 +63,7 @@ main {
     display: flex;
     flex-direction: column;
     width: 100%;
+    top: 80px;
 }
 
 .new_conversation_container {
@@ -161,7 +159,7 @@ main {
     gap: 16px;
 }
 
-.user,
+// .user,
 .channel {
     padding: 4px 8px;
     border-radius: 30px;
@@ -172,36 +170,19 @@ main {
     }
 }
 
-// INPUT SECTION
+// MEDIA-QUERIES
 
-.tagMenuOuterContainer {
-    position: absolute;
-    bottom: 50px;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
-    background-color: white;
-}
+@media (max-width: 500px) {
 
-.tagMenuInnerContainer {
-    background: white;
-
-    padding: 12px;
-    height: 200px;
-    overflow: scroll;
-}
-
-.user {
-    display: flex;
-
-    img {
-        width: 25px;
-        height: 25px;
-        border-radius: 100%;
+    header {
+        padding: 15px 25px;
     }
-}
+    
+    .direct_message_info_box {
+        gap: 10px;
+    }
 
-app-emoji-picker {
-    position: absolute;
-    bottom: 50px;
+    main {
+        top: 60px;
+    }
 }

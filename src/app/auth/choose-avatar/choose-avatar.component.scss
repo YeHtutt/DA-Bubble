@@ -1,14 +1,15 @@
 .avatarContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    max-width: 100%;
+    max-width: 1280px;
     min-height: 100vh;
     background-color: #ECEEFE;
     position: relative;
 
-    @media(max-width: 599px) {
+    @media(max-width: 650px) {
         flex-direction: column;
     }
 }
@@ -21,7 +22,7 @@ mat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px 53px;
+    padding: 30px 30px;
     background-color: #FFF;
 
     .arrow-back {
@@ -40,15 +41,21 @@ mat-card {
             background-color: rgba(0, 0, 0, 0.15);
         }
 
-        @media(max-width: 599px) {
+        @media(max-width: 650px) {
             top: 25px;
             left: 20px;
         }
     }
 
-    @media(max-width: 599px) {
-        width: 398px;
-        padding: 26px 20px;
+    @media(max-width: 650px) {
+        width: 90%;
+        margin: auto;
+        padding: 10px 10px;
+    }
+
+    @media(max-width: 400px) {
+        width: 100%;
+        padding: 10px 10px;
     }
 }
 
@@ -59,7 +66,7 @@ mat-card-title {
     text-align: center;
     color: var(--Purple-1, #444DF2);
 
-    @media(max-width: 599px) {
+    @media(max-width: 650px) {
         font-size: 32px;
         width: 70%;
     }
@@ -67,36 +74,55 @@ mat-card-title {
 
 .profileImg {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
     width: 136px;
     height: 136px;
     padding: 16px;
-    background: var(--Purple-2, #797EF3);
+    //background: var(--Purple-2, #797EF3);
     border-radius: 100px;
 
-    @media(max-width: 599px) {
+    img {
+        width: 152px;
+        height: 152px;
+        object-fit: cover;
+        border-radius: 100px;
+    }
+
+    @media(max-width: 650px) {
         height: 120px;
         width: 120px;
         padding: 16px;
 
         img {
-            height: 120px;
-            width: 120px;
+            height: 136px;
+            width: 136px;
+            object-fit: cover;
+        }
+    }
+
+    @media(max-width: 400px) {
+        width: 90px;
+        height: 90px;
+
+        img {
+            height: 106px;
+            width: 106px;
             object-fit: cover;
         }
     }
 }
 
 .avatarContentBox {
-    margin-top: 25.5px;
+    margin-top: 10px;
     width: 472px;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 32px;
+    gap: 15px;
 
     .newUser {
         box-sizing: border-box;
@@ -140,15 +166,23 @@ mat-card-title {
                 background-color: lightgray;
             }
 
-            @media(max-width: 599px) {
+            @media(max-width: 650px) {
                 width: 56px;
                 height: 56px;
                 object-fit: cover;
             }
+
+            @media(max-width: 400px) {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+            }
         }
 
-        @media(max-width: 599px) {
+        @media(max-width: 650px) {
             gap: 0;
+            display: flex;
+            flex-wrap: wrap;
         }
     }
 
@@ -181,7 +215,7 @@ mat-card-title {
                 background-color: lightgray;
             }
 
-            @media(max-width: 599px) {
+            @media(max-width: 650px) {
                 font-size: 14px;
             }
 
@@ -189,10 +223,6 @@ mat-card-title {
     }
 
     .buttonBox {
-        /*position: absolute;
-        right: 53px;
-        bottom: 30px;
-        padding: 12px 25px;*/
         position: block;
         box-sizing: border-box;
         width: 100%;
@@ -218,48 +248,87 @@ mat-card-title {
         }
     }
 
-    @media(max-width: 599px) {
-        width: 356px;
+    @media(max-width: 650px) {
+        width: 100%;
     }
 
 }
 
 .legals {
     flex-shrink: 0;
-    position: absolute;
     bottom: 48px;
     display: flex;
     gap: 16px;
     color: #A4A8F7;
     cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 10px;
 
-    @media(max-width: 599px) {
+    @media(max-width: 650px) {
         display: none;
     }
 }
 
 .logoContent-normal {
-    position: absolute;
-
-    left: 50px;
-    top: 30px;
     display: flex;
+    width: 100vw;
+    max-width: 1280px;
+    justify-content: flex-start;
+    margin-top: 30px;
+    margin-bottom: 30px;
 
     img {
         height: 70px;
         width: auto;
         object-fit: cover;
         position: relative;
+        margin-left: 75px;
+
+        @media(max-width: 1040px) {
+            margin-left: 0px;
+        }
+
+        @media(max-width: 560px) {
+            margin-left: 0;
+            margin-bottom: 0;
+            height: 60px;
+        }
+
+        @media(max-width: 400px) {
+            height: 41px;
+        }
     }
 
-    @media(max-width: 599px) {
+    @media(max-width: 1040px) {
         position: static;
-        box-sizing: border-box;
-        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 30px;
-        margin-bottom: 30px;
+        margin-top: 0;
+        margin-left: 0;
     }
+
+    @media(max-width: 750px) {
+        margin-bottom: 30px;
+        margin-top: 30px;
+        margin-left: 0;
+    }
+
+    @media(max-width: 650px) {
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    @media(max-width: 400px) {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+}
+
+.backgroundContainer {
+    width: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: #ECEEFE;
 }

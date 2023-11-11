@@ -15,7 +15,7 @@ export class ChooseAvatarComponent {
   url = 'assets/img/avatar/';
   newUserID:any;
   avatarPic: boolean = true;
-
+  urlToSelectedAvatar: string | null = null;
 
   user: UserProfile = new UserProfile;
   
@@ -27,6 +27,13 @@ export class ChooseAvatarComponent {
 
   setNewPic(image: any) {
     this.currentPic = image;
+    if(this.avatarPic) {
+      this.urlToSelectedAvatar = 'assets/img/avatar/' + image;
+    }else
+    {
+      this.urlToSelectedAvatar = image;
+      this.avatarPic = true;
+    }
   }
 
   async saveNewPic(image: any) {

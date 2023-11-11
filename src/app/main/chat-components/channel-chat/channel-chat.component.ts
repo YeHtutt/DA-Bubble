@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
-import { Subscription } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 /* Models */
 
 import { Message } from 'src/app/models/message';
@@ -20,13 +20,26 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { FileUpload } from 'src/app/models/file-upload';
+import { NotificationService } from 'src/app/services/notification.service';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
-  styleUrls: ['./channel-chat.component.scss']
+  styleUrls: ['./channel-chat.component.scss'],
+  animations: [
+    trigger('slide', [
+      transition(':enter', [
+        style({transform: 'translateX(100%)'}), 
+        animate('300ms ease-out', style({transform: 'translateX(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({transform: 'translateX(100%)'}))  
+      ])
+    ])
+  ]
 })
 export class ChannelChatComponent {
 
@@ -43,9 +56,10 @@ export class ChannelChatComponent {
   showTagMenu: boolean = false;
   isOpened: boolean = false;
   scrollElement: any;
-  @ViewChild('scroller', {static: false}) scroller?: ElementRef;
+  @ViewChild('scroller', { static: false }) scroller?: ElementRef;
   messageCount: any;
-  
+  fileUpload?: FileUpload;
+  fileType: string = '';
 
 
   constructor(
@@ -57,7 +71,9 @@ export class ChannelChatComponent {
     private messageService: MessageService,
     private channelService: ChannelService,
     public threadService: ThreadService,
-    private fileService: FileStorageService) {
+    private fileService: FileStorageService,
+    private notificationService: NotificationService,
+    public drawerService: DrawerService) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -77,20 +93,15 @@ export class ChannelChatComponent {
     });
   }
 
+
   ngOnDestroy() {
     this.channelService.unsubChannel();
   }
 
 
-  getAllMessages() {
-    this.scrollToBottom();
-    return this.messageService.messages
-  }
 
-  scrollToBottom() {
-    if(this.scroller) {
-      this.scroller.nativeElement.scrollIntoView(); 
-    }
+  getAllMessages() {
+    return this.messageService.messages
   }
 
 
@@ -124,6 +135,7 @@ export class ChannelChatComponent {
       this.receiver = await this.channelService.getSingleChannel(docId)
       this.messageService.sendMessage(this.message, this.receiver, false, '');
       this.text = '';
+      this.fileUpload = undefined;
     });
     this.getAllMessages();
   }
@@ -141,7 +153,7 @@ export class ChannelChatComponent {
       textEdited: false,
       type: 'message',
       reactions: [],
-      fileUpload: []
+      fileUpload: this.fileUpload?.toJSON() || []
     });
   }
 
@@ -180,8 +192,27 @@ export class ChannelChatComponent {
 
   onUpload(event: any) {
     const file = new FileUpload(event.target.files[0]);
-    const fileUploaded = this.fileService.uploadFile(file)
-    console.log(fileUploaded)
+    const maxSize = 1500 * 1024;
+    this.setFileType(file.file.type);
+    if (file.file.size > maxSize) {
+      this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+      return;
+    } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+      this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
+      return;
+    } else {
+      this.fileService.uploadFile(file).then(file => this.fileUpload = file);
+    }
   }
 
+  setFileType(type: string) {
+    if(type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
+    if(type.includes('png')) this.fileType = 'assets/img/icons/png.png';
+    if(type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
+  }
+
+  onDelete(filePath: string) {
+    this.fileService.deleteFile(filePath);
+    this.fileUpload = undefined;
+  }
 }

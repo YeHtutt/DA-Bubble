@@ -61,7 +61,6 @@ import { UserProfileViewComponent } from './main/users/user-profile-view/user-pr
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
 import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
 import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
-import { DirectMessageAddDialogComponent } from './main/direct-message-add-dialog/direct-message-add-dialog.component';
 import { DirectMessageComponent } from './main/direct-message/direct-message.component';
 import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
@@ -70,6 +69,9 @@ import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
+import { SearchBarComponent } from './main/search-bar/search-bar.component';
+import { NewChatDialogComponent } from './main/direct-message/new-chat-dialog/new-chat-dialog.component';
+import { ScrollBottomDirective } from './scroll-bottom.directive';
 
 
 
@@ -98,14 +100,17 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     ChannelUsersDialogComponent,
     UserProfileEditComponent,
     UserProfileSubViewComponent,
-    DirectMessageAddDialogComponent,
+
     DirectMessageComponent,
     EmojiPickerComponent,
     AddPeopleDialogComponent,
     ImprintComponent,
     DataPrivacyComponent,
     FilterPipe,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    SearchBarComponent,
+    NewChatDialogComponent,
+    ScrollBottomDirective
 
 
 
@@ -139,7 +144,7 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
     MatRadioModule,
     MatChipsModule,
     PickerModule
-    
+
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
