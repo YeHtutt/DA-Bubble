@@ -94,9 +94,7 @@ export class ChannelChatComponent {
   }
 
 
-  ngOnDestroy() {
-    this.channelService.unsubChannel();
-  }
+  
 
 
 

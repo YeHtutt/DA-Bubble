@@ -67,8 +67,6 @@ export class ChannelService {
   }
 
 
-
-
   private _transformer = (node: ChannelsNode, level: number) => {
     const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
@@ -79,10 +77,12 @@ export class ChannelService {
     };
   };
 
+
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level,
     node => node.expandable,
   );
+
 
   treeFlattener = new MatTreeFlattener<ChannelsNode, ExampleFlatNode>(
     this._transformer,
@@ -90,7 +90,6 @@ export class ChannelService {
     node => node.expandable,
     node => node.children,
   );
-
 
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -119,7 +118,6 @@ export class ChannelService {
       this.dataLoaded.next(true);
     });
   }
-
 
 
   populateChannelsAndMore(list: any) {
@@ -198,7 +196,6 @@ export class ChannelService {
 
   setChannelContentObj(obj: any, docId: string): Channel {
     const channelJSON = { ...obj, channelId: docId };
-    console.log(channelJSON);
     return Channel.fromJSON(channelJSON);
   }
 
