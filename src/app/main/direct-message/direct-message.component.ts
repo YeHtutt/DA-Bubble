@@ -55,7 +55,7 @@ export class DirectMessageComponent {
     const chatAlreadyExists = await this.firebaseUtils.chatExists(this.currentUser.id, receiverId);
     if (!chatAlreadyExists) {
       let newDirectChat = this.createDirectChatObject(receiverId).toJSON();
-      this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
+      this.firebaseUtils.addCollWithCustomId(newDirectChat, 'chat', newDirectChat.chatId);
     }
     // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
     const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
@@ -66,11 +66,10 @@ export class DirectMessageComponent {
 
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
-      chatId: '',
+      chatId: `${this.currentUser.id}_${receiver}`,
       creationTime: new Date(),
       user1: this.currentUser.id,
       user2: receiver,
-      splittedId: `${this.currentUser.id}_${receiver}`
     });
   }
 
