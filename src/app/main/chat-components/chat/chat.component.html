@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <button [disabled]="text.length == 0" (click)="send()"><mat-icon
-                        class="send_btn">send</mat-icon></button>
+                    [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send_btn">send</mat-icon></button>
             </div>
         </div>
     </section>
