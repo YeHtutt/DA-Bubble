@@ -63,11 +63,10 @@ export class NewMessageComponent {
 
   createDirectChatObject(receiver: UserProfile): DirectChat {
     return new DirectChat({
-      chatId: '',
+      chatId: `${this.currentUser.id}_${receiver.id}`,
       creationTime: new Date(),
       user1: this.currentUser.id,
       user2: receiver.id,
-      splittedId: `${this.currentUser.id}_${receiver.id}`
     });
   }
 
@@ -153,9 +152,9 @@ export class NewMessageComponent {
   }
 
   setFileType(type: string) {
-    if(type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
-    if(type.includes('png')) this.fileType = 'assets/img/icons/png.png';
-    if(type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
+    if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
+    if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
+    if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
 
   onDelete(filePath: string) {

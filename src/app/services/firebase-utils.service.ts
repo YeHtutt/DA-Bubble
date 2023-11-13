@@ -9,7 +9,7 @@ import {
   where, query,
   limit,
   collectionData,
-  getDocs
+  getDocs, setDoc
 } from '@angular/fire/firestore';
 
 
@@ -33,6 +33,14 @@ export class FirebaseUtilsService {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  async addCollWithCustomId(data: any, collectionName: string, customId: string): Promise<void> {
+    const collectionRef = collection(this.firestore, collectionName);
+    // Use the custom ID to create the document reference
+    const documentRef = doc(collectionRef, customId);
+    // Now use setDoc to create the document with the custom ID
+    return setDoc(documentRef, data);
   }
 
 
