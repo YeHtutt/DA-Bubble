@@ -21,7 +21,7 @@
                 </div>
             </div>
         </header>
-        <main id="scroller" [appScrollBottom]="getAllMessages()" [currentChat]="channel.channelId">
+        <main id="scroller" [appScrollBottom]="getAllMessages()">
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
         </main>
 

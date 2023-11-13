@@ -28,6 +28,10 @@ app-search-bar {
   align-items: center;
 }
 
+.left_side {
+  display: flex;
+}
+
 .search-box {
   position: relative;
   height: 50px;
@@ -41,7 +45,7 @@ app-search-bar {
   padding: 0 45px;
   font-size: 24px;
   font-weight: 400;
-  margin-left: 101.5px;
+  margin-left: 80.5px;
 }
 
 .profil-box {

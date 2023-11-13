@@ -6,6 +6,8 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { FileUpload } from 'src/app/models/file-upload';
 import { FileStorageService } from 'src/app/services/file-storage.service';
+import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Reaction {
   reactionEmoji: string,
@@ -43,7 +45,8 @@ export class MessageComponent {
     public threadService: ThreadService,
     private firebaseUtils: FirebaseUtilsService,
     private router: Router,
-    private fileService: FileStorageService
+    private fileService: FileStorageService,
+    public dialog: MatDialog
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
@@ -231,4 +234,27 @@ export class MessageComponent {
     return message.user.id === this.currentUser && message.origin === 'channel';
   }
   
+  // OPEN USER PROFIL
+
+  openProfileDialog(node: any) {
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
+    const userEmail = node.email;
+    const isOnline = node.isOnline;
+    this.dialog.open(UserProfileSubViewComponent, {
+      width: '500px',
+      height: '727px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+      data: {
+        id: userId,
+        name: userName,
+        photoURL: userPhotoURL,
+        email: userEmail,
+        isOnline: isOnline
+      }
+    });
+  }
 }

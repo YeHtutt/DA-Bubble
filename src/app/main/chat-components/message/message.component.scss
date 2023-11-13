@@ -29,6 +29,14 @@
     background-color: white;
 }
 
+.user_name {
+    cursor: pointer;
+
+    &:hover {
+        color: #444DF2;
+    }
+}
+
 .content_container {
     display: flex;
     flex-direction: column;

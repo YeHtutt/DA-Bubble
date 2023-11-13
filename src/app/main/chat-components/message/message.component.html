@@ -4,7 +4,7 @@
     <div *ngIf="!showEdit" [ngClass]="{'content_container_reverse': currentUser == message.user.id && message.origin === 'chat'}"
         class="content_container">
         <div [ngClass]="{'creator_info_reverse': currentUser == message.user.id && message.origin === 'chat'}" class="creator_info">
-            <span>{{ message.user.name }}</span>
+            <span class="user_name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
         <div [ngClass]="messageClasses(message)" class="message">
