@@ -138,7 +138,7 @@ export class MessageService {
     let chatExists: boolean = false;
     if (chats) {
       chats.forEach(chat => {
-        if (chat.user1 == directChat.user1 && chat.user2 == directChat.user2) {
+        if (chat.user1 == directChat.user1 && chat.user2 == directChat.user2 || chat.user1 == directChat.user2 && chat.user2 == directChat.user1) {
           chatExists = chat.chatId;
         } else {
           chatExists = false;

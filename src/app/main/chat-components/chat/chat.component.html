@@ -6,16 +6,15 @@
                 <span>{{receiver.name}}</span>
             </div>
         </header>
-        <main id="scroller" [appScrollBottom]="getAllMessages()">
+        <main id="scroller" [appScrollBottom]="this.messageService.messages" [currentChat]="chatId">
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
-            <div #scroller></div>
-            <div *ngIf="!chatExists" class="new_conversation_container">
+            <!-- <div *ngIf="!chatExists" class="new_conversation_container">
                 <div class="user_info_box">
                     <img src="{{receiver.photoURL}}" alt="">
                     <span>{{receiver.name}}</span>
                 </div>
-                <span>Diese Unterhaltung findet nur zwischen <span>@{{receiver.name}}</span> und dir statt.</span>
-            </div>
+                <span>Diese Unterhaltung findet nur zwischen <span>&#64;{{receiver.name}}</span> und dir statt.</span>
+            </div> -->
         </main>
         <div class="input_message_container">
             <textarea [(ngModel)]="text" placeholder="Nachricht an @{{receiver.name}}"></textarea>
