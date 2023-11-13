@@ -100,40 +100,33 @@ export class MessageTreeService {
 
   unsubChat: any;
 
+  
   subUserMessagesList() {
-    // We keep a reference to the unsubscribe function
-    this.unsubChat = onSnapshot(this.firebaseUtils.getRef('chat'), async (list: any) => {
-      // Initialize an empty array for all promises
-      let promises = [];
-      // Using `for...of` loop instead of `forEach` to handle async/await
-      for (const element of list.docs) {
-        // Create a promise for each user data retrieval and push it to the promises array
-        promises.push(this.processMessageElement(element));
-      }
-
-      // Wait for all promises to resolve
-      await Promise.all(promises);
-
-      // Now that we have all the data, update the tree
+    return this.unsubChat = onSnapshot(this.firebaseUtils.getRef('users'), (list: any) => {
+      this.messageTree = [];
+      list.forEach((element: any) => {
+        const messageObj = this.setDirectMessageObj(element.data(), element.id);
+        let currentUser = this.userService.getFromLocalStorage();
+        if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
+      });
+      this.messageTree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       this.themes = [{ name: 'Direktnachrichten', children: this.messageTree }];
       this.dataSource.data = this.themes;
       this.dataLoaded.next(true);
     });
   }
 
-  // This function processes each element from the list and is designed to be used with async/await
-  async processMessageElement(element: any) {
-    let currentUser = await this.userService.getFromLocalStorage();
-    let user1 = element.data().user1;
-    let user2 = element.data().user2;
-    let user = currentUser !== user1 ? user1 : user2;
-    if (currentUser !== user) {
-      let receiver = await this.userService.getUser(user) as UserProfile;
-      const messageObj = this.setDirectMessageObj(receiver, element.id);
-      this.messageTree.push(messageObj);
-    }
-  }
 
+  getChannelContent(documentId: string) {
+    const docRef = doc(this.firebaseUtils.getRef('users'), documentId);
+    return this.unsubChat = onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        return this.setDirectMessageObj(docSnapshot.data(), docSnapshot.id);
+      } else {
+        return console.log('Document does not exist!');
+      }
+    });
+  }
 
   setDirectMessageObj(obj: any, docId: string): MessagesNode {
     return new UserProfile({
@@ -145,6 +138,7 @@ export class MessageTreeService {
       children: []
     });
   }
+
 
 
 

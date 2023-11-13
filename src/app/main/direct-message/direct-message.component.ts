@@ -42,8 +42,6 @@ export class DirectMessageComponent {
   filteredUser: any = [];
 
 
-
-
   ngOnInit() {
     const sub = this.messageTreeService.dataLoaded.subscribe(loaded => {
       if (loaded) {
@@ -63,7 +61,7 @@ export class DirectMessageComponent {
     const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
     this.drawerService.close();
-    if(this.threadService.threadIsOpen)this.threadService.closeThread();
+    if (this.threadService.threadIsOpen) this.threadService.closeThread();
   }
 
   createDirectChatObject(receiver: string): DirectChat {

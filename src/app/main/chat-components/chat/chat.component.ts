@@ -22,11 +22,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
   animations: [
     trigger('slide', [
       transition(':enter', [
-        style({transform: 'translateX(100%)'}), 
-        animate('300ms ease-out', style({transform: 'translateX(0%)'}))
+        style({ transform: 'translateX(100%)' }),
+        animate('300ms ease-out', style({ transform: 'translateX(0%)' }))
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({transform: 'translateX(100%)'}))  
+        animate('300ms ease-in', style({ transform: 'translateX(100%)' }))
       ])
     ])
   ]
@@ -42,7 +42,7 @@ export class ChatComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
-  @ViewChild('scroller', {static: false}) scroller?: ElementRef;
+  @ViewChild('scroller', { static: false }) scroller?: ElementRef;
   fileUpload?: FileUpload;
   fileType: string = '';
 
@@ -71,6 +71,7 @@ export class ChatComponent {
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
+
     });
   }
 
@@ -147,7 +148,6 @@ export class ChatComponent {
     const userPhotoURL = node.photoURL;
     const userEmail = node.email;
     const isOnline = node.isOnline;
-
     this.dialog.open(UserProfileSubViewComponent, {
       width: '500px',
       height: '727px',
@@ -182,9 +182,9 @@ export class ChatComponent {
   }
 
   setFileType(type: string) {
-    if(type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
-    if(type.includes('png')) this.fileType = 'assets/img/icons/png.png';
-    if(type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
+    if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
+    if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
+    if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
 
   onDelete(filePath: string) {

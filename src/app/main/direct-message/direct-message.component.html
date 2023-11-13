@@ -1,7 +1,7 @@
 <mat-tree class="mat-tree" [dataSource]="messageTreeService.dataSource" [treeControl]="messageTreeService.treeControl">
   <!-- This is the tree node template for leaf nodes !IMPORTANT -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact"
-  (click)="selectReceiver(node.id)">
+    (click)="selectReceiver(node.id)">
     <img class="profil-icon" src="{{ node.photoURL }}">
     <img *ngIf="node.isOnline" class="onlineStatus" src="assets/img/Online.png">
     <img *ngIf="!node.isOnline" class="onlineStatus" src="assets/img/Offline.png">
@@ -20,7 +20,6 @@
           <img src="../../../assets/img/account_circle.png">
           <h3>{{node.name}}</h3>
         </div>
-        <mat-icon mat-mini-fab color="primary" mat-raised-button (click)="openNewChatDialog()">add</mat-icon>
       </div>
     </div>
   </mat-tree-node>
