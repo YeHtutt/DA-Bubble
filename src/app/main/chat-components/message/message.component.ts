@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
@@ -112,12 +112,12 @@ export class MessageComponent {
     this.isOpened = false;
   }
 
-  openReaction() {
+  toggleReaction() {
     this.isReactionInputOpened = !this.isReactionInputOpened;
     // setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
   }
 
-  openInReaction() {
+  toggleInReaction() {
     this.isReactionOpened = !this.isReactionOpened;
   }
 
@@ -175,6 +175,15 @@ export class MessageComponent {
     const sortedReactions = this.message.reactions.sort((a: any, b: any) => b.users.length - a.users.length);
     return sortedReactions;
   }
+
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   if (!target.closest('.reaction_emoji_inside')) {
+  //     this.isReactionInputOpened = false;
+  // this.isReactionOpened = false;
+  //   }
+  // }
 
 
   /* Thread(Reply) functions */
