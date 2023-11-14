@@ -16,6 +16,9 @@
                 <div class="message-bubble">
                     {{message.text}}
                 </div>
+                <div *ngIf="message.fileUpload !== []" class="show_attachement">
+                    <a href="{{!isPDF ? imageFile?.url : pdfFile?.url}}" target="_blank"><img src="{{!isPDF ? imageFile?.url : 'assets/img/icons/pdf.png'}}"  [ngStyle]="{'max-width': !isPDF ? '150px' : '64px', 'width': '100%'}"></a>
+                </div>
             </div>
         </div>
         <div class="divider">
@@ -51,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <button (click)="sendReplyTo()"><mat-icon class="send-btn">send</mat-icon></button>
+                <button [disabled]="text.length == 0" (click)="sendReplyTo()"><mat-icon [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send-btn">send</mat-icon></button>
             </div>
         </div>
     </main>

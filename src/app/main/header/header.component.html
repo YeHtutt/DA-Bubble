@@ -1,12 +1,18 @@
 <header>
-  <img *ngIf="this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize() || !this.drawerService.checkScreenSize()" class="logo" src="../assets/img/logo+text.png">
-  <img (click)="this.drawerService.open(); this.threadService.closeThread()" *ngIf="!this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize()" class="open_menu" src="assets/img/open-menu-button.png" alt="">
-  <div class="logo-search-box">
-    <div class="search-box">
-      <app-search-bar></app-search-bar>
+  <div class="left_side">
+    <img
+      *ngIf="this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize() || !this.drawerService.checkScreenSize()"
+      class="logo" src="../assets/img/logo+text.png">
+    <img (click)="this.drawerService.open(); this.threadService.closeThread()"
+      *ngIf="!this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize()" class="open_menu"
+      src="assets/img/open-menu-button.png" alt="">
+    <div class="logo-search-box">
+      <div class="search-box">
+        <app-search-bar></app-search-bar>
+      </div>
     </div>
   </div>
-  <div class="profil-box" *ngIf="this.currentUser"  [matMenuTriggerFor]="menu">
+  <div class="profil-box" *ngIf="this.currentUser" [matMenuTriggerFor]="menu">
     <span class="profil-name">{{ this.currentUser.name}}</span>
     <div class="alignRight" style="position: relative;">
       <img class="avatar" src="{{ this.currentUser.photoURL }}">

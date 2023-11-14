@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
@@ -6,6 +6,8 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { FileUpload } from 'src/app/models/file-upload';
 import { FileStorageService } from 'src/app/services/file-storage.service';
+import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Reaction {
   reactionEmoji: string,
@@ -43,7 +45,8 @@ export class MessageComponent {
     public threadService: ThreadService,
     private firebaseUtils: FirebaseUtilsService,
     private router: Router,
-    private fileService: FileStorageService
+    private fileService: FileStorageService,
+    public dialog: MatDialog
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
@@ -109,12 +112,12 @@ export class MessageComponent {
     this.isOpened = false;
   }
 
-  openReaction() {
+  toggleReaction() {
     this.isReactionInputOpened = !this.isReactionInputOpened;
     // setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
   }
 
-  openInReaction() {
+  toggleInReaction() {
     this.isReactionOpened = !this.isReactionOpened;
   }
 
@@ -172,6 +175,15 @@ export class MessageComponent {
     const sortedReactions = this.message.reactions.sort((a: any, b: any) => b.users.length - a.users.length);
     return sortedReactions;
   }
+
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   if (!target.closest('.reaction_emoji_inside')) {
+  //     this.isReactionInputOpened = false;
+  // this.isReactionOpened = false;
+  //   }
+  // }
 
 
   /* Thread(Reply) functions */
@@ -231,4 +243,27 @@ export class MessageComponent {
     return message.user.id === this.currentUser && message.origin === 'channel';
   }
   
+  // OPEN USER PROFIL
+
+  openProfileDialog(node: any) {
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
+    const userEmail = node.email;
+    const isOnline = node.isOnline;
+    this.dialog.open(UserProfileSubViewComponent, {
+      width: '500px',
+      height: '727px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+      data: {
+        id: userId,
+        name: userName,
+        photoURL: userPhotoURL,
+        email: userEmail,
+        isOnline: isOnline
+      }
+    });
+  }
 }

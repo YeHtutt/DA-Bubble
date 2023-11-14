@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -33,6 +33,9 @@ export class ThreadsComponent {
   thread: any;
   fileUploadThread?: FileUpload;
   fileTypeThread: string = '';
+  isPDF: boolean = false;
+  imageFile?: FileUpload;
+  pdfFile?: FileUpload;
 
 
   constructor(
@@ -61,6 +64,7 @@ export class ThreadsComponent {
       this.threadService.message$.subscribe(message => {
         this.messageCreator = message.user;
         this.message = message
+        this.getPDFurl(message);
         this.collPath = `${message.origin}/${this.currentId}/message/${message.messageId}/thread`
         this.threadService.subReplies(this.collPath);
       })
@@ -70,17 +74,6 @@ export class ThreadsComponent {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
-  // scrollToBottom() {
-  //   if (this.scroller) this.scroller.nativeElement.scrollIntoView();
-  // }
-
-  // onMessageLoaded() {
-  //   this.messagesLoaded++;
-  //   if(this.messagesLoaded == this.threadService.replies.length) {
-  //    this.scrollToBottom();
-  //   }
-  // }
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
@@ -138,32 +131,48 @@ export class ThreadsComponent {
     this.fileUploadThread = undefined;
   }
 
+  // UPLOADED FILES
 
-    // Upload File
-
-    onUploadThread(event: any) {
-      const file = new FileUpload(event.target.files[0]);
-      const maxSize = 1500 * 1024;
-      this.setFileType(file.file.type);
-      if (file.file.size > maxSize) {
-        this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
-        return;
-      } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
-        this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
-        return;
+  async getPDFurl(message: any) {
+    if (message.fileUpload && message.fileUpload.name) {
+      if (message.fileUpload.name.includes('pdf')) {
+        this.imageFile = undefined;
+        this.isPDF = true;
+        this.pdfFile = message.fileUpload;
       } else {
-        this.fileService.uploadFile(file).then(file => this.fileUploadThread = file);
+        this.pdfFile = undefined;
+        this.isPDF = false;
+        this.imageFile = message.fileUpload;
       }
     }
-  
-    setFileType(type: string) {
-      if(type.includes('jpeg' || 'jpg')) this.fileTypeThread = 'assets/img/icons/jpg.png';
-      if(type.includes('png')) this.fileTypeThread = 'assets/img/icons/png.png';
-      if(type.includes('pdf')) this.fileTypeThread = 'assets/img/icons/pdf.png';
+  }
+
+
+  // Upload File
+
+  onUploadThread(event: any) {
+    const file = new FileUpload(event.target.files[0]);
+    const maxSize = 1500 * 1024;
+    this.setFileType(file.file.type);
+    if (file.file.size > maxSize) {
+      this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+      return;
+    } else if (!file.file.type.match(/image\/(png|jpeg|jpg)|application\/pdf/)) {
+      this.notificationService.showError('Bitte nur png, jpg, jpeg oder PDF senden.');
+      return;
+    } else {
+      this.fileService.uploadFile(file).then(file => this.fileUploadThread = file);
     }
-  
-    onDelete(filePath: string) {
-      this.fileService.deleteFile(filePath);
-      this.fileUploadThread = undefined;
-    }
+  }
+
+  setFileType(type: string) {
+    if (type.includes('jpeg' || 'jpg')) this.fileTypeThread = 'assets/img/icons/jpg.png';
+    if (type.includes('png')) this.fileTypeThread = 'assets/img/icons/png.png';
+    if (type.includes('pdf')) this.fileTypeThread = 'assets/img/icons/pdf.png';
+  }
+
+  onDelete(filePath: string) {
+    this.fileService.deleteFile(filePath);
+    this.fileUploadThread = undefined;
+  }
 }

@@ -56,7 +56,6 @@ export class ChannelChatComponent {
   showTagMenu: boolean = false;
   isOpened: boolean = false;
   scrollElement: any;
-  @ViewChild('scroller', { static: false }) scroller?: ElementRef;
   messageCount: any;
   fileUpload?: FileUpload;
   fileType: string = '';

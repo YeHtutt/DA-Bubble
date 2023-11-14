@@ -29,6 +29,14 @@
     background-color: white;
 }
 
+.user_name {
+    cursor: pointer;
+
+    &:hover {
+        color: #444DF2;
+    }
+}
+
 .content_container {
     display: flex;
     flex-direction: column;
@@ -221,25 +229,25 @@
     }
 }
 
-.edit_container_thread_style {
+// .edit_container_thread_style {
 
-    // .user_avatar {
-    //     display: none;
-    // }
+//     // .user_avatar {
+//     //     display: none;
+//     // }
 
-    // .edit_box {
-    //     width: 90%;
-    // }
+//     // .edit_box {
+//     //     width: 90%;
+//     // }
 
-    // .button_box {
-    //     gap: 16px;
-    // }
+//     // .button_box {
+//     //     gap: 16px;
+//     // }
 
-    // .cancel_btn, .save_btn {
-    //     width: 100px;
-    //     font-size: 14px;
-    // }
-}
+//     // .cancel_btn, .save_btn {
+//     //     width: 100px;
+//     //     font-size: 14px;
+//     // }
+// }
 
 .button_box {
     display: flex;

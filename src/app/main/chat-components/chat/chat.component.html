@@ -6,15 +6,14 @@
                 <span>{{receiver.name}}</span>
             </div>
         </header>
-        <main id="scroller" [appScrollBottom]="getAllMessages()">
+        <main id="scroller" [appScrollBottom]="this.messageService.messages">
             <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
-            <div #scroller></div>
             <div *ngIf="!chatExists" class="new_conversation_container">
                 <div class="user_info_box">
                     <img src="{{receiver.photoURL}}" alt="">
                     <span>{{receiver.name}}</span>
                 </div>
-                <span>Diese Unterhaltung findet nur zwischen <span>@{{receiver.name}}</span> und dir statt.</span>
+                <span>Diese Unterhaltung findet nur zwischen <span>&#64;{{receiver.name}}</span> und dir statt.</span>
             </div>
         </main>
         <div class="input_message_container">
@@ -45,7 +44,7 @@
                     </div>
                 </div>
                 <button [disabled]="text.length == 0" (click)="send()"><mat-icon
-                        class="send_btn">send</mat-icon></button>
+                    [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send_btn">send</mat-icon></button>
             </div>
         </div>
     </section>

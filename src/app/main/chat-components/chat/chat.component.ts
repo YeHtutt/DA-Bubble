@@ -42,13 +42,12 @@ export class ChatComponent {
   allUsers: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
-  @ViewChild('scroller', { static: false }) scroller?: ElementRef;
   fileUpload?: FileUpload;
   fileType: string = '';
 
 
   constructor(
-    private messageService: MessageService,
+    public messageService: MessageService,
     private route: ActivatedRoute,
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
@@ -71,7 +70,6 @@ export class ChatComponent {
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
-
     });
   }
 
