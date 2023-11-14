@@ -22,7 +22,13 @@
             </div>
         </header>
         <main id="scroller" [appScrollBottom]="getAllMessages()">
-            <div *ngFor="let group of groupedMessages">{{group.date}}
+
+            <div *ngFor="let group of groupedMessages">
+                <div class="line-with-date">
+                    <div class="dividing-line"></div>
+                    <div class="message-date">{{ group.date }}</div>
+                    <div class="dividing-line"></div>
+                </div>
                 <app-message *ngFor="let msg of group.messages" [message]="msg"></app-message>
             </div>
         </main>
