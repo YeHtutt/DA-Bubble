@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-emoji-picker',
@@ -8,20 +8,11 @@ import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angu
 export class EmojiPickerComponent {
 
   @Output() emojiSelectedEvent = new EventEmitter<string>();
-  @Output() outsideClick = new EventEmitter<void>();
 
-  constructor(private elRef: ElementRef) {}
+  constructor() {}
 
   emojiSelected(event: any) {
     this.emojiSelectedEvent.emit(event.emoji.native);
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    const clickedInside = this.elRef.nativeElement.contains(event.target);
-    if (!clickedInside) {
-      this.outsideClick.emit();
-    }
   }
 
 }

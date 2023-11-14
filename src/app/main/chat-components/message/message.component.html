@@ -15,8 +15,8 @@
             <a href="{{!isPDF ? imageFile?.url : pdfFile?.url}}" target="_blank"><img src="{{!isPDF ? imageFile?.url : 'assets/img/icons/pdf.png'}}"  [ngStyle]="{'max-width': !isPDF ? '350px' : '64px', 'width': '100%'}"></a>
         </div>
         <div *ngIf="message.reactions.length > 0" class="reactions_container">
-            <mat-icon (click)="toggleInReaction()">add_reaction</mat-icon>
-            <app-emoji-picker (outsideClick)="onOutsideEmojiPickerClick()" class="reaction_emoji_inside" *ngIf="isReactionOpened"
+            <mat-icon (click)="toggleInReaction($event)">add_reaction</mat-icon>
+            <app-emoji-picker appClickOutside (clickOutside)="onOutsideClick('isReactionOpened')" class="reaction_emoji_inside" *ngIf="isReactionOpened"
                 (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
             <div class="reaction_btn" *ngFor="let reaction of message.reactions"
                 (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)">
@@ -46,9 +46,9 @@
             <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)" *ngIf="i === 0">{{reaction.reactionEmoji}}</span>
             <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)" *ngIf="i === 1">{{reaction.reactionEmoji}}</span>
         </ng-container>
-        <mat-icon (click)="toggleReaction()">add_reaction</mat-icon>
+        <mat-icon (click)="toggleReaction($event)">add_reaction</mat-icon>
         <app-emoji-picker [ngStyle]="getStyles(message.origin)" [ngClass]="{'reaction_emoji_reverse': currentUser !== message.user.id && message.origin === 'chat'}" class="reaction_emoji" *ngIf="isReactionInputOpened" #pick
-            (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
+        appClickOutside (clickOutside)="onOutsideClick('isReactionInputOpened')" (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
         <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
         <div class="menu_container">

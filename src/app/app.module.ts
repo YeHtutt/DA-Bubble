@@ -74,8 +74,9 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
-import { ScrollBottomDirective } from './scroll-bottom.directive';
+import { ScrollBottomDirective } from './directives/scroll-bottom.directive';
 import { ProfileDialogComponent } from './main/header/profile-dialog/profile-dialog.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -113,7 +114,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     CustomSnackbarComponent,
     SearchBarComponent,
     ScrollBottomDirective,
-    ProfileDialogComponent
+    ProfileDialogComponent,
+    ClickOutsideDirective
 
 
 

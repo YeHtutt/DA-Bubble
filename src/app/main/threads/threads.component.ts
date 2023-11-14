@@ -96,7 +96,8 @@ export class ThreadsComponent {
     this.showTagMenu = !this.showTagMenu;
   }
 
-  toggleEmoji() {
+  toggleEmoji(event: Event) {
+    event.stopPropagation();
     this.isOpened = !this.isOpened;
   }
 
@@ -104,6 +105,10 @@ export class ThreadsComponent {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
+  }
+
+  onOutsideClick(): void {
+    this.isOpened = false
   }
 
   getAllReplies() {
