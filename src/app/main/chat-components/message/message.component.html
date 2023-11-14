@@ -16,7 +16,7 @@
         </div>
         <div *ngIf="message.reactions.length > 0" class="reactions_container">
             <mat-icon (click)="toggleInReaction()">add_reaction</mat-icon>
-            <app-emoji-picker [(ngModel)]="isReactionOpened" class="reaction_emoji_inside" *ngIf="isReactionOpened"
+            <app-emoji-picker (outsideClick)="onOutsideEmojiPickerClick()" class="reaction_emoji_inside" *ngIf="isReactionOpened"
                 (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
             <div class="reaction_btn" *ngFor="let reaction of message.reactions"
                 (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)">

@@ -176,14 +176,10 @@ export class MessageComponent {
     return sortedReactions;
   }
 
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('.reaction_emoji_inside')) {
-  //     this.isReactionInputOpened = false;
-  // this.isReactionOpened = false;
-  //   }
-  // }
+  onOutsideEmojiPickerClick() {
+    this.toggleReaction();
+    this.toggleInReaction();
+  }
 
 
   /* Thread(Reply) functions */

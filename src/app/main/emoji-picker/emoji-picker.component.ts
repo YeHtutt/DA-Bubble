@@ -8,6 +8,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angu
 export class EmojiPickerComponent {
 
   @Output() emojiSelectedEvent = new EventEmitter<string>();
+  @Output() outsideClick = new EventEmitter<void>();
 
   constructor(private elRef: ElementRef) {}
 
@@ -19,8 +20,7 @@ export class EmojiPickerComponent {
   onDocumentClick(event: MouseEvent): void {
     const clickedInside = this.elRef.nativeElement.contains(event.target);
     if (!clickedInside) {
-      console.log('click auserhalb')
-      
+      this.outsideClick.emit();
     }
   }
 
