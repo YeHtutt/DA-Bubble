@@ -70,7 +70,6 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
-import { NewChatDialogComponent } from './main/direct-message/new-chat-dialog/new-chat-dialog.component';
 import { ScrollBottomDirective } from './scroll-bottom.directive';
 
 
@@ -100,7 +99,6 @@ import { ScrollBottomDirective } from './scroll-bottom.directive';
     ChannelUsersDialogComponent,
     UserProfileEditComponent,
     UserProfileSubViewComponent,
-
     DirectMessageComponent,
     EmojiPickerComponent,
     AddPeopleDialogComponent,
@@ -109,7 +107,6 @@ import { ScrollBottomDirective } from './scroll-bottom.directive';
     FilterPipe,
     CustomSnackbarComponent,
     SearchBarComponent,
-    NewChatDialogComponent,
     ScrollBottomDirective
 
 

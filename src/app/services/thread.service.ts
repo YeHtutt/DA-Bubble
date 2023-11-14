@@ -55,10 +55,6 @@ export class ThreadService {
   }
 
 
-  /*  
-  ref `${coll}/${docId}/message/${messageId}/thread`
-  */
-
   async addReplyToCollection(path: string, message: {}) {
     // Get reference to the sub-collection inside the specified document
     let ref = collection(this.firestore, path);

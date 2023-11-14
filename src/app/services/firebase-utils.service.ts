@@ -1,5 +1,6 @@
 
 import { Injectable, inject } from '@angular/core';
+import { UsersFirebaseService } from './users-firebase.service';
 
 import {
   Firestore, collection,
@@ -17,11 +18,10 @@ import {
   providedIn: 'root'
 })
 export class FirebaseUtilsService {
+  currentUserId: any;
 
-  constructor() { }
+  constructor(private userService: UsersFirebaseService) { this.currentUserId = this.userService.getFromLocalStorage(); }
   firestore: Firestore = inject(Firestore);
-
-
 
 
   async addColl(item: {}, ref: string, fieldId: string) {
@@ -81,7 +81,6 @@ export class FirebaseUtilsService {
   }
 
 
-
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
   getRef(ref: any) {
     return collection(this.firestore, ref);
@@ -112,8 +111,6 @@ export class FirebaseUtilsService {
   }
 
 
-
-
   getDateTime() {
     let dateTime = new Date();
     return dateTime
@@ -125,7 +122,23 @@ export class FirebaseUtilsService {
       .catch((err) => { console.log(err) })
   }
 
+  async chatExists2(directChat: any) {
+    await directChat.chatId.includes(this.currentUserId);
+    return true
+  }
 
+  async chatExists3(user1: string): Promise<boolean> {
+    const chatCollection = collection(this.firestore, 'chat');
+
+    // Create a compound query to check if a chat document exists for user1 and user2
+    const compoundQuery = query(chatCollection,
+      where('user1', '==', user1),
+      where('user2', '==', this.currentUserId)
+    );
+    const querySnapshot = await getDocs(compoundQuery);
+    // Check if the compound query returns any documents
+    return !querySnapshot.empty;
+  }
 
 
 

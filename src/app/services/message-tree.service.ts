@@ -51,9 +51,7 @@ export class MessageTreeService {
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
-    private userService: UsersFirebaseService,
-    private route: ActivatedRoute,
-    private firestore: Firestore = inject(Firestore),
+    private userService: UsersFirebaseService
   ) {
     this.unsubChat = this.subUserMessagesList();
   }
@@ -100,7 +98,7 @@ export class MessageTreeService {
 
   unsubChat: any;
 
-  
+
   subUserMessagesList() {
     return this.unsubChat = onSnapshot(this.firebaseUtils.getRef('users'), (list: any) => {
       this.messageTree = [];
@@ -117,8 +115,8 @@ export class MessageTreeService {
   }
 
 
-  getChannelContent(documentId: string) {
-    const docRef = doc(this.firebaseUtils.getRef('users'), documentId);
+  getChannelContent(docId: string) {
+    const docRef = doc(this.firebaseUtils.getRef('users'), docId);
     return this.unsubChat = onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         return this.setDirectMessageObj(docSnapshot.data(), docSnapshot.id);

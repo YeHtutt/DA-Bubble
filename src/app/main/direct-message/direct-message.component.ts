@@ -9,7 +9,6 @@ import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
 import { DrawerService } from 'src/app/services/drawer.service';
-import { NewChatDialogComponent } from './new-chat-dialog/new-chat-dialog.component';
 import { ThreadService } from 'src/app/services/thread.service';
 
 
@@ -52,7 +51,7 @@ export class DirectMessageComponent {
   }
 
   async selectReceiver(receiverId: any) {
-    const chatAlreadyExists = await this.firebaseUtils.chatExists(this.currentUser.id, receiverId);
+    const chatAlreadyExists = await this.firebaseUtils.chatExists3(receiverId);    
     if (!chatAlreadyExists) {
       let newDirectChat = this.createDirectChatObject(receiverId).toJSON();
       this.firebaseUtils.addCollWithCustomId(newDirectChat, 'chat', newDirectChat.chatId);
@@ -95,16 +94,6 @@ export class DirectMessageComponent {
     return this.userService.getFromLocalStorage();
   }
 
-  openNewChatDialog() {
-
-    this.dialog.open(NewChatDialogComponent, {
-      width: '880px',
-      height: '514px',
-      hasBackdrop: true,
-      panelClass: 'dialog-main-style',
-      autoFocus: false,
-    });
-  }
 
 }
 

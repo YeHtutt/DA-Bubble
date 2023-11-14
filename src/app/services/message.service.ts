@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
 import { FileUpload } from '../models/file-upload';
-
+import { UsersFirebaseService } from './users-firebase.service';
 
 
 type ReceiverType = UserProfile | Channel;
@@ -19,8 +19,8 @@ export class MessageService {
 
   messages: Message[] = [];
   unsubMessages: any;
-  unsubReactions: any
-
+  unsubReactions: any;
+  currentUserId: any;
 
   ngOnDestroy() {
     this.unsubMessages();
@@ -30,8 +30,9 @@ export class MessageService {
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private userService: UsersFirebaseService,
+  ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   // SEND MESSAGE //
 
@@ -150,8 +151,9 @@ export class MessageService {
 
   async getChatDocId(directChat: DirectChat) {
     let docId: any;
-    if (await this.checkIfChatExists(directChat) == false) {
+    if (await directChat.chatId.includes(this.currentUserId)) {
       docId = await this.createDirectChat(directChat);
+      console.log('true')
     } else {
       docId = await this.checkIfChatExists(directChat);
     }
@@ -190,4 +192,7 @@ export class MessageService {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
+
+
+
 }
