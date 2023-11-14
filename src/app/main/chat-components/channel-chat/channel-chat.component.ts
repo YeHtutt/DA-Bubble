@@ -59,7 +59,7 @@ export class ChannelChatComponent {
   messageCount: any;
   fileUpload?: FileUpload;
   fileType: string = '';
-
+  groupedMessages: any;
 
   constructor(
     public dialog: MatDialog,
@@ -87,7 +87,7 @@ export class ChannelChatComponent {
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
-        this.groupMessagesByDate(this.messageService.messages);
+        this.groupedMessages = this.groupMessagesByDate(this.messageService.messages);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
@@ -117,10 +117,7 @@ export class ChannelChatComponent {
           messages: []
         };
       }
-
-      // Use the same Date object for the time conversion, also in German locale
-      const messageTime = this.datePipe.transform(messageDateObject, 'HH:mm', 'de');
-      groupedMessages[index].messages.push({ ...message, time: messageTime });
+      groupedMessages[index].messages.push({ ...message});
     });
 
     console.log(groupedMessages);

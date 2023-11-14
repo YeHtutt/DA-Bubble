@@ -22,7 +22,15 @@
             </div>
         </header>
         <main id="scroller" [appScrollBottom]="getAllMessages()">
-            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
+
+            <div *ngFor="let group of groupedMessages">
+                <div class="line-with-date">
+                    <div class="dividing-line"></div>
+                    <div class="message-date">{{ group.date }}</div>
+                    <div class="dividing-line"></div>
+                </div>
+                <app-message *ngFor="let msg of group.messages" [message]="msg"></app-message>
+            </div>
         </main>
 
         <div class="input_message_container">
@@ -53,7 +61,8 @@
                     </div>
                 </div>
                 <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
-                        [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send_btn">send</mat-icon></button>
+                        [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}"
+                        class="send_btn">send</mat-icon></button>
             </div>
         </div>
     </section>
