@@ -38,8 +38,8 @@
                         <input type="file" style="display:none;" id="fileUploadThread" (change)="onUploadThread($event)">
                     </div>
                     <hr>
-                    <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
-                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
+                    <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
+                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside (clickOutside)="onOutsideClick()"></app-emoji-picker>
                     <mat-icon (click)="openTagMenu()" class="action-btn-style">alternate_email</mat-icon>
                     <div *ngIf="fileUploadThread" class="file_to_upload">
                         <mat-icon (click)="onDelete(fileUploadThread.path)" class="delete_btn">close</mat-icon>

@@ -112,12 +112,14 @@ export class MessageComponent {
     this.isOpened = false;
   }
 
-  toggleReaction() {
+  toggleReaction(event: Event) {
+    event.stopPropagation();
     this.isReactionInputOpened = !this.isReactionInputOpened;
     // setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
   }
 
-  toggleInReaction() {
+  toggleInReaction(event: Event) {
+    event.stopPropagation();
     this.isReactionOpened = !this.isReactionOpened;
   }
 
@@ -176,9 +178,9 @@ export class MessageComponent {
     return sortedReactions;
   }
 
-  onOutsideEmojiPickerClick() {
-    this.toggleReaction();
-    this.toggleInReaction();
+  onOutsideClick(reaction: string): void {
+    if(reaction == 'isReactionOpened') this.isReactionOpened = false;
+    if(reaction == 'isReactionInputOpened') this.isReactionInputOpened = false;
   }
 
 

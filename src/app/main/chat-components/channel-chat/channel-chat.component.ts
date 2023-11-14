@@ -128,10 +128,6 @@ export class ChannelChatComponent {
   }
 
 
-
-
-
-
   getAllMessages() {
     return this.messageService.messages
   }
@@ -206,7 +202,8 @@ export class ChannelChatComponent {
   }
 
 
-  toggleEmoji() {
+  toggleEmoji(event: Event) {
+    event.stopPropagation();
     this.isOpened = !this.isOpened;
   }
 
@@ -214,6 +211,10 @@ export class ChannelChatComponent {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
+  }
+
+  onOutsideClick(): void {
+    this.isOpened = false
   }
 
   // Upload File

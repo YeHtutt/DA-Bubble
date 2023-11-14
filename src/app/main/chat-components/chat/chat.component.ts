@@ -130,7 +130,8 @@ export class ChatComponent {
   }
 
 
-  toggleEmoji() {
+  toggleEmoji(event: Event) {
+    event.stopPropagation();
     this.isOpened = !this.isOpened;
   }
 
@@ -138,6 +139,10 @@ export class ChatComponent {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
+  }
+
+  onOutsideClick(): void {
+    this.isOpened = false
   }
 
   openProfileDialogInSearch(node: any) {
