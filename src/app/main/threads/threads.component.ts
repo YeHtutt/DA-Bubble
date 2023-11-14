@@ -36,6 +36,7 @@ export class ThreadsComponent {
   isPDF: boolean = false;
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
+  shiftPressed: boolean = false;
 
 
   constructor(
@@ -134,6 +135,21 @@ export class ThreadsComponent {
     this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON());
     this.text = '';
     this.fileUploadThread = undefined;
+  }
+
+
+  sendByKey(event: KeyboardEvent) {
+    if(event.key == 'Shift') {
+      this.shiftPressed = event.type === 'keydown';
+    }
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
+      this.sendReplyTo();
+    }
+  }
+
+  
+  isEmptyOrWhitespace(): boolean {
+    return this.text.replace(/\n/g, '').trim().length === 0;
   }
 
   // UPLOADED FILES

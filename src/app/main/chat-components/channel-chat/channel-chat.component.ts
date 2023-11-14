@@ -153,6 +153,22 @@ export class ChannelChatComponent {
     });
   }
 
+  shiftPressed: boolean = false;
+
+  sendByKey(event: KeyboardEvent) {
+    if(event.key == 'Shift') {
+      this.shiftPressed = event.type === 'keydown';
+    }
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
+      this.sendMessageTo('channel', this.channelId);
+    }
+  }
+
+  
+  isEmptyOrWhitespace(): boolean {
+    return this.text.replace(/\n/g, '').trim().length === 0;
+  }
+
 
   sendMessageTo(coll: string, docId: string) {
     this.createMessageObject().then(async createdMessage => {

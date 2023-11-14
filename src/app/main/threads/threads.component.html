@@ -28,7 +28,7 @@
         <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
         <div #scroller></div>
         <div class="input-message-container">
-            <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..."></textarea>
+            <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
                     <div class="file_upload_button">

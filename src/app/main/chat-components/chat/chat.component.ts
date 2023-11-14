@@ -44,6 +44,7 @@ export class ChatComponent {
   isOpened: boolean = false;
   fileUpload?: FileUpload;
   fileType: string = '';
+  shiftPressed: boolean = false;
 
 
   constructor(
@@ -115,6 +116,21 @@ export class ChatComponent {
       reactions: [],
       fileUpload: this.fileUpload?.toJSON() || []
     });
+  }
+
+
+  sendByKey(event: KeyboardEvent) {
+    if(event.key == 'Shift') {
+      this.shiftPressed = event.type === 'keydown';
+    }
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
+      this.send();
+    }
+  }
+
+  
+  isEmptyOrWhitespace(): boolean {
+    return this.text.replace(/\n/g, '').trim().length === 0;
   }
 
   async openTagMenu() {

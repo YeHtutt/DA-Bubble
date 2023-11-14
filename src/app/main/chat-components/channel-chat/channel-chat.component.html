@@ -27,7 +27,7 @@
         </main>
 
         <div class="input_message_container">
-            <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"></textarea>
+            <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}" (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control_container">
                 <div class="chat_action_box">
                     <div class="file_upload_button">
