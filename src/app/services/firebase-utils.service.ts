@@ -1,5 +1,6 @@
 
 import { Injectable, inject } from '@angular/core';
+import { UsersFirebaseService } from './users-firebase.service';
 
 import {
   Firestore, collection,
@@ -17,11 +18,10 @@ import {
   providedIn: 'root'
 })
 export class FirebaseUtilsService {
+  currentUserId: any;
 
-  constructor() { }
+  constructor(private userService: UsersFirebaseService) { this.currentUserId = this.userService.getFromLocalStorage(); }
   firestore: Firestore = inject(Firestore);
-
-
 
 
   async addColl(item: {}, ref: string, fieldId: string) {
@@ -81,7 +81,6 @@ export class FirebaseUtilsService {
   }
 
 
-
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
   getRef(ref: any) {
     return collection(this.firestore, ref);
@@ -112,8 +111,6 @@ export class FirebaseUtilsService {
   }
 
 
-
-
   getDateTime() {
     let dateTime = new Date();
     return dateTime
@@ -128,45 +125,5 @@ export class FirebaseUtilsService {
 
 
 
-
-  async chatExists(user1: string, user2: string): Promise<boolean> {
-    const chatCollection = collection(this.firestore, 'chat');
-
-    // Query for user1 -> user2
-    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
-    const result1 = await getDocs(query1);
-
-    // Query for user2 -> user1
-    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
-    const result2 = await getDocs(query2);
-
-    // Return true if either query has results
-    return !result1.empty || !result2.empty;
-  }
-
-  async getExistingChatId(user1: string, user2: string): Promise<string> {
-    const chatCollection = collection(this.firestore, 'chat');
-
-    // Query for user1 -> user2
-    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
-    const result1 = await getDocs(query1);
-
-    // If found, return the chatId
-    if (!result1.empty) {
-      return result1.docs[0].id;
-    }
-
-    // Query for user2 -> user1
-    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
-    const result2 = await getDocs(query2);
-
-    // If found, return the chatId
-    if (!result2.empty) {
-      return result2.docs[0].id;
-    }
-
-    // If not found, return an empty string (or handle as needed)
-    return '';
-  }
 
 }

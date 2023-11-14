@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { DatePipe } from '@angular/common';
 /* Models */
 
 import { Message } from 'src/app/models/message';
@@ -24,7 +25,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { DrawerService } from 'src/app/services/drawer.service';
 
 
-
 @Component({
   selector: 'app-channel-chat',
   templateUrl: './channel-chat.component.html',
@@ -32,11 +32,11 @@ import { DrawerService } from 'src/app/services/drawer.service';
   animations: [
     trigger('slide', [
       transition(':enter', [
-        style({transform: 'translateX(100%)'}), 
-        animate('300ms ease-out', style({transform: 'translateX(0%)'}))
+        style({ transform: 'translateX(100%)' }),
+        animate('300ms ease-out', style({ transform: 'translateX(0%)' }))
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({transform: 'translateX(100%)'}))  
+        animate('300ms ease-in', style({ transform: 'translateX(100%)' }))
       ])
     ])
   ]
@@ -72,7 +72,8 @@ export class ChannelChatComponent {
     public threadService: ThreadService,
     private fileService: FileStorageService,
     private notificationService: NotificationService,
-    public drawerService: DrawerService) {
+    public drawerService: DrawerService,
+    private datePipe: DatePipe) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -86,6 +87,7 @@ export class ChannelChatComponent {
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
+        this.groupMessagesByDate(this.messageService.messages);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
@@ -93,7 +95,40 @@ export class ChannelChatComponent {
   }
 
 
-  
+
+
+
+  groupMessagesByDate(messagesToGroup: any) {
+    const groupedMessages: any = [];
+    let currentDate: string | null = null;
+    let index = -1;
+
+    messagesToGroup.forEach((message: any) => {
+      // Convert Firestore Timestamp to JavaScript Date object
+      const messageDateObject = (message.time as any).toDate();
+      // Format the date using German locale
+      const messageDate = this.datePipe.transform(messageDateObject, 'EEEE, d. MMMM', 'de');
+
+      if (messageDate !== currentDate) {
+        currentDate = messageDate;
+        index++;
+        groupedMessages[index] = {
+          date: currentDate,
+          messages: []
+        };
+      }
+
+      // Use the same Date object for the time conversion, also in German locale
+      const messageTime = this.datePipe.transform(messageDateObject, 'HH:mm', 'de');
+      groupedMessages[index].messages.push({ ...message, time: messageTime });
+    });
+
+    console.log(groupedMessages);
+    return groupedMessages;
+  }
+
+
+
 
 
 
@@ -137,7 +172,6 @@ export class ChannelChatComponent {
     this.getAllMessages();
   }
 
-
   async createMessageObject() {
     let creatorId = this.getCreatorId();
     let messageCreator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
@@ -153,9 +187,6 @@ export class ChannelChatComponent {
       fileUpload: this.fileUpload?.toJSON() || []
     });
   }
-
-
-  addUser() { }
 
 
   getCreatorId() {
@@ -203,9 +234,9 @@ export class ChannelChatComponent {
   }
 
   setFileType(type: string) {
-    if(type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
-    if(type.includes('png')) this.fileType = 'assets/img/icons/png.png';
-    if(type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
+    if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
+    if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
+    if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
 
   onDelete(filePath: string) {

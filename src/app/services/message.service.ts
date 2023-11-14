@@ -1,5 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot } from '@angular/fire/firestore';
+import {
+  Firestore,
+  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where
+} from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
@@ -7,7 +10,7 @@ import { Router } from '@angular/router';
 import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
 import { FileUpload } from '../models/file-upload';
-
+import { UsersFirebaseService } from './users-firebase.service';
 
 
 type ReceiverType = UserProfile | Channel;
@@ -19,8 +22,8 @@ export class MessageService {
 
   messages: Message[] = [];
   unsubMessages: any;
-  unsubReactions: any
-
+  unsubReactions: any;
+  currentUserId: any;
 
   ngOnDestroy() {
     this.unsubMessages();
@@ -30,8 +33,9 @@ export class MessageService {
   constructor(
     private firestore: Firestore = inject(Firestore),
     private router: Router,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private userService: UsersFirebaseService,
+  ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   // SEND MESSAGE //
 
@@ -120,6 +124,10 @@ export class MessageService {
     });
   }
 
+
+
+  
+
   // DIRECT CHAT FUNKTIONS //
 
   async getChats() {
@@ -150,8 +158,9 @@ export class MessageService {
 
   async getChatDocId(directChat: DirectChat) {
     let docId: any;
-    if (await this.checkIfChatExists(directChat) == false) {
+    if (await directChat.chatId.includes(this.currentUserId)) {
       docId = await this.createDirectChat(directChat);
+      console.log('true')
     } else {
       docId = await this.checkIfChatExists(directChat);
     }
@@ -190,4 +199,29 @@ export class MessageService {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
+
+  async chatExists(user1: string, user2: string): Promise<boolean> {
+    const chatCollection = collection(this.firestore, 'chat');
+    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+    const result1 = await getDocs(query1);
+    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+    const result2 = await getDocs(query2);
+    return !result1.empty || !result2.empty;
+  }
+
+  async getExistingChatId(user1: string, user2: string): Promise<string> {
+    const chatCollection = collection(this.firestore, 'chat');
+    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+    const result1 = await getDocs(query1);
+    if (!result1.empty) {
+      return result1.docs[0].id;
+    }
+    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+    const result2 = await getDocs(query2);
+    if (!result2.empty) {
+      return result2.docs[0].id;
+    }
+    return '';
+  }
+
 }

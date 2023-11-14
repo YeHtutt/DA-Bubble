@@ -9,8 +9,8 @@ import { Message } from 'src/app/models/message';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Router } from '@angular/router';
 import { DrawerService } from 'src/app/services/drawer.service';
-import { NewChatDialogComponent } from './new-chat-dialog/new-chat-dialog.component';
 import { ThreadService } from 'src/app/services/thread.service';
+import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
@@ -27,7 +27,8 @@ export class DirectMessageComponent {
     private router: Router,
     private firebaseUtils: FirebaseUtilsService,
     private drawerService: DrawerService,
-    private threadService: ThreadService
+    private threadService: ThreadService,
+    private messageService: MessageService,
   ) { this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user }); }
 
   private subscriptions: Subscription[] = [];
@@ -52,13 +53,12 @@ export class DirectMessageComponent {
   }
 
   async selectReceiver(receiverId: any) {
-    const chatAlreadyExists = await this.firebaseUtils.chatExists(this.currentUser.id, receiverId);
+    const chatAlreadyExists = await this.messageService.chatExists(this.currentUser.id, receiverId);
     if (!chatAlreadyExists) {
       let newDirectChat = this.createDirectChatObject(receiverId).toJSON();
       this.firebaseUtils.addCollWithCustomId(newDirectChat, 'chat', newDirectChat.chatId);
     }
-    // Assuming you can retrieve the chatId of the existing chat. Adjust as needed.
-    const chatId = await this.firebaseUtils.getExistingChatId(this.currentUser.id, receiverId);
+    const chatId = await this.messageService.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
     this.drawerService.close();
     if (this.threadService.threadIsOpen) this.threadService.closeThread();
@@ -95,16 +95,6 @@ export class DirectMessageComponent {
     return this.userService.getFromLocalStorage();
   }
 
-  openNewChatDialog() {
-
-    this.dialog.open(NewChatDialogComponent, {
-      width: '880px',
-      height: '514px',
-      hasBackdrop: true,
-      panelClass: 'dialog-main-style',
-      autoFocus: false,
-    });
-  }
 
 }
 
