@@ -21,9 +21,15 @@
                 </div>
             </div>
         </header>
-        <main id="scroller" [appScrollBottom]="getAllMessages()">
-            
-            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
+        <main id="scroller">
+            <div *ngFor="let messageGroup of this.messageService.groupedMessages">
+                <div class="line-with-date">
+                    <div class="dividing-line"></div>
+                    <div class="message-date">{{ messageGroup.date }}</div>
+                    <div class="dividing-line"></div>
+                </div>
+                <app-message *ngFor="let msg of this.messageGroup.messages" [message]="msg"></app-message>
+            </div>
         </main>
 
         <div class="input_message_container">
@@ -38,7 +44,8 @@
                     </div>
                     <hr>
                     <mat-icon (click)="toggleEmoji($event)" class="action_btn_style">sentiment_satisfied</mat-icon>
-                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside (clickOutside)="onOutsideClick()"></app-emoji-picker>
+                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside
+                        (clickOutside)="onOutsideClick()"></app-emoji-picker>
                     <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
                     <div *ngIf="fileUpload" class="file_to_upload">
                         <mat-icon (click)="onDelete(fileUpload.path)" class="delete_btn">close</mat-icon>
@@ -54,7 +61,8 @@
                     </div>
                 </div>
                 <button [disabled]="text.length == 0" (click)="sendMessageTo('channel', channel.channelId)"><mat-icon
-                        [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send_btn">send</mat-icon></button>
+                        [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}"
+                        class="send_btn">send</mat-icon></button>
             </div>
         </div>
     </section>

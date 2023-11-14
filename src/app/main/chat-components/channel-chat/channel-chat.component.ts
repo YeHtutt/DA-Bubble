@@ -59,7 +59,7 @@ export class ChannelChatComponent {
   messageCount: any;
   fileUpload?: FileUpload;
   fileType: string = '';
-  groupedMessages: any;
+
 
   constructor(
     public dialog: MatDialog,
@@ -67,13 +67,13 @@ export class ChannelChatComponent {
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
     private searchService: SearchService,
-    private messageService: MessageService,
+    public messageService: MessageService,
     private channelService: ChannelService,
     public threadService: ThreadService,
     private fileService: FileStorageService,
     private notificationService: NotificationService,
     public drawerService: DrawerService,
-    private datePipe: DatePipe) {
+    ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -87,48 +87,11 @@ export class ChannelChatComponent {
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
-        this.groupedMessages = this.groupMessagesByDate(this.messageService.messages);
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });
     });
   }
-
-
-
-
-
-  groupMessagesByDate(messagesToGroup: any) {
-    const groupedMessages: any = [];
-    let currentDate: string | null = null;
-    let index = -1;
-
-    messagesToGroup.forEach((message: any) => {
-      // Convert Firestore Timestamp to JavaScript Date object
-      const messageDateObject = (message.time as any).toDate();
-      // Format the date using German locale
-      const messageDate = this.datePipe.transform(messageDateObject, 'EEEE, d. MMMM', 'de');
-
-      if (messageDate !== currentDate) {
-        currentDate = messageDate;
-        index++;
-        groupedMessages[index] = {
-          date: currentDate,
-          messages: []
-        };
-      }
-      groupedMessages[index].messages.push({ ...message});
-    });
-
-    console.log(groupedMessages);
-    return groupedMessages;
-  }
-
-
-  getAllMessages() {
-    return this.messageService.messages
-  }
-
 
   openChannelMenu() {
     this.dialog.open(ChannelMenuComponent, {
@@ -178,7 +141,6 @@ export class ChannelChatComponent {
       this.text = '';
       this.fileUpload = undefined;
     });
-    this.getAllMessages();
   }
 
   async createMessageObject() {
