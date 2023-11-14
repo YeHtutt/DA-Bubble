@@ -11,7 +11,7 @@ import { DirectChat } from '../models/direct-chat';
 import { NotificationService } from './notification.service';
 import { FileUpload } from '../models/file-upload';
 import { UsersFirebaseService } from './users-firebase.service';
-
+import { DatePipe } from '@angular/common';
 
 type ReceiverType = UserProfile | Channel;
 
@@ -35,6 +35,7 @@ export class MessageService {
     private router: Router,
     private notificationService: NotificationService,
     private userService: UsersFirebaseService,
+    private datePipe: DatePipe,
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   // SEND MESSAGE //
@@ -109,7 +110,7 @@ export class MessageService {
 
 
   // GET MESSAGE //
-
+  groupedMessages: any = [];
 
   // Gets messages from channel and chat
   subMessage(coll: string, subId: string) {
@@ -118,15 +119,40 @@ export class MessageService {
     const q = query(ref, orderBy('time'));
     return this.unsubMessages = onSnapshot(q, (list) => {
       this.messages = [];
+      this.groupedMessages = [];
       list.forEach((message) => {
         this.messages.push(Message.fromJSON({ ...message.data(), messageId: message.id }));
       });
+      this.groupedMessages = this.groupMessagesByDate(this.messages);
+      console.log(this.groupedMessages)
     });
   }
 
 
+  groupMessagesByDate(messagesToGroup: any) {
+    const groupedMessages: any = [];
+    let currentDate: string | null = null;
+    let index = -1;
+    messagesToGroup.forEach((message: any) => {
+      // Convert Firestore Timestamp to JavaScript Date object
+      const messageDateObject = (message.time as any).toDate();
+      // Format the date using German locale
+      const messageDate = this.datePipe.transform(messageDateObject, 'EEEE, d. MMMM', 'de');
 
-  
+      if (messageDate !== currentDate) {
+        currentDate = messageDate;
+        index++;
+        groupedMessages[index] = {
+          date: currentDate,
+          messages: []
+        };
+      }
+      groupedMessages[index].messages.push({ ...message });
+    });
+    return groupedMessages;
+  }
+
+
 
   // DIRECT CHAT FUNKTIONS //
 
