@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
@@ -10,27 +10,29 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
   styleUrls: ['./choose-avatar.component.scss']
 })
 export class ChooseAvatarComponent {
-  avatars = ['avatar1.png','avatar2.png','avatar3.png','avatar4.png','avatar5.png','avatar6.png' ];
+  avatars = ['avatar1.png', 'avatar2.png', 'avatar3.png', 'avatar4.png', 'avatar5.png', 'avatar6.png'];
   currentPic = '../assets/img/avatar/person.png'; //default Pic
   url = 'assets/img/avatar/';
-  newUserID:any;
+  newUserID: any;
   avatarPic: boolean = true;
   urlToSelectedAvatar: string | null = null;
 
   user: UserProfile = new UserProfile;
-  
+  newUserName: string = '';
 
-  constructor(private router: Router, private usersfbService: UsersFirebaseService, private auth: Auth) {
-
+  constructor(private router: Router, private usersfbService: UsersFirebaseService, private auth: Auth, private route: ActivatedRoute) {
+    // Retrieve user's name from the route state
+    this.route.paramMap.subscribe(params => {
+      this.newUserName = params.get('userName') || '';
+    });
   }
 
 
   setNewPic(image: any) {
     this.currentPic = image;
-    if(this.avatarPic) {
+    if (this.avatarPic) {
       this.urlToSelectedAvatar = 'assets/img/avatar/' + image;
-    }else
-    {
+    } else {
       this.urlToSelectedAvatar = image;
       this.avatarPic = true;
     }
@@ -43,7 +45,7 @@ export class ChooseAvatarComponent {
     })
   }
 
-  
+
   onSelect(event: any) {
     this.avatarPic = false;
     const file: File = event.target.files[0]; // ausgewählte Datei wird als variable file gespeichert (typ File interface)
@@ -56,11 +58,11 @@ export class ChooseAvatarComponent {
     if (fileType.match(/image\/(png|jpeg|jpg)/)) {
       let reader = new FileReader();
       reader.readAsDataURL(file);
-    
+
       reader.onload = (event: any) => {
         this.url = event.target.result;
         this.setNewPic(this.url);
-        };
+      };
     } else {
       window.alert('Bitte nur png, jpg oder jpeg senden');
     }

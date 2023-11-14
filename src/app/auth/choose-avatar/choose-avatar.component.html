@@ -10,7 +10,7 @@
             <div class="profileImg" [ngStyle]="urlToSelectedAvatar ? { 'background-color': 'transparent' } : { 'background-color': '#797EF3' }">
                 <img [src]="urlToSelectedAvatar ? urlToSelectedAvatar : 'assets/img/avatar/person.png'">
             </div>
-            <div class="newUser"> Frederik Beck </div>
+            <div class="newUser"> {{ newUserName }} </div>
             <div class="chooseInfo">Aus der Liste wählen</div>
 
             <div class="allProfilePics">
