@@ -60,7 +60,7 @@ export class SignUpComponent {
         this.sighUpSuccess = true;
         this.openSnackBar();
         setTimeout(() => {
-          this.router.navigate([`/choose-avatar`]);
+          this.router.navigate([`/choose-avatar`, { userName: name }]);
         }, 2000);
       })
   }
