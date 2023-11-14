@@ -386,6 +386,36 @@ button {
   }
 }
 
+.resetPassword-input-field {
+  .mdc-text-field--outlined {
+      --mdc-outlined-text-field-outline-width: 0px !important;
+      --mdc-outlined-text-field-focus-outline-width: 0px !important;
+      --mdc-outlined-text-field-container-shape: 0px !important;
+  }
+
+  .mdc-notched-outline__leading {
+      border-top-left-radius: 100px !important;
+      border-bottom-left-radius: 100px !important;
+      min-width: 100px !important;
+  }
+
+  .mat-mdc-form-field-infix {
+      background-color: #ECEEFE !important;
+      border-top-right-radius: 100px !important;
+      border-bottom-right-radius: 100px !important;
+      border-top-left-radius: 100px !important;
+      border-bottom-left-radius: 100px !important;
+  }
+
+  .mat-mdc-form-field-icon-prefix,
+  .mat-mdc-form-field-icon-suffix {
+      padding: 0 0px 0 0;
+      background-color: #ECEEFE !important;
+      border-top-left-radius: 100px !important;
+      border-bottom-left-radius: 100px !important;
+  }
+}
+
 /************************** SCROLLBAR STYLES **********************/
 
 /* For Webkit browsers (Chrome, Safari, newer versions of Edge) */
