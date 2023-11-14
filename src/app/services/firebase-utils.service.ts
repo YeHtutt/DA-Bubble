@@ -122,64 +122,8 @@ export class FirebaseUtilsService {
       .catch((err) => { console.log(err) })
   }
 
-  async chatExists2(directChat: any) {
-    await directChat.chatId.includes(this.currentUserId);
-    return true
-  }
-
-  async chatExists3(user1: string): Promise<boolean> {
-    const chatCollection = collection(this.firestore, 'chat');
-
-    // Create a compound query to check if a chat document exists for user1 and user2
-    const compoundQuery = query(chatCollection,
-      where('user1', '==', user1),
-      where('user2', '==', this.currentUserId)
-    );
-    const querySnapshot = await getDocs(compoundQuery);
-    // Check if the compound query returns any documents
-    return !querySnapshot.empty;
-  }
 
 
 
-  async chatExists(user1: string, user2: string): Promise<boolean> {
-    const chatCollection = collection(this.firestore, 'chat');
-
-    // Query for user1 -> user2
-    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
-    const result1 = await getDocs(query1);
-
-    // Query for user2 -> user1
-    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
-    const result2 = await getDocs(query2);
-
-    // Return true if either query has results
-    return !result1.empty || !result2.empty;
-  }
-
-  async getExistingChatId(user1: string, user2: string): Promise<string> {
-    const chatCollection = collection(this.firestore, 'chat');
-
-    // Query for user1 -> user2
-    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
-    const result1 = await getDocs(query1);
-
-    // If found, return the chatId
-    if (!result1.empty) {
-      return result1.docs[0].id;
-    }
-
-    // Query for user2 -> user1
-    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
-    const result2 = await getDocs(query2);
-
-    // If found, return the chatId
-    if (!result2.empty) {
-      return result2.docs[0].id;
-    }
-
-    // If not found, return an empty string (or handle as needed)
-    return '';
-  }
 
 }

@@ -1,5 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot } from '@angular/fire/firestore';
+import {
+  Firestore,
+  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where
+} from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
 import { Channel } from '../models/channel';
@@ -121,6 +124,10 @@ export class MessageService {
     });
   }
 
+
+
+  
+
   // DIRECT CHAT FUNKTIONS //
 
   async getChats() {
@@ -193,6 +200,28 @@ export class MessageService {
     updateDoc(msgRef, { reactions: reaction })
   }
 
+  async chatExists(user1: string, user2: string): Promise<boolean> {
+    const chatCollection = collection(this.firestore, 'chat');
+    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+    const result1 = await getDocs(query1);
+    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+    const result2 = await getDocs(query2);
+    return !result1.empty || !result2.empty;
+  }
 
+  async getExistingChatId(user1: string, user2: string): Promise<string> {
+    const chatCollection = collection(this.firestore, 'chat');
+    const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
+    const result1 = await getDocs(query1);
+    if (!result1.empty) {
+      return result1.docs[0].id;
+    }
+    const query2 = query(chatCollection, where('user1', '==', user2), where('user2', '==', user1));
+    const result2 = await getDocs(query2);
+    if (!result2.empty) {
+      return result2.docs[0].id;
+    }
+    return '';
+  }
 
 }

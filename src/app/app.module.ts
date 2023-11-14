@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { DatePipe } from '@angular/common';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
 /* Angular Material components */
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -71,8 +75,9 @@ import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
 import { ScrollBottomDirective } from './scroll-bottom.directive';
+import { ProfileDialogComponent } from './main/header/profile-dialog/profile-dialog.component';
 
-
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 @NgModule({
   declarations: [
@@ -107,7 +112,8 @@ import { ScrollBottomDirective } from './scroll-bottom.directive';
     FilterPipe,
     CustomSnackbarComponent,
     SearchBarComponent,
-    ScrollBottomDirective
+    ScrollBottomDirective,
+    ProfileDialogComponent
 
 
 
@@ -144,6 +150,8 @@ import { ScrollBottomDirective } from './scroll-bottom.directive';
 
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'de-DE' },
+    DatePipe,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
   ],
   bootstrap: [AppComponent]
