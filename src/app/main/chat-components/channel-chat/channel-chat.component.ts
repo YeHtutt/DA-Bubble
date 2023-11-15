@@ -59,6 +59,8 @@ export class ChannelChatComponent {
   messageCount: any;
   fileUpload?: FileUpload;
   fileType: string = '';
+  shiftPressed: boolean = false;
+  messageSending: boolean = false;
 
 
   constructor(
@@ -119,13 +121,14 @@ export class ChannelChatComponent {
     });
   }
 
-  shiftPressed: boolean = false;
+  
 
   sendByKey(event: KeyboardEvent) {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+      this.messageSending = true;
       this.sendMessageTo('channel', this.channelId);
     }
   }
@@ -143,6 +146,7 @@ export class ChannelChatComponent {
       this.messageService.sendMessage(this.message, this.receiver, false, '');
       this.text = '';
       this.fileUpload = undefined;
+      this.messageSending = false;
     });
   }
 

@@ -37,6 +37,7 @@ export class ThreadsComponent {
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
   shiftPressed: boolean = false;
+  messageSending: boolean = false;
 
 
   constructor(
@@ -132,7 +133,7 @@ export class ThreadsComponent {
 
 
   sendReplyTo() {
-    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON());
+    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON()).then(() => this.messageSending = false);
     this.text = '';
     this.fileUploadThread = undefined;
   }
@@ -142,7 +143,8 @@ export class ThreadsComponent {
     if(event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+      this.messageSending = true;
       this.sendReplyTo();
     }
   }

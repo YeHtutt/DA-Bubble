@@ -45,6 +45,7 @@ export class ChatComponent {
   fileUpload?: FileUpload;
   fileType: string = '';
   shiftPressed: boolean = false;
+  messageSending: boolean = false;
 
 
   constructor(
@@ -98,7 +99,7 @@ export class ChatComponent {
 
 
   send() {
-    this.messageService.sendMessage(this.createMessageObject(), this.chatId, false, '');
+    this.messageService.sendMessage(this.createMessageObject(), this.chatId, false, '').then(() => this.messageSending = false);
     this.text = '';
     this.fileUpload = undefined;
   }
@@ -123,7 +124,8 @@ export class ChatComponent {
     if(event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+      this.messageSending = true;
       this.send();
     }
   }
