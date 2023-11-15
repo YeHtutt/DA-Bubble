@@ -21,15 +21,18 @@
                 </div>
             </div>
         </header>
-        <main id="scroller">
-            <div *ngFor="let messageGroup of this.messageService.groupedMessages">
-                <div class="date-border">
-                    <div class="message-date"><span>{{ messageGroup.date }}</span></div>
+        <div class="chat_container">
+            <main id="scroller">
+                <div *ngFor="let messageGroup of this.messageService.groupedMessages">
+                    <div class="date-border">
+                        <div class="message-date"><span>{{ messageGroup.date }}</span></div>
+                    </div>
+                    <app-message *ngFor="let msg of this.messageGroup.messages" [message]="msg"></app-message>
                 </div>
-                <app-message *ngFor="let msg of this.messageGroup.messages" [message]="msg"></app-message>
-            </div>
-        </main>
-
+                
+            </main>
+            <app-scroll-button></app-scroll-button>
+        </div>
         <div class="input_message_container">
             <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"
                 (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
