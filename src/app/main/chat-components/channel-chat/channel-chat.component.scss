@@ -2,35 +2,44 @@
     box-sizing: border-box;
 }
 
-
-.line-with-date {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-
-    .dividing-line {
-        height: 1px;
-        background-color: blue;
-        width: calc(100% - 80px - 16px);
-        z-index: 1;
-    }
-
-    .message-date {
-        white-space: nowrap;
-        font-size: 14px;
-        padding: 4px 16px 4px 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2;
-        width: 160px;
-        border-radius: 24px;
-        border: 1px solid blue;
-    }
-
+.date-border {
+    width: 95%;
+    margin: auto;
 }
 
+.message-date {
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+
+  
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 100%; // Adjust the width as needed
+        height: 1px;
+        background-color: #ADB0D9; // Adjust the color as needed
+    }
+
+    &::before {
+        left: 0;
+    }
+
+    &::after {
+        right: 0;
+    }
+
+    // This centers the date and gives it a background to overlap the lines
+    span {
+        background: #fff; // The background color of your choice
+        position: relative;
+        z-index: 1;
+        border: 1px solid #ADB0D9;
+        border-radius: 30px;
+        padding: 5px 15px;
+    }
+}
 
 .dashboard {
     display: flex;
