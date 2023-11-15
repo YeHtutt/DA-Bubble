@@ -73,7 +73,8 @@ export class ChannelChatComponent {
     private fileService: FileStorageService,
     private notificationService: NotificationService,
     public drawerService: DrawerService,
-    ) {
+    private datePipe: DatePipe
+  ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
@@ -92,6 +93,8 @@ export class ChannelChatComponent {
       });
     });
   }
+
+
 
   openChannelMenu() {
     this.dialog.open(ChannelMenuComponent, {
@@ -119,7 +122,7 @@ export class ChannelChatComponent {
   shiftPressed: boolean = false;
 
   sendByKey(event: KeyboardEvent) {
-    if(event.key == 'Shift') {
+    if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
     if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace()) {
@@ -127,7 +130,7 @@ export class ChannelChatComponent {
     }
   }
 
-  
+
   isEmptyOrWhitespace(): boolean {
     return this.text.replace(/\n/g, '').trim().length === 0;
   }

@@ -133,14 +133,20 @@ export class MessageService {
     const groupedMessages: any = [];
     let currentDate: string | null = null;
     let index = -1;
+  
+    const todayFormatted = this.datePipe.transform(new Date(), 'EEEE, d. MMMM', 'de'); // Get today's date in the same format for comparison
+  
     messagesToGroup.forEach((message: any) => {
       // Convert Firestore Timestamp to JavaScript Date object
       const messageDateObject = (message.time as any).toDate();
       // Format the date using German locale
       const messageDate = this.datePipe.transform(messageDateObject, 'EEEE, d. MMMM', 'de');
-
-      if (messageDate !== currentDate) {
-        currentDate = messageDate;
+  
+      // Compare with today's date
+      const displayDate = (messageDate === todayFormatted) ? 'Heute' : messageDate;
+  
+      if (displayDate !== currentDate) {
+        currentDate = displayDate;
         index++;
         groupedMessages[index] = {
           date: currentDate,
@@ -151,7 +157,7 @@ export class MessageService {
     });
     return groupedMessages;
   }
-
+  
 
 
   // DIRECT CHAT FUNKTIONS //
