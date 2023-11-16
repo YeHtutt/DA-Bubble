@@ -80,13 +80,14 @@ export class ChannelChatComponent {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
+  replyPath: any = '';
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.messageService.subMessage('channel', this.channelId);
+        this.messageService.subMessage('channel', this.channelId);          
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
@@ -121,7 +122,7 @@ export class ChannelChatComponent {
     });
   }
 
-  
+
 
   sendByKey(event: KeyboardEvent) {
     if (event.key == 'Shift') {
@@ -225,5 +226,10 @@ export class ChannelChatComponent {
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
+  }
+
+
+  getThreadLength() {
+
   }
 }

@@ -12,7 +12,7 @@
     text-align: center;
     margin: 20px 0;
 
-  
+
     &::after {
         content: '';
         position: absolute;
@@ -191,6 +191,7 @@ header {
     margin: 0 20px 0 20px;
     width: calc(100% - 40px);
 
+
     &:hover {
         border: 1px solid #535AF1;
     }
@@ -205,6 +206,7 @@ header {
         width: 100%;
         min-height: 70px;
         max-height: 200px;
+        font-family: 'Nunito';
 
         &:focus {
             outline: none;

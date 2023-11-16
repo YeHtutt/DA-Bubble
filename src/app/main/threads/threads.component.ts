@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -69,6 +69,7 @@ export class ThreadsComponent {
         this.getPDFurl(message);
         this.collPath = `${message.origin}/${this.currentId}/message/${message.messageId}/thread`
         this.threadService.subReplies(this.collPath);
+     
       })
     );
   }
@@ -140,7 +141,7 @@ export class ThreadsComponent {
 
 
   sendByKey(event: KeyboardEvent) {
-    if(event.key == 'Shift') {
+    if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
     if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
@@ -149,7 +150,7 @@ export class ThreadsComponent {
     }
   }
 
-  
+
   isEmptyOrWhitespace(): boolean {
     return this.text.replace(/\n/g, '').trim().length === 0;
   }

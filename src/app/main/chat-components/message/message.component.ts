@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
@@ -8,6 +8,7 @@ import { FileUpload } from 'src/app/models/file-upload';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 import { MatDialog } from '@angular/material/dialog';
+import { collection, getCountFromServer, query } from 'firebase/firestore';
 
 interface Reaction {
   reactionEmoji: string,
@@ -46,18 +47,33 @@ export class MessageComponent {
     private firebaseUtils: FirebaseUtilsService,
     private router: Router,
     private fileService: FileStorageService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
 
+  currentId: string = '';
+
   ngOnInit() {
     this.getPDFurl();
+    this.route.params.subscribe(params => {
+      let channelId = params['channelId'];
+      let chatId = params['chatId'];
+      if (channelId) this.currentId = channelId;
+      else if (chatId) this.currentId = chatId;
+    });
+  }
+
+
+  getThreadCount(messageId: string) {
+    this.collPath = `${this.message.origin}/${this.currentId}/message/${messageId}/thread`
+    this.threadService.getThreadCount(this.collPath);
   }
 
   ngAfterViewInit() {
-    this.messageLoaded.emit(true); 
+    this.messageLoaded.emit(true);
   }
 
 
@@ -179,8 +195,8 @@ export class MessageComponent {
   }
 
   onOutsideClick(reaction: string): void {
-    if(reaction == 'isReactionOpened') this.isReactionOpened = false;
-    if(reaction == 'isReactionInputOpened') this.isReactionInputOpened = false;
+    if (reaction == 'isReactionOpened') this.isReactionOpened = false;
+    if (reaction == 'isReactionInputOpened') this.isReactionInputOpened = false;
   }
 
 
@@ -232,15 +248,15 @@ export class MessageComponent {
       'message_channel_current_user': this.isChannelMessageFromCurrentUser(message)
     };
   }
-  
+
   isUserAuthor(message: any) {
     return message.user.id === this.currentUser && message.origin === 'chat';
-  } 
-  
+  }
+
   isChannelMessageFromCurrentUser(message: any) {
     return message.user.id === this.currentUser && message.origin === 'channel';
   }
-  
+
   // OPEN USER PROFIL
 
   openProfileDialog(node: any) {
@@ -263,5 +279,11 @@ export class MessageComponent {
         isOnline: isOnline
       }
     });
+  }
+
+
+  setThread() {
+    this.collPath = `${this.message.origin}/${this.currentId}/message/${this.message.messageId}/thread`
+    this.threadService.subReplies(this.collPath);
   }
 }
