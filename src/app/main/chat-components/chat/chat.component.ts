@@ -115,7 +115,8 @@ export class ChatComponent {
       textEdited: false,
       type: 'message',
       reactions: [],
-      fileUpload: this.fileUpload?.toJSON() || []
+      fileUpload: this.fileUpload?.toJSON() || [],
+      threadCount: ''
     });
   }
 

@@ -21,10 +21,12 @@ export class ThreadService {
   ) { }
 
   unsubReplies: any;
+  unsubRepliesCount: any;
   replies: Message[] = [];
 
   ngOnDestroy() {
     this.unsubReplies();
+    this.unsubRepliesCount();
   }
 
   threadIsOpen: boolean = false;
@@ -57,11 +59,7 @@ export class ThreadService {
     });
   }
 
-  async getThreadCount(path: string) {
-    const coll = this.firebaseService.getRef(path);
-    const snapshot = await getCountFromServer(coll);
-    console.log('count: ', snapshot.data().count);
-  }
+
 
   async addReplyToCollection(path: string, message: {}) {
     // Get reference to the sub-collection inside the specified document

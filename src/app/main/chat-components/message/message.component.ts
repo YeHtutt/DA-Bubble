@@ -67,10 +67,6 @@ export class MessageComponent {
   }
 
 
-  getThreadCount(messageId: string) {
-    this.collPath = `${this.message.origin}/${this.currentId}/message/${messageId}/thread`
-    this.threadService.getThreadCount(this.collPath);
-  }
 
   ngAfterViewInit() {
     this.messageLoaded.emit(true);
@@ -282,8 +278,5 @@ export class MessageComponent {
   }
 
 
-  setThread() {
-    this.collPath = `${this.message.origin}/${this.currentId}/message/${this.message.messageId}/thread`
-    this.threadService.subReplies(this.collPath);
-  }
+
 }

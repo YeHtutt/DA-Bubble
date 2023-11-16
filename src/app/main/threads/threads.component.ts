@@ -128,7 +128,8 @@ export class ThreadsComponent {
       type: 'reply',
       origin: '',
       reactions: [],
-      fileUpload: this.fileUploadThread?.toJSON() || []
+      fileUpload: this.fileUploadThread?.toJSON() || [],
+      threadCount: '',
     });
   }
 

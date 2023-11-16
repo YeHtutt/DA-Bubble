@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div> Antworten</div>
+        <div *ngIf="message.threadCount > 0" (click)="this.threadService.openThread(message)">{{message.threadCount}} Antworten</div>
 
     </div>
     <div [ngClass]="{'interaction_container_reverse': currentUser === message.user.id && message.origin === 'chat'}"

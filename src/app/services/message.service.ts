@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
-  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where
+  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where, getCountFromServer
 } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
@@ -24,10 +24,12 @@ export class MessageService {
   unsubMessages: any;
   unsubReactions: any;
   currentUserId: any;
+  unsubThreadCount: any;
 
   ngOnDestroy() {
     this.unsubMessages();
     this.unsubReactions();
+    this.unsubThreadCount();
   }
 
   constructor(
@@ -113,19 +115,26 @@ export class MessageService {
   groupedMessages: any = [];
 
   // Gets messages from channel and chat
-  subMessage(coll: string, subId: string) {
-    // Target the 'message' subcollection under the specified document ID
+  // Gets messages from channel and chat
+  // Gets messages from channel and chat
+  async subMessage(coll: string, subId: string) {
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
     const q = query(ref, orderBy('time'));
-    return this.unsubMessages = onSnapshot(q, (list) => {
+    this.unsubMessages = onSnapshot(q, async (list) => {
       this.messages = [];
       this.groupedMessages = [];
-      list.forEach((message) => {
-        this.messages.push(Message.fromJSON({ ...message.data(), messageId: message.id }));
-      });
+      for (const message of list.docs) {
+        // Convert the Firestore document to your Message model
+        const messageData = Message.fromJSON({ ...message.data(), messageId: message.id });
+        // Wait for the thread count to resolve and assign it to the Message instance
+        messageData.threadCount = await this.getThreadCount(coll, subId, message.id);
+        this.messages.push(messageData);
+      }
       this.groupedMessages = this.groupMessagesByDate(this.messages);
     });
   }
+
+
 
 
   groupMessagesByDate(messagesToGroup: any) {
@@ -151,7 +160,15 @@ export class MessageService {
   }
 
 
-  groupEachMessage() { }
+
+  async getThreadCount(coll: string, subId: string, messageId: string): Promise<number> {
+    const collPath = `${coll}/${subId}/message/${messageId}/thread`;
+    const threadColl = collection(this.firestore, collPath);
+    const snapshot = await getCountFromServer(threadColl);
+    // You can store the count in the service state if needed
+    this.unsubThreadCount = snapshot.data().count;
+    return this.unsubThreadCount;
+  }
 
 
   // DIRECT CHAT FUNKTIONS //
