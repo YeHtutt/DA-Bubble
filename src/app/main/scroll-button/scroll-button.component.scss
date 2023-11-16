@@ -1,0 +1,35 @@
+div {
+    position: absolute;
+    right: 0;
+    bottom: 250px;
+    background-color: #797EF3;
+    border: 1px solid transparent;
+    width: 50px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 12px;
+    z-index: 5;
+    cursor: pointer;
+
+    mat-icon,
+    span {
+        color: white;
+    }
+
+    &:hover {
+        background-color: #EDEEFE;
+        border: 1px solid #797EF3;
+        border-right: none;
+
+        mat-icon,
+        span {
+            color: #797EF3;
+        }
+    }
+
+}
