@@ -69,6 +69,7 @@ export class ChatComponent {
       this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then(() => {
         this.messageService.subMessage('chat', this.chatId);
+        // console.log(this.messageService.messages)
       }).catch(err => {
         console.error("Error fetching channel data:", err);
       });

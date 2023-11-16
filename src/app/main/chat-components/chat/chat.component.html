@@ -16,6 +16,7 @@
                 <span>Diese Unterhaltung findet nur zwischen <span>&#64;{{receiver.name}}</span> und dir statt.</span>
             </div>
         </main>
+        <app-scroll-button [messageCount]="this.messageService.messages.length"></app-scroll-button>
         <div class="input_message_container">
             <textarea [(ngModel)]="text" placeholder="Nachricht an @{{receiver.name}}" (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control_container">

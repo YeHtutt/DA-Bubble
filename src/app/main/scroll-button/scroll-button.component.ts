@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-scroll-button',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./scroll-button.component.scss']
 })
 export class ScrollButtonComponent {
+
+  @Input() messageCount: any 
+
+  constructor(private messageService: MessageService) {}
+
+  ngOnInit() {
+    
+  }
 
 }
