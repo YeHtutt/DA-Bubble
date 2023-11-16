@@ -114,9 +114,6 @@ export class MessageService {
   // GET MESSAGE //
   groupedMessages: any = [];
 
-  // Gets messages from channel and chat
-  // Gets messages from channel and chat
-  // Gets messages from channel and chat
   async subMessage(coll: string, subId: string) {
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
     const q = query(ref, orderBy('time'));
@@ -124,10 +121,7 @@ export class MessageService {
       this.messages = [];
       this.groupedMessages = [];
       for (const message of list.docs) {
-        // Convert the Firestore document to your Message model
-        const messageData = Message.fromJSON({ ...message.data(), messageId: message.id });
-        // Wait for the thread count to resolve and assign it to the Message instance
-        messageData.threadCount = await this.getThreadCount(coll, subId, message.id);
+        const messageData = Message.fromJSON({ ...message.data(), messageId: message.id }); 
         this.messages.push(messageData);
       }
       this.groupedMessages = this.groupMessagesByDate(this.messages);
@@ -242,6 +236,12 @@ export class MessageService {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
+
+  async updateCount(coll: any, docId: any, msgId: string, count: number) {
+    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+    updateDoc(msgRef, { threadCount: count })
+  }
+
 
   async chatExists(user1: string, user2: string): Promise<boolean> {
     const chatCollection = collection(this.firestore, 'chat');

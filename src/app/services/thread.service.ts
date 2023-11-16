@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Message } from '../models/message';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Firestore, addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, arrayUnion, getCountFromServer } from '@angular/fire/firestore';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { DrawerService } from './drawer.service';
@@ -21,12 +21,11 @@ export class ThreadService {
   ) { }
 
   unsubReplies: any;
-  unsubRepliesCount: any;
   replies: Message[] = [];
+  replyCount: any = [];
 
   ngOnDestroy() {
     this.unsubReplies();
-    this.unsubRepliesCount();
   }
 
   threadIsOpen: boolean = false;
@@ -45,8 +44,22 @@ export class ThreadService {
     if (!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForResponsive(1440) && !this.drawerService.isDrawerOpen && !this.threadIsOpen) this.drawerService.toggle();
   }
 
+  private replyCountSource = new BehaviorSubject<number>(0);
+  currentReplyCount = this.replyCountSource.asObservable();
 
+  updateReplyCount(count: number) {
+    this.replyCountSource.next(count);
+  }
 
+  private threadCountSource = new BehaviorSubject<number>(0);
+
+  setThreadCount(count: number) {
+    this.threadCountSource.next(count);
+  }
+
+  getThreadCount(): Observable<number> {
+    return this.threadCountSource.asObservable();
+  }
 
   subReplies(path: string) {
     let ref = collection(this.firestore, path);
@@ -59,12 +72,8 @@ export class ThreadService {
     });
   }
 
-
-
   async addReplyToCollection(path: string, message: {}) {
-    // Get reference to the sub-collection inside the specified document
     let ref = collection(this.firestore, path);
-    // Add the new message to the sub-collection
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
       .then((docRef: any) => {
@@ -85,13 +94,11 @@ export class ThreadService {
   }
 
 
-  // Inside ThreadService
-
   async updateDoc(path: string, doc: any, idField: string, updatedFields: any) {
     if (doc[idField]) {
       console.log(path, doc);
       let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
-      await updateDoc(docRef, { ...updatedFields }); // Updating only the specified fields
+      await updateDoc(docRef, { ...updatedFields });
     } else {
       console.error("ID is missing");
     }

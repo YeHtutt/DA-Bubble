@@ -11,7 +11,7 @@ import { FileStorageService } from 'src/app/services/file-storage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FileUpload } from 'src/app/models/file-upload';
 import { DrawerService } from 'src/app/services/drawer.service';
-
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-threads',
@@ -19,23 +19,26 @@ import { DrawerService } from 'src/app/services/drawer.service';
   styleUrls: ['./threads.component.scss']
 })
 export class ThreadsComponent {
+  @Output() replyCountUpdated = new EventEmitter<number>();
+  private subscriptions = new Subscription();
+  allUsers: UserProfile[] = [];
+  currentUser: UserProfile = new UserProfile;
 
   currentId: string = '';
   messageCreator: any;
   message: any;
-  private subscriptions = new Subscription();
-  isOpened: boolean = false;
   text: string = '';
-  showTagMenu: boolean = false;
-  allUsers: UserProfile[] = [];
-  currentUser: UserProfile = new UserProfile;
   collPath = '';
   thread: any;
+
   fileUploadThread?: FileUpload;
   fileTypeThread: string = '';
-  isPDF: boolean = false;
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
+
+  isOpened: boolean = false;
+  isPDF: boolean = false;
+  showTagMenu: boolean = false;
   shiftPressed: boolean = false;
   messageSending: boolean = false;
 
@@ -48,7 +51,8 @@ export class ThreadsComponent {
     private userService: UsersFirebaseService,
     private fileService: FileStorageService,
     private notificationService: NotificationService,
-    public drawerService: DrawerService
+    public drawerService: DrawerService,
+    private messageService: MessageService,
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -69,7 +73,6 @@ export class ThreadsComponent {
         this.getPDFurl(message);
         this.collPath = `${message.origin}/${this.currentId}/message/${message.messageId}/thread`
         this.threadService.subReplies(this.collPath);
-     
       })
     );
   }
@@ -138,7 +141,10 @@ export class ThreadsComponent {
     this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON()).then(() => this.messageSending = false);
     this.text = '';
     this.fileUploadThread = undefined;
+    this.messageService.updateCount(this.message.origin, this.currentId, this.message.messageId, this.threadService.replies.length)
   }
+
+
 
 
   sendByKey(event: KeyboardEvent) {

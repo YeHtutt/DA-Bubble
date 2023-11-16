@@ -87,9 +87,7 @@ export class ChannelChatComponent {
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
-        this.messageService.subMessage('channel', this.channelId);
-    
-        
+        this.messageService.subMessage('channel', this.channelId); 
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
