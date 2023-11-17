@@ -67,20 +67,6 @@ export class FirebaseUtilsService {
     }
   }
 
-  /* UPDATE */
-
-
-  async updateDoc(path: string, doc: any, idField: string) {
-    if (doc[idField]) {
-      let docRef = this.getSingleDocRef(path, doc[idField]);
-      await updateDoc(docRef, doc.toJSON());
-    } else {
-      console.error("ID is missing");
-      throw new Error("ID is missing");
-    }
-  }
-
-
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
   getRef(ref: any) {
     return collection(this.firestore, ref);

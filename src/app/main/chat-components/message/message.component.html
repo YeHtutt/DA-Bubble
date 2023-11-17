@@ -56,7 +56,8 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="message.threadCount > 0" (click)="this.threadService.openThread(message)">{{message.threadCount}} Antworten</div>
+        <button *ngIf="message.threadCount > 0" (click)="this.threadService.openThread(message)" class="answer-button">
+            {{message.threadCount}} Antworten</button>
 
     </div>
     <div [ngClass]="{'interaction_container_reverse': currentUser === message.user.id && message.origin === 'chat'}"
@@ -85,7 +86,6 @@
                 *ngIf="checkIfEdit">Nachricht
                 löschen</button>
         </div>
-
     </div>
 </div>
 <div *ngIf="showEdit" class="edit_container" [ngClass]="{'edit_container_thread_style' : message.origin === ''}">

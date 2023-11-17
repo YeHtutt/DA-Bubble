@@ -25,7 +25,7 @@
             <div>Antworten</div>
             <mat-divider></mat-divider>
         </div>
-        <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [collPath]="collPath"></app-message>
+        <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [parentMessageId]="parentMessageId" [collPath]="collPath"></app-message>
         <div #scroller></div>
         <div class="input-message-container">
             <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>

@@ -22,7 +22,7 @@ export class ThreadService {
 
   unsubReplies: any;
   replies: Message[] = [];
-  replyCount: any = [];
+  replyCount: number = 0;
 
   ngOnDestroy() {
     this.unsubReplies();
@@ -32,6 +32,7 @@ export class ThreadService {
 
   private _message = new BehaviorSubject<Message>(new Message());
   message$ = this._message.asObservable();
+
 
   openThread(message: Message) {
     this.threadIsOpen = true;
@@ -44,22 +45,6 @@ export class ThreadService {
     if (!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForResponsive(1440) && !this.drawerService.isDrawerOpen && !this.threadIsOpen) this.drawerService.toggle();
   }
 
-  private replyCountSource = new BehaviorSubject<number>(0);
-  currentReplyCount = this.replyCountSource.asObservable();
-
-  updateReplyCount(count: number) {
-    this.replyCountSource.next(count);
-  }
-
-  private threadCountSource = new BehaviorSubject<number>(0);
-
-  setThreadCount(count: number) {
-    this.threadCountSource.next(count);
-  }
-
-  getThreadCount(): Observable<number> {
-    return this.threadCountSource.asObservable();
-  }
 
   subReplies(path: string) {
     let ref = collection(this.firestore, path);
@@ -69,6 +54,26 @@ export class ThreadService {
       list.forEach((reply) => {
         this.replies.push(Message.fromJSON({ ...reply.data(), replyId: reply.id }));
       });
+      this.replyCount = this.replies.length; // Update the replyCount here
+      console.log('reply' + this.replyCount);
+    });
+  }
+
+  // Function to manually fetch the updated count of messages/replies.
+  fetchUpdatedCount(collPath: string) {
+    return new Promise((resolve, reject) => {
+      const ref = collection(this.firestore, collPath);
+      const q = query(ref, orderBy('time'));
+
+      // Get the snapshot once instead of subscribing to changes.
+      getDocs(q)
+        .then(snapshot => {
+          const count = snapshot.size; // Get the count from the snapshot.
+          resolve(count);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
   }
 

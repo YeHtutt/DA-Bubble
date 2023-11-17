@@ -1,14 +1,14 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ThreadService } from 'src/app/services/thread.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { FileUpload } from 'src/app/models/file-upload';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 import { MatDialog } from '@angular/material/dialog';
-import { collection, getCountFromServer, query } from 'firebase/firestore';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+
 
 interface Reaction {
   reactionEmoji: string,
@@ -22,15 +22,17 @@ interface Reaction {
 })
 export class MessageComponent {
 
+  @Input() parentMessageId: any;
   @Input() collPath: any;
   @Input() message: any;
   public currentUser: string;
-  currentUserName: string = '';
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
+  currentUserName: string = '';
   editMessage: string = '';
   docId: string | undefined = '';
   coll: string | undefined = '';
+  origin: string = '';
   isOpened: boolean = false;
   isReactionInputOpened: boolean = false;
   isReactionOpened: boolean = false;
@@ -44,11 +46,11 @@ export class MessageComponent {
     private userService: UsersFirebaseService,
     private messageService: MessageService,
     public threadService: ThreadService,
-    private firebaseUtils: FirebaseUtilsService,
     private router: Router,
     private fileService: FileStorageService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private firebaseUtils: FirebaseUtilsService
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
@@ -61,8 +63,14 @@ export class MessageComponent {
     this.route.params.subscribe(params => {
       let channelId = params['channelId'];
       let chatId = params['chatId'];
-      if (channelId) this.currentId = channelId;
-      else if (chatId) this.currentId = chatId;
+      if (channelId) {
+        this.currentId = channelId;
+        this.origin = 'channel'
+      }
+      else if (chatId) {
+        this.currentId = chatId;
+        this.origin = 'chat'
+      }
     });
   }
 
@@ -207,8 +215,9 @@ export class MessageComponent {
     this.threadService.updateDoc(path, this.message, 'messageId', updateObject);
   }
 
-  deleteReply(path: string) {
-    this.firebaseUtils.deleteCollection(path, this.message.messageId)
+  async deleteReply(path: string) {
+    await this.firebaseUtils.deleteCollection(path, this.message.messageId);
+    this.messageService.updateCount(this.origin, this.currentId, this.parentMessageId, this.threadService.replyCount);
   }
 
   // UPLOADED FILES

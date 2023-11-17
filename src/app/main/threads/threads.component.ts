@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -29,6 +29,7 @@ export class ThreadsComponent {
   message: any;
   text: string = '';
   collPath = '';
+  parentMessageId: string = '';
   thread: any;
 
   fileUploadThread?: FileUpload;
@@ -53,11 +54,10 @@ export class ThreadsComponent {
     private notificationService: NotificationService,
     public drawerService: DrawerService,
     private messageService: MessageService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
-
-
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -70,11 +70,13 @@ export class ThreadsComponent {
       this.threadService.message$.subscribe(message => {
         this.messageCreator = message.user;
         this.message = message
+        this.parentMessageId = this.message.messageId
         this.getPDFurl(message);
         this.collPath = `${message.origin}/${this.currentId}/message/${message.messageId}/thread`
         this.threadService.subReplies(this.collPath);
       })
     );
+
   }
 
   ngOnDestroy(): void {
@@ -138,11 +140,29 @@ export class ThreadsComponent {
 
 
   sendReplyTo() {
-    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON()).then(() => this.messageSending = false);
+    // Step 1: Add the new message.
+    this.firebaseUtils.addCollWithPath(this.collPath, 'messageId', this.createMessageObject().toJSON())
+      .then(() => {
+        // The message has been sent, we can stop any sending indicators.
+        this.messageSending = false;
+
+        // Step 3: Manually fetch the updated count of messages/replies.
+        return this.threadService.fetchUpdatedCount(this.collPath);
+      })
+      .then((newCount: any) => {
+        // Step 4: Update the UI with the new count.
+        this.messageService.updateCount(this.message.origin, this.currentId, this.message.messageId, newCount);
+      })
+      .catch(error => {
+        console.error("Error sending reply: ", error);
+      });
+
+    // Reset the message input.
     this.text = '';
     this.fileUploadThread = undefined;
-    this.messageService.updateCount(this.message.origin, this.currentId, this.message.messageId, this.threadService.replies.length)
   }
+
+
 
 
 

@@ -24,12 +24,12 @@ export class MessageService {
   unsubMessages: any;
   unsubReactions: any;
   currentUserId: any;
-  unsubThreadCount: any;
+
 
   ngOnDestroy() {
     this.unsubMessages();
     this.unsubReactions();
-    this.unsubThreadCount();
+  
   }
 
   constructor(
@@ -121,14 +121,12 @@ export class MessageService {
       this.messages = [];
       this.groupedMessages = [];
       for (const message of list.docs) {
-        const messageData = Message.fromJSON({ ...message.data(), messageId: message.id }); 
+        const messageData = Message.fromJSON({ ...message.data(), messageId: message.id });
         this.messages.push(messageData);
       }
       this.groupedMessages = this.groupMessagesByDate(this.messages);
     });
   }
-
-
 
 
   groupMessagesByDate(messagesToGroup: any) {
@@ -151,17 +149,6 @@ export class MessageService {
       groupedMessages[index].messages.push({ ...message });
     });
     return groupedMessages;
-  }
-
-
-
-  async getThreadCount(coll: string, subId: string, messageId: string): Promise<number> {
-    const collPath = `${coll}/${subId}/message/${messageId}/thread`;
-    const threadColl = collection(this.firestore, collPath);
-    const snapshot = await getCountFromServer(threadColl);
-    // You can store the count in the service state if needed
-    this.unsubThreadCount = snapshot.data().count;
-    return this.unsubThreadCount;
   }
 
 
@@ -241,6 +228,8 @@ export class MessageService {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { threadCount: count })
   }
+
+
 
 
   async chatExists(user1: string, user2: string): Promise<boolean> {
