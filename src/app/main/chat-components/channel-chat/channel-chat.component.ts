@@ -130,7 +130,7 @@ export class ChannelChatComponent {
     }
     if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
       this.messageSending = true;
-      this.sendMessageTo('channel', this.channelId);
+      this.sendMessageTo(this.channelId);
     }
   }
 
@@ -140,10 +140,10 @@ export class ChannelChatComponent {
   }
 
 
-  sendMessageTo(coll: string, docId: string) {
+  sendMessageTo(docId: string) {
     this.createMessageObject().then(async createdMessage => {
       this.message = createdMessage;
-      this.receiver = await this.channelService.getSingleChannel(docId)
+      this.receiver = await this.channelService.getSingleChannel(docId);
       this.messageService.sendMessage(this.message, this.receiver, false, '');
       this.text = '';
       this.fileUpload = undefined;
@@ -229,8 +229,4 @@ export class ChannelChatComponent {
     this.fileUpload = undefined;
   }
 
-
-  getThreadLength() {
-
-  }
 }

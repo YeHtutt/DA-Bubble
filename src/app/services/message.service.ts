@@ -12,6 +12,8 @@ import { NotificationService } from './notification.service';
 import { FileUpload } from '../models/file-upload';
 import { UsersFirebaseService } from './users-firebase.service';
 import { DatePipe } from '@angular/common';
+import { FirebaseUtilsService } from './firebase-utils.service';
+
 
 type ReceiverType = UserProfile | Channel;
 
@@ -24,12 +26,11 @@ export class MessageService {
   unsubMessages: any;
   unsubReactions: any;
   currentUserId: any;
-
+  groupedMessages: any = [];
 
   ngOnDestroy() {
     this.unsubMessages();
     this.unsubReactions();
-  
   }
 
   constructor(
@@ -38,6 +39,7 @@ export class MessageService {
     private notificationService: NotificationService,
     private userService: UsersFirebaseService,
     private datePipe: DatePipe,
+    private firebaseUtils: FirebaseUtilsService
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   // SEND MESSAGE //
@@ -60,6 +62,39 @@ export class MessageService {
     }
   }
 
+
+
+  sendMessageToChannel(origin: string, id: string, message: Message) {
+    let path = `${origin}/${id}`;
+
+  }
+
+  async sendMessageToChat(id: string, message: Message) {
+    const chatAlreadyExists = await this.chatExists(this.currentUserId, id);
+    if (chatAlreadyExists) {
+      const chatId = await this.getExistingChatId(this.currentUserId, id);
+      this.router.navigate(['main/chat', chatId]);
+      this.uploadMessage('chat', chatId, 'message', message);
+    }
+    else {
+      if (!chatAlreadyExists) {
+        let newDirectChat = await this.createDirectChatObject(id).toJSON();
+        this.firebaseUtils.addCollWithCustomId(newDirectChat, 'chat', newDirectChat.chatId);
+      }
+    }
+  }
+
+  createDirectChatObject(receiver: string): DirectChat {
+    return new DirectChat({
+      chatId: `${this.currentUserId}_${receiver}`,
+      creationTime: new Date(),
+      user1: this.currentUserId,
+      user2: receiver,
+    });
+  }
+
+
+ 
 
   async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
     const docId = await this.getChatDocId(directChat);
@@ -112,7 +147,7 @@ export class MessageService {
 
 
   // GET MESSAGE //
-  groupedMessages: any = [];
+
 
   async subMessage(coll: string, subId: string) {
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
