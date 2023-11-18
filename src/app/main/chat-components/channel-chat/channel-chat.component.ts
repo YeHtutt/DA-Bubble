@@ -61,6 +61,7 @@ export class ChannelChatComponent {
   fileType: string = '';
   shiftPressed: boolean = false;
   messageSending: boolean = false;
+  @ViewChild('scroller') scrollElementRef?: ElementRef;
 
 
   constructor(
@@ -98,6 +99,10 @@ export class ChannelChatComponent {
   }
 
 
+  scrollDown() {
+    this.scrollElement = this.scrollElementRef?.nativeElement;
+    this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
+  }
 
   openChannelMenu() {
     this.dialog.open(ChannelMenuComponent, {

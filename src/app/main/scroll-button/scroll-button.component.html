@@ -1,4 +1,4 @@
-<div>
-    <span>1</span>
+<div (click)="scrollDown()">
+    <span *ngIf="newMessageCount > 0">{{newMessageCount}}</span>
     <mat-icon>keyboard_arrow_down</mat-icon>
 </div>
