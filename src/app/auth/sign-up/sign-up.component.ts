@@ -62,7 +62,13 @@ export class SignUpComponent {
         setTimeout(() => {
           this.router.navigate([`/choose-avatar`, { userName: name }]);
         }, 2000);
-      })
+      },
+      (error) => {
+        console.error('SignUp error:', error);
+        this.sighUpSuccess = false;
+        this.openSnackBar();
+      }
+      )
   }
 
   fillUserObject(name: string, email: string) {
@@ -75,7 +81,7 @@ export class SignUpComponent {
     if (this.sighUpSuccess == true) {
       this.notificationService.showSuccess('Registrierung erfolgreich')
     } else {
-      this.notificationService.showError('Registrierung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben')
+      this.notificationService.showError('Die Benutzer/Email existiert schon bereit, bitte geben Sie die neue Angaben!')
     }
   }
 

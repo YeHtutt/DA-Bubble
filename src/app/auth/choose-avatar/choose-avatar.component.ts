@@ -15,7 +15,7 @@ export class ChooseAvatarComponent {
   url = 'assets/img/avatar/';
   newUserID: any;
   avatarPic: boolean = true;
-  urlToSelectedAvatar: string | null = null;
+  urlToSelectedAvatar: string = '';
 
   user: UserProfile = new UserProfile;
   newUserName: string = '';
@@ -34,12 +34,12 @@ export class ChooseAvatarComponent {
       this.urlToSelectedAvatar = 'assets/img/avatar/' + image;
     } else {
       this.urlToSelectedAvatar = image;
-      //this.avatarPic = true;
+      this.avatarPic = true;
     }
   }
 
-  async saveNewPic(image: any) {
-    this.usersfbService.saveUserPic(image, this.avatarPic);
+  async saveNewPic() {
+    this.usersfbService.saveUserPic(this.urlToSelectedAvatar);
     setTimeout(() => {
       this.router.navigate(['/login'])
     })
