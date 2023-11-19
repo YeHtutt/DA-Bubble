@@ -6,6 +6,7 @@ import { UsersFirebaseService } from './users-firebase.service';
 import { UserProfile } from '../models/user-profile';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { NotificationService } from './notification.service';
 
 
 
@@ -25,7 +26,8 @@ export class AuthenticationService {
 
   constructor(private auth: Auth, private afAuth: AngularFireAuth, 
     private userfbService: UsersFirebaseService, private router: Router, 
-    private usersFbService: UsersFirebaseService) {
+    private usersFbService: UsersFirebaseService,
+    private notificationService: NotificationService) {
     this.user = new UserProfile(); // user initialisiert
   }
 
@@ -91,9 +93,11 @@ export class AuthenticationService {
         }
         this.usersFbService.saveToLocalStorage(result.user.uid);
         this.router.navigate([`/main`]);
+        this.notificationService.showSuccess('Login erfolgreich');
       }
       ).catch((error) => {
-        console.error(error)
+        console.error(error);
+        this.notificationService.showError('Login fehlgeschlagen!');
       });
   }
 
