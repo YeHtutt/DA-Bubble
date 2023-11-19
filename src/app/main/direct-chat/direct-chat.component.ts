@@ -14,11 +14,11 @@ import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
-  selector: 'app-direct-message',
-  templateUrl: './direct-message.component.html',
-  styleUrls: ['./direct-message.component.scss']
+  selector: 'app-direct-chat',
+  templateUrl: './direct-chat.component.html',
+  styleUrls: ['./direct-chat.component.scss']
 })
-export class DirectMessageComponent {
+export class DirectChatComponent {
 
   constructor(
     public messageTreeService: MessageTreeService,

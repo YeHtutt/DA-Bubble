@@ -32,13 +32,8 @@ export class ChannelsComponent {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.expandChannels();
     });
-    this.subscriptions.push(sub);
-    
+    this.subscriptions.push(sub);    
   }
-
-
-  /*   if (!this.channelTree.includes(channelObj.channelName)) {
-      this.notificationService.showError('Ein Channel mit diesem Namen existiert bereits'); */
 
 
   ngOnDestroy() {

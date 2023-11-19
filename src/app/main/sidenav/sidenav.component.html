@@ -1,5 +1,13 @@
-<img class="toggle-box" (click)="drawer.toggle()"
-  src="{{isDrawerOpen ? '../assets/img/close-sidenav.png' : '../assets/img/open-sidenav.png'}}">
+<button class="toggle-box" (click)="drawer.toggle(); isDrawerOpen = !isDrawerOpen">
+
+  <span class="material-symbols-outlined" *ngIf="!isDrawerOpen">
+    right_panel_open
+  </span>
+  <span class="material-symbols-outlined" *ngIf="isDrawerOpen">
+    right_panel_close
+  </span>
+  <div>{{ isDrawerOpen ? 'Workspace-menu schließen' : 'Workspace-menu öffnen' }} </div>
+</button>
 
 <mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer [class.side_nav_mobile]="isMobile" #drawer [opened]="true" class="sidenav" mode="side">
@@ -14,9 +22,10 @@
       </div>
       <app-search-bar [isMobile]="true"></app-search-bar>
       <app-channels></app-channels>
-      <app-direct-message></app-direct-message>
+      <app-direct-chat></app-direct-chat>
     </div>
-    <button (click)="drawer.close()" [routerLink]="['message']" *ngIf="isDrawerOpen && isMobile" mat-fab color="primary" class="new_msg_mobile_button">
+    <button (click)="drawer.close()" [routerLink]="['message']" *ngIf="isDrawerOpen && isMobile" mat-fab color="primary"
+      class="new_msg_mobile_button">
       <mat-icon>edit_square</mat-icon>
     </button>
   </mat-drawer>

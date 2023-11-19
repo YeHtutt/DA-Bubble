@@ -12,7 +12,7 @@ import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.compon
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
-import { DirectMessageComponent } from './main/direct-message/direct-message.component';
+import { DirectChatComponent } from './main/direct-chat/direct-chat.component';
 import { ImprintComponent } from './main/imprint/imprint.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
 

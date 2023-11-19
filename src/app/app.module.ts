@@ -65,7 +65,7 @@ import { UserProfileViewComponent } from './main/users/user-profile-view/user-pr
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
 import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
 import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
-import { DirectMessageComponent } from './main/direct-message/direct-message.component';
+import { DirectChatComponent } from './main/direct-chat/direct-chat.component';
 import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
@@ -106,7 +106,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     ChannelUsersDialogComponent,
     UserProfileEditComponent,
     UserProfileSubViewComponent,
-    DirectMessageComponent,
+    DirectChatComponent,
     EmojiPickerComponent,
     AddPeopleDialogComponent,
     ImprintComponent,
