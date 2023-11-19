@@ -34,7 +34,7 @@ export class ChooseAvatarComponent {
       this.urlToSelectedAvatar = 'assets/img/avatar/' + image;
     } else {
       this.urlToSelectedAvatar = image;
-      this.avatarPic = true;
+      //this.avatarPic = true;
     }
   }
 
