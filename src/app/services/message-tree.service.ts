@@ -100,7 +100,7 @@ export class MessageTreeService {
 
 
   subUserMessagesList() {
-    return this.unsubChat = onSnapshot(this.firebaseUtils.getRef('users'), (list: any) => {
+    return this.unsubChat = onSnapshot(this.firebaseUtils.getColl('users'), (list: any) => {
       this.messageTree = [];
       list.forEach((element: any) => {
         const messageObj = this.setDirectMessageObj(element.data(), element.id);
@@ -116,7 +116,7 @@ export class MessageTreeService {
 
 
   getChannelContent(docId: string) {
-    const docRef = doc(this.firebaseUtils.getRef('users'), docId);
+    const docRef = doc(this.firebaseUtils.getColl('users'), docId);
     return this.unsubChat = onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         return this.setDirectMessageObj(docSnapshot.data(), docSnapshot.id);

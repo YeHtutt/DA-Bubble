@@ -24,9 +24,36 @@ export class FirebaseUtilsService {
   firestore: Firestore = inject(Firestore);
 
 
+
+/**
+ * Adds an item to a Firestore collection and updates the added item with its own ID.
+ * The function uses a path to identify the collection and logs errors using console.error.
+ * Errors are thrown to be handled by the caller.
+ * 
+ * @async
+ * @param {Object} item - The item to be added to the Firestore collection.
+ * @param {string} path - The path to the collection in Firestore.
+ * @param {string} fieldId - The name of the field where the document ID should be stored.
+ * 
+ * @throws {Error} If there is an error in the process.
+ */
+  async addDocumentWithID(item: {}, path: string, fieldId: string) {
+    try {
+      // Add the document to the specified collection
+      const docRef = await addDoc(this.getColl(path), item);
+      console.log("Document written with ID:", docRef.id);
+      // Update the document with the ID
+      await updateDoc(docRef, { [fieldId]: docRef.id });
+    } catch (err) {
+      console.error("Error adding document:", err);
+      throw err; // Rethrow to allow caller to handle the error
+    }
+  }
+
+
   async addColl(item: {}, ref: string, fieldId: string) {
     try {
-      const docRef = await addDoc(this.getRef(ref), item);
+      const docRef = await addDoc(this.getColl(ref), item);
       console.log("Document written with ID", docRef.id);
       // Update the document with the ID
       await updateDoc(docRef, { [fieldId]: docRef.id });
@@ -57,7 +84,7 @@ export class FirebaseUtilsService {
   async addCollWithPath(path: string, fieldId: string, item: {}) {
     try {
       // Add the document to the specified collection
-      const docRef = await addDoc(this.getRef(path), item);
+      const docRef = await addDoc(this.getColl(path), item);
       console.log("Document written with ID", docRef.id);
       // Update the document with the ID
       await updateDoc(docRef, { [fieldId]: docRef.id });
@@ -68,10 +95,14 @@ export class FirebaseUtilsService {
   }
 
   /* This method takes a collection ID and a document ID as parameters and returns a reference to the specified document in the Firestore database. */
-  getRef(ref: any) {
-    return collection(this.firestore, ref);
+  getColl(coll: any) {
+    return collection(this.firestore, coll);
   }
 
+
+  getDoc(path: string) {
+    return doc(this.firestore, `${path}`);
+  }
 
   /**
    * @param path path to the collection or sub-collection

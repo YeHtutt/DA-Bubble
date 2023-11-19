@@ -151,7 +151,8 @@ export class ThreadsComponent {
       })
       .then((newCount: any) => {
         // Step 4: Update the UI with the new count.
-        this.messageService.updateCount(this.message.origin, this.currentId, this.message.messageId, newCount);
+        let path = `${this.message.origin}, ${this.currentId}, ${this.message.messageId}`
+        this.messageService.updateCount(path, newCount);
       })
       .catch(error => {
         console.error("Error sending reply: ", error);
