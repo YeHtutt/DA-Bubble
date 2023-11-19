@@ -60,13 +60,15 @@ export class LoginComponent implements OnInit {
           this.authService.setIsAuthenticated(true);
           this.openSnackBar();
           this.router.navigate([`/main`]);
-        } else {
-          this.loginSuccess = false;
-          this.authService.setIsAuthenticated(false);
-          this.openSnackBar();
-          console.error('user is null.');
-        }
-      })
+        } 
+      },
+      (error) => {
+        console.error('Login error:', error);
+        this.loginSuccess = false;
+        this.authService.setIsAuthenticated(false);
+        this.openSnackBar();
+      }
+      )
     }
   }
 
@@ -93,12 +95,13 @@ export class LoginComponent implements OnInit {
         this.authService.setIsAuthenticated(true);
         this.openSnackBar();
         this.router.navigate([`/main`]);
-      } else {
-        this.loginSuccess = false;
-        this.authService.setIsAuthenticated(false);
-        this.openSnackBar();
-        console.error('user is null.');
       }
+    },
+    (error) => {
+      console.error('Login error:', error);
+      this.loginSuccess = false;
+      this.authService.setIsAuthenticated(false);
+      this.openSnackBar();
     })
   }
 
@@ -112,7 +115,7 @@ export class LoginComponent implements OnInit {
     if (this.loginSuccess == true) {
       this.notificationService.showSuccess('Login erfolgreich');
     } else {
-      this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.')
+      this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben!')
     }
   }
 
