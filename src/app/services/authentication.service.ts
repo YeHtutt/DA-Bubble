@@ -77,10 +77,6 @@ export class AuthenticationService {
       .then((result: any) => {
         console.log("signInWithRedirect reuslt:", result);
         if (result && result.user) {
-          /*if (result.user.metadata.createdAt == result.user.metadata.lastLoginAt) { 
-            //neue User
-            this.router.navigate([`/sign-up`]);
-          } else {// existierende User }*/
           const collRef = doc(this.firestore, 'users', result.user.uid);
           this.userUID = result.user.uid;
           this.currentUser = result.user;
@@ -89,6 +85,7 @@ export class AuthenticationService {
             name: result.user.displayName,
             email: result.user.email,
             photoURL: result.user.photoURL,
+            isOnline: false,
           })
           setDoc(collRef, this.user.toJSON());
         }
