@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
-  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where, getCountFromServer
+  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where
 } from '@angular/fire/firestore';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
@@ -62,12 +62,28 @@ export class MessageService {
     }
   }
 
-
-
-  sendMessageToChannel(origin: string, id: string, message: Message) {
-    let path = `${origin}/${id}`;
-
+  async sendChannelMessage(receiver: any, message: Message, newMessage: boolean) {
+    this.uploadMessage('channel', receiver.channelId, 'message', message);
+    if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
   }
+
+
+  async sendMessageToChannel(origin: string, id: string, message: Message) {
+    let path = `${origin}/${id}/message`;
+    this.uploadMessageWithPath(path, message);
+    if (message) this.router.navigateByUrl('/main/channel/' + id);
+  }
+
+
+  async uploadMessageWithPath(path: string, message: Message) {
+    try {
+      const docRef = await addDoc(this.firebaseUtils.getColl(path), message.toJSON());
+      await updateDoc(docRef, { messageId: docRef.id });
+    } catch (error) {
+      this.notificationService.showError(`Nachricht konnte nicht gesendet werden`);
+    }
+  }
+
 
   async sendMessageToChat(id: string, message: Message) {
     const chatAlreadyExists = await this.chatExists(this.currentUserId, id);
@@ -94,7 +110,9 @@ export class MessageService {
   }
 
 
- 
+
+
+
 
   async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
     const docId = await this.getChatDocId(directChat);
@@ -102,11 +120,6 @@ export class MessageService {
     if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
   }
 
-
-  async sendChannelMessage(receiver: any, message: Message, newMessage: boolean) {
-    this.uploadMessage('channel', receiver.channelId, 'message', message);
-    if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
-  }
 
 
 
@@ -259,10 +272,11 @@ export class MessageService {
     updateDoc(msgRef, { reactions: reaction })
   }
 
-  async updateCount(coll: any, docId: any, msgId: string, count: number) {
-    const msgRef = await this.getMsgDocRef(coll, docId, msgId);
+  async updateCount(path: any, count: number) {
+    const msgRef = await this.firebaseUtils.getDoc(path);
     updateDoc(msgRef, { threadCount: count })
   }
+
 
 
 

@@ -99,7 +99,7 @@ export class ChannelService {
 
 
   getAllChannels() {
-    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
+    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channels.push(channelObj);
@@ -111,7 +111,7 @@ export class ChannelService {
   }
 
   subChannelList() {
-    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getRef('channel'), (list: any) => {
+    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       this.channelTree = [];
       this.populateChannelsAndMore(list);
       this.updateDataSource();
@@ -160,7 +160,7 @@ export class ChannelService {
 
 
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
-    const docRef = doc(this.firebaseUtils.getRef('channel'), documentId);
+    const docRef = doc(this.firebaseUtils.getColl('channel'), documentId);
     return onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         callback(docSnapshot.data());
