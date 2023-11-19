@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Subscription, lastValueFrom } from 'rxjs';
 import { FileUpload } from '../models/file-upload';
-import { Subscription, firstValueFrom, lastValueFrom } from 'rxjs';
-import { MessageService } from './message.service';
-import { deleteObject } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,6 @@ export class FileStorageService {
 
   constructor(
     private storage: AngularFireStorage,
-    private messageService: MessageService
   ) { }
 
   ngOnDestroy() {
