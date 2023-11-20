@@ -48,7 +48,9 @@ export class ChatComponent {
   messageSending: boolean = false;
   scrollElement: any;
   @ViewChild('scroller') scrollElementRef?: ElementRef;
-  collPath: string = '';
+  @ViewChild('endScrollElement') endScrollElement?: ElementRef;
+  private observer?: IntersectionObserver;
+  isElementVisible: boolean = false;
 
 
   constructor(
@@ -69,7 +71,6 @@ export class ChatComponent {
     this.route.paramMap.subscribe(async (params) => {
       this.chatExists = false;
       this.chatId = params.get('chatId') || '';
-      this.collPath = `channel/${this.chatId}/message`;
       this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then(() => {
         this.messageService.subMessage('chat', this.chatId);
@@ -77,6 +78,25 @@ export class ChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
+  }
+
+  ngAfterViewInit() {
+    this.initIntersectionObserver();
+  }
+
+  ngOnDestroy() {
+    if (this.observer) this.observer.disconnect();
+  }
+
+  initIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isElementVisible = entry.isIntersecting;
+      });
+    }, { threshold: 1 });
+    if (this.endScrollElement) {
+      this.observer.observe(this.endScrollElement?.nativeElement);
+    }
   }
 
 

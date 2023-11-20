@@ -61,6 +61,9 @@ export class ChannelChatComponent {
   shiftPressed: boolean = false;
   messageSending: boolean = false;
   @ViewChild('scroller') scrollElementRef?: ElementRef;
+  @ViewChild('endScrollElement') endScrollElement?: ElementRef;
+  private observer?: IntersectionObserver;
+  isElementVisible: boolean = false;
 
 
   constructor(
@@ -84,7 +87,6 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
-      // this.collPath = `chat/${this.channelId}/message`;
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
@@ -95,6 +97,25 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
+  }
+
+  ngAfterViewInit() {
+    this.initIntersectionObserver();
+  }
+
+  ngOnDestroy() {
+    if (this.observer) this.observer.disconnect();
+  }
+
+  initIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isElementVisible = entry.isIntersecting;
+      });
+    }, { threshold: 1 });
+    if (this.endScrollElement) {
+      this.observer.observe(this.endScrollElement?.nativeElement);
+    }
   }
 
 

@@ -26,7 +26,7 @@
             <mat-divider></mat-divider>
         </div>
         <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [parentMessageId]="parentMessageId" [collPath]="collPath"></app-message>
-        <app-scroll-button (EmitScrollDown)="scrollDown()" [chatData]="{collPath: collPath}"></app-scroll-button>
+        <app-scroll-button *ngIf="!isElementVisible" (EmitScrollDown)="scrollDown()" [chatData]="{collPath: collPath}"></app-scroll-button>
         <div class="input-message-container">
             <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">
@@ -57,5 +57,6 @@
                 <button [disabled]="text.length == 0" (click)="sendReplyTo()"><mat-icon [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send-btn">send</mat-icon></button>
             </div>
         </div>
+        <div #endScrollElement></div>
     </main>
 </div>

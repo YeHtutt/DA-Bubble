@@ -44,6 +44,9 @@ export class ThreadsComponent {
   messageSending: boolean = false;
   scrollElement: any;
   @ViewChild('scroller') scrollElementRef?: ElementRef;
+  @ViewChild('endScrollElement') endScrollElement?: ElementRef;
+  private observer?: IntersectionObserver;
+  isElementVisible: boolean = false;
 
 
 
@@ -82,14 +85,31 @@ export class ThreadsComponent {
 
   }
 
+  ngAfterViewInit() {
+    this.initIntersectionObserver();
+  }
+
+  ngOnDestroy(): void  {
+    if (this.observer) this.observer.disconnect();
+    this.subscriptions.unsubscribe();
+  }
+
+  initIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isElementVisible = entry.isIntersecting;
+      });
+    }, { threshold: 1 });
+    if (this.endScrollElement) {
+      this.observer.observe(this.endScrollElement?.nativeElement);
+    }
+  }
+
   scrollDown() {
     this.scrollElement = this.scrollElementRef?.nativeElement;
     this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
