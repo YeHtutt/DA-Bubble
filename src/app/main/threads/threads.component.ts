@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -42,6 +42,9 @@ export class ThreadsComponent {
   showTagMenu: boolean = false;
   shiftPressed: boolean = false;
   messageSending: boolean = false;
+  scrollElement: any;
+  @ViewChild('scroller') scrollElementRef?: ElementRef;
+
 
 
   constructor(
@@ -77,6 +80,11 @@ export class ThreadsComponent {
       })
     );
 
+  }
+
+  scrollDown() {
+    this.scrollElement = this.scrollElementRef?.nativeElement;
+    this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
   }
 
   ngOnDestroy(): void {

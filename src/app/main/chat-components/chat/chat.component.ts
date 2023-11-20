@@ -46,6 +46,9 @@ export class ChatComponent {
   fileType: string = '';
   shiftPressed: boolean = false;
   messageSending: boolean = false;
+  scrollElement: any;
+  @ViewChild('scroller') scrollElementRef?: ElementRef;
+  collPath: string = '';
 
 
   constructor(
@@ -66,6 +69,7 @@ export class ChatComponent {
     this.route.paramMap.subscribe(async (params) => {
       this.chatExists = false;
       this.chatId = params.get('chatId') || '';
+      this.collPath = `channel/${this.chatId}/message`;
       this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then(() => {
         this.messageService.subMessage('chat', this.chatId);
@@ -79,6 +83,11 @@ export class ChatComponent {
   getAllMessages() {
     if (this.messageService.messages.length > 0) this.chatExists = true;
     return this.messageService.messages
+  }
+
+  scrollDown() {
+    this.scrollElement = this.scrollElementRef?.nativeElement;
+    this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
   }
 
 

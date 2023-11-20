@@ -1,28 +1,27 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
+import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { DatePipe } from '@angular/common';
+import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 /* Models */
 
-import { Message } from 'src/app/models/message';
 import { Channel } from 'src/app/models/channel';
+import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
 
 /* Services */
 
-import { MessageService } from 'src/app/services/message.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { FileUpload } from 'src/app/models/file-upload';
+import { ChannelService } from 'src/app/services/channel.service';
+import { DrawerService } from 'src/app/services/drawer.service';
+import { FileStorageService } from 'src/app/services/file-storage.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { MessageService } from 'src/app/services/message.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
-import { ChannelService } from 'src/app/services/channel.service';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { FileUpload } from 'src/app/models/file-upload';
-import { NotificationService } from 'src/app/services/notification.service';
-import { DrawerService } from 'src/app/services/drawer.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 
 @Component({
@@ -75,8 +74,7 @@ export class ChannelChatComponent {
     public threadService: ThreadService,
     private fileService: FileStorageService,
     private notificationService: NotificationService,
-    public drawerService: DrawerService,
-    private datePipe: DatePipe
+    public drawerService: DrawerService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -86,6 +84,7 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
+      // this.collPath = `chat/${this.channelId}/message`;
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);

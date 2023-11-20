@@ -227,6 +227,7 @@ export class MessageService {
     }
     return chatExists;
   }
+  
 
   async getChatDocId(directChat: DirectChat) {
     let docId: any;
@@ -276,9 +277,6 @@ export class MessageService {
     const msgRef = await this.firebaseUtils.getDoc(path);
     updateDoc(msgRef, { threadCount: count })
   }
-
-
-
 
 
   async chatExists(user1: string, user2: string): Promise<boolean> {

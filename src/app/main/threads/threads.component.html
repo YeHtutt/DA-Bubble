@@ -5,7 +5,7 @@
             <mat-icon>close</mat-icon>
         </button>
     </header>
-    <main id="scroller" [appScrollBottom]="getAllReplies()">
+    <main #scroller>
         <div class="avatar-message-container">
             <img class="avatar" src="{{ message.user.photoURL }}" alt="">
             <div class="message-time">
@@ -26,7 +26,7 @@
             <mat-divider></mat-divider>
         </div>
         <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [parentMessageId]="parentMessageId" [collPath]="collPath"></app-message>
-        <div #scroller></div>
+        <app-scroll-button (EmitScrollDown)="scrollDown()" [chatData]="{collPath: collPath}"></app-scroll-button>
         <div class="input-message-container">
             <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">

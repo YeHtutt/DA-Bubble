@@ -78,6 +78,7 @@ main {
     overflow-x: hidden;
     height: calc(100% - 96px);
     padding-bottom: 120px;
+    scroll-behavior: smooth;
 }
 
 .message-bubble {
