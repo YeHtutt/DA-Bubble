@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { DrawerService } from 'src/app/services/drawer.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-header',
@@ -32,13 +33,25 @@ export class HeaderComponent implements OnInit {
     public userFbService: UsersFirebaseService,
     private searchService: SearchService,
     public drawerService: DrawerService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+
   ) { }
 
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+
+
+  isMenuOpen = false;
+
+  closeMenu() {
+    if (this.menuTrigger) {
+      this.menuTrigger.closeMenu();
+    }
+    this.isMenuOpen = false; // Make sure this line is executed regardless of the condition.
+  }
 
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
-    this.getCurrentUser(); 
+    this.getCurrentUser();
   }
 
   async getCurrentUser() {

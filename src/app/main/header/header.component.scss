@@ -32,6 +32,16 @@ app-search-bar {
   display: flex;
 }
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
 .search-box {
   position: relative;
   height: 50px;
@@ -196,7 +206,7 @@ app-search-bar {
 }
 
 @media (max-width: 750px) {
-  .logo-search-box{
+  .logo-search-box {
     display: none;
   }
 }

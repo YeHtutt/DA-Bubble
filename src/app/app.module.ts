@@ -150,7 +150,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     MatSnackBarModule,
     MatRadioModule,
     MatChipsModule,
-    PickerModule
+    PickerModule,
+   
 
   ],
   providers: [

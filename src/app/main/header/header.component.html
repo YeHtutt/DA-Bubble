@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <div class="profil-box" *ngIf="this.currentUser" [matMenuTriggerFor]="menu">
+  <div class="profil-box" *ngIf="currentUser" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (menuOpened)="isMenuOpen = true" (menuClosed)="isMenuOpen = false">
     <span class="profil-name">{{ this.currentUser.name}}</span>
     <div class="alignRight" style="position: relative;">
       <img class="avatar" src="{{ this.currentUser.photoURL }}">
@@ -23,12 +23,16 @@
     <button mat-icon-button>
       <img class="arrow-down" src="../assets/img/arrow-down.png"></button>
   </div>
-  <mat-menu #menu="matMenu">
+  <div class="backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+
+  <mat-menu #menu="matMenu" class="profile-menu" >
+
     <button mat-menu-item (click)="openUserProfile()">
       <span>Profile</span>
     </button>
     <button mat-menu-item (click)="userLoggedout()">
       <span>Logout</span>
     </button>
+
   </mat-menu>
 </header>

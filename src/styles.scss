@@ -122,8 +122,6 @@
   display: none;
 }
 
-
-
 .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 30px !important;
 }
@@ -140,6 +138,13 @@ body {
   padding: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow-x: hidden;
+}
+
+.profile-menu  {
+  border-radius: 30px 0px 30px 30px !important;
+  background: var(--White, #FFF) !important;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20) !important;
+  z-index: 9000;
 }
 
 
@@ -390,31 +395,31 @@ button {
 
 .resetPassword-input-field {
   .mdc-text-field--outlined {
-      --mdc-outlined-text-field-outline-width: 0px !important;
-      --mdc-outlined-text-field-focus-outline-width: 0px !important;
-      --mdc-outlined-text-field-container-shape: 0px !important;
+    --mdc-outlined-text-field-outline-width: 0px !important;
+    --mdc-outlined-text-field-focus-outline-width: 0px !important;
+    --mdc-outlined-text-field-container-shape: 0px !important;
   }
 
   .mdc-notched-outline__leading {
-      border-top-left-radius: 100px !important;
-      border-bottom-left-radius: 100px !important;
-      min-width: 100px !important;
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
+    min-width: 100px !important;
   }
 
   .mat-mdc-form-field-infix {
-      background-color: #ECEEFE !important;
-      border-top-right-radius: 100px !important;
-      border-bottom-right-radius: 100px !important;
-      border-top-left-radius: 100px !important;
-      border-bottom-left-radius: 100px !important;
+    background-color: #ECEEFE !important;
+    border-top-right-radius: 100px !important;
+    border-bottom-right-radius: 100px !important;
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
   }
 
   .mat-mdc-form-field-icon-prefix,
   .mat-mdc-form-field-icon-suffix {
-      padding: 0 0px 0 0;
-      background-color: #ECEEFE !important;
-      border-top-left-radius: 100px !important;
-      border-bottom-left-radius: 100px !important;
+    padding: 0 0px 0 0;
+    background-color: #ECEEFE !important;
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
   }
 }
 
