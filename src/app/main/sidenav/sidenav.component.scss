@@ -5,6 +5,8 @@
 }
 
 
+
+
 mat-drawer {
   height: calc(100vh - 125px);
   margin-left: 12px;
@@ -42,8 +44,11 @@ mat-drawer {
   font-size: 18px;
   font-weight: 600;
   color: black;
-  margin-bottom: 15px;
-  position: relative;
+  margin-bottom: 15px;  
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  z-index: 200;
 
   span {
     margin-right: 21px;

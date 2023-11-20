@@ -9,7 +9,7 @@
   <div>{{ isDrawerOpen ? 'Workspace-menu schließen' : 'Workspace-menu öffnen' }} </div>
 </button>
 
-<mat-drawer-container class="mat-drawer-container" autosize>
+<mat-drawer-container cdk-scrollable class="mat-drawer-container" autosize>
   <mat-drawer [class.side_nav_mobile]="isMobile" #drawer [opened]="true" class="sidenav" mode="side">
     <div class="mat-drawer-box">
       <div class="sidenav-header">
@@ -21,8 +21,10 @@
         </div>
       </div>
       <app-search-bar [isMobile]="true"></app-search-bar>
-      <app-channels></app-channels>
-      <app-direct-chat></app-direct-chat>
+      <div class="tree">
+        <app-channels></app-channels>
+        <app-direct-chat></app-direct-chat>
+      </div>
     </div>
     <button (click)="drawer.close()" [routerLink]="['message']" *ngIf="isDrawerOpen && isMobile" mat-fab color="primary"
       class="new_msg_mobile_button">
