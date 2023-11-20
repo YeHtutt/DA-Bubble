@@ -28,7 +28,7 @@
         <app-message  *ngFor="let thread of getAllReplies()" [message]="thread" [parentMessageId]="parentMessageId" [collPath]="collPath"></app-message>
         <app-scroll-button [ngStyle]="{'opacity': !isElementVisible ? '1' : '0'}" (EmitScrollDown)="scrollDown()" [chatData]="{collPath: collPath}"></app-scroll-button>
         <div class="input-message-container">
-            <textarea [(ngModel)]="text" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
+            <textarea [(ngModel)]="text" (ngModelChange)="checkForTag()" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
                     <div class="file_upload_button">
@@ -39,8 +39,8 @@
                     </div>
                     <hr>
                     <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
-                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside (clickOutside)="onOutsideClick()"></app-emoji-picker>
-                    <mat-icon (click)="openTagMenu()" class="action-btn-style">alternate_email</mat-icon>
+                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside (clickOutside)="closeEmojiMenu()"></app-emoji-picker>
+                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="openTagMenu('@')" class="action-btn-style">alternate_email</mat-icon>
                     <div *ngIf="fileUploadThread" class="file_to_upload">
                         <mat-icon (click)="onDelete(fileUploadThread.path)" class="delete_btn">close</mat-icon>
                         <img style="height: 45px;" src="{{fileTypeThread}}" alt="">

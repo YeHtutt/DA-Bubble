@@ -199,19 +199,29 @@ export class ChannelChatComponent {
   }
 
   checkForTag() {
-    if(this.text.includes('@')) console.log('@ wurde genutzt')
+    const atIndex = this.text.lastIndexOf('@');
+    if (atIndex > 0 && this.text[atIndex - 1] === ' ' || atIndex === 0) {
+      const textAfterAt = this.text.substring(atIndex);
+      const endOfQueryIndex = textAfterAt.indexOf(' ');
+      const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
+      this.openTagMenu(searchQuery)
+    }
+    if(!this.text.includes('@')) this.showTagMenu = false;
   }
 
-  async openTagMenu() {
-    this.showTagMenu = !this.showTagMenu;
-    const searchResult = await this.searchService.searchUsersAndChannels('@', '');
+  async openTagMenu(tag: string) {
+    this.showTagMenu = true;
+    const searchResult = await this.searchService.searchUsersAndChannels(tag, '');
     this.allUsers = searchResult.filteredUser;
-    setTimeout(() => this.showTagMenu = false, 8000);
   }
 
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
+  }
+
+  closeTagMenu() {
+    this.showTagMenu = false;
   }
 
 
@@ -226,7 +236,7 @@ export class ChannelChatComponent {
     this.isOpened = false;
   }
 
-  onOutsideClick(): void {
+  closeEmojiMenu(): void {
     this.isOpened = false
   }
 
