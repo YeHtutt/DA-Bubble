@@ -4,8 +4,16 @@
   background-color: #ECEEFE;
 }
 
+.scrollbar {
+  padding-bottom: 10px;
+}
 
-
+.sticky {
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  z-index: 200;
+}
 
 mat-drawer {
   height: calc(100vh - 125px);
@@ -44,11 +52,7 @@ mat-drawer {
   font-size: 18px;
   font-weight: 600;
   color: black;
-  margin-bottom: 15px;  
-  position: sticky;
-  top: 0px;
-  background-color: white;
-  z-index: 200;
+  margin-bottom: 15px;
 
   span {
     margin-right: 21px;
@@ -122,6 +126,7 @@ mat-drawer {
   box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.20);
   padding: 23px 14px;
   border: unset;
+
   div {
     transform: rotate(180deg);
     width: 100%;

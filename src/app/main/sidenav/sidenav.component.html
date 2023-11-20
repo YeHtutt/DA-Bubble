@@ -9,10 +9,10 @@
   <div>{{ isDrawerOpen ? 'Workspace-menu schließen' : 'Workspace-menu öffnen' }} </div>
 </button>
 
-<mat-drawer-container cdk-scrollable class="mat-drawer-container" autosize>
+<mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer [class.side_nav_mobile]="isMobile" #drawer [opened]="true" class="sidenav" mode="side">
     <div class="mat-drawer-box">
-      <div class="sidenav-header">
+      <div class="sidenav-header sticky">
         <img class="workspace-logo" src="../assets/img/workspace.png">
         <span>Code learning</span>
         <div [routerLink]="['message']" class="edit-div">
@@ -20,7 +20,9 @@
           <div class="bg-div"></div>
         </div>
       </div>
-      <app-search-bar [isMobile]="true"></app-search-bar>
+      <div class="sticky scrollbar" *ngIf="isMobile">
+        <app-search-bar [isMobile]="true"></app-search-bar>
+      </div>
       <div class="tree">
         <app-channels></app-channels>
         <app-direct-chat></app-direct-chat>
