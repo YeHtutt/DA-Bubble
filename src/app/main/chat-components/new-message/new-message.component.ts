@@ -101,7 +101,7 @@ export class NewMessageComponent {
 
 
   async searchData() {
-    const searchResult = await this.searchService.searchUsersAndChannels(this.search)
+    const searchResult = await this.searchService.searchUsersAndChannels(this.search, '')
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
   }
@@ -130,7 +130,7 @@ export class NewMessageComponent {
 
   async openTagMenu() {
     this.showTagMenu = !this.showTagMenu;
-    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    const searchResult = await this.searchService.searchUsersAndChannels('@', '');
     this.allUsers = searchResult.filteredUser;
     setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
   }

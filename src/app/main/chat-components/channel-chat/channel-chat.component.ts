@@ -204,7 +204,7 @@ export class ChannelChatComponent {
 
   async openTagMenu() {
     this.showTagMenu = !this.showTagMenu;
-    const searchResult = await this.searchService.searchUsersAndChannels('@');
+    const searchResult = await this.searchService.searchUsersAndChannels('@', '');
     this.allUsers = searchResult.filteredUser;
     setTimeout(() => this.showTagMenu = false, 8000);
   }

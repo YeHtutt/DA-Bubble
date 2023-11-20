@@ -14,9 +14,10 @@ export class SearchService {
 
   }
 
-  async getUserAndChannelData() {
+  async getUserAndChannelData(chatPath: string) {
     this.usersAndChannels.users = await this.userService.getUsers();
     this.usersAndChannels.channels = await this.channelService.getChannels();
+    // if(chatPath) await 
   }
 
   transformForSearch(array: any, search: string) {
@@ -36,8 +37,8 @@ export class SearchService {
   }
 
 
-  async searchUsersAndChannels(search: string) {
-    await this.getUserAndChannelData();
+  async searchUsersAndChannels(search: string, chatPath: string) {
+    await this.getUserAndChannelData(chatPath);
     this.transformForSearch(this.usersAndChannels, search)
     this.SearchResult.filteredUser = search && this.usersAndChannels.users.filter((user: object) => this.checkIfIncluded(user, search.toLowerCase()));
     this.SearchResult.filteredChannel = search && this.usersAndChannels.channels.filter((channel: object) => this.checkIfIncluded(channel, search.toLowerCase()));

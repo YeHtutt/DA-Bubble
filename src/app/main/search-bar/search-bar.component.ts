@@ -16,13 +16,14 @@ export class SearchBarComponent {
   usersAndChannels: any = [];
   searchOutput: boolean = false;
   @Input() isMobile: boolean = false;
+  @Input() collPath: string = '';
 
   constructor(
     private searchService: SearchService,
     public dialog: MatDialog) {}
 
   async searchData() {
-    const searchResult = await this.searchService.searchUsersAndChannels(this.search)
+    const searchResult = await this.searchService.searchUsersAndChannels(this.search, this.collPath)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
   }

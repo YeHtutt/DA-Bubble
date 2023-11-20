@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
   usersAndChannels: any = [];
   searchOutput: boolean = false;
   public currentUser: UserProfile = new UserProfile();
+  chatPath: string = '';
 
   constructor(private authService: AuthenticationService,
     private afAuth: AngularFireAuth,
@@ -52,6 +53,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.getCurrentUser();
+    this.getMessagePath();
   }
 
   async getCurrentUser() {
@@ -77,33 +79,33 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  async searchData() {
-    const searchResult = await this.searchService.searchUsersAndChannels(this.search)
-    this.filteredUser = searchResult.filteredUser;
-    this.filteredChannel = searchResult.filteredChannel;
-  }
+  // async searchData() {
+  //   const searchResult = await this.searchService.searchUsersAndChannels(this.search)
+  //   this.filteredUser = searchResult.filteredUser;
+  //   this.filteredChannel = searchResult.filteredChannel;
+  // }
 
 
-  deleteSearch() {
-    this.search = '';
-    this.filteredUser = [];
-    this.filteredChannel = [];
-    this.toggleSearchOutput();
-  }
+  // deleteSearch() {
+  //   this.search = '';
+  //   this.filteredUser = [];
+  //   this.filteredChannel = [];
+  //   this.toggleSearchOutput();
+  // }
 
 
-  toggleSearchOutput() {
-    this.searchOutput = !this.searchOutput;
-  }
+  // toggleSearchOutput() {
+  //   this.searchOutput = !this.searchOutput;
+  // }
 
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
-      this.searchOutput = false;
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
+  //     this.searchOutput = false;
+  //   }
+  // }
 
 
   openProfileDialogInSearch(node: any) {
@@ -129,4 +131,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  getMessagePath() {
+    const url = this.router.url;
+    let urlParts = url.split('/');
+    const docId = urlParts.pop();
+    const coll = urlParts.pop();
+    this.chatPath = `${coll}/${docId}`;
+  }
 }
