@@ -31,7 +31,7 @@
             </div>
             <div #endScrollElement></div>
         </main>
-        <app-scroll-button *ngIf="!isElementVisible" (EmitScrollDown)="scrollDown()"
+        <app-scroll-button [ngStyle]="{'opacity': !isElementVisible ? '1' : '0'}" (EmitScrollDown)="scrollDown()"
             [chatData]="{collPath: 'channel/' + channelId + '/message'}"></app-scroll-button>
         <div class="input_message_container">
             <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"
