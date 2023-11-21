@@ -60,7 +60,8 @@
             {{message.threadCount}} Antworten</button>
         <button *ngIf="message.threadCount == 1" (click)="this.threadService.openThread(message)" class="answer-button">
             {{message.threadCount}} Antwort</button>
-        <div></div>
+        <div class="last-message-time" *ngIf="message.timeOflastReply !== ''">{{getTimeOfDate(message.timeOflastReply)}}
+        </div>
 
     </div>
     <div [ngClass]="{'interaction_container_reverse': currentUser === message.user.id && message.origin === 'chat'}"

@@ -277,6 +277,7 @@ export class MessageService {
     const msgRef = await this.firebaseUtils.getDoc(path);
     updateDoc(msgRef, {
       threadCount: count,
+      timeOflastReply: time
     });
   }
 
