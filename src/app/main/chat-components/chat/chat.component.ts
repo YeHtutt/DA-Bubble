@@ -51,6 +51,7 @@ export class ChatComponent {
   @ViewChild('endScrollElement') endScrollElement?: ElementRef;
   private observer?: IntersectionObserver;
   isElementVisible: boolean = false;
+  searchMessage: boolean = false;
 
 
   constructor(
@@ -184,7 +185,7 @@ export class ChatComponent {
   }
 
   async searchUserToTag(tag: string) {
-    const searchResult = await this.searchService.searchUsersAndChannels(tag, '');
+    const searchResult = await this.searchService.searchUsersChannelsAndMessages(tag, this.searchMessage);
     this.allUsers = searchResult.filteredUser;
   }
 

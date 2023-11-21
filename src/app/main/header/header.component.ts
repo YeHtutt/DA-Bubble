@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit {
   usersAndChannels: any = [];
   searchOutput: boolean = false;
   public currentUser: UserProfile = new UserProfile();
-  chatPath: string = '';
 
   constructor(private authService: AuthenticationService,
     private afAuth: AngularFireAuth,
@@ -53,7 +52,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.getCurrentUser();
-    this.getMessagePath();
   }
 
   async getCurrentUser() {
@@ -129,13 +127,5 @@ export class HeaderComponent implements OnInit {
         isOnline: isOnline
       }
     });
-  }
-
-  getMessagePath() {
-    const url = this.router.url;
-    let urlParts = url.split('/');
-    const docId = urlParts.pop();
-    const coll = urlParts.pop();
-    this.chatPath = `${coll}/${docId}`;
   }
 }
