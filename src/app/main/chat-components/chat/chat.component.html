@@ -31,7 +31,7 @@
                     <hr>
                     <mat-icon (click)="toggleEmoji($event)" class="action_btn_style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside (clickOutside)="closeEmojiMenu()"></app-emoji-picker>
-                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="openTagMenu('@')" class="action_btn_style">alternate_email</mat-icon>
+                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="toggleTagMenu('@')" class="action_btn_style">alternate_email</mat-icon>
                     <div *ngIf="fileUpload" class="file_to_upload">
                         <mat-icon (click)="onDelete(fileUpload.path)" class="delete_btn">close</mat-icon>
                         <img style="height: 45px;" src="{{fileType}}" alt="">

@@ -214,24 +214,34 @@ export class ChannelChatComponent {
 
   checkForTag() {
     const atIndex = this.text.lastIndexOf('@');
-    if (atIndex > 0 && this.text[atIndex - 1] === ' ' || atIndex === 0) {
+    if (atIndex > 0 && this.text[atIndex - 1] === ' ' && this.text.includes('@') || atIndex === 0) {
+      this.showTagMenu = true;
       const textAfterAt = this.text.substring(atIndex);
       const endOfQueryIndex = textAfterAt.indexOf(' ');
       const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
-      this.openTagMenu(searchQuery)
+      this.searchUserToTag(searchQuery)
     }
     if (!this.text.includes('@')) this.showTagMenu = false;
   }
 
-  async openTagMenu(tag: string) {
-    this.showTagMenu = true;
+  async toggleTagMenu(tag: string) {
+    this.showTagMenu = !this.showTagMenu;
+    this.searchUserToTag(tag);
+  }
+
+  async searchUserToTag(tag: string) {
     const searchResult = await this.searchService.searchUsersAndChannels(tag, '');
     this.allUsers = searchResult.filteredUser;
   }
 
   tagUser(user: string) {
-    this.text = `@${user}`;
-    this.showTagMenu = !this.showTagMenu;
+    const atIndex = this.text.lastIndexOf('@');
+    if (atIndex !== -1) {
+      this.text = this.text.substring(0, atIndex) + `@${user}`;
+    } else {
+      this.text = this.text + `@${user}`;
+      this.showTagMenu = !this.showTagMenu;
+    }
   }
 
   closeTagMenu() {
