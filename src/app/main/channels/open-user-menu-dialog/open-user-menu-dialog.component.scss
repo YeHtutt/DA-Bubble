@@ -1,7 +1,48 @@
 @import "../../../../styles.scss";
 
 
+.close-user-menu {
+    padding: 40px;
+}
+
+.close-user-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h3 {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
 .close-btn {
     display: flex;
     align-self: flex-end;
+}
+
+.profil-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+}
+
+.online-status {
+    width: 12px;
+    height: 12px;
+    object-fit: cover;
+    position: relative;
+    left: -15px;
+    top: 9px;
+}
+
+.user-in-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 13px;
 }
