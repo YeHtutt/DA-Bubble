@@ -29,6 +29,8 @@ h3 {
     width: 32px;
     height: 32px;
     object-fit: cover;
+    border-radius: 100%;
+    margin-right: 10px;
 }
 
 .online-status {
@@ -40,9 +42,38 @@ h3 {
     top: 9px;
 }
 
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
 .user-in-list {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 13px;
+}
+
+.add-user {
+    height: 36px;
+    width: 36px;
+    background-color: #ECEEFE;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    mat-icon {
+        color: black;
+        font-size: 20px;
+        transition: transform 120ms ease-in, color 120ms ease-in;
+    }
+
+    &:hover {
+
+        mat-icon {
+            transform: scale(1.1);
+            color: #535AF1;
+        }
+    }
 }

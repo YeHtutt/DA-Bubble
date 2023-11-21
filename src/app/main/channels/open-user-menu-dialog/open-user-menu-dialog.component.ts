@@ -21,6 +21,6 @@ export class OpenUserMenuDialogComponent {
   closeCreateChannelDialog() {
     this.dialogRef.close();
   }
-
+  openPeopleUserlDialog() { }
 
 }

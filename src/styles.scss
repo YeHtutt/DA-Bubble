@@ -140,7 +140,7 @@ body {
   overflow-x: hidden;
 }
 
-.profile-menu  {
+.profile-menu {
   border-radius: 30px 0px 30px 30px !important;
   background: var(--White, #FFF) !important;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20) !important;
@@ -322,6 +322,12 @@ button {
   cursor: pointer;
 }
 
+.basic-text-button {
+  border: unset;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}
 
 .mat-mdc-radio-button.mat-primary {
   --mdc-radio-unselected-hover-icon-color: #444DF2;
@@ -331,7 +337,7 @@ button {
 
 .basic-button {
   background-color: transparent;
-  border: none;
+  border: unset;
   border-radius: 50%;
   padding: 8px;
   height: 40px;

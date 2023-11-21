@@ -5,15 +5,19 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>
-    <div *ngFor="let user of this.channel.usersData" class="user-in-list">
-        <img class="profil-icon" src="{{ user.photoURL }}">
-        <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
-        <img *ngIf="!user.isOnline" class="online-status" src="assets/img/Offline.png">
-        <div>{{user.name}}</div>
+    <div class="users-list">
+        <div *ngFor="let user of this.channel.usersData" class="user-in-list">
+            <img class="profil-icon" src="{{ user.photoURL }}">
+            <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
+            <img *ngIf="!user.isOnline" class="online-status" src="assets/img/Offline.png">
+            <div>{{user.name}}</div>
+        </div>
     </div>
-    <button class="add-user-btn">
-        <span class="material-symbols-outlined">
-            person_add
-        </span>
+    <button class="add-user-btn basic-text-button">
+        <div class="add-user" (click)="openPeopleUserlDialog()">
+            <mat-icon>person_add</mat-icon>
+        </div>
+
+
         Mitglieder hinzufügen</button>
 </div>
