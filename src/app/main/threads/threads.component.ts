@@ -135,6 +135,7 @@ export class ThreadsComponent {
       reactions: [],
       fileUpload: this.fileUploadThread?.toJSON() || [],
       threadCount: '',
+      timeOflastReply: ''
     });
   }
 

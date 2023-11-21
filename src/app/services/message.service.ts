@@ -274,9 +274,8 @@ export class MessageService {
 
   async updateCount(path: any, count: number) {
     const msgRef = await this.firebaseUtils.getDoc(path);
-    updateDoc(msgRef, { threadCount: count })
+    updateDoc(msgRef, { threadCount: count });    
   }
-
 
 
 

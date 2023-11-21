@@ -116,7 +116,8 @@ export class ChatComponent {
       type: 'message',
       reactions: [],
       fileUpload: this.fileUpload?.toJSON() || [],
-      threadCount: ''
+      threadCount: '',
+      timeOflastReply: ''
     });
   }
 

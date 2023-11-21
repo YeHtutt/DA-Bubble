@@ -7,7 +7,7 @@
             </div>
             <div class="user_channel_info_box">
                 <div class="user_in_channel_box">
-                    <div class="user_avatar_box">
+                    <div class="user_avatar_box" (click)="openUserMenu()">
                         <div *ngFor="let user of channel?.usersData;let i=index;">
                             <img *ngIf="i < 3" [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL"
                                 alt="User image">

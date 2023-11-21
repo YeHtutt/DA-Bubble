@@ -116,6 +116,10 @@ export class ChannelChatComponent {
   }
 
 
+  openUserMenu() {
+
+  }
+
   openPeopleUserlDialog() {
     this.dialog.open(AddPeopleDialogComponent, {
       width: '710px',
@@ -169,7 +173,8 @@ export class ChannelChatComponent {
       type: 'message',
       reactions: [],
       fileUpload: this.fileUpload?.toJSON() || [],
-      threadCount: ''
+      threadCount: '',
+      timeOflastReply: ''
     });
   }
 

@@ -11,6 +11,7 @@ export class Message {
     reactions: [];
     fileUpload: [];
     threadCount: any;
+    timeOflastReply: any;
 
     constructor(obj?: any) {
         this.origin = obj ? obj.origin : '';
@@ -23,6 +24,8 @@ export class Message {
         this.reactions = obj ? obj.reactions : [];
         this.fileUpload = obj ? obj.fileUpload : [];
         this.threadCount = obj ? obj.threadCount : '';
+        this.timeOflastReply = obj ? obj.timeOflastReply : '';
+
     }
 
     public toJSON() {
@@ -37,6 +40,7 @@ export class Message {
             reactions: this.reactions,
             fileUpload: this.fileUpload,
             threadCount: this.threadCount,
+            timeOflastReply: this.timeOflastReply,
         };
     }
 
@@ -53,6 +57,7 @@ export class Message {
             reactions: json.reactions,
             fileUpload: json.fileUpload,
             threadCount: json.threadCount,
+            timeOflastReply: json.timeOflastReply,
         });
     }
 }

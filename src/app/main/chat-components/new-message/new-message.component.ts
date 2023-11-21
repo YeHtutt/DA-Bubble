@@ -96,6 +96,7 @@ export class NewMessageComponent {
       reactions: [],
       fileUpload: this.fileUpload?.toJSON() || [],
       threadCount: '',
+      timeOflastReply: ''
     });
   }
 

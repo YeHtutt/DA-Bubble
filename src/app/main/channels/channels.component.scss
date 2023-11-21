@@ -110,6 +110,15 @@ h3 {
     }
 }
 
+.other-groups {
+    display: flex;
+    align-items: center;
+
+    mat-icon {
+        margin-right: 16px
+    }
+}
+
 .add-channel {
     display: flex;
     align-items: center;
