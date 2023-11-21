@@ -1,5 +1,5 @@
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 import { Subscription } from 'rxjs';
@@ -42,6 +42,12 @@ export class ThreadsComponent {
   showTagMenu: boolean = false;
   shiftPressed: boolean = false;
   messageSending: boolean = false;
+  scrollElement: any;
+  @ViewChild('scroller') scrollElementRef?: ElementRef;
+  @ViewChild('endScrollElement') endScrollElement?: ElementRef;
+  private observer?: IntersectionObserver;
+  isElementVisible: boolean = false;
+
 
 
   constructor(
@@ -79,9 +85,31 @@ export class ThreadsComponent {
 
   }
 
-  ngOnDestroy(): void {
+  ngAfterViewInit() {
+    this.initIntersectionObserver();
+  }
+
+  ngOnDestroy(): void  {
+    if (this.observer) this.observer.disconnect();
     this.subscriptions.unsubscribe();
   }
+
+  initIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isElementVisible = entry.isIntersecting;
+      });
+    }, { threshold: 1 });
+    if (this.endScrollElement) {
+      this.observer.observe(this.endScrollElement?.nativeElement);
+    }
+  }
+
+  scrollDown() {
+    this.scrollElement = this.scrollElementRef?.nativeElement;
+    this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
+  }
+
 
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
@@ -92,16 +120,30 @@ export class ThreadsComponent {
   }
 
 
-  async openTagMenu() {
-    this.showTagMenu = !this.showTagMenu;
-    const searchResult = await this.searchService.searchUsersAndChannels('@');
+  async openTagMenu(tag: string) {
+    this.showTagMenu = true;
+    const searchResult = await this.searchService.searchUsersAndChannels(tag, '');
     this.allUsers = searchResult.filteredUser;
-    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
   }
 
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
+  }
+
+  checkForTag() {
+    const atIndex = this.text.lastIndexOf('@');
+    if (atIndex > 0 && this.text[atIndex - 1] === ' ' || atIndex === 0) {
+      const textAfterAt = this.text.substring(atIndex);
+      const endOfQueryIndex = textAfterAt.indexOf(' ');
+      const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
+      this.openTagMenu(searchQuery)
+    }
+    if(!this.text.includes('@')) this.showTagMenu = false;
+  }
+
+  closeTagMenu() {
+    this.showTagMenu = false;
   }
 
   toggleEmoji(event: Event) {
@@ -115,7 +157,7 @@ export class ThreadsComponent {
     this.isOpened = false;
   }
 
-  onOutsideClick(): void {
+  closeEmojiMenu(): void {
     this.isOpened = false
   }
 

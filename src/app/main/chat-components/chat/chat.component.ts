@@ -46,6 +46,11 @@ export class ChatComponent {
   fileType: string = '';
   shiftPressed: boolean = false;
   messageSending: boolean = false;
+  scrollElement: any;
+  @ViewChild('scroller') scrollElementRef?: ElementRef;
+  @ViewChild('endScrollElement') endScrollElement?: ElementRef;
+  private observer?: IntersectionObserver;
+  isElementVisible: boolean = false;
 
 
   constructor(
@@ -75,10 +80,34 @@ export class ChatComponent {
     });
   }
 
+  ngAfterViewInit() {
+    this.initIntersectionObserver();
+  }
+
+  ngOnDestroy() {
+    if (this.observer) this.observer.disconnect();
+  }
+
+  initIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isElementVisible = entry.isIntersecting;
+      });
+    }, { threshold: 1 });
+    if (this.endScrollElement) {
+      this.observer.observe(this.endScrollElement?.nativeElement);
+    }
+  }
+
 
   getAllMessages() {
     if (this.messageService.messages.length > 0) this.chatExists = true;
     return this.messageService.messages
+  }
+
+  scrollDown() {
+    this.scrollElement = this.scrollElementRef?.nativeElement;
+    this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
   }
 
 
@@ -137,16 +166,30 @@ export class ChatComponent {
     return this.text.replace(/\n/g, '').trim().length === 0;
   }
 
-  async openTagMenu() {
-    this.showTagMenu = !this.showTagMenu;
-    const searchResult = await this.searchService.searchUsersAndChannels('@');
+  async openTagMenu(tag: string) {
+    this.showTagMenu = true;
+    const searchResult = await this.searchService.searchUsersAndChannels(tag, '');
     this.allUsers = searchResult.filteredUser;
-    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
   }
 
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
+  }
+
+  checkForTag() {
+    const atIndex = this.text.lastIndexOf('@');
+    if (atIndex > 0 && this.text[atIndex - 1] === ' ' || atIndex === 0) {
+      const textAfterAt = this.text.substring(atIndex);
+      const endOfQueryIndex = textAfterAt.indexOf(' ');
+      const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
+      this.openTagMenu(searchQuery)
+    }
+    if(!this.text.includes('@')) this.showTagMenu = false;
+  }
+
+  closeTagMenu() {
+    this.showTagMenu = false;
   }
 
 
@@ -161,7 +204,7 @@ export class ChatComponent {
     this.isOpened = false;
   }
 
-  onOutsideClick(): void {
+  closeEmojiMenu(): void {
     this.isOpened = false
   }
 

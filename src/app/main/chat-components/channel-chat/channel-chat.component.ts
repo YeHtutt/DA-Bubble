@@ -1,28 +1,27 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
+import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { DatePipe } from '@angular/common';
+import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
 /* Models */
 
-import { Message } from 'src/app/models/message';
 import { Channel } from 'src/app/models/channel';
+import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
 
 /* Services */
 
-import { MessageService } from 'src/app/services/message.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { FileUpload } from 'src/app/models/file-upload';
+import { ChannelService } from 'src/app/services/channel.service';
+import { DrawerService } from 'src/app/services/drawer.service';
+import { FileStorageService } from 'src/app/services/file-storage.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { MessageService } from 'src/app/services/message.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
-import { ChannelService } from 'src/app/services/channel.service';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { FileUpload } from 'src/app/models/file-upload';
-import { NotificationService } from 'src/app/services/notification.service';
-import { DrawerService } from 'src/app/services/drawer.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 
 @Component({
@@ -62,6 +61,9 @@ export class ChannelChatComponent {
   shiftPressed: boolean = false;
   messageSending: boolean = false;
   @ViewChild('scroller') scrollElementRef?: ElementRef;
+  @ViewChild('endScrollElement') endScrollElement?: ElementRef;
+  private observer?: IntersectionObserver;
+  isElementVisible: boolean = false;
 
 
   constructor(
@@ -75,8 +77,7 @@ export class ChannelChatComponent {
     public threadService: ThreadService,
     private fileService: FileStorageService,
     private notificationService: NotificationService,
-    public drawerService: DrawerService,
-    private datePipe: DatePipe
+    public drawerService: DrawerService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -96,6 +97,25 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
+  }
+
+  ngAfterViewInit() {
+    this.initIntersectionObserver();
+  }
+
+  ngOnDestroy() {
+    if (this.observer) this.observer.disconnect();
+  }
+
+  initIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isElementVisible = entry.isIntersecting;
+      });
+    }, { threshold: 1 });
+    if (this.endScrollElement) {
+      this.observer.observe(this.endScrollElement?.nativeElement);
+    }
   }
 
 
@@ -183,16 +203,30 @@ export class ChannelChatComponent {
     return this.userService.getFromLocalStorage();
   }
 
-  async openTagMenu() {
-    this.showTagMenu = !this.showTagMenu;
-    const searchResult = await this.searchService.searchUsersAndChannels('@');
+  checkForTag() {
+    const atIndex = this.text.lastIndexOf('@');
+    if (atIndex > 0 && this.text[atIndex - 1] === ' ' || atIndex === 0) {
+      const textAfterAt = this.text.substring(atIndex);
+      const endOfQueryIndex = textAfterAt.indexOf(' ');
+      const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
+      this.openTagMenu(searchQuery)
+    }
+    if(!this.text.includes('@')) this.showTagMenu = false;
+  }
+
+  async openTagMenu(tag: string) {
+    this.showTagMenu = true;
+    const searchResult = await this.searchService.searchUsersAndChannels(tag, '');
     this.allUsers = searchResult.filteredUser;
-    setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
   }
 
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
+  }
+
+  closeTagMenu() {
+    this.showTagMenu = false;
   }
 
 
@@ -207,7 +241,7 @@ export class ChannelChatComponent {
     this.isOpened = false;
   }
 
-  onOutsideClick(): void {
+  closeEmojiMenu(): void {
     this.isOpened = false
   }
 

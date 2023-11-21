@@ -78,6 +78,7 @@ main {
     overflow-x: hidden;
     height: calc(100% - 96px);
     padding-bottom: 120px;
+    scroll-behavior: smooth;
 }
 
 .message-bubble {
@@ -194,7 +195,7 @@ app-emoji-picker {
 
 .tag-menu-outer-container {
     position: absolute;
-    bottom: 50px;
+    bottom: 150px;
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
@@ -204,18 +205,33 @@ app-emoji-picker {
 .tag-menu-inner-container {
     background: white;
     padding: 12px;
-    height: 200px;
+    max-height: 200px;
+    min-width: 200px;
     overflow: scroll;
 }
 
 
 .user {
     display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 4px 8px;
+    border-radius: 30px;
+    cursor: pointer;
 
     img {
         width: 25px;
         height: 25px;
         border-radius: 100%;
+    }
+
+    span {
+        font-size: 16px;
+        color: black;
+    }
+
+    &:hover {
+        background-color: #ECEEFE;
     }
 }
 

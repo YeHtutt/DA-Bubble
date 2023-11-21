@@ -29,11 +29,12 @@
                 <app-message *ngFor="let msg of this.messageGroup.messages; let i = index"
                     [message]="msg"></app-message>
             </div>
+            <div #endScrollElement></div>
         </main>
-        <app-scroll-button (EmitScrollDown)="scrollDown()"
-            [chatData]="{ chat: 'channel', id: channelId }"></app-scroll-button>
+        <app-scroll-button [ngStyle]="{'opacity': !isElementVisible ? '1' : '0'}" (EmitScrollDown)="scrollDown()"
+            [chatData]="{collPath: 'channel/' + channelId + '/message'}"></app-scroll-button>
         <div class="input_message_container">
-            <textarea #myTextarea [(ngModel)]="text" placeholder="Nachricht an #{{channel?.channelName}}"
+            <textarea #myTextarea [(ngModel)]="text" (ngModelChange)="checkForTag()" placeholder="Nachricht an #{{channel?.channelName}}"
                 (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control_container">
                 <div class="chat_action_box">
@@ -46,8 +47,8 @@
                     <hr>
                     <mat-icon (click)="toggleEmoji($event)" class="action_btn_style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside
-                        (clickOutside)="onOutsideClick()"></app-emoji-picker>
-                    <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
+                        (clickOutside)="closeEmojiMenu()"></app-emoji-picker>
+                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="openTagMenu('@')" class="action_btn_style">alternate_email</mat-icon>
                     <div *ngIf="fileUpload" class="file_to_upload">
                         <mat-icon (click)="onDelete(fileUpload.path)" class="delete_btn">close</mat-icon>
                         <img style="height: 45px;" src="{{fileType}}" alt="">

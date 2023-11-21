@@ -286,7 +286,7 @@ app-emoji-picker {
 
 .tagMenuOuterContainer {
     position: absolute;
-    bottom: 50px;
+    bottom: 130px;
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3019607843);
@@ -295,9 +295,9 @@ app-emoji-picker {
 
 .tagMenuInnerContainer {
     background: white;
-
     padding: 12px;
-    height: 200px;
+    max-height: 200px;
+    min-width: 200px;
     overflow: scroll;
 }
 
@@ -317,6 +317,10 @@ app-emoji-picker {
         width: 25px;
         height: 25px;
         border-radius: 100%;
+    }
+
+    span {
+        width: max-content;
     }
 }
 

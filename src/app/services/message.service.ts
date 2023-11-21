@@ -227,6 +227,7 @@ export class MessageService {
     }
     return chatExists;
   }
+  
 
   async getChatDocId(directChat: DirectChat) {
     let docId: any;

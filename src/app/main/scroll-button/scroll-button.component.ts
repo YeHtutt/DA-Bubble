@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, getCountFromServer } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -31,7 +31,7 @@ export class ScrollButtonComponent {
   }
 
   getMessageLength() {
-    const collRef = collection(this.firestore, `${this.chatData.chat}/${this.chatData.id}/message`);
+    const collRef = collection(this.firestore, `${this.chatData.collPath}`);
     this.messages = collectionData(collRef);
     this.messageSubscription = this.messages.subscribe((message: any) => this.setCounter(message.length));
   }
