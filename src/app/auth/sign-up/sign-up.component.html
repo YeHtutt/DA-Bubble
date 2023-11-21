@@ -1,6 +1,6 @@
-<div class="backgroundContainer">
-<div class="signUpPage-Container">
-    <div class="logoContent-normal">
+<div class="background-container">
+<div class="signup-page-container">
+    <div class="logo-content-normal">
         <img src="./assets/img/logo+text.png">
     </div>
     
@@ -12,7 +12,7 @@
         </mat-card-header>
 
         <form [formGroup]="signUpForm" (ngSubmit)="submit()">
-            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+            <mat-form-field appearance="outline" class="full-width register-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/person.png"></mat-icon>
                 <input matInput placeholder="Name und Nachname" formControlName="name" type="text" style="
                 color: black !important;">
@@ -20,7 +20,7 @@
                 <mat-error *ngIf="signUpForm.get('name')?.hasError('minlength')">Mindestens 3 Zeichen eingeben</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+            <mat-form-field appearance="outline" class="full-width register-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
                 <input matInput placeholder="beispiel@email.com" formControlName="email" type="email" style="
                 color: black !important;">
@@ -28,7 +28,7 @@
                 <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+            <mat-form-field appearance="outline" class="full-width register-outline-field">
                 <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
                 <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
@@ -36,12 +36,12 @@
                 <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">Mindestens 6 Zeichen eingeben</mat-error>
             </mat-form-field>
 
-            <section class="sectionCheckbox">
+            <section class="section-checkbox">
                 <mat-checkbox class="example-margin" formControlName="agreement">Ich stimme die <a
                         href="#">Datenschutzerklärungen</a> zu</mat-checkbox>
             </section>
 
-            <div class="buttonBox">
+            <div class="button-box">
                 <button type="submit" [disabled]="signUpForm.invalid">Weiter</button>
             </div>
 

@@ -1,10 +1,10 @@
-<div class="backgroundContainer">
+<div class="background-container">
 
-    <div class="logInPage-Container">
-        <div class="logoContent-normal">
+    <div class="login-page-container">
+        <div class="logo-content-normal">
             <img src="./assets/img/logo+text.png">
 
-            <div class="toSignUpTop" [ngClass]="{'hide-under-750px': !isScreenAbove750px}">
+            <div class="to-signup-top" [ngClass]="{'hide-under-750px': !isScreenAbove750px}">
                 <div>Neu bei Bubble? </div>
                 <a [routerLink]="'/sign-up'">Konto Erstellen</a>
             </div>
@@ -18,7 +18,7 @@
             </mat-card-header>
 
             <form [formGroup]="loginForm" (ngSubmit)="submit()">
-                <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+                <mat-form-field appearance="outline" class="full-width register-outline-field">
                     <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
                     <input matInput formControlName="email" placeholder="beispiel@email.com" type="email"
                         style="color: black !important;">
@@ -26,7 +26,7 @@
                     <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="fullWidth register-outline-field">
+                <mat-form-field appearance="outline" class="full-width register-outline-field">
                     <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
                     <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
@@ -35,7 +35,7 @@
                         eingeben</mat-error>
                 </mat-form-field>
 
-                <div class="forgetPassword">
+                <div class="forget-password">
                     <a [routerLink]="'/forget-password'">Password vergessen?</a>
                 </div>
 
@@ -48,7 +48,7 @@
 
 
                 <div class="input-field-container" (click)="loginWithGoogle()">
-                    <div class="googleLoginBtn">
+                    <div class="google-login-btn">
                         <img src="./assets/img/Google.png">
                         <span>Anmelden mit Google</span>
                     </div>
@@ -65,7 +65,7 @@
             </form>
         </mat-card>
 
-        <div class="toSignUpBelow" [ngClass]="{'hide-above-750px': isScreenAbove750px}">
+        <div class="to-signup-below" [ngClass]="{'hide-above-750px': isScreenAbove750px}">
             <div>Neu bei Bubble? </div>
             <a [routerLink]="'/sign-up'">Konto Erstellen</a>
         </div>

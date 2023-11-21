@@ -1,4 +1,4 @@
-.logInPage-Container {
+.login-page-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -210,7 +210,7 @@ form {
         text-decoration: none !important;
     }
 
-    .forgetPassword {
+    .forget-password {
         box-sizing: border-box;
         width: 100%;
         text-align: center;
@@ -238,7 +238,7 @@ form {
     }
 
 
-    .googleLoginBtn {
+    .google-login-btn {
         box-sizing: border-box;
         width: 100%;
         display: flex;
@@ -261,14 +261,14 @@ form {
     }
 
 
-    .buttonBox {
+    .button-box {
         box-sizing: border-box;
         width: 100%;
         display: flex;
         justify-content: center;
         gap: 30px;
 
-        .loginBtn {
+        .login-btn {
             width: 137px;
             height: 49px;
             border-radius: 25px;
@@ -283,7 +283,7 @@ form {
         }
 
 
-        .guestLoginBtn {
+        .guest-login-btn {
             width: 137px;
             height: 49px;
             border-radius: 25px;
@@ -300,7 +300,7 @@ form {
     }
 
     /*mat Formfield design*/
-    .fullWidth {
+    .full-width {
         width: 100% !important;
     }
 
@@ -367,7 +367,7 @@ form {
 }
 
 /*Logo image after animation*/
-.logoContent-normal {
+.logo-content-normal {
     display: flex;
     width: 100vw;
     max-width: 1280px;
@@ -478,7 +478,7 @@ form {
 }
 
 
-.toSignUpBelow {
+.to-signup-below {
     position: static;
     margin-top: 30px;
 
@@ -495,12 +495,12 @@ form {
 
 /* the elements are only visible if the screen width is smaller than 751px */
 @media screen and (min-width: 751px) {
-    .toSignUpBelow.hide-above-750px {
+    .to-signup-below.hide-above-750px {
         display: none;
     }
 }
 
-.toSignUpTop {
+.to-signup-top {
     margin-right: 75px;
 
     a {
@@ -511,12 +511,12 @@ form {
 
 /* the elements are only visible if the screen width is greater than 751px */
 @media screen and (max-width: 750px) {
-    .toSignUpTop.hide-under-750px {
+    .to-signup-top.hide-under-750px {
         display: none;
     }
 }
 
-.backgroundContainer {
+.background-container {
     width: 100%;
     width: 100vw;
     display: flex;

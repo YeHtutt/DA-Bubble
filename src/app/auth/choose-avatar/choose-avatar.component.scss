@@ -1,4 +1,4 @@
-.avatarContainer {
+.avatar-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -72,7 +72,7 @@ mat-card-title {
     }
 }
 
-.profileImg {
+.profile-img {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,7 +113,7 @@ mat-card-title {
     }
 }
 
-.avatarContentBox {
+.avatar-content-box {
     margin-top: 10px;
     width: 472px;
     height: auto;
@@ -123,7 +123,7 @@ mat-card-title {
     align-items: center;
     gap: 10px;
 
-    .newUser {
+    .new-user {
         box-sizing: border-box;
         width: 100%;
         color: #000;
@@ -134,7 +134,7 @@ mat-card-title {
         line-height: normal;
     }
 
-    .chooseInfo {
+    .choose-info {
         box-sizing: border-box;
         width: 100%;
         text-align: left;
@@ -145,7 +145,7 @@ mat-card-title {
         line-height: normal;
     }
 
-    .allProfilePics {
+    .all-profile-pics {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -185,7 +185,7 @@ mat-card-title {
         }
     }
 
-    .ownPic {
+    .own-pic {
         box-sizing: border-box;
         width: 100%;
         display: flex;
@@ -221,7 +221,7 @@ mat-card-title {
         }
     }
 
-    .buttonBox {
+    .button-box {
         position: block;
         box-sizing: border-box;
         width: 100%;
@@ -267,7 +267,7 @@ mat-card-title {
     }
 }
 
-.logoContent-normal {
+.logo-content-normal {
     display: flex;
     width: 100vw;
     max-width: 1280px;
@@ -323,7 +323,7 @@ mat-card-title {
     }
 }
 
-.backgroundContainer {
+.background-container {
     width: 100%;
     width: 100vw;
     display: flex;

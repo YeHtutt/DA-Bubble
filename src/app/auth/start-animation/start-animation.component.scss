@@ -1,4 +1,4 @@
-.logInPage-Container {
+.login-page-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
 }
 
 /*Logo image after animation*/
-.logoContent-normal {
+.logo-content-normal {
     position: absolute;
     left: 50px;
     top: 30px;
@@ -25,7 +25,7 @@
 }
 
 /*Background animation for Intro*/
-.introBg {
+.intro-bg {
     position: absolute;
     z-index: 99;
     top: 0;
@@ -38,13 +38,13 @@
 }
 
 /*Logo and title animation for Intro*/
-.logoAndTitleAnimation {
+.logo-and-title-animation {
     z-index: 100;
     position: absolute;
     right: 0;
     bottom: 64px;
 
-    .introLogoTitle {
+    .intro-logo-title {
         /*start Logo+Text Box Size*/
         width: 600px;
         height: 160px;
@@ -57,7 +57,7 @@
 
 
 /*Logo and title content start and during animation*/
-.LogoAndTitleContent {
+.Logo-and-title-content {
     position: relative;
     height: 150px;
 

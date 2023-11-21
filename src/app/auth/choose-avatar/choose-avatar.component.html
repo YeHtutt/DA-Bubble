@@ -1,25 +1,25 @@
-<div class="backgroundContainer">
-<div class="avatarContainer">
-    <div class="logoContent-normal">
+<div class="background-container">
+<div class="avatar-container">
+    <div class="logo-content-normal">
         <img src="./assets/img/logo+text.png">
     </div>
     <mat-card>
         <mat-card-title>Wähle deinen Avatar</mat-card-title>
 
-        <div class="avatarContentBox">
-            <div class="profileImg" [ngStyle]="urlToSelectedAvatar ? { 'background-color': 'transparent' } : { 'background-color': '#797EF3' }">
+        <div class="avatar-content-box">
+            <div class="profile-img" [ngStyle]="urlToSelectedAvatar ? { 'background-color': 'transparent' } : { 'background-color': '#797EF3' }">
                 <img [src]="urlToSelectedAvatar ? urlToSelectedAvatar : 'assets/img/avatar/person.png'">
             </div>
-            <div class="newUser"> {{ newUserName }} </div>
-            <div class="chooseInfo">Aus der Liste wählen</div>
+            <div class="new-user"> {{ newUserName }} </div>
+            <div class="choose-info">Aus der Liste wählen</div>
 
-            <div class="allProfilePics">
+            <div class="all-profile-pics">
                 <div  *ngFor="let avatar of avatars" (click)="this.setNewPic(avatar)">
                     <img src="../assets/img/avatar/{{ avatar }}">
                 </div>
             </div>
 
-            <div class="ownPic">
+            <div class="own-pic">
                 <span>Eigenes Bild anwenden</span>
                 <div class="form-group"> 
                     <label for="file">Datei Hochladen</label>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="buttonBox">
+            <div class="button-box">
                 <button type="submit" (click)="this.saveNewPic()">Weiter</button>
             </div>
             

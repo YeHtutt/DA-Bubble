@@ -1,4 +1,4 @@
-.signUpPage-Container {
+.signup-page-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -105,7 +105,7 @@ form {
         }
     }
 
-    .sectionCheckbox {
+    .section-checkbox {
         display: flex;
         box-sizing: border-box;
         width: 100%;
@@ -116,7 +116,7 @@ form {
         }
     }
 
-    .buttonBox {
+    .button-box {
         position: absolute;
         right: 53px;
         bottom: 40px;
@@ -144,7 +144,7 @@ form {
     }
 
     /*mat Formfield design*/
-    .fullWidth {
+    .full-width {
         width: 100% !important;
     }
 
@@ -246,7 +246,7 @@ form {
 }
 
 /*Logo image after animation*/
-.logoContent-normal {
+.logo-content-normal {
     display: flex;
     width: 100vw;
     max-width: 1280px;
@@ -319,7 +319,7 @@ form {
     }
 }
 
-.backgroundContainer {
+.background-container {
     width: 100%;
     width: 100vw;
     display: flex;

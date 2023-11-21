@@ -1,4 +1,4 @@
-.imprint-Container {
+.imprint-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,14 +11,12 @@
 }
 
 /*Logo image after animation*/
-.logoContent-normal {
+.logo-content-normal {
     display: flex;
     width: 100vw;
     max-width: 1280px;
     justify-content: flex-start;
-    margin-top: 25px;
     margin-left: 50px;
-    margin-bottom: 150px;
 
     img {
         height: 70px;
@@ -45,13 +43,14 @@ mat-card {
     flex-direction: column;
     align-items: flex-start;
     gap: 32px;
+    margin-top: 30px;
 
     border-radius: 30px;
     background: var(--White, #FFF);
     /* header */
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
 
-    .returnToLogin {
+    .return-to-login {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -88,7 +87,7 @@ mat-card {
         margin-bottom: 16px;
     }
 
-    .imprintInfo {
+    .imprint-info {
         color: var(--Black, #000);
         font-family: 'Nunito';
         font-size: 20px;
@@ -104,6 +103,7 @@ mat-card {
     @media(max-width: 750px) {
         width: 400px;
         padding: 15px 30px;
+        margin-top: 0;
     }
 
     @media(max-width: 415px) {
@@ -112,7 +112,7 @@ mat-card {
     }
 }
 
-.backgroundContainer {
+.background-container {
     width: 100%;
     width: 100vw;
     display: flex;
