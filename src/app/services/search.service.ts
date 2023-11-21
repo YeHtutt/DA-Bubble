@@ -26,18 +26,25 @@ export class SearchService {
     this.messageSubscription?.unsubscribe();
   }
 
+
   async loadData(messageSearch: boolean) {
     this.usersAndChannels.users = await this.userService.getUsers();
     this.usersAndChannels.channels = await this.channelService.getChannels();
-    if(messageSearch && !this.messageSubscription || this.messageSubscription?.closed) {
-      this.getMessagePath();
-      this.messages = [];
-      this.getMessages(this.chatPath);
-    } 
-    if(this.search === '') this.messageSubscription?.unsubscribe();
+    if (messageSearch && !this.messageSubscription || this.messageSubscription?.closed) {
+      this.loadMessageDataAndSubscribe();
+    }
+    if (this.search === '') this.messageSubscription?.unsubscribe();
   }
 
-  transformForSearch(array: any, search: string) {
+
+  loadMessageDataAndSubscribe(): void {
+    this.messages = [];
+    this.extractChatPathFromUrl();
+    this.getMessages(this.chatPath);
+  }
+
+
+  transformForSearch(array: any, search: string): void {
     array.channels.forEach((c: any) => {
       c.channelName = search.startsWith('#') ? `#${c.channelName}` : c.channelName;
       c.channelName = c.channelName.toLowerCase();
@@ -48,7 +55,8 @@ export class SearchService {
     });
   }
 
-  transformForFinalResult(array: any) {
+
+  transformForFinalResult(array: any): void {
     array.filteredChannel.forEach((c: any) => { c.channelName = c.channelName.slice(1) });
     array.filteredUser.forEach((u: any) => { u.name = u.name.slice(1) });
   }
@@ -65,6 +73,7 @@ export class SearchService {
     return this.SearchResult;
   }
 
+
   checkIfIncluded(obj: any, search: string) {
     const isUserMatch = obj.name && obj.name.startsWith(search);
     const isChannelMatch = obj.channelName && obj.channelName.startsWith(search);
@@ -72,7 +81,8 @@ export class SearchService {
     return isUserMatch || isChannelMatch || isMessageMatch;
   }
 
-  getMessages(chatPath: any) {
+
+  getMessages(chatPath: any): void {
     const collRef = collection(this.firestore, `${chatPath}/message`);
     const messages = collectionData(collRef);
     this.messageSubscription = messages.subscribe((message: any) => {
@@ -80,7 +90,8 @@ export class SearchService {
     });
   }
 
-  getMessagePath() {
+
+  extractChatPathFromUrl(): void {
     const url = this.router.url;
     let urlParts = url.split('/');
     const docId = urlParts.pop();
