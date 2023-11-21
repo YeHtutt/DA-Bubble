@@ -1,0 +1,7 @@
+<div>
+    <h3>Mitglieder</h3>
+    <button class="basic-button close-btn" (click)="closeCreateChannelDialog()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div *ngFor="let user of this.channel.usersData">{{user.name}}</div>

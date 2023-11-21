@@ -77,6 +77,7 @@ import { SearchBarComponent } from './main/search-bar/search-bar.component';
 import { ProfileDialogComponent } from './main/header/profile-dialog/profile-dialog.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
+import { OpenUserMenuDialogComponent } from './main/channels/open-user-menu-dialog/open-user-menu-dialog.component';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -115,7 +116,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     SearchBarComponent,
     ProfileDialogComponent,
     ClickOutsideDirective,
-    ScrollButtonComponent
+    ScrollButtonComponent,
+    OpenUserMenuDialogComponent
 
 
 

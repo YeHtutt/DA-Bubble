@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
+import { OpenUserMenuDialogComponent } from '../../channels/open-user-menu-dialog/open-user-menu-dialog.component';
+
 /* Models */
 
 import { Channel } from 'src/app/models/channel';
@@ -137,7 +139,14 @@ export class ChannelChatComponent {
 
 
   openUserMenu() {
-
+    this.dialog.open(OpenUserMenuDialogComponent, {
+      width: '710px',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+      data: { channel: this.channel }
+    });
   }
 
   openPeopleUserlDialog() {
@@ -211,7 +220,7 @@ export class ChannelChatComponent {
       const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
       this.openTagMenu(searchQuery)
     }
-    if(!this.text.includes('@')) this.showTagMenu = false;
+    if (!this.text.includes('@')) this.showTagMenu = false;
   }
 
   async openTagMenu(tag: string) {

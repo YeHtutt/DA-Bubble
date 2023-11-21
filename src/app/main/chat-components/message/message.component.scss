@@ -1,16 +1,34 @@
-.answer-button {
-    background-color: transparent;
-    border: none;
-    color: #535AF1;
-    padding: 0px;
-}
-
 .last-answer {
     color: #686868
 }
 
-.last-message-time {
-    color: gray
+
+.reply-information {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    .answer-button {
+        background-color: transparent;
+        border: none;
+        padding: 0px;
+        color: #535AF1;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+
+    }
+
+    .last-message-time {
+        color: var(--Text-gray, #686868);
+        font-family: Nunito;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
 }
 
 .message_container {
