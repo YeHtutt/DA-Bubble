@@ -36,7 +36,7 @@ export class ThreadsComponent {
   fileTypeThread: string = '';
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
-
+  currentTime: any;
   isOpened: boolean = false;
   isPDF: boolean = false;
   showTagMenu: boolean = false;
@@ -89,7 +89,7 @@ export class ThreadsComponent {
     this.initIntersectionObserver();
   }
 
-  ngOnDestroy(): void  {
+  ngOnDestroy(): void {
     if (this.observer) this.observer.disconnect();
     this.subscriptions.unsubscribe();
   }
@@ -139,7 +139,7 @@ export class ThreadsComponent {
       const searchQuery = endOfQueryIndex === -1 ? textAfterAt : textAfterAt.substring(0, endOfQueryIndex);
       this.openTagMenu(searchQuery)
     }
-    if(!this.text.includes('@')) this.showTagMenu = false;
+    if (!this.text.includes('@')) this.showTagMenu = false;
   }
 
   closeTagMenu() {
@@ -166,9 +166,10 @@ export class ThreadsComponent {
   }
 
   createMessageObject() {
+    this.currentTime = new Date();
     return new Message({
       text: this.text,
-      time: new Date(),
+      time: this.currentTime,
       messageId: '',
       user: this.currentUser.toJSON(),
       textEdited: false,
@@ -194,8 +195,8 @@ export class ThreadsComponent {
       })
       .then((newCount: any) => {
         // Step 4: Update the UI with the new count.
-        let path = `${this.message.origin}, ${this.currentId}, ${this.message.messageId}`
-        this.messageService.updateCount(path, newCount);
+        let path = `${this.message.origin}/${this.currentId}/message/${this.message.messageId}`
+        this.messageService.updateCount(path, newCount, this.currentTime);
       })
       .catch(error => {
         console.error("Error sending reply: ", error);

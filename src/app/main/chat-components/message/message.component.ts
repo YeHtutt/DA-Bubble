@@ -217,8 +217,10 @@ export class MessageComponent {
 
   async deleteReply(path: string) {
     await this.firebaseUtils.deleteCollection(path, this.message.messageId);
-    let replyPath = `${this.origin}/${this.currentId}/${this.parentMessageId}`
-    this.messageService.updateCount(replyPath, this.threadService.replyCount);
+    let replyPath = `${this.origin}/${this.currentId}/${this.parentMessageId}`;
+    let newTime = this.firebaseUtils.getColl(replyPath);
+    let time = new Date();
+   /*  this.messageService.updateCount(replyPath, this.threadService.replyCount); */
   }
 
   // UPLOADED FILES
