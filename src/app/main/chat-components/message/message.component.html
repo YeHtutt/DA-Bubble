@@ -1,6 +1,6 @@
 <div *ngIf="!showEdit"
     [ngClass]="{'message_container_reverse': this.currentUser == message.user.id && message.origin === 'chat'}"
-    class="message_container">
+    class="message_container" id="{{message.messageId}}">
     <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
     <div *ngIf="!showEdit"
         [ngClass]="{'content_container_reverse': currentUser == message.user.id && message.origin === 'chat'}"

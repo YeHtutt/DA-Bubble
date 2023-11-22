@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
+import { redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './main/main.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
-import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
-import {canActivate, redirectLoggedInTo, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
-import { AuthenticationService } from './services/authentication.service';
-import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
-import { ChatComponent } from './main/chat-components/chat/chat.component';
+import { LoginComponent } from './auth/login/login.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
-import { DirectChatComponent } from './main/direct-chat/direct-chat.component';
-import { ImprintComponent } from './main/imprint/imprint.component';
+import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
+import { ChatComponent } from './main/chat-components/chat/chat.component';
+import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
 import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
+import { ImprintComponent } from './main/imprint/imprint.component';
+import { MainComponent } from './main/main.component';
+import { AuthenticationService } from './services/authentication.service';
 
 
 

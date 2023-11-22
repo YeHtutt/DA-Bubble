@@ -2,6 +2,8 @@ import { Component, HostListener, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
+import { MessageSelectionService } from 'src/app/services/message-selection.service';
+
 
 @Component({
   selector: 'app-search-bar',
@@ -21,13 +23,19 @@ export class SearchBarComponent {
 
   constructor(
     private searchService: SearchService,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog,
+    public messageSelectionService: MessageSelectionService
+    ) {}
 
   async searchData() {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(this.search, this.messageSearch)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
     this.filteredMessages = searchResult.filteredMessages
+  }
+
+  onMessageSelect(messageId: string) {
+    this.messageSelectionService.selectMessage(messageId);
   }
 
   deleteSearch() {

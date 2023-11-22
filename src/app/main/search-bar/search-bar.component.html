@@ -18,8 +18,8 @@
         </div>
     </div>
     <div class="messageBox" *ngIf="filteredMessages.length > 0">
-        <div class="message" *ngFor="let message of filteredMessages">
-            <img src="{{message.user.photoURL}}" alt="image of the user">
+        <div class="message" *ngFor="let message of filteredMessages" (click)="onMessageSelect(message.messageId); deleteSearch()">
+            <img src="{{message.user.photoURL}}" alt="image of the user" (click)="openProfileDialogInSearch(message.user); deleteSearch()">
             <div class="message-container">
                 <div class="message-content module line-clamp">
                     <span>{{message.text}}</span>

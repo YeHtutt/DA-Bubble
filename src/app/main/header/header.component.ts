@@ -1,16 +1,16 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MatDialog } from '@angular/material/dialog';
-import { UserProfileViewComponent } from '../users/user-profile-view/user-profile-view.component';
-import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { SearchService } from 'src/app/services/search.service';
-import { UserProfile } from 'src/app/models/user-profile';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { ThreadService } from 'src/app/services/thread.service';
+import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { Router } from '@angular/router';
+import { UserProfile } from 'src/app/models/user-profile';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DrawerService } from 'src/app/services/drawer.service';
+import { SearchService } from 'src/app/services/search.service';
+import { ThreadService } from 'src/app/services/thread.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
+import { UserProfileViewComponent } from '../users/user-profile-view/user-profile-view.component';
 
 @Component({
   selector: 'app-header',

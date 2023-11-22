@@ -24,6 +24,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { MessageSelectionService } from 'src/app/services/message-selection.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -67,6 +69,7 @@ export class ChannelChatComponent {
   private observer?: IntersectionObserver;
   isElementVisible: boolean = false;
   searchMessage: boolean = false;
+  messageSelectionSub: Subscription = new Subscription();
 
 
   constructor(
@@ -80,7 +83,8 @@ export class ChannelChatComponent {
     public threadService: ThreadService,
     private fileService: FileStorageService,
     private notificationService: NotificationService,
-    public drawerService: DrawerService
+    public drawerService: DrawerService,
+    private messageSelectionService: MessageSelectionService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -100,6 +104,7 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
+    this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => {if (id) this.scrollToMessage(id)});
   }
 
   ngAfterViewInit() {
@@ -108,6 +113,7 @@ export class ChannelChatComponent {
 
   ngOnDestroy() {
     if (this.observer) this.observer.disconnect();
+    if (this.messageSelectionSub) this.messageSelectionSub.unsubscribe();
   }
 
   initIntersectionObserver() {
@@ -125,6 +131,13 @@ export class ChannelChatComponent {
   scrollDown() {
     this.scrollElement = this.scrollElementRef?.nativeElement;
     this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
+  }
+
+  scrollToMessage(id: string) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   openChannelMenu() {
