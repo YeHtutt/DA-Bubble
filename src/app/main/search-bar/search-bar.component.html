@@ -3,7 +3,8 @@
     [ngStyle]="{ 'width.px': isMobile ? 160 : 'auto' }">
 <img src="../assets/img/search.png">
 <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}"
-    *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0 || filteredMessages?.length > 0" class="searchOutputHeader">
+    *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0 || filteredMessages?.length > 0"
+    class="searchOutputHeader">
     <div class="user-box" *ngIf="filteredUser.length > 0">
         <div class="user" *ngFor="let user of filteredUser" (click)="openProfileDialogInSearch(user); deleteSearch()">
             <img src="{{user.photoURL}}" alt="">
@@ -18,7 +19,17 @@
     </div>
     <div class="messageBox" *ngIf="filteredMessages.length > 0">
         <div class="message" *ngFor="let message of filteredMessages">
-            <span>{{message.text}}</span>
+            <img src="{{message.user.photoURL}}" alt="image of the user">
+            <div class="message-container">
+                <div class="message-content module line-clamp">
+                    <span>{{message.text}}</span>
+                </div>
+                <div class="message-info">
+                    <span>{{message.user.name}}</span>
+                    •
+                    <span>{{formatTimestamp(message.time)}}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

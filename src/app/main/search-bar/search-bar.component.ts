@@ -28,9 +28,6 @@ export class SearchBarComponent {
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
     this.filteredMessages = searchResult.filteredMessages
-    console.log(this.filteredMessages)
-    console.log('channel',this.filteredChannel)
-    console.log('user', this.filteredUser)
   }
 
   deleteSearch() {
@@ -74,6 +71,14 @@ export class SearchBarComponent {
         isOnline: isOnline
       }
     });
+  }
+
+  formatTimestamp(timestamp: { seconds: number; nanoseconds: number }): string {
+    const date = new Date(timestamp.seconds * 1000);
+    const day = date.getDate();
+    const monthNames = ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."];
+    const month = monthNames[date.getMonth()];
+    return `${day}. ${month}`;
   }
 
 }
