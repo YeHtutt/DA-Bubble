@@ -11,7 +11,7 @@ header {
     // z-index: 5;
 }
 
-.direct_message_info_box {
+.direct-message-info-box {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@ header {
     }
 }
 
-.input_container {
+.input-container {
     width: 100%;
     border: 1px solid #ADB0D9;
     border-radius: 30px;
@@ -39,7 +39,7 @@ header {
     }
 }
 
-.user_avatar_container {
+.user-avatar-container {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -66,12 +66,12 @@ main {
     top: 80px;
 }
 
-.new_conversation_container {
+.new-conversation-container {
     display: flex;
     flex-direction: column;
 }
 
-.user_info_box {
+.user-info-box {
 
     display: flex;
     gap: 15px;
@@ -89,7 +89,7 @@ main {
     }
 }
 
-.new_conversation_container {
+.new-conversation-container {
     position: absolute;
     bottom: 40px;
     left: 25px;
@@ -178,7 +178,7 @@ main {
         padding: 15px 25px;
     }
     
-    .direct_message_info_box {
+    .direct-message-info-box {
         gap: 10px;
     }
 

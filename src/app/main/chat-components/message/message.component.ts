@@ -252,8 +252,8 @@ export class MessageComponent {
 
   messageClasses(message: any) {
     return {
-      'message_reverse': this.isUserAuthor(message),
-      'message_channel_current_user': this.isChannelMessageFromCurrentUser(message)
+      'message-reverse': this.isUserAuthor(message),
+      'message-channel-current-user': this.isChannelMessageFromCurrentUser(message)
     };
   }
 
