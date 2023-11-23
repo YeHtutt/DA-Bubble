@@ -32,7 +32,7 @@ export class ChannelsComponent {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.expandChannels();
     });
-    this.subscriptions.push(sub);    
+    this.subscriptions.push(sub);
   }
 
 
@@ -43,8 +43,8 @@ export class ChannelsComponent {
 
   openCreateChannelDialog() {
     this.dialog.open(CreateChannelDialogComponent, {
-      width: '880px',
-      height: '514px',
+      width: 'auto',
+      height: 'auto',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
       autoFocus: false,
