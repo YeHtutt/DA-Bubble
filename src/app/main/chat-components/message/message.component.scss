@@ -31,7 +31,7 @@
     }
 }
 
-.message_container {
+.message-container {
     height: fit-content;
     display: flex;
     gap: 30px;
@@ -47,7 +47,7 @@
             background-color: white;
         }
 
-        .interaction_container {
+        .interaction-container {
             display: flex !important;
             animation: fadeIn 225ms ease-in-out forwards;
         }
@@ -55,14 +55,14 @@
 }
 
 
-.user_avatar {
+.user-avatar {
     width: 60px;
     height: 60px;
     border-radius: 100%;
     background-color: white;
 }
 
-.user_name {
+.user-name {
     cursor: pointer;
 
     &:hover {
@@ -70,13 +70,13 @@
     }
 }
 
-.content_container {
+.content-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.creator_info {
+.creator-info {
     display: flex;
     gap: 8px;
 
@@ -95,40 +95,40 @@
 
 // MESSAGE STYLE FOR LOGGED IN USER
 
-.message_container_reverse {
+.message-container-reverse {
     flex-direction: row-reverse;
     padding: 10px 45px 10px 10px;
 
     &:hover {
         background-color: #ECEEFE;
 
-        .interaction_container {
+        .interaction-container {
             display: flex !important;
             animation: fadeInReverse 225ms ease-in-out forwards;
         }
     }
 }
 
-.content_container_reverse {
+.content-container-reverse {
     align-items: flex-end;
 }
 
-.message_reverse {
+.message-reverse {
     border-radius: 30px 0 30px 30px;
     background-color: #797EF3 !important;
     color: white;
 }
 
-.message_channel_current_user {
+.message-channel-current-user {
     background-color: #797EF3 !important;
     color: white;
 }
 
-.creator_info_reverse {
+.creator-info-reverse {
     flex-direction: row-reverse;
 }
 
-.interaction_container_reverse {
+.interaction-container-reverse {
     left: 25px;
     width: fit-content;
     border-radius: 25px 25px 0 25px !important;
@@ -136,7 +136,7 @@
 
 // INTERACTIONS 
 
-.interaction_container {
+.interaction-container {
     display: none !important;
     position: absolute;
     height: fit-content;
@@ -186,7 +186,7 @@
 
 // UPDATE MESSAGE
 
-.menu_container {
+.menu-container {
     position: relative;
 
     button {
@@ -205,10 +205,10 @@
         }
     }
 
-    .deleteMsgBtn {
+    .delete-msg-btn {
         bottom: -40px;
         background-color: rgb(236, 101, 101);
-
+        border: unset;
         &:hover {
             background-color: rgb(214, 17, 17);
             color: white;
@@ -216,19 +216,20 @@
     }
 }
 
-.edit_msg_btn_channel_style {
+.edit-msg-btn-channel-style {
     right: 0 !important;
     bottom: -33px !important;
     border-radius: 25px 0 25px 25px !important;
+    border: unset
 }
 
-.delete_msg_btn_channel_style {
+.delete-msg-btn-channel-style {
     right: 0 !important;
     bottom: -63px !important;
     border-radius: 25px 0 25px 25px !important;
 }
 
-.edit_container {
+.edit-container {
     width: 100%;
     background-color: #ECEEFE;
     display: flex;
@@ -241,7 +242,7 @@
 
 }
 
-.edit_box {
+.edit-box {
     width: 80%;
     border-radius: 20px;
     padding: 20px;
@@ -262,32 +263,12 @@
     }
 }
 
-// .edit_container_thread_style {
-
-//     // .user_avatar {
-//     //     display: none;
-//     // }
-
-//     // .edit_box {
-//     //     width: 90%;
-//     // }
-
-//     // .button_box {
-//     //     gap: 16px;
-//     // }
-
-//     // .cancel_btn, .save_btn {
-//     //     width: 100px;
-//     //     font-size: 14px;
-//     // }
-// }
-
-.button_box {
+.button-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .button_right {
+    .button-right {
         display: flex;
         gap: 32px;
     }
@@ -304,32 +285,32 @@
     }
 }
 
-.edit_emoji {
+.edit-emoji {
     position: absolute;
     left: 100px;
     z-index: 2;
 }
 
-.reaction_emoji {
+.reaction-emoji {
     position: absolute;
     left: 0;
     top: 32px;
     z-index: 2;
 }
 
-.reaction_emoji_inside {
+.reaction-emoji-inside {
     position: absolute;
     left: -30px;
     top: 40px;
     z-index: 2;
 }
 
-.reaction_emoji_reverse {
+.reaction-emoji-reverse {
     left: auto;
     right: 0;
 }
 
-.cancel_btn {
+.cancel-btn {
     background-color: white;
     color: #444DF2;
     border: 1px solid #797EF3;
@@ -342,7 +323,7 @@
     }
 }
 
-.save_btn {
+.save-btn {
     font-weight: 700;
 
     &:hover {
@@ -356,7 +337,7 @@
 
 // REACTIONS
 
-.reactions_container {
+.reactions-container {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -374,7 +355,7 @@
     }
 }
 
-.reaction_btn {
+.reaction-btn {
     padding: 3px 10px 3px 10px;
     width: fit-content;
     border-radius: 20px;
@@ -388,13 +369,13 @@
     &:hover {
         border: 1px solid #444DF2;
 
-        .hover_card_reactions {
+        .hover-card-reactions {
             opacity: 1;
         }
     }
 }
 
-.hover_card_reactions {
+.hover-card-reactions {
     position: absolute;
     bottom: 35px;
     left: 30px;
@@ -412,11 +393,11 @@
 }
 
 
-.small_letters {
+.small-letters {
     font-size: 12px;
 }
 
-.reaction_hover {
+.reaction-hover {
     border-radius: 100%;
     width: 25px;
     height: 25px;
@@ -434,32 +415,32 @@
 
 @media (max-width: 1024px) {
 
-    .message_container_reverse {
+    .message-container-reverse {
         padding-right: 15px;
     }
 
-    .message_container {
+    .message-container {
         padding: 10px 20px;
     }
 }
 
 @media (min-width: 961px) {
-    .edit_container_thread_style {
+    .edit-container-thread-style {
 
-        .user_avatar {
+        .user-avatar {
             display: none;
         }
 
-        .edit_box {
+        .edit-box {
             width: 90%;
         }
 
-        .button_box {
+        .button-box {
             gap: 16px;
         }
 
-        .cancel_btn,
-        .save_btn {
+        .cancel-btn,
+        .save-btn {
             width: 100px;
             font-size: 14px;
         }
@@ -468,33 +449,33 @@
 
 @media (max-width: 500px) {
 
-    .message_container_reverse {
+    .message-container-reverse {
         padding-right: 15px;
     }
 
-    .message_container {
+    .message-container {
         padding: 10px 15px;
     }
 
-    .edit_container {
-        .user_avatar {
+    .edit-container {
+        .user-avatar {
             display: none;
         }
     }
 
-    .edit_box {
+    .edit-box {
         width: 90%;
     }
 }
 
 @media (max-width: 425px) {
 
-    .button_right {
+    .button-right {
         gap: 16px !important;
     }
 
-    .cancel_btn,
-    .save_btn {
+    .cancel-btn,
+    .save-btn {
         width: 100px;
         font-size: 14px;
     }

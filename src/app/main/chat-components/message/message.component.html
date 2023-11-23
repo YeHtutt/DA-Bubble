@@ -1,36 +1,36 @@
 <div *ngIf="!showEdit"
-    [ngClass]="{'message_container_reverse': this.currentUser == message.user.id && message.origin === 'chat'}"
-    class="message_container" id="{{message.messageId}}">
-    <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
+    [ngClass]="{'message-container-reverse': this.currentUser == message.user.id && message.origin === 'chat'}"
+    class="message-container" id="{{message.messageId}}">
+    <img class="user-avatar" src="{{ message.user.photoURL }}" alt="">
     <div *ngIf="!showEdit"
-        [ngClass]="{'content_container_reverse': currentUser == message.user.id && message.origin === 'chat'}"
-        class="content_container">
-        <div [ngClass]="{'creator_info_reverse': currentUser == message.user.id && message.origin === 'chat'}"
-            class="creator_info">
-            <span class="user_name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
+        [ngClass]="{'content-container-reverse': currentUser == message.user.id && message.origin === 'chat'}"
+        class="content-container">
+        <div [ngClass]="{'creator-info-reverse': currentUser == message.user.id && message.origin === 'chat'}"
+            class="creator-info">
+            <span class="user-name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
         <div [ngClass]="messageClasses(message)" class="message">
             {{message.text}}
-            <span *ngIf="message.textEdited" class="editedMsg">(bearbeitet)</span>
+            <span *ngIf="message.textEdited" class="edited-msg">(bearbeitet)</span>
         </div>
-        <div *ngIf="message.fileUpload !== []" class="show_attachement">
+        <div *ngIf="message.fileUpload !== []" class="show-attachment">
             <a href="{{!isPDF ? imageFile?.url : pdfFile?.url}}" target="_blank"><img
                     src="{{!isPDF ? imageFile?.url : 'assets/img/icons/pdf.png'}}"
                     [ngStyle]="{'max-width': !isPDF ? '350px' : '64px', 'width': '100%'}"></a>
         </div>
-        <div *ngIf="message.reactions.length > 0" class="reactions_container">
+        <div *ngIf="message.reactions.length > 0" class="reactions-container">
             <mat-icon (click)="toggleInReaction($event)">add_reaction</mat-icon>
             <app-emoji-picker appClickOutside (clickOutside)="onOutsideClick('isReactionOpened')"
-                class="reaction_emoji_inside" *ngIf="isReactionOpened"
+                class="reaction-emoji-inside" *ngIf="isReactionOpened"
                 (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
-            <div class="reaction_btn" *ngFor="let reaction of message.reactions"
+            <div class="reaction-btn" *ngFor="let reaction of message.reactions"
                 (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)">
-                <span class="reactionEmoji">{{reaction.reactionEmoji}}</span><span
-                    class="reactionCount">{{reaction.users.length}}</span>
-                <div class="hover_card_reactions">
+                <span class="reaction-emoji">{{reaction.reactionEmoji}}</span><span
+                    class="reaction-count">{{reaction.users.length}}</span>
+                <div class="hover-card-reactions">
                     <span>{{reaction.reactionEmoji}}</span>
-                    <div class="reaction_users_box">
+                    <div class="reaction-users-box">
                         <ng-container *ngFor="let name of reaction.users | filterBy: currentUserName; let i = index">
                             <ng-container *ngIf="currentUserName === name; else showName">Du</ng-container>
                             <ng-template #showName>{{ name }}</ng-template>
@@ -41,16 +41,16 @@
                             <ng-container *ngIf="i < reaction.users.length - 2">, </ng-container>
                         </ng-container>
                     </div>
-                    <span class="small_letters"
+                    <span class="small-letters"
                         *ngIf="reaction.users.length > 1 && reaction.users.includes(currentUserName)">haben
                         reagiert</span>
-                    <span class="small_letters"
+                    <span class="small-letters"
                         *ngIf="reaction.users.length > 1 && !reaction.users.includes(currentUserName)">haben
                         reagiert</span>
-                    <span class="small_letters"
+                    <span class="small-letters"
                         *ngIf="reaction.users.length == 1 && reaction.users.includes(currentUserName)">hast
                         reagiert</span>
-                    <span class="small_letters"
+                    <span class="small-letters"
                         *ngIf="reaction.users.length == 1 && !reaction.users.includes(currentUserName)">hat
                         reagiert</span>
                 </div>
@@ -68,47 +68,47 @@
             </div>
         </div>
     </div>
-    <div [ngClass]="{'interaction_container_reverse': currentUser === message.user.id && message.origin === 'chat'}"
-        class="interaction_container">
+    <div [ngClass]="{'interaction-container-reverse': currentUser === message.user.id && message.origin === 'chat'}"
+        class="interaction-container">
         <ng-container *ngFor="let reaction of getHighestReactions(); let i = index">
-            <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)"
+            <span class="reaction-hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)"
                 *ngIf="i === 0">{{reaction.reactionEmoji}}</span>
-            <span class="reaction_hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)"
+            <span class="reaction-hover" (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)"
                 *ngIf="i === 1">{{reaction.reactionEmoji}}</span>
         </ng-container>
         <mat-icon (click)="toggleReaction($event)">add_reaction</mat-icon>
         <app-emoji-picker [ngStyle]="getStyles(message.origin)"
-            [ngClass]="{'reaction_emoji_reverse': currentUser !== message.user.id && message.origin === 'chat'}"
-            class="reaction_emoji" *ngIf="isReactionInputOpened" #pick appClickOutside
+            [ngClass]="{'reaction-emoji-reverse': currentUser !== message.user.id && message.origin === 'chat'}"
+            class="reaction-emoji" *ngIf="isReactionInputOpened" #pick appClickOutside
             (clickOutside)="onOutsideClick('isReactionInputOpened')"
             (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
         <mat-icon *ngIf="message.type == 'message'" (click)="this.threadService.openThread(message)">comment</mat-icon>
         <mat-icon *ngIf="message.user.id == this.currentUser" (click)="openMenu()">more_vert</mat-icon>
-        <div class="menu_container">
+        <div class="menu-container">
             <button (click)="openEdit(message.text)" *ngIf="checkIfEdit"
-                [ngClass]="{'edit_msg_btn_channel_style' : message.origin === 'channel' || message.origin === ''}">Nachricht
+                [ngClass]="{'edit-msg-btn-channel-style' : message.origin === 'channel' || message.origin === ''}">Nachricht
                 bearbeiten</button>
-            <button class="deleteMsgBtn"
-                [ngClass]="{'delete_msg_btn_channel_style' : message.origin === 'channel' || message.origin === ''}"
+            <button class="delete-msg-btn"
+                [ngClass]="{'delete-msg-btn-channel-style' : message.origin === 'channel' || message.origin === ''}"
                 (click)="message.type === 'message' ? deleteMessage(message.messageId, message.fileUpload.path) : deleteReply(collPath)"
                 *ngIf="checkIfEdit">Nachricht
                 löschen</button>
         </div>
     </div>
 </div>
-<div *ngIf="showEdit" class="edit_container" [ngClass]="{'edit_container_thread_style' : message.origin === ''}">
-    <div class="edit_box">
+<div *ngIf="showEdit" class="edit-container" [ngClass]="{'edit-container-thread-style' : message.origin === ''}">
+    <div class="edit-box">
         <textarea [(ngModel)]="editMessage"></textarea>
-        <div class="button_box">
-            <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
-            <app-emoji-picker class="edit_emoji" *ngIf="isOpened"
+        <div class="button-box">
+            <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
+            <app-emoji-picker class="edit-emoji" *ngIf="isOpened"
                 (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
-            <div class="button_right">
-                <button (click)="cancelEdit()" class="cancel_btn" mat-fab extended color="primary">Abbrechen</button>
+            <div class="button-right">
+                <button (click)="cancelEdit()" class="cancel-btn" mat-fab extended color="primary">Abbrechen</button>
                 <button (click)="message.type === 'message' ? saveMessage(message.messageId) : saveReply(collPath)"
-                    class="save_btn" mat-fab extended color="primary">Speichern</button>
+                    class="save-btn" mat-fab extended color="primary">Speichern</button>
             </div>
         </div>
     </div>
-    <img class="user_avatar" src="{{ message.user.photoURL }}" alt="">
+    <img class="user-avatar" src="{{ message.user.photoURL }}" alt="">
 </div>

@@ -1,22 +1,20 @@
 <div class="dashboard">
     <section class="message-section">
         <header>
-            <div class="direct_message_info_box">
+            <div class="direct-message-info-box">
                 <span>Neue Nachricht</span>
-                <div class="input_container">
+                <div class="input-container">
                     <input (click)="toggleSearchOutput()" (keyup)="searchData()" [(ngModel)]="search"
                         placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text">
                     <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}"
-                        *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="searchOutput">
+                        *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0" class="search-output">
                         <div class="user-box" *ngIf="filteredUser.length > 0">
-                            <!-- <h3 class="headline">User</h3> -->
                             <div class="user" *ngFor="let user of filteredUser" (click)="selectReceiver(user)">
                                 <img src="{{user.photoURL}}" alt="">
                                 <span>{{user.name}}</span>
                             </div>
                         </div>
-                        <div class="channelBox" *ngIf="filteredChannel.length > 0">
-                            <!-- <h3 class="headline">Channel</h3> -->
+                        <div class="channel-box" *ngIf="filteredChannel.length > 0">
                             <div class="channel" *ngFor="let channel of filteredChannel"
                                 (click)="selectReceiver(channel)">
                                 <span><mat-icon>tag</mat-icon>{{channel.channelName}}</span>
@@ -26,26 +24,26 @@
                 </div>
             </div>
         </header>
-        <div class="input_message_container">
+        <div class="input-message-container">
             <textarea [(ngModel)]="text" placeholder="Starte eine neue Nachricht"></textarea>
-            <div class="control_container">
-                <div class="chat_action_box">
-                    <div class="file_upload_button">
+            <div class="control-container">
+                <div class="chat-action-box">
+                    <div class="file-upload-button">
                         <label for="fileUpload">
-                            <mat-icon class="action_btn_style">add</mat-icon>
+                            <mat-icon class="action-btn-style">add</mat-icon>
                         </label>
                         <input type="file" style="display:none;" id="fileUpload" (change)="onUpload($event)">
                     </div>
                     <hr>
-                    <mat-icon (click)="toggleEmoji()" class="action_btn_style">sentiment_satisfied</mat-icon>
+                    <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
-                    <mat-icon (click)="openTagMenu()" class="action_btn_style">alternate_email</mat-icon>
-                    <div *ngIf="fileUpload" class="file_to_upload">
-                        <mat-icon (click)="onDelete(fileUpload.path)" class="delete_btn">close</mat-icon>
+                    <mat-icon (click)="openTagMenu()" class="action-btn-style">alternate_email</mat-icon>
+                    <div *ngIf="fileUpload" class="file-to-upload">
+                        <mat-icon (click)="onDelete(fileUpload.path)" class="delete-btn">close</mat-icon>
                         <img style="height: 45px;" src="{{fileType}}" alt="">
                     </div>
-                    <div class="tagMenuOuterContainer">
-                        <div *ngIf="showTagMenu" class="tagMenuInnerContainer">
+                    <div class="tag-menu-outer-container">
+                        <div *ngIf="showTagMenu" class="tag-menu-inner-container">
                             <div class="user" *ngFor="let user of allUsers" (click)="tagUser(user.name)">
                                 <img src="{{user.photoURL}}" alt="">
                                 <span>{{user.name}}</span>
@@ -54,7 +52,8 @@
                     </div>
                 </div>
                 <button [disabled]="text.length == 0 || search.length <= 0" (click)="sendMessage()"><mat-icon
-                    [ngStyle]="{'color' : text.length == 0 || search.length <= 0 ? 'grey' : '#535AF1'}" class="send_btn">send</mat-icon></button>
+                        [ngStyle]="{'color' : text.length == 0 || search.length <= 0 ? 'grey' : '#535AF1'}"
+                        class="send-btn">send</mat-icon></button>
             </div>
         </div>
     </section>

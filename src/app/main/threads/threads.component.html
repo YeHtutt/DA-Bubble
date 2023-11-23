@@ -16,7 +16,7 @@
                 <div class="message-bubble">
                     {{message.text}}
                 </div>
-                <div *ngIf="message.fileUpload !== []" class="show_attachement">
+                <div *ngIf="message.fileUpload !== []" class="show-attachement">
                     <a href="{{!isPDF ? imageFile?.url : pdfFile?.url}}" target="_blank"><img src="{{!isPDF ? imageFile?.url : 'assets/img/icons/pdf.png'}}"  [ngStyle]="{'max-width': !isPDF ? '150px' : '64px', 'width': '100%'}"></a>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             <textarea [(ngModel)]="text" (ngModelChange)="checkForTag()" #myTextarea placeholder="Antworten..." (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
-                    <div class="file_upload_button">
+                    <div class="file-upload-button">
                         <label for="fileUploadThread">
                             <mat-icon class="action_btn_style">add</mat-icon>
                         </label>
@@ -41,8 +41,8 @@
                     <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside (clickOutside)="closeEmojiMenu()"></app-emoji-picker>
                     <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="toggleTagMenu('@')" class="action-btn-style">alternate_email</mat-icon>
-                    <div *ngIf="fileUploadThread" class="file_to_upload">
-                        <mat-icon (click)="onDelete(fileUploadThread.path)" class="delete_btn">close</mat-icon>
+                    <div *ngIf="fileUploadThread" class="file-to-upload">
+                        <mat-icon (click)="onDelete(fileUploadThread.path)" class="delete-btn">close</mat-icon>
                         <img style="height: 45px;" src="{{fileTypeThread}}" alt="">
                     </div>
                     <div class="tag-menu-outer-container">
