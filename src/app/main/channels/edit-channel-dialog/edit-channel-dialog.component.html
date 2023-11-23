@@ -9,7 +9,6 @@
         </button>
     </div>
     <div>
-        <!-- For Channel Name -->
         <div [ngClass]="{
             'channel-name-border': true,
             'pdg-20': !editChannelName, 
@@ -18,7 +17,10 @@
           }">
             <div class="edit-channel">
                 <div class="width-100">
-                    <h3>Channel-Name</h3>
+                    <div class="flex-between">
+                        <h3>Channel-Name</h3>
+                        <button class="edit-btn" (click)="saveChannelName()" *ngIf="editChannelName">Speichern</button>
+                    </div>
                     <div class="flex-center" *ngIf="!editChannelName">
                         <mat-icon class="tag">tag</mat-icon>
                         <h3>{{channel.channelName}}</h3>
@@ -28,13 +30,12 @@
                     </mat-form-field>
                 </div>
                 <button class="edit-btn" (click)="toggleDescriptionInput()" *ngIf="!editChannelName">Bearbeiten</button>
-                <button class="edit-btn" (click)="saveChannelName()" *ngIf="editChannelName">Speichern</button>
             </div>
         </div>
     </div>
     <div>
-        <!-- For Description -->
-        <div [ngClass]="{
+
+        <div class="description-container" [ngClass]="{
             'channel-name-border': true,
             'pdg-20': !editDescription, 
             'no-border': editDescription,
@@ -52,22 +53,22 @@
                     </mat-form-field>
                 </div>
                 <button class="edit-btn" *ngIf="!editDescription" (click)="toggleChannelNameInput()">Bearbeiten</button>
-                <button *ngIf="editDescription" mat-stroked-button color="primary" (click)="saveDescription()">Speichern
+                <button class="edit-btn" *ngIf="editDescription" mat-stroked-button color="primary"
+                    (click)="saveDescription()">Speichern
                 </button>
             </div>
             <mat-divider></mat-divider>
-            <div>
-                <h3>Erstellt von </h3>
+            <div class="creator-container">
+                <div  class="created-by">Erstellt von </div>
                 <div class="creator-name">{{channel.creator.name}}</div>
             </div>
         </div>
     </div>
-    <div class="">
+    <div class="channel-btn-container">
         <button mat-fab extended color="warn" (click)="deleteChannel()"
             [disabled]="channel.creator.id !== currentUserId">
             Channel löschen
         </button>
-
         <button mat-fab extended color="primary" (click)="leaveChannel()" [disabled]="">
             Channel verlassen
         </button>

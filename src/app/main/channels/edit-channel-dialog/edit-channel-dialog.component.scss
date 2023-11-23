@@ -1,15 +1,36 @@
 @import "../../../../styles.scss";
 
+.create-channel-container {
+    padding: 40px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 20px;
+}
 
 .edit-header {
     display: flex;
     justify-content: space-between;
 }
 
+.creator-container {
+    @include flex-column;
+    gap: 20px;
+}
+
+.created-by {
+    color: var(--Black, #000);
+    font-family: Nunito;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
 .headline {
     display: flex;
     align-items: center;
-
     .mat-icon {
         font-size: 30px !important;
         height: 30px !important;
@@ -20,6 +41,28 @@
 .pdg-20 {
     padding: 20px;
     transition: padding 0.3s ease;
+}
+
+.channel-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.flex-between {
+    @include flex-between
+}
+
+
+.edit-btn {
+    border: none;
+    background-color: transparent;
+    color: #535AF1;
+    font-family: "Nunito";
+    font-weight: 600;
+    margin: 0px;
+    padding: 0px;
 }
 
 .flex-center {
@@ -45,16 +88,12 @@ h3 {
     transition: border 0.3s ease, padding 0.3s ease;
 }
 
-.create-channel-container {
-    padding: 20px;
-    width: calc(90% - 40px);
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: calc(100% - 40px);
-    justify-content: space-around;
+
+.description-container {
+    @include flex-column;
+    gap: 30px;
 }
+
 
 
 .close-btn {
@@ -77,15 +116,7 @@ h3 {
     align-self: flex-end;
 }
 
-.edit-btn {
-    border: none;
-    background-color: transparent;
-    color: #535AF1;
-    font-family: "Nunito";
-    font-weight: 600;
-    margin: 0px;
-    padding: 0px;
-}
+
 
 .border-transition {
     transition: border 0.3s ease-in-out;

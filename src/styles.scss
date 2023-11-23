@@ -256,8 +256,6 @@ div {
 
 .mat-divider {
   border-top-color: $border-color !important;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .paddingTop45 {
@@ -274,6 +272,12 @@ div {
 @mixin flex-center {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 

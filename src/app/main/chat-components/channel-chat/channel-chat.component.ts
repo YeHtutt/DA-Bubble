@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
-import { ChannelMenuComponent } from '../../channels/channel-menu/channel-menu.component';
+import { EditChannelDialogComponent } from '../../channels/edit-channel-dialog/edit-channel-dialog.component';
 import { OpenUserMenuDialogComponent } from '../../channels/open-user-menu-dialog/open-user-menu-dialog.component';
 
 /* Models */
@@ -104,7 +104,7 @@ export class ChannelChatComponent {
         console.error("Error fetching channel data:", err);
       });
     });
-    this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => {if (id) this.scrollToMessage(id)});
+    this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
   }
 
   ngAfterViewInit() {
@@ -141,9 +141,9 @@ export class ChannelChatComponent {
   }
 
   openChannelMenu() {
-    this.dialog.open(ChannelMenuComponent, {
-      width: '872px',
-      height: '616px',
+    this.dialog.open(EditChannelDialogComponent, {
+      width: '750px',
+      height: 'auto',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
       autoFocus: false,

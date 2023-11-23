@@ -6,15 +6,15 @@ import { FormControl, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { UserProfile } from 'src/app/models/user-profile';
+
 
 
 @Component({
-  selector: 'app-channel-menu',
-  templateUrl: './channel-menu.component.html',
-  styleUrls: ['./channel-menu.component.scss']
+  selector: 'app-edit-channel-dialog',
+  templateUrl: './edit-channel-dialog.component.html',
+  styleUrls: ['./edit-channel-dialog.component.scss']
 })
-export class ChannelMenuComponent {
+export class EditChannelDialogComponent {
 
 
 
@@ -22,7 +22,7 @@ export class ChannelMenuComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UsersFirebaseService,
     private channelService: ChannelService,
-    public dialogRef: MatDialogRef<ChannelMenuComponent>,
+    public dialogRef: MatDialogRef<EditChannelDialogComponent>,
     public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
   ) { }

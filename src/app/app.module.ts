@@ -50,6 +50,7 @@ import { NewMessageComponent } from './main/chat-components/new-message/new-mess
 import { HeaderComponent } from './main/header/header.component';
 import { SidenavComponent } from './main/sidenav/sidenav.component';
 import { ThreadsComponent } from './main/threads/threads.component';
+import { EditChannelDialogComponent } from './main/channels/edit-channel-dialog/edit-channel-dialog.component';
 
 /* Module */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -60,7 +61,6 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ChooseAvatarComponent } from './auth/choose-avatar/choose-avatar.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
-import { ChannelMenuComponent } from './main/channels/channel-menu/channel-menu.component';
 import { UserProfileViewComponent } from './main/users/user-profile-view/user-profile-view.component';
 import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
 import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
@@ -100,9 +100,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     ChooseAvatarComponent,
     ForgetPasswordComponent,
     StartAnimationComponent,
-    ChannelMenuComponent,
+    EditChannelDialogComponent,
     UserProfileViewComponent,
-    ChannelMenuComponent,
     ChannelUsersDialogComponent,
     UserProfileEditComponent,
     UserProfileSubViewComponent,
@@ -151,7 +150,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     MatRadioModule,
     MatChipsModule,
     PickerModule,
-   
+
 
   ],
   providers: [

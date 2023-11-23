@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { OpenUserMenuDialogComponent } from './open-user-menu-dialog.component';
 
 describe('OpenUserMenuDialogComponent', () => {
