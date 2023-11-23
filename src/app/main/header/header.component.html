@@ -26,13 +26,11 @@
   <div class="backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
 
   <mat-menu #menu="matMenu" class="profile-menu" >
-
-    <button mat-menu-item (click)="openUserProfile()">
+    <button class="menu-btn" mat-menu-item (click)="openUserProfile()">
       <span>Profile</span>
     </button>
-    <button mat-menu-item (click)="userLoggedout()">
+    <button class="menu-btn" mat-menu-item (click)="userLoggedout()">
       <span>Logout</span>
     </button>
-
   </mat-menu>
 </header>

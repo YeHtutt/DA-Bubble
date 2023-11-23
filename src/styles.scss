@@ -145,6 +145,14 @@ body {
   background: var(--White, #FFF) !important;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20) !important;
   z-index: 9000;
+  padding: 30px !important;
+
+  
+  .mat-mdc-menu-item:not([disabled]):hover {
+    border-radius: 100px !important;
+    background: #ECEEFE !important;
+    color: #535AF1 !important;
+  }
 }
 
 
