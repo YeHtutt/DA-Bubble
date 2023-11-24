@@ -12,6 +12,8 @@ import { map, startWith } from 'rxjs/operators';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ChangeDetectorRef } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
+import { CreateChannelDialogComponent } from '../create-channel-dialog/create-channel-dialog.component';
+
 
 @Component({
   selector: 'app-channel-users-dialog',
@@ -40,6 +42,7 @@ export class ChannelUsersDialogComponent {
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
     private dialogRef: MatDialogRef<ChannelUsersDialogComponent>,
+    private dialogRef2: MatDialogRef<CreateChannelDialogComponent>,
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef,
     private notification: NotificationService,
@@ -89,13 +92,14 @@ export class ChannelUsersDialogComponent {
     if (this.selectedOption === 'all') {
       this.pushAllUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
-    }
+    };
     if (this.selectedOption === 'individual') {
       this.pushCertainUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
-    }
+    };
+    this.dialogRef2.close();
+    this.dialogRef.close();
     this.notification.showSuccess('Channel has been added');
-
   }
 
 
@@ -104,12 +108,12 @@ export class ChannelUsersDialogComponent {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
       this.channel.usersData.push(userObject);
     });
-      }
+  }
 
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
-     
+
       this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.channel.usersData.push(userObject);
     });

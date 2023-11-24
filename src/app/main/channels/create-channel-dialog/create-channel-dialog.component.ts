@@ -70,6 +70,7 @@ export class CreateChannelDialogComponent {
       autoFocus: false,
       data: { channel: this.channel }
     });
+    this.closeCreateChannelDialog();
   }
 
   closeCreateChannelDialog() {
@@ -91,7 +92,7 @@ export class CreateChannelDialogComponent {
     // Remove the 'email' validation as it doesn't seem relevant for a channel name
     return '';
   }
-  
+
 
 
   validateInput() {
@@ -102,12 +103,12 @@ export class CreateChannelDialogComponent {
   }
 
 
-    checkForDoubledChannels() {
-      // Assuming this.channelService.channels is an array of channel objects
-      const channelName = this.channelNameInput.value // Consider case-insensitivity
-      return this.channelService.channels.some(checkChannel => checkChannel.channelName === channelName);
-    }
-    
+  checkForDoubledChannels() {
+    // Assuming this.channelService.channels is an array of channel objects
+    const channelName = this.channelNameInput.value // Consider case-insensitivity
+    return this.channelService.channels.some(checkChannel => checkChannel.channelName === channelName);
+  }
 
-   }
+
+}
 
