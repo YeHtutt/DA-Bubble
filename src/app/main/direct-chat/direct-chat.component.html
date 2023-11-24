@@ -3,14 +3,14 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact"
     (click)="selectReceiver(node.id)">
     <img class="profil-icon" src="{{ node.photoURL }}">
-    <img *ngIf="node.isOnline" class="onlineStatus" src="assets/img/Online.png">
-    <img *ngIf="!node.isOnline" class="onlineStatus" src="assets/img/Offline.png">
+    <img *ngIf="node.isOnline" class="online-status" src="assets/img/Online.png">
+    <img *ngIf="!node.isOnline" class="online-status" src="assets/img/Offline.png">
     <div>{{node.name}}</div>
   </mat-tree-node>
   <mat-tree-node *matTreeNodeDef="let node;when: messageTreeService.hasChild" class="highest-node">
     <div class="main-node">
       <div class="channel-headline">
-        <div class="channel-head" (click)="toggleExpanded(node)">
+        <div class="channel-head open-panel" (click)="toggleExpanded(node)">
           <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
             [attr.aria-label]="'Toggle ' + node.name">
             <mat-icon class="main-icon">

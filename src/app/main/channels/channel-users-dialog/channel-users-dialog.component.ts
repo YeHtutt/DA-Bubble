@@ -42,7 +42,6 @@ export class ChannelUsersDialogComponent {
     private userService: UsersFirebaseService,
     private firebaseUtils: FirebaseUtilsService,
     private dialogRef: MatDialogRef<ChannelUsersDialogComponent>,
-    private dialogRef2: MatDialogRef<CreateChannelDialogComponent>,
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef,
     private notification: NotificationService,
@@ -97,9 +96,9 @@ export class ChannelUsersDialogComponent {
       this.pushCertainUsersToChannel();
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
-    this.dialogRef2.close();
     this.dialogRef.close();
     this.notification.showSuccess('Channel has been added');
+
   }
 
 

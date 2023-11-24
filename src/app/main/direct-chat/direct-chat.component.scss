@@ -5,6 +5,22 @@
 }
 
 
+.open-panel {
+  transition: color 0.2s ease, transform 0.2s ease;
+  &:hover {
+      cursor: pointer;
+      color: #535AF1;
+
+      img {
+          filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
+      }
+
+      .main-icon {
+          scale: 1.2;
+      }
+  }
+}
+
 .mat-tree {
   gap: 13px;
 }
@@ -294,7 +310,7 @@ mat-toolbar {
     object-fit: cover;
   }
 
-  .onlineStatus {
+  .online-status {
     width: 12px;
     height: 12px;
     object-fit: cover;
