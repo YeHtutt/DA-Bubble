@@ -1,8 +1,8 @@
 <div class="dashboard">
     <section class="message-section" [ngStyle]="{'margin-right' : this.threadService.threadIsOpen ? '25px' : ''}">
         <header>
-            <div class="channel-info-box">
-                <span (click)="openChannelMenu()">{{channel?.channelName}}</span>
+            <div class="channel-info-box" (click)="openChannelMenu()">
+                <span>{{channel?.channelName}}</span>
                 <mat-icon>expand_more</mat-icon>
             </div>
             <div class="user-channel-info-box">
@@ -11,7 +11,6 @@
                         <div *ngFor="let user of channel?.usersData;let i=index;">
                             <img *ngIf="i < 3" [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL"
                                 alt="User image">
-                            <!-- Display the "+number" if there are more than three users -->
                         </div>
                     </div>
                     <div class="user-amount-box">{{channel?.usersData.length}}</div>
@@ -34,8 +33,9 @@
         <app-scroll-button [ngStyle]="{'opacity': !isElementVisible ? '1' : '0'}" (EmitScrollDown)="scrollDown()"
             [chatData]="{collPath: 'channel/' + channelId + '/message'}"></app-scroll-button>
         <div class="input-message-container">
-            <textarea #myTextarea [(ngModel)]="text" (ngModelChange)="checkForTag()" placeholder="Nachricht an #{{channel?.channelName}}"
-                (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
+            <textarea #myTextarea [(ngModel)]="text" (ngModelChange)="checkForTag()"
+                placeholder="Nachricht an #{{channel?.channelName}}" (keyup)="sendByKey($event)"
+                (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
                     <div class="file-upload-button">
@@ -48,7 +48,8 @@
                     <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
                     <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside
                         (clickOutside)="closeEmojiMenu()"></app-emoji-picker>
-                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="toggleTagMenu('@')" class="action-btn-style">alternate_email</mat-icon>
+                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="toggleTagMenu('@')"
+                        class="action-btn-style">alternate_email</mat-icon>
                     <div *ngIf="fileUpload" class="file-to-upload">
                         <mat-icon (click)="onDelete(fileUpload.path)" class="delete-btn">close</mat-icon>
                         <img style="height: 45px;" src="{{fileType}}" alt="">

@@ -12,6 +12,13 @@ h3 {
     gap: 13px;
 }
 
+.create-channel-btn {
+    &:hover {
+        cursor: pointer;
+        color: #535AF1;
+    }
+}
+
 .child-node {
     margin-left: 20px;
 
@@ -24,6 +31,8 @@ h3 {
     }
 }
 
+
+
 .channel-headline {
     display: flex;
     align-items: center;
@@ -33,19 +42,21 @@ h3 {
     color: black;
     width: 100%;
 
+
     img {
         width: 22px;
         height: 22px;
-    }
 
-    &:hover {
-        cursor: pointer;
-        color: #535AF1;
+        &:hover {
+            cursor: pointer;
+            color: #535AF1;
 
-        img {
-            filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
+            img {
+                filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
+            }
         }
     }
+
 }
 
 .tag {
@@ -131,13 +142,6 @@ h3 {
     &:hover {
         cursor: pointer;
 
-        :first-child {
-            color: #535AF1;
-        }
-
-        span {
-            color: #535AF1;
-        }
     }
 }
 
