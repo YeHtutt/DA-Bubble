@@ -60,7 +60,6 @@ export class AddPeopleDialogComponent {
 
   ngOnInit() {
     this.getUsersNotInChannel();
-    
   }
 
 
@@ -68,13 +67,8 @@ export class AddPeopleDialogComponent {
     this.allUsers = await this.usersService.getUsers();
     this.usersNotInChannel = this.filterUsersNotInChannel();
     this.usersNotInChannelSubject.next(this.usersNotInChannel);
-    // Disable or enable the FormControl based on the condition
-    if (this.usersNotInChannel.length === 0) {
-      this.userCtrl.disable(); // Disables the form control
-
-    } else {
-      this.userCtrl.enable(); // Enables the form control
-    }
+    if (this.usersNotInChannel.length === 0) this.userCtrl.disable();
+    else this.userCtrl.enable();
   }
 
 
@@ -100,7 +94,8 @@ export class AddPeopleDialogComponent {
   }
 
   addUsers() {
-
+    console.log(this.channel);
+    console.log(this.users);
   }
 
   pushCertainUsersToChannel() {

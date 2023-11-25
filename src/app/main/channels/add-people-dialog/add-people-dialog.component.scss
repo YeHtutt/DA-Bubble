@@ -23,7 +23,7 @@
 .invitation-dialog-container {
     padding: 40px;
     height: auto;
-    @include flex-column;  
+    @include flex-column;
 
     .flex-column {
         @include flex-column
@@ -141,4 +141,15 @@ img {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    padding: 4px 8px;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ECEEFE;
+    }
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+    background-color: transparent !important;
 }

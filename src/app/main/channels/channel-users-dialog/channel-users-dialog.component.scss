@@ -66,6 +66,7 @@ span {
     padding: 4px 8px;
     border-radius: 30px;
     cursor: pointer;
+
     &:hover {
         background-color: #ECEEFE;
     }
@@ -137,7 +138,7 @@ span {
 .chip-row {
     .user-chip {
         display: flex;
-        align-items: center;      
+        align-items: center;
     }
 }
 
@@ -155,4 +156,14 @@ img {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    padding: 4px 8px;
+    border-radius: 30px;
+    cursor: pointer;
+    &:hover {
+        background-color: #ECEEFE;
+    }
 }
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+    background-color: transparent !important;
+  }
