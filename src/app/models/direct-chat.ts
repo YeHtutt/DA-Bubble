@@ -20,8 +20,6 @@ export class DirectChat {
             creationTime: this.creationTime,
             user1: this.user1,
             user2: this.user2,
-
-
         };
     }
 

@@ -22,7 +22,7 @@ export class MainComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.router.navigate(['/main/channel/sB7XI0Od6n5qf2TGgeb4']);
+    this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.getCurrentUser();
   }

@@ -63,16 +63,10 @@ export class EditChannelDialogComponent {
   }
 
 
-
-
   async leaveTheChannel() {
     try {
       if (this.channel && this.currentUserId && this.channel.usersData) {
-        // Find the index of the current user in the usersData array
-
         const userIndex = this.channel.usersData.findIndex((user: any) => this.currentUserId === user.id);
-
-        console.log(userIndex)
         if (userIndex > -1) {
           this.channel.usersData.splice(userIndex, 1);
           await this.channelService.updateChannel(this.channel);
@@ -98,9 +92,11 @@ export class EditChannelDialogComponent {
     this.editChannelName = !this.editChannelName;
   }
 
+
   toggleChannelNameInput() {
     this.editDescription = !this.editDescription;
   }
+
 
   deleteChannel() {
     if (this.currentUserId == this.channel.creator.id) {
@@ -115,6 +111,7 @@ export class EditChannelDialogComponent {
     this.channelService.updateChannel(this.channel);
     this.toggleDescriptionInput();
   }
+
 
   saveDescription() {
     this.channel.description = this.channelDescriptionInput.value;

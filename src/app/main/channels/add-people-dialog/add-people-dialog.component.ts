@@ -12,7 +12,9 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { ChannelService } from 'src/app/services/channel.service';
+import { Channel } from 'src/app/models/channel';
 
 @Component({
   selector: 'app-add-people-dialog',
@@ -22,7 +24,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AddPeopleDialogComponent {
 
   private usersNotInChannelSubject: BehaviorSubject<UserProfile[]> = new BehaviorSubject<UserProfile[]>([]);
-  channel = this.data.channel;
+  channel: Channel = new Channel(this.data.channel);
   selectedOption: string | undefined;
   inputOpened = false;
   public search: string = '';
@@ -46,7 +48,8 @@ export class AddPeopleDialogComponent {
     private firebaseUtils: FirebaseUtilsService,
     private dialogRef: MatDialogRef<AddPeopleDialogComponent>,
     private announcer: LiveAnnouncer,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private channelService: ChannelService
   ) {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
@@ -84,7 +87,7 @@ export class AddPeopleDialogComponent {
           break;
         }
       }
-      if (!found) notInChannel.push(oneUser);
+      if (!found) notInChannel.push(oneUser.toJSON());
     }
     return notInChannel;
   }
@@ -94,8 +97,8 @@ export class AddPeopleDialogComponent {
   }
 
   addUsers() {
-    console.log(this.channel);
-    console.log(this.users);
+    this.channel.usersData.push(...this.users);
+    this.channelService.updateChannel(this.channel);
   }
 
   pushCertainUsersToChannel() {
