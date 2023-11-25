@@ -94,6 +94,7 @@ export class ChannelUsersDialogComponent {
     };
     if (this.selectedOption === 'individual') {
       this.pushCertainUsersToChannel();
+      this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
     this.dialogRef.close();
@@ -111,8 +112,6 @@ export class ChannelUsersDialogComponent {
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
-
-      this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.channel.usersData.push(userObject);
     });
   }
