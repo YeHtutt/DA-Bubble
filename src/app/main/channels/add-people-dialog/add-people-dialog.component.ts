@@ -4,17 +4,15 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { COMMA, ENTER, S } from '@angular/cdk/keycodes';
-import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ChangeDetectorRef } from '@angular/core';
-import { User } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-people-dialog',
@@ -60,9 +58,9 @@ export class AddPeopleDialogComponent {
     );
   }
 
-
   ngOnInit() {
     this.getUsersNotInChannel();
+    
   }
 
 
@@ -70,7 +68,16 @@ export class AddPeopleDialogComponent {
     this.allUsers = await this.usersService.getUsers();
     this.usersNotInChannel = this.filterUsersNotInChannel();
     this.usersNotInChannelSubject.next(this.usersNotInChannel);
+    // Disable or enable the FormControl based on the condition
+    if (this.usersNotInChannel.length === 0) {
+      this.userCtrl.disable(); // Disables the form control
+
+    } else {
+      this.userCtrl.enable(); // Enables the form control
+    }
   }
+
+
 
   filterUsersNotInChannel() {
     let usersInChannel = this.channel.usersData.map((user: any) => UserProfile.fromJSON(user));

@@ -4,7 +4,6 @@
         <button class="basic-button close-btn" (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
     </div>
     <div class="channel-name"><mat-icon>tag</mat-icon>{{channel.channelName}}</div>
-
     <form class="width-100">
         <mat-form-field class="width-100" appearance="outline">
             <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
@@ -18,9 +17,10 @@
                     </button>
                 </mat-chip-row>
             </mat-chip-grid>
-            <input placeholder="Add User" #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid"
-                [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="add($event)" (input)="validateInput()" />
+            <input [placeholder]="usersNotInChannel.length === 0 ? 'Bereits alle Nutzer im Channel' : 'Name eingeben'"
+                #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"
+                (input)="validateInput()" />
 
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                 <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
