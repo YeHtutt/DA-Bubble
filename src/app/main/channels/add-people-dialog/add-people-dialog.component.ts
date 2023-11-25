@@ -15,6 +15,7 @@ import { switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Channel } from 'src/app/models/channel';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-add-people-dialog',
@@ -49,7 +50,8 @@ export class AddPeopleDialogComponent {
     private dialogRef: MatDialogRef<AddPeopleDialogComponent>,
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef,
-    private channelService: ChannelService
+    private channelService: ChannelService,
+    private notificationsService: NotificationService,
   ) {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
@@ -99,7 +101,14 @@ export class AddPeopleDialogComponent {
   addUsers() {
     this.channel.usersData.push(...this.users);
     this.channelService.updateChannel(this.channel);
+    let names: any = []; // Initialize `names` as an empty array
+    this.users.forEach((user) => {
+      names.push(user.name); // Now you can push items into `names`
+    });
+    this.notificationsService.showSuccess(`${names.join(', ')} erfolgreich hinzugefügt`); // Use `names` here, not `this.users`
+    this.dialogRef.close();
   }
+
 
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
