@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { UserProfile } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersFirebaseService } from '../../../services/users-firebase.service';
-import { ChooseAvatarComponent } from 'src/app/auth/choose-avatar/choose-avatar.component';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -15,8 +14,14 @@ export class UserProfileEditComponent {
   url = 'assets/img/avatar/';
   currentPic = this.usersFbService.loggedInUserImg; //User current profile pic
   avatarPic: boolean = false;
+  profileEditSuccess: boolean | null = null;
 
-  constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService ) { 
+  ngOnInit() {
+    this.profileEditSuccess = false;
+  }
+
+  constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService, 
+    private notificationService: NotificationService  ) { 
     
   }
 
@@ -27,24 +32,25 @@ export class UserProfileEditComponent {
 
 
   onEdit() {
-    //console.log(this.userEditForm);
     if (this.userEditForm.valid) {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
       this.saveNewPic(this.currentPic, currentUserID);
-      //console.log(currentUserID);
       
       if (currentUserID) {
         // Aktualisieren Sie das Benutzerprofil in Firestore
         this.usersFbService.updateUserProfile(currentUserID, formData) //mit currentUserID und formDatas
           .then(() => {
-            console.log("Benutzerprofil erfolgreich aktualisiert.");
+            this.profileEditSuccess = true;
+            this.openSnackBar();
           })
           .catch((error: any) => {
-            console.error("Fehler beim Aktualisieren des Benutzerprofils:", error);
+            this.profileEditSuccess = false;
+            this.openSnackBar();
           });
       }
     }
+    this.dialog.closeAll();
   }
 
   onSelect(event: any) {
@@ -76,4 +82,11 @@ export class UserProfileEditComponent {
     this.usersFbService.saveUserPicFromDialog(image, this.avatarPic, currentUserId);
   }
 
+  openSnackBar() {
+    if (this.profileEditSuccess == true) {
+      this.notificationService.showSuccess('Benutzerprofil erfolgreich aktualisiert.');
+    } else {
+      this.notificationService.showError('Benutzerprofil Aktualisierung fehlgeschlagen. Bitte prüfen Sie die Eingaben!')
+    }
+  }
 }

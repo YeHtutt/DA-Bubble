@@ -18,17 +18,17 @@
                 <span>Vollständiger Name</span>
             </div>
             <mat-form-field appearance="outline"  color="primary" class="width-100">
-                <input matInput placeholder="Frederik Beck" formControlName="name" type="text">
+                <input matInput placeholder="{{ this.usersFbService.loggedInUserName }}" formControlName="name" type="text">
                 <mat-error *ngIf="userEditForm.get('name')?.hasError('required')">Name eingeben</mat-error>
             </mat-form-field>
         </div>
         <div class="email-container form-group">
-            <div class="emailContainerTitle">
+            <div class="email-container-title">
                 <img class="email-icon" src="../assets/img/mail.png">
                 <span>E-Mail-Adresse</span>
             </div>
             <mat-form-field appearance="outline" color="primary" class="width-100">
-                <input matInput placeholder="beispiel@email.com" formControlName="email" type="email">
+                <input matInput placeholder="{{ this.usersFbService.loggedInUserEmail }}" formControlName="email" type="email">
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('required')">Email eingeben</mat-error>
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>

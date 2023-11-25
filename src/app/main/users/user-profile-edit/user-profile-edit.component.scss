@@ -60,6 +60,7 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        margin-bottom: 7px;
     }
 
 
@@ -68,8 +69,8 @@
 
 
 .name-icon {
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
     object-fit: cover;
     border: 2px solid gray;
     border-radius: 100%;
@@ -77,8 +78,8 @@
 }
 
 .email-icon {
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
     object-fit: contain;
     margin-right: 20px;
 }
@@ -123,9 +124,12 @@
 
 mat-icon {
     position: relative;
-    left: -160px;
-    bottom: 0px;
+    left: -60px;
+    bottom: -3px;
     cursor: pointer;
+    background-color: lightblue;
+    padding: 5px;
+    border-radius: 50%;
 }
 
 ::ng-deep .cdk-overlay-pane {
