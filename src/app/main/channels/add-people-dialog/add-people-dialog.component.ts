@@ -88,6 +88,10 @@ export class AddPeopleDialogComponent {
     return notInChannel;
   }
 
+  closeAddPeopleDialog() {
+    this.dialogRef.close();
+  }
+
   addUsers() {
 
   }

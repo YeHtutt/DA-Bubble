@@ -4,14 +4,26 @@
     display: none;
 }
 
+.header {
+    @include flex-between;
+}
 
+.channel-name {
+    color: var(--Purple-2, #797EF3);
+    font-family: Nunito;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
 .invitation-dialog-container {
     padding: 40px;
-    width: calc(90% - 80px);
     height: auto;
-    @include flex-column;
-    margin: auto;
+    @include flex-column;  
 
     .flex-column {
         @include flex-column
@@ -28,7 +40,6 @@
     display: flex;
     align-self: flex-end;
     justify-self: baseline;
-    margin-top: 20px;
 }
 
 

@@ -1,7 +1,10 @@
 <div class="invitation-dialog-container">
-    <div>
-        <h3>Leute hinzufügen</h3>
+    <div class="header">
+        <h2>Leute hinzufügen</h2>
+        <button class="basic-button close-btn" (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
     </div>
+    <div class="channel-name"><mat-icon>tag</mat-icon>{{channel.channelName}}</div>
+
     <form class="width-100">
         <mat-form-field class="width-100" appearance="outline">
             <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
@@ -30,5 +33,5 @@
         </mat-form-field>
     </form>
     <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()"
-        [disabled]="!isKnownUser">Erstellen</button>    
+        [disabled]="!isKnownUser">Erstellen</button>
 </div>
