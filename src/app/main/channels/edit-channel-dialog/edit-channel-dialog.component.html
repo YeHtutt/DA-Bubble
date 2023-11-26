@@ -8,69 +8,75 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>
-    <div>
-        <div [ngClass]="{
+    <div class="main-content">
+        <div>
+            <div [ngClass]="{
             'channel-name-border': true,
             'pdg-20': !editChannelName, 
             'no-border': editChannelName,
             'no-padding': editChannelName
           }">
-            <div class="edit-channel">
-                <div class="width-100">
-                    <div class="flex-between">
-                        <h3>Channel-Name</h3>
-                        <button class="edit-btn" (click)="saveChannelName()" *ngIf="editChannelName">Speichern</button>
+                <div class="edit-channel">
+                    <div class="width-100">
+                        <div class="flex-between">
+                            <h3>Channel-Name</h3>
+                            <button class="edit-btn" (click)="saveChannelName()"
+                                *ngIf="editChannelName">Speichern</button>
+                        </div>
+                        <div class="flex-center" *ngIf="!editChannelName">
+                            <mat-icon class="tag">tag</mat-icon>
+                            <h3>{{channel.channelName}}</h3>
+                        </div>
+                        <mat-form-field appearance="outline" class="width-100" *ngIf="editChannelName">
+                            <input [formControl]="channelNameInput" matInput>
+                        </mat-form-field>
                     </div>
-                    <div class="flex-center" *ngIf="!editChannelName">
-                        <mat-icon class="tag">tag</mat-icon>
-                        <h3>{{channel.channelName}}</h3>
-                    </div>
-                    <mat-form-field appearance="outline" class="width-100" *ngIf="editChannelName">
-                        <input [formControl]="channelNameInput" matInput>
-                    </mat-form-field>
+                    <button class="edit-btn" (click)="toggleDescriptionInput()"
+                        *ngIf="!editChannelName">Bearbeiten</button>
                 </div>
-                <button class="edit-btn" (click)="toggleDescriptionInput()" *ngIf="!editChannelName">Bearbeiten</button>
             </div>
         </div>
-    </div>
-    <div>
-
-        <div class="description-container" [ngClass]="{
+        <div>
+            <div class="description-container" [ngClass]="{
             'channel-name-border': true,
             'pdg-20': !editDescription, 
             'no-border': editDescription,
             'no-padding': editDescription
           }">
-            <div class="edit-channel">
-                <div class="width-100">
-                    <h3>Beschreibung</h3>
-                    <div class="flex-center" *ngIf="!editDescription">
-                        <mat-icon class="tag">tag</mat-icon>
-                        <h3>{{channel.description}}</h3>
+                <div class="edit-channel">
+                    <div class="width-100">
+                        <h3>Beschreibung</h3>
+                        <div class="flex-center" *ngIf="!editDescription">
+                            <h3>{{channel.description}}</h3>
+                        </div>
+                        <mat-form-field appearance="outline" class="width-100" *ngIf="editDescription">
+                            <input [formControl]="channelDescriptionInput" matInput>
+                        </mat-form-field>
                     </div>
-                    <mat-form-field appearance="outline" class="width-100" *ngIf="editDescription">
-                        <input [formControl]="channelDescriptionInput" matInput>
-                    </mat-form-field>
+                    <button class="edit-btn" *ngIf="!editDescription"
+                        (click)="toggleChannelNameInput()">Bearbeiten</button>
+                    <button class="edit-btn" *ngIf="editDescription" mat-stroked-button color="primary"
+                        (click)="saveDescription()">Speichern
+                    </button>
                 </div>
-                <button class="edit-btn" *ngIf="!editDescription" (click)="toggleChannelNameInput()">Bearbeiten</button>
-                <button class="edit-btn" *ngIf="editDescription" mat-stroked-button color="primary"
-                    (click)="saveDescription()">Speichern
-                </button>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="creator-container">
-                <div  class="created-by">Erstellt von </div>
-                <div class="creator-name">{{channel.creator.name}}</div>
+                <mat-divider></mat-divider>
+                <div class="creator-container">
+                    <div class="created-by">Erstellt von </div>
+                    <div class="creator-name">{{channel.creator.name}}</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="channel-btn-container">
-        <button mat-fab extended color="warn" (click)="deleteChannel()"
-            [disabled]="channel.creator.id !== currentUserId">
-            Channel löschen
-        </button>
-        <button mat-fab extended color="primary" (click)="leaveChannel()" [disabled]="">
-            Channel verlassen
-        </button>
+        <div *ngIf="isMobile" class="member-list">
+            <app-open-user-menu-dialog [isMobile]="isMobile"></app-open-user-menu-dialog>
+        </div>
+        <div class="channel-btn-container">
+            <button mat-fab extended color="warn" (click)="deleteChannel()"
+                [disabled]="channel.creator.id !== currentUserId">
+                Channel löschen
+            </button>
+            <button mat-fab extended color="primary" (click)="leaveChannel()" [disabled]="">
+                Channel verlassen
+            </button>
+        </div>
     </div>
 </div>

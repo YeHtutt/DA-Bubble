@@ -5,8 +5,14 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     gap: 20px;
+}
+
+
+.main-content {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-header {
@@ -31,6 +37,7 @@
 .headline {
     display: flex;
     align-items: center;
+
     .mat-icon {
         font-size: 30px !important;
         height: 30px !important;
@@ -110,6 +117,11 @@ h3 {
 }
 
 
+.member-list {
+    border: solid 1px #ADB0D9;
+    border-radius: 20px;
+}
+
 
 .create-btn {
     display: flex;
@@ -136,4 +148,37 @@ h3 {
 
 .no-border {
     border: none !important;
+}
+
+
+@media(max-width: 750px) {
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .create-channel-container {
+        padding: 0px;
+        gap: 10px;
+    }
+
+    .channel-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .edit-header {
+        padding: 40px 16px 10px 16px;
+        width: calc(100% - 32px);
+        position: sticky;
+        top: 0;
+        z-index: 10000;
+        background: var(--White, #FFF);
+        box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+    }
+
+
+
 }

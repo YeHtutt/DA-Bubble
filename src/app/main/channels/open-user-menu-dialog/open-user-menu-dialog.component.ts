@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel';
 import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
@@ -10,11 +10,18 @@ import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog
   styleUrls: ['./open-user-menu-dialog.component.scss']
 })
 export class OpenUserMenuDialogComponent {
+
+
   channel: Channel = new Channel(this.data.channel);
+  @Input() isMobile: boolean = false;
+
+
+  
   constructor(
     public dialogRef: MatDialogRef<OpenUserMenuDialogComponent>,
- 
-    @Inject(MAT_DIALOG_DATA) public data: any,) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) { }
+
 
   closeCreateChannelDialog() {
     this.dialogRef.close();

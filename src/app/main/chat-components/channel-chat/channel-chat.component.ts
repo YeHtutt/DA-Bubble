@@ -140,12 +140,13 @@ export class ChannelChatComponent {
     }
   }
 
+  
   openChannelMenu() {
     this.dialog.open(EditChannelDialogComponent, {
       width: '750px',
       height: 'auto',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style',
+      panelClass: 'channel-dialog',
       autoFocus: false,
       data: { channel: this.channel }
     });

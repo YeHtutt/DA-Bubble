@@ -131,7 +131,7 @@
 }
 
 
-.create-channel-dialog {
+.channel-dialog {
   .mat-mdc-dialog-container .mdc-dialog__surface {
     border-radius: 30px !important;
   }
@@ -567,11 +567,11 @@ button {
 }
 
 @media(max-width: 750px) {
-  .create-channel-dialog {
+  .channel-dialog {
     max-width: 100svw !important;
     max-height: 100svh !important;
     height: 100% !important;
-    
+     
     .mat-mdc-dialog-container .mdc-dialog__surface {
       border-radius: 0px !important;
       display: flex;
@@ -579,4 +579,11 @@ button {
     
   }
 }
+
+app-edit-channel-dialog  {
+  overflow: scroll;
+  height: 100%;
+}
+
+
 }

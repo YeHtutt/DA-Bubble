@@ -1,8 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
-import { FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
@@ -26,7 +26,7 @@ export class EditChannelDialogComponent {
   editChannelName: boolean = false;
   editDescription: boolean = false;
   isOutlineVisible: boolean = true;
-
+  isMobile: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,6 +35,7 @@ export class EditChannelDialogComponent {
     public dialogRef: MatDialogRef<EditChannelDialogComponent>,
     public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
+
   ) { }
 
 
@@ -43,8 +44,19 @@ export class EditChannelDialogComponent {
   }
 
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkMobileMode(event.target.innerWidth);
+  }
+
+  private checkMobileMode(width: number): void {
+    this.isMobile = width <= 750;
+    console.log(this.isMobile);
+  }
+
   ngOnInit() {
     this.currentUserId = this.userService.getFromLocalStorage()
+    this.checkMobileMode(window.innerWidth);
   }
 
 
@@ -88,7 +100,7 @@ export class EditChannelDialogComponent {
 
   closeSnackbar() { }
 
-  
+
   toggleDescriptionInput() {
     this.editChannelName = !this.editChannelName;
   }
@@ -119,5 +131,7 @@ export class EditChannelDialogComponent {
     this.channelService.updateChannel(this.channel);
     this.toggleChannelNameInput();
   }
+
+
 
 }
