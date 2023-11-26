@@ -154,26 +154,31 @@ export class ChannelChatComponent {
   }
 
 
-  openUserMenu() {
+  openUserMenu(openingInChat: boolean) {
     this.dialog.open(OpenUserMenuDialogComponent, {
       width: 'auto',
       height: 'auto',
       hasBackdrop: true,
       panelClass: 'corner-right-top-dialog',
       autoFocus: false,
-      data: { channel: this.channel }
+      data: {
+        channel: this.channel,
+        openingInChat: openingInChat
+      }
     });
   }
 
 
-  openPeopleUserDialog() {
+  openAddUserDialog() {
     this.dialog.open(AddPeopleDialogComponent, {
       width: 'auto',
       height: 'auto',
       hasBackdrop: true,
       panelClass: 'corner-right-top-dialog',
       autoFocus: false,
-      data: { channel: this.channel }
+      data: {
+        channel: this.channel
+      }
     });
   }
 
@@ -311,18 +316,18 @@ export class ChannelChatComponent {
     if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
 
-  
+
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
   }
 
 
-  
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkMobileMode(event.target.innerWidth);
-   
+
   }
 
   private checkMobileMode(width: number): void {
