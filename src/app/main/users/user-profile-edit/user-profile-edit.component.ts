@@ -101,8 +101,12 @@ export class UserProfileEditComponent {
   /** user Profilbild mit Avatare zu aktualisieren*/
   openAvatarDialog() {
     const dialogRef = this.dialog.open(UserProfileChooseAvatarComponent, {
-      width: '400px',
-      data: { currentPic: this.currentPic }
+      width: '500px',
+      height: 'auto',
+      data: { currentPic: this.currentPic },
+      hasBackdrop: true,
+      panelClass: 'user-profile-view-dialog',
+      autoFocus: false,
     });
 
     dialogRef.componentInstance.avatarSelected.subscribe((selectedAvatar: string) => {

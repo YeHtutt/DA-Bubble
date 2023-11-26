@@ -8,6 +8,10 @@
     @media(max-width: 767px) {
         gap: 25px;
     }
+
+    @media screen and (min-width: 1024px) and (max-height: 600px) {
+        gap: 10px;
+    }
 }
 
 .title {
@@ -35,6 +39,11 @@
     @media(max-width: 767px) {
         width: 120px;
         height: 120px;
+    }
+
+    @media screen and (min-width: 1024px) and (max-height: 600px) {
+        width: 85px;
+        height: 85px;
     }
 }
 
@@ -153,6 +162,14 @@
     }
 }
 
+.paddingTop45 {
+    padding-top: 45px;
+
+    @media screen and (min-width: 1024px) and (max-height: 600px) {
+        padding-top: 10px;
+    }
+}
+
 mat-icon {
     position: relative;
     left: -60px;
@@ -165,5 +182,10 @@ mat-icon {
     @media(max-width: 767px) {
         left: -50px;
         bottom: -10px;
+    }
+
+    @media screen and (min-width: 1024px) and (max-height: 600px) {
+        left: -40px;
+        bottom: -6px;
     }
 }

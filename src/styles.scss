@@ -315,10 +315,6 @@ div {
   border-top-color: $border-color !important;
 }
 
-.paddingTop45 {
-  padding-top: 45px;
-}
-
 .width-100 {
   width: 100%;
 }
@@ -642,6 +638,11 @@ button {
 
 @media(max-width: 450px) {
 
+  .user-profile-view-dialog {
+    top: unset !important;
+    right: unset !important;
+  }
+
   .corner-right-top-dialog {
     position: absolute !important;
     top: 130px !important;
@@ -669,6 +670,11 @@ button {
     left: unset !important;
     height: 100vh !important;
 
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     .mat-mdc-menu-panel {
       max-width: unset !important;
     }
@@ -680,11 +686,14 @@ button {
       left: 0px !important;
       box-sizing: border-box;
       width: 100vw !important;
+      display: flex !important;
+      justify-content: center !important;
     }
   }
 
-  .mat-mdc-menu-content, .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {
-    width: 80vw !important;
+  .mat-mdc-menu-content,
+  .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {
+    width: 100vw !important;
 
     div {
       padding-left: 20px;
@@ -692,8 +701,9 @@ button {
     }
   }
 
-  .menu-btn{
+  .menu-btn {
     padding: unset !important;
+
     div {
       display: flex !important;
       justify-content: space-between !important;
@@ -702,6 +712,22 @@ button {
 
   .mat-mdc-menu-content {
     padding: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    max-width: unset !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .user-profile-edit-menu {
+    .cdk-overlay-connected-position-bounding-box {
+      top: -155px !important;
+      left: 180px !important;
+    }
   }
 
 }
+
+/*for Nest Hub*/
+@media screen and (min-width: 1024px) and (max-height: 600px) {}

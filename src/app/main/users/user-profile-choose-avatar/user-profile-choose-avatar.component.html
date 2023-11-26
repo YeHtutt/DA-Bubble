@@ -1,3 +1,6 @@
+<div class="avatar-header">
+    <h2>Wählen Sie ein Avatar <br> als Ihr Profil-bild</h2>
+</div>
 <div class="all-profile-pics">
     <div  *ngFor="let avatar of avatars" (click)="this.setNewPic(avatar)">
         <img src="../assets/img/avatar/{{ avatar }}">
