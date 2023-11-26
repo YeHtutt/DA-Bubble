@@ -29,7 +29,7 @@ export class UserProfileViewComponent implements OnInit {
   openProfileEditDialog(): void {
     const dialogRef = this.dialog.open(UserProfileEditComponent, {
       width: '500px',
-      height: '716px',
+      height: 'auto',
       hasBackdrop: true,
       panelClass: 'user-profile-view-dialog',
       autoFocus: false,

@@ -74,7 +74,7 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
-import { ProfileDialogComponent } from './main/users/profile-dialog/profile-dialog.component';
+
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
 import { OpenUserMenuDialogComponent } from './main/channels/open-user-menu-dialog/open-user-menu-dialog.component';
@@ -113,14 +113,10 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     FilterPipe,
     CustomSnackbarComponent,
     SearchBarComponent,
-    ProfileDialogComponent,
     ClickOutsideDirective,
     ScrollButtonComponent,
     OpenUserMenuDialogComponent,
     UserProfileChooseAvatarComponent
-
-
-
   ],
   imports: [
     BrowserModule,

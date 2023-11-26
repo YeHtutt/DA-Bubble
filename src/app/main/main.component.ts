@@ -77,7 +77,7 @@ export class MainComponent implements OnInit {
   openUserProfile() {
     this.dialog.open(UserProfileViewComponent, {
       width: '500px',
-      height: '623px',
+      height: 'auto',
       hasBackdrop: true,
       panelClass: 'user-profile-view-dialog',
       autoFocus: false,
