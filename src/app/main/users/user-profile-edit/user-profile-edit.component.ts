@@ -18,6 +18,11 @@ export class UserProfileEditComponent {
 
   ngOnInit() {
     this.profileEditSuccess = false;
+
+    //der Standardwert für das Email-Feld setzten
+    this.userEditForm.patchValue({
+      email: this.usersFbService.loggedInUserEmail
+    });
   }
 
   constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService, 
