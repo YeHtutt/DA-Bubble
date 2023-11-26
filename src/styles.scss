@@ -592,6 +592,17 @@ button {
     overflow: scroll;
     height: 100%;
   }
+}
 
+
+@media(max-width: 450px) {
+
+  .corner-right-top-dialog {
+    position: absolute !important;
+    top: 130px !important;
+
+    max-width: 90vw !important;
+
+  }
 
 }

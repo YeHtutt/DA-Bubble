@@ -166,7 +166,7 @@ export class ChannelChatComponent {
   }
 
 
-  openPeopleUserlDialog() {
+  openPeopleUserDialog() {
     this.dialog.open(AddPeopleDialogComponent, {
       width: 'auto',
       height: 'auto',
