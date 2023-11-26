@@ -12,7 +12,7 @@ import { map, startWith } from 'rxjs/operators';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ChangeDetectorRef } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
-import { CreateChannelDialogComponent } from '../create-channel-dialog/create-channel-dialog.component';
+
 
 
 @Component({
@@ -56,8 +56,8 @@ export class ChannelUsersDialogComponent {
         return user ? this._filter(user) : usersToShow;
       }),
     );
-
   }
+
 
   ngOnInit() {
     this.getAllUsers();
@@ -109,12 +109,14 @@ export class ChannelUsersDialogComponent {
     });
   }
 
+
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
       this.channel.usersData.push(userObject);
     });
   }
+
 
   remove(name: string): void {
     const index = this.users.findIndex((user: any) => user.name === name);
@@ -138,6 +140,7 @@ export class ChannelUsersDialogComponent {
       this.allUsers.splice(index, 1);
     }
   }
+
 
   checkKnownUsers(): void {
     for (let user of this.users) {
@@ -165,6 +168,7 @@ export class ChannelUsersDialogComponent {
   closeDialog() {
     this.dialogRef.close();
   }
+
 
   validateInput(): void {
     const inputValue = this.userCtrl.value?.trim();

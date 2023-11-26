@@ -77,7 +77,6 @@ export class AddPeopleDialogComponent {
   }
 
 
-
   filterUsersNotInChannel() {
     let usersInChannel = this.channel.usersData.map((user: any) => UserProfile.fromJSON(user));
     let notInChannel: UserProfile[] = [];
@@ -94,10 +93,12 @@ export class AddPeopleDialogComponent {
     return notInChannel;
   }
 
+
   closeAddPeopleDialog() {
     this.dialogRef.close();
   }
 
+  
   addUsers() {
     this.channel.usersData.push(...this.users);
     this.channelService.updateChannel(this.channel);
