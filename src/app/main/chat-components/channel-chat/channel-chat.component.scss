@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+
 .date-border {
     width: 95%;
     margin: auto;
@@ -329,6 +330,7 @@ app-emoji-picker {
 
 .file-to-upload {
     cursor: pointer;
+
     &:hover {
         .delete-btn {
             display: flex !important;

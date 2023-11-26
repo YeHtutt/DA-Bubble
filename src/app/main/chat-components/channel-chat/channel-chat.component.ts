@@ -163,6 +163,7 @@ export class ChannelChatComponent {
     });
   }
 
+
   openPeopleUserlDialog() {
     this.dialog.open(AddPeopleDialogComponent, {
       width: '710px',
@@ -173,7 +174,6 @@ export class ChannelChatComponent {
       data: { channel: this.channel }
     });
   }
-
 
 
   sendByKey(event: KeyboardEvent) {
@@ -203,6 +203,7 @@ export class ChannelChatComponent {
     });
   }
 
+
   async createMessageObject() {
     let creatorId = this.getCreatorId();
     let messageCreator = (await this.userService.getUser(creatorId) as UserProfile).toJSON();
@@ -226,6 +227,7 @@ export class ChannelChatComponent {
     return this.userService.getFromLocalStorage();
   }
 
+
   checkForTag() {
     const atIndex = this.text.lastIndexOf('@');
     if (atIndex > 0 && this.text[atIndex - 1] === ' ' && this.text.includes('@') || atIndex === 0) {
@@ -238,15 +240,18 @@ export class ChannelChatComponent {
     if (!this.text.includes('@')) this.showTagMenu = false;
   }
 
+
   async toggleTagMenu(tag: string) {
     this.showTagMenu = !this.showTagMenu;
     this.searchUserToTag(tag);
   }
 
+
   async searchUserToTag(tag: string) {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(tag, this.searchMessage);
     this.allUsers = searchResult.filteredUser;
   }
+
 
   tagUser(user: string) {
     const atIndex = this.text.lastIndexOf('@');
@@ -258,6 +263,7 @@ export class ChannelChatComponent {
     }
   }
 
+
   closeTagMenu() {
     this.showTagMenu = false;
   }
@@ -268,17 +274,18 @@ export class ChannelChatComponent {
     this.isOpened = !this.isOpened;
   }
 
+
   addEmoji(emoji: string) {
     const text = `${emoji}`;
     this.text += text;
     this.isOpened = false;
   }
 
+
   closeEmojiMenu(): void {
     this.isOpened = false
   }
 
-  // Upload File
 
   onUpload(event: any) {
     const file = new FileUpload(event.target.files[0]);
@@ -295,12 +302,14 @@ export class ChannelChatComponent {
     }
   }
 
+
   setFileType(type: string) {
     if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
     if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
     if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
 
+  
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
