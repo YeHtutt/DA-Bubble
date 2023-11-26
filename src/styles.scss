@@ -124,10 +124,18 @@
 }
 
 
-.mat-mdc-dialog-container .mdc-dialog__surface {
-  border-radius: 30px !important;
+.dialog-main-style {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px !important;
+  }
 }
 
+
+.create-channel-dialog {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px !important;
+  }
+}
 
 html,
 body {
@@ -558,5 +566,12 @@ button {
     max-width: 100svw !important;
     max-height: 100svh !important;
     height: 100% !important;
+    
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      border-radius: 0px !important;
+      display: flex;
+      justify-content: center;
+    
   }
+}
 }

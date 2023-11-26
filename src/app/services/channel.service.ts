@@ -38,16 +38,9 @@ interface ExampleFlatNode {
 
 
 export class ChannelService {
-
+  
+ 
   firestore: Firestore = inject(Firestore);
-
-  constructor(
-    private firebaseUtils: FirebaseUtilsService,
-    private userService: UsersFirebaseService,
-    private notificationService: NotificationService) {
-    this.unsubChannelTree = this.subChannelList();
-  }
-
   channelContent: Channel[] = [];
   channelTree: ChannelsNode[] = [];
   channels: Channel[] = [];
@@ -58,6 +51,15 @@ export class ChannelService {
   unsubMessage: any;
   unsubChannelContent: any;
   currentUserId = this.userService.getFromLocalStorage()
+
+  
+  constructor(
+    private firebaseUtils: FirebaseUtilsService,
+    private userService: UsersFirebaseService,
+    private notificationService: NotificationService) {
+    this.unsubChannelTree = this.subChannelList();
+  }
+
 
   ngOnDestroy() {
     this.unsubChannelTree();
@@ -132,9 +134,11 @@ export class ChannelService {
     this.appendMoreChannels(moreChannels);
   }
 
+
   sortChannelTree() {
     this.channelTree.sort((a, b) => a.channelName.toLowerCase().localeCompare(b.channelName.toLowerCase()));
   }
+
 
   appendMoreChannels(moreChannels: ChannelsNode[]) {
     if (moreChannels.length) {
@@ -146,10 +150,12 @@ export class ChannelService {
     }
   }
 
+
   updateDataSource() {
     this.themes = [{ channelName: 'Channel', children: this.channelTree }];
     this.dataSource.data = this.themes;
   }
+
 
   expandChannels() {
     const firstNode = this.treeControl.dataNodes[0];
@@ -169,6 +175,7 @@ export class ChannelService {
       }
     });
   }
+
 
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
