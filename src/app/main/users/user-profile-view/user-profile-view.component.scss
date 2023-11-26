@@ -1,4 +1,4 @@
-.userProfileViewContainer {
+.user-profile-view-container {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
     padding: 45px 40px;
     gap: 38px;
 
-    .profileViewHeader {
+    .profile-view-header {
         box-sizing: border-box;
         width: 100%;
         display: flex;
@@ -24,13 +24,13 @@
         }
     }
 
-    .profileViewImg {
+    .profile-view-img {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
 
-        .profileImg {
+        .profile-img {
             width: 200px;
             height: 200px;
             object-fit: cover;
@@ -39,7 +39,7 @@
         }
     }
 
-    .profileViewName {
+    .profile-view-name {
         width: 100%;
 
         div {
@@ -61,13 +61,13 @@
             margin: unset;
         }
 
-        .flexRow {
+        .flex-row {
             display: flex !important;
             align-items: center !important;
             gap: 15px;
         }
 
-        .profileEdit-container {
+        .profile-edit-container {
             display: flex;
             justify-content: space-between;
 
@@ -83,7 +83,7 @@
         }
     }
 
-    .profileViewEmail {
+    .profile-view-email {
         width: 100%;
 
         img {
@@ -109,7 +109,7 @@
         }
     }
 
-    .dialogCloseButton {
+    .dialog-close-button {
         border-radius: 100%;
         cursor: pointer;
 
@@ -117,22 +117,20 @@
             background-color: lightgray;
         }
     }
+}
 
-    ::ng-deep .mat-mdc-dialog-actions>* {
-        background-color: #444DF2 !important;
-    }
+::ng-deep .mat-mdc-dialog-actions > * {
+    background-color: #444DF2 !important;
+}
 
-    ::ng-deep .mat-mdc-button.mat-unthemed {
-        color: white !important;
-    }
+::ng-deep .mat-mdc-button.mat-unthemed {
+    color: white !important;
+}
 
-    ::ng-deep .mat-mdc-button {
-        box-sizing: border-box !important;
-        padding: 20px 25px !important;
-        border-radius: 30px !important;
-    }
-
-
+::ng-deep .mat-mdc-button {
+    box-sizing: border-box !important;
+    padding: 20px 25px !important;
+    border-radius: 30px !important;
 }
 
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
