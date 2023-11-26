@@ -27,6 +27,7 @@ export class EditChannelDialogComponent {
   editDescription: boolean = false;
   isOutlineVisible: boolean = true;
   isMobile: boolean = false;
+  openingInChat: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,6 +43,7 @@ export class EditChannelDialogComponent {
   ngOnInit() {
     this.currentUserId = this.userService.getFromLocalStorage()
     this.checkMobileMode(window.innerWidth);
+    
   }
 
   toggleEdit() {

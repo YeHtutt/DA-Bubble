@@ -26,6 +26,7 @@ export class AddPeopleDialogComponent {
 
   private usersNotInChannelSubject: BehaviorSubject<UserProfile[]> = new BehaviorSubject<UserProfile[]>([]);
   channel: Channel = new Channel(this.data.channel);
+  openingInChat = this.data.openingInChat;
   selectedOption: string | undefined;
   inputOpened = false;
   public search: string = '';
@@ -65,6 +66,7 @@ export class AddPeopleDialogComponent {
 
   ngOnInit() {
     this.getUsersNotInChannel();
+    console.log(this.openingInChat)
   }
 
 
@@ -98,7 +100,7 @@ export class AddPeopleDialogComponent {
     this.dialogRef.close();
   }
 
-  
+
   addUsers() {
     this.channel.usersData.push(...this.users);
     this.channelService.updateChannel(this.channel);

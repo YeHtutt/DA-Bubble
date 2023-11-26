@@ -13,7 +13,7 @@ export class OpenUserMenuDialogComponent {
 
   channel: Channel = new Channel(this.data.channel);
   @Input() isMobile: boolean = false;
-
+  openingInChat: boolean = this.data.openingInChat;
 
 
   constructor(
@@ -28,14 +28,21 @@ export class OpenUserMenuDialogComponent {
   }
 
 
-  openPeopleUserDialog() {
+  addUserDialog() {
+    let dialogStyle;
+    console.log(this.openingInChat)
+    if (!this.openingInChat) { dialogStyle = 'corner-right-top-dialog'; }
+    if (this.openingInChat) { dialogStyle = 'top-left-right-dialog'; }
     this.dialog.open(AddPeopleDialogComponent, {
       width: 'auto',
       height: 'auto',
       hasBackdrop: true,
-      panelClass: 'corner-right-top-dialog',
+      panelClass: dialogStyle,
       autoFocus: false,
-      data: { channel: this.channel }
+      data: {
+        channel: this.channel,
+        openingInChat: this.openingInChat
+      }
     });
 
   }

@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
       width: '500px',
       height: '623px',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style',
+      panelClass: 'user-profile-dialog',
       autoFocus: false,
     });
   }
