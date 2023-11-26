@@ -31,7 +31,7 @@ export class UserProfileViewComponent implements OnInit {
       width: '500px',
       height: '716px',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style',
+      panelClass: 'user-profile-view-dialog',
       autoFocus: false,
     });
 

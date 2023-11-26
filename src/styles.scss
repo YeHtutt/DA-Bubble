@@ -130,6 +130,51 @@
   }
 }
 
+.user-profile-view-dialog {
+
+  .mat-mdc-dialog-actions>* {
+    background-color: #444DF2 !important;
+  }
+
+  .mat-mdc-button.mat-unthemed {
+    color: white !important;
+  }
+
+  .mat-mdc-button {
+    box-sizing: border-box !important;
+    padding: 20px 25px !important;
+    border-radius: 30px !important;
+  }
+
+
+  .dialog-main-style .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px 0px 30px 30px !important;
+
+    @media(max-width: 767px) {
+      border-radius: 30px 30px 30px 30px !important;
+    }
+  }
+
+  .cdk-overlay-connected-position-bounding-box {
+    top: 0 !important;
+    right: 0 !important;
+    height: 969px;
+    width: 1339px;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .dialog-main-style {
+    height: auto !important;
+  }
+
+  .cdk-overlay-pane {
+    position: absolute !important;
+    top: 85px !important;
+    right: 15px !important;
+  }
+}
+
 
 .channel-dialog {
   .mat-mdc-dialog-container .mdc-dialog__surface {
