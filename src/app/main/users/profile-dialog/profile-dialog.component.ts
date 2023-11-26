@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserProfileViewComponent } from '../../users/user-profile-view/user-profile-view.component';
+import { UserProfileViewComponent } from '../user-profile-view/user-profile-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';

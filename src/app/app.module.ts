@@ -47,7 +47,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ChannelsComponent } from './main/channels/channels.component';
 import { MainComponent } from './main/main.component';
 import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
-import { HeaderComponent } from './main/header/header.component';
+
 import { SidenavComponent } from './main/sidenav/sidenav.component';
 import { ThreadsComponent } from './main/threads/threads.component';
 import { EditChannelDialogComponent } from './main/channels/edit-channel-dialog/edit-channel-dialog.component';
@@ -74,7 +74,7 @@ import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component
 import { FilterPipe } from './main/pipes/filter.pipe';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
-import { ProfileDialogComponent } from './main/header/profile-dialog/profile-dialog.component';
+import { ProfileDialogComponent } from './main/users/profile-dialog/profile-dialog.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
 import { OpenUserMenuDialogComponent } from './main/channels/open-user-menu-dialog/open-user-menu-dialog.component';
@@ -90,7 +90,6 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     ChannelsComponent,
     MainComponent,
     NewMessageComponent,
-    HeaderComponent,
     SidenavComponent,
     ThreadsComponent,
     CreateChannelDialogComponent,
