@@ -30,13 +30,13 @@ export class CreateChannelDialogComponent {
     private channelService: ChannelService
   ) { }
 
+
   ngOnInit() {
     this.channelService.getAllChannels();
-
   }
 
-  addChannel() {
 
+  addChannel() {
     if (this.channelNameInput.invalid) {
       this.notificationService.checkInputLength(this.channelNameInput);
       this.validateInput()
@@ -63,7 +63,7 @@ export class CreateChannelDialogComponent {
 
   openAddUserlDialog() {
     this.dialog.open(ChannelUsersDialogComponent, {
-      width: '710px',
+      width: 'auto',
       height: 'auto',
       hasBackdrop: true,
       panelClass: 'dialog-main-style',
@@ -72,6 +72,7 @@ export class CreateChannelDialogComponent {
     });
     this.closeCreateChannelDialog();
   }
+
 
   closeCreateChannelDialog() {
     this.dialogRef.close();
@@ -83,16 +84,10 @@ export class CreateChannelDialogComponent {
   }
 
   getErrorMessage() {
-    if (this.channelNameInput.hasError('required')) {
-      return 'You must enter a value';
-    }
-    if (this.checkForDoubledChannels()) {
-      return 'The channel already exists';
-    }
-    // Remove the 'email' validation as it doesn't seem relevant for a channel name
+    if (this.channelNameInput.hasError('required'))       return 'Du musst einen Namen eingeben.';    
+    if (this.checkForDoubledChannels())       return 'Der Channel exisiert bereits.';      
     return '';
   }
-
 
 
   validateInput() {

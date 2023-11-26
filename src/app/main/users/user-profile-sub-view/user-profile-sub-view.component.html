@@ -1,30 +1,30 @@
-<div class="userProfileSubViewContainer">
-    <div class="profileSubViewHeader">
+<div class="user-profile-sub-view-container">
+    <div class="profile-sub-view-header">
         <div mat-dialog-title>Profile</div>
-        <mat-icon class="hoverStyle" (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
+        <mat-icon class="hover-style" (click)="closeDialog()" class="dialog-close-button">close</mat-icon>
     </div>
-    <div class="profileSubViewImg">
-        <img class="profileImg" [src]="userPhotoURL" />
+    <div class="profile-sub-view-img">
+        <img class="profile-img" [src]="userPhotoURL" />
     </div>
-    <div class="profileSubViewName">
-        <div class="profileEdit-container">
+    <div class="profile-sub-view-name">
+        <div class="profile-edit-container">
             <div> {{ userName }} </div>
         </div>
         
-        <div class="flexRow">
-            <img src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID">
-            <p *ngIf="this.userFbService.loggedInUserID">Anwesend</p>
-            <img src="assets/img/Offline.png" *ngIf="!this.userFbService.loggedInUserID">
-            <p *ngIf="!this.userFbService.loggedInUserID">Abwesend</p>
+        <div class="flex-row">
+            <img src="assets/img/Online.png" *ngIf="userFbService.loggedInUserID">
+            <p *ngIf="userFbService.loggedInUserID">Anwesend</p>
+            <img src="assets/img/Offline.png" *ngIf="!userFbService.loggedInUserID">
+            <p *ngIf="!userFbService.loggedInUserID">Abwesend</p>
         </div>
     </div>
-    <div class="profileSubViewEmail">
+    <div class="profile-sub-view-email">
         <p><img src="assets/img/mail.png">E-Mail-Adresse</p>
         <a href=""> {{ userEmail }} </a>
     </div>
     
     <div mat-dialog-actions>
-        <button class="hoverStyle" (click)="openChat()" mat-fab extended color="primary" [mat-dialog-close]="">
+        <button class="hover-style" (click)="openChat()" mat-fab extended color="primary" [mat-dialog-close]="">
             <mat-icon>mode_comment</mat-icon>
             Nachricht
         </button>

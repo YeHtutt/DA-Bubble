@@ -1,25 +1,25 @@
-<div class="userProfileViewContainer">
-    <div class="profileViewHeader">
+<div class="user-profile-view-container">
+    <div class="profile-view-header">
         <div mat-dialog-title>Profile</div>
-        <mat-icon (click)="closeDialog()" class="dialogCloseButton">close</mat-icon>
+        <mat-icon (click)="closeDialog()" class="dialog-close-button">close</mat-icon>
     </div>
-    <div class="profileViewImg">
-        <img class="profileImg" src="{{ this.userFbService.loggedInUserImg }}" />
+    <div class="profile-view-img">
+        <img class="profile-img" src="{{ this.userFbService.loggedInUserImg }}" />
     </div>
-    <div class="profileViewName">
-        <div class="profileEdit-container">
+    <div class="profile-view-name">
+        <div class="profile-edit-container">
             <div> {{ this.userFbService.loggedInUserName }} </div>
-            <a (click)="closeDialog(); openProfileEditDialog()" >Bearbeiten</a>
+            <a (click)="closeDialog(); openProfileEditDialog()">Bearbeiten</a>
         </div>
         
-        <div class="flexRow">
+        <div class="flex-row">
             <img src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID">
             <p *ngIf="this.userFbService.loggedInUserID">Anwesend</p>
             <img src="assets/img/Offline.png" *ngIf="!this.userFbService.loggedInUserID">
             <p *ngIf="!this.userFbService.loggedInUserID">Abwesend</p>
         </div>
     </div>
-    <div class="profileViewEmail">
+    <div class="profile-view-email">
         <p><img src="assets/img/mail.png">E-Mail-Adresse</p>
         <a href=""> {{this.userFbService.loggedInUserEmail}} </a>
     </div>

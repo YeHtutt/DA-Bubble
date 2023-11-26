@@ -1,6 +1,11 @@
 @import "../../../../styles.scss";
 
 
+.create-channel-dialog {
+    max-width: 100svw !important;
+    max-height: 100svh !important;
+}
+
 
 .create-channel-container {
     padding: 40px;

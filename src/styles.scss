@@ -557,3 +557,11 @@ button {
   min-width: 100%;
   overflow: auto;
 }
+
+@media(max-width: 750px) {
+  .create-channel-dialog {
+    max-width: 100svw !important;
+    max-height: 100svh !important;
+    height: 100% !important;
+  }
+}

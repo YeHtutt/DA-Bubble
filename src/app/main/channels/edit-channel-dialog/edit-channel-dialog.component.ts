@@ -2,11 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { ChannelService } from 'src/app/services/channel.service';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl} from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-
 
 
 @Component({
@@ -14,8 +13,19 @@ import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
   templateUrl: './edit-channel-dialog.component.html',
   styleUrls: ['./edit-channel-dialog.component.scss']
 })
+
+
 export class EditChannelDialogComponent {
 
+
+  channel: Channel = new Channel(this.data.channel);
+  currentUserId: string | null = '';
+  channelNameInput = new FormControl(this.channel.channelName);
+  channelDescriptionInput = new FormControl(this.channel.description);
+  isEditing: boolean = false;
+  editChannelName: boolean = false;
+  editDescription: boolean = false;
+  isOutlineVisible: boolean = true;
 
 
   constructor(
@@ -27,38 +37,31 @@ export class EditChannelDialogComponent {
     private firestoreUtils: FirebaseUtilsService,
   ) { }
 
-  channel: Channel = new Channel(this.data.channel);
-  currentUserId: string | null = '';
-  isEditing = false;
-  channelNameInput = new FormControl(this.channel.channelName);
-  channelDescriptionInput = new FormControl(this.channel.description);
-  editChannelName: boolean = false;
-  editDescription: boolean = false;
-
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
   }
 
+
   ngOnInit() {
     this.currentUserId = this.userService.getFromLocalStorage()
   }
 
-  isOutlineVisible = true;
 
   toggleOutline() {
     this.isOutlineVisible = !this.isOutlineVisible;
   }
 
+
   closeCreateChannelDialog() {
     this.dialogRef.close();
   }
+
 
   leaveChannel() {
     if (this.channel.channelName === 'allgemein') {
       this.notificationService.showError('Der allgemeine Channel kann nicht verlassen werden.')
     }
-
     else this.leaveTheChannel();
   }
 
@@ -82,12 +85,10 @@ export class EditChannelDialogComponent {
     }
   }
 
-  checkUsers() { }
-
-
 
   closeSnackbar() { }
 
+  
   toggleDescriptionInput() {
     this.editChannelName = !this.editChannelName;
   }

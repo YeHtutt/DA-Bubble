@@ -46,7 +46,7 @@ export class ChannelsComponent {
       width: 'auto',
       height: 'auto',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style',
+      panelClass: 'create-channel-dialog',
       autoFocus: false,
     });
   }

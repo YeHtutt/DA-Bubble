@@ -1,4 +1,4 @@
-.userProfileSubViewContainer {
+.user-profile-sub-view-container {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
     padding: 45px 40px;
     gap: 38px;
 
-    .profileSubViewHeader {
+    .profile-sub-view-header {
         box-sizing: border-box;
         width: 100%;
         display: flex;
@@ -15,24 +15,22 @@
         align-items: center;
 
         div {
-            color: var(--Black, #000);
+            color: var(--black, #000);
             font-family: Nunito;
             font-size: 24px;
             font-style: normal;
             font-weight: 700;
             line-height: normal;
         }
-
-
     }
 
-    .profileSubViewImg {
+    .profile-sub-view-img {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
 
-        .profileImg {
+        .profile-img {
             width: 200px;
             height: 200px;
             object-fit: cover;
@@ -41,11 +39,11 @@
         }
     }
 
-    .profileSubViewName {
+    .profile-sub-view-name {
         width: 100%;
 
         div {
-            color: var(--Black, #000);
+            color: var(--black, #000);
             font-family: Nunito;
             font-size: 32px;
             font-style: normal;
@@ -54,7 +52,7 @@
         }
 
         p {
-            color: var(--Text-gray, #686868);
+            color: var(--text-gray, #686868);
             font-family: Nunito;
             font-size: 20px;
             font-style: normal;
@@ -63,13 +61,13 @@
             margin: unset;
         }
 
-        .flexRow {
+        .flex-row {
             display: flex !important;
             align-items: center !important;
             gap: 15px;
         }
 
-        .profileEdit-container {
+        .profile-edit-container {
             display: flex;
             justify-content: space-between;
 
@@ -85,7 +83,7 @@
         }
     }
 
-    .profileSubViewEmail {
+    .profile-sub-view-email {
         width: 100%;
 
         img {
@@ -93,7 +91,7 @@
         }
 
         p {
-            color: var(--Black, #000);
+            color: var(--black, #000);
             font-family: Nunito;
             font-size: 20px;
             font-style: normal;
@@ -111,7 +109,7 @@
         }
     }
 
-    .dialogCloseButton {
+    .dialog-close-button {
         border-radius: 100%;
         cursor: pointer;
 
@@ -121,6 +119,6 @@
     }
 }
 
-.hoverStyle {
+.hover-style {
     cursor: pointer;
 }
