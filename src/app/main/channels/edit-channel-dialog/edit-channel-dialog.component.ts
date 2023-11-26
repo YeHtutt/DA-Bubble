@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Channel } from 'src/app/models/channel';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-
+import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
 
 @Component({
   selector: 'app-edit-channel-dialog',
@@ -35,9 +35,14 @@ export class EditChannelDialogComponent {
     public dialogRef: MatDialogRef<EditChannelDialogComponent>,
     public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
-
+   
   ) { }
 
+
+  ngOnInit() {
+    this.currentUserId = this.userService.getFromLocalStorage()
+    this.checkMobileMode(window.innerWidth);
+  }
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
@@ -48,16 +53,13 @@ export class EditChannelDialogComponent {
   onResize(event: any) {
     this.checkMobileMode(event.target.innerWidth);
   }
+  
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
     console.log(this.isMobile);
   }
 
-  ngOnInit() {
-    this.currentUserId = this.userService.getFromLocalStorage()
-    this.checkMobileMode(window.innerWidth);
-  }
 
 
   toggleOutline() {

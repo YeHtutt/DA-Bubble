@@ -10,6 +10,8 @@ export class DrawerService {
   drawer?: MatDrawer;
   drawerSub: Subscription = new Subscription()
   isDrawerOpen: boolean = false;
+  isMobile: boolean = false;
+
 
   constructor() { }
 
@@ -35,11 +37,11 @@ export class DrawerService {
   }
 
   open() {
-    if(this.checkScreenSize()) this.drawer?.open();
+    if (this.checkScreenSize()) this.drawer?.open();
   }
 
   close() {
-    if(this.checkScreenSize()) this.drawer?.close();
+    if (this.checkScreenSize()) this.drawer?.close();
   }
 
   closeWithoutCondition() {
@@ -51,12 +53,13 @@ export class DrawerService {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
+  onResize(event: any) {
     this.checkScreenSize();
+    this.checkMobileMode(event.target.innerWidth);
   }
 
   checkScreenSize() {
-    if(window.innerWidth < 750) {
+    if (window.innerWidth < 750) {
       return true;
     } else {
       return false;
@@ -64,10 +67,21 @@ export class DrawerService {
   }
 
   checkScreenSizeForResponsive(width: number) {
-    if(window.innerWidth < width) {
+    if (window.innerWidth < width) {
       return true;
     } else {
       return false;
     }
   }
+
+
+
+
+  checkMobileMode(width: number): void {
+    this.isMobile = width <= 750;
+    console.log(this.isMobile);
+  }
+
+
+
 }

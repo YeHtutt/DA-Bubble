@@ -35,7 +35,7 @@ export class SidenavComponent {
   ) {}
 
   ngOnInit() {
-    this.checkScreenSize();
+    this.drawerService.isMobile;
   }
 
   ngAfterViewInit() {

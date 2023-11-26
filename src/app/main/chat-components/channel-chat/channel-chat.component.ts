@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
@@ -45,7 +45,7 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class ChannelChatComponent {
-
+  isMobile: boolean = false;
   text: string = '';
   message: Message = new Message()
   id: string = '';
@@ -105,6 +105,7 @@ export class ChannelChatComponent {
       });
     });
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
+    this.checkMobileMode(window.innerWidth);
   }
 
   ngAfterViewInit() {
@@ -314,6 +315,19 @@ export class ChannelChatComponent {
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
+  }
+
+
+  
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkMobileMode(event.target.innerWidth);
+   
+  }
+
+  private checkMobileMode(width: number): void {
+    this.isMobile = width <= 750;
+    console.log(this.isMobile);
   }
 
 }
