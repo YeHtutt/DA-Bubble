@@ -1,0 +1,31 @@
+.all-profile-pics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    div {
+        height: 80px;
+        width: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: lightgray;
+        }
+    }
+
+    img {
+        height: 50px;
+        width: 50px;
+        object-fit: cover;
+        border-radius: 100%;
+
+        &:hover {
+            height: 53px;
+            width: 53px;
+            object-fit: cover;
+        }
+    }
+}

@@ -78,6 +78,7 @@ import { ProfileDialogComponent } from './main/header/profile-dialog/profile-dia
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
 import { OpenUserMenuDialogComponent } from './main/channels/open-user-menu-dialog/open-user-menu-dialog.component';
+import { UserProfileChooseAvatarComponent } from './main/users/user-profile-choose-avatar/user-profile-choose-avatar.component';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -116,7 +117,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     ProfileDialogComponent,
     ClickOutsideDirective,
     ScrollButtonComponent,
-    OpenUserMenuDialogComponent
+    OpenUserMenuDialogComponent,
+    UserProfileChooseAvatarComponent
 
 
 

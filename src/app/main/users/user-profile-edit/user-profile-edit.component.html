@@ -1,14 +1,31 @@
 <div class="profile-edit-contianer">
     <div class="title">Dein Profil bearbeiten</div>
     <div class="form-group"> 
-        <img class="user-img" src="{{ currentPic }}" (click)="this.setNewPic(currentPic)">
+        <!-- <img class="user-img" src="{{ currentPic }}" (click)="this.setNewPic(currentPic)">
         <label for="file"><mat-icon class="edit-icon">edit</mat-icon></label>
         <input
         type="file"
         id="file"
         style="display: none;"
         (change)="onSelect($event)"
-        >
+        > -->
+        <div class="dropdown-container">
+            <img class="user-img" src="{{ currentPic }}" (click)="this.setNewPic(currentPic)">
+            <!-- <label for="file">
+                <mat-icon class="edit-icon">edit</mat-icon>
+            </label>
+            <input type="file" id="file" style="display: none;" (change)="onSelect($event)"> -->
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openAvatarDialog()">Avatare auswählen</button>
+                <label mat-menu-item for="file">
+                    Eigenes Bild auswählen
+                </label>
+                <input type="file" id="file" style="display: none;" (change)="onSelect($event)">
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon class="more-icon">more_vert</mat-icon>
+            </button>
+        </div>
     </div>
 
     <form [formGroup]="userEditForm" (ngSubmit)="onEdit()" class="name-email-container">
@@ -36,7 +53,7 @@
 
         <div class="button-container paddingTop45">
             <button mat-fab extended class="unfilled-text-btn" (click)="this.dialog.closeAll()">Abbrechen</button>
-            <button mat-fab extended color="primary" type="submit">Speichern</button>
+            <button mat-fab extended color="primary" type="submit" [disabled]="userEditForm.invalid">Speichern</button>
         </div>
     </form>  
 </div>

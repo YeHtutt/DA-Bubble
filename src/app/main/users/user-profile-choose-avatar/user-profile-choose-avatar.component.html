@@ -1,0 +1,5 @@
+<div class="all-profile-pics">
+    <div  *ngFor="let avatar of avatars" (click)="this.setNewPic(avatar)">
+        <img src="../assets/img/avatar/{{ avatar }}">
+    </div>
+</div>

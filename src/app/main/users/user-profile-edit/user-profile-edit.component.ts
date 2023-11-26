@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UsersFirebaseService } from '../../../services/users-firebase.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { UserProfileChooseAvatarComponent } from '../user-profile-choose-avatar/user-profile-choose-avatar.component';
 
 
 @Component({
@@ -25,9 +26,10 @@ export class UserProfileEditComponent {
     });
   }
 
-  constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService, 
-    private notificationService: NotificationService  ) { 
-    
+  constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService,
+    private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>,
+    private notificationService: NotificationService) {
+
   }
 
   userEditForm = new FormGroup({
@@ -41,7 +43,7 @@ export class UserProfileEditComponent {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
       this.saveNewPic(this.currentPic, currentUserID);
-      
+
       if (currentUserID) {
         // Aktualisieren Sie das Benutzerprofil in Firestore
         this.usersFbService.updateUserProfile(currentUserID, formData) //mit currentUserID und formDatas
@@ -58,6 +60,7 @@ export class UserProfileEditComponent {
     this.dialog.closeAll();
   }
 
+  /** user Profilbild mit eigene Bilder aus dem PC zu aktualisieren*/
   onSelect(event: any) {
     const file: File = event.target.files[0]; // ausgewählte Datei wird als variable file gespeichert (typ File interface)
     let fileType = file.type;
@@ -69,11 +72,11 @@ export class UserProfileEditComponent {
     if (fileType.match(/image\/(png|jpeg|jpg)/)) {
       let reader = new FileReader();
       reader.readAsDataURL(file);
-    
+
       reader.onload = (event: any) => {
         this.url = event.target.result;
         this.setNewPic(this.url);
-        };
+      };
     } else {
       window.alert('Bitte nur png, jpg oder jpeg senden');
     }
@@ -94,4 +97,21 @@ export class UserProfileEditComponent {
       this.notificationService.showError('Benutzerprofil Aktualisierung fehlgeschlagen. Bitte prüfen Sie die Eingaben!')
     }
   }
+
+  /** user Profilbild mit Avatare zu aktualisieren*/
+  openAvatarDialog() {
+    const dialogRef = this.dialog.open(UserProfileChooseAvatarComponent, {
+      width: '400px',
+      data: { currentPic: this.currentPic }
+    });
+
+    dialogRef.componentInstance.avatarSelected.subscribe((selectedAvatar: string) => {
+      this.setNewPic(selectedAvatar);
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }
