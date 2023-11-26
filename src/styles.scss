@@ -266,12 +266,6 @@ div {
   font-size: 24px !important;
   height: 24px !important;
   width: 24px !important;
-
-  // @media(max-width: 400px) {
-  //   font-size: 18px !important;
-  //   height: 18px !important;
-  //   width: 18px !important;
-  // }
 }
 
 .mat-mdc-unelevated-button>.mat-icon {
@@ -643,15 +637,6 @@ button {
     overflow: scroll;
     height: 100%;
   }
-
-
-  .profile-menu {
-    border-radius: 30px 30px 0px 0px !important;
-    position: absolute;
-    bottom: 0px;
-    top: auto !important;
-    left: auto !important;
-  }
 }
 
 
@@ -677,5 +662,46 @@ button {
     }
   }
 
+
+
+  .cdk-overlay-connected-position-bounding-box {
+    top: unset !important;
+    left: unset !important;
+    height: 100vh !important;
+
+    .mat-mdc-menu-panel {
+      max-width: unset !important;
+    }
+
+    .profile-menu {
+      border-radius: 30px 30px 0px 0px !important;
+      position: absolute;
+      bottom: 0px !important;
+      left: 0px !important;
+      box-sizing: border-box;
+      width: 100vw !important;
+    }
+  }
+
+  .mat-mdc-menu-content, .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {
+    width: 80vw !important;
+
+    div {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  .menu-btn{
+    padding: unset !important;
+    div {
+      display: flex !important;
+      justify-content: space-between !important;
+    }
+  }
+
+  .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
 
 }

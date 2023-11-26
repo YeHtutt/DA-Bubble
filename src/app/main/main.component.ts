@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -13,13 +13,13 @@ import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
 import { Auth } from '@angular/fire/auth';
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-
 
   ngOnInit(): void {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
@@ -37,8 +37,8 @@ export class MainComponent implements OnInit {
     private searchService: SearchService,
     public drawerService: DrawerService,
     public threadService: ThreadService,
-    private authService: AuthenticationService,) { }
-
+    private authService: AuthenticationService,
+  ) { }
 
   public search: string = '';
   filteredUser: any = [];
@@ -84,7 +84,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  
+
 
   // async searchData() {
   //   const searchResult = await this.searchService.searchUsersAndChannels(this.search)
@@ -136,6 +136,14 @@ export class MainComponent implements OnInit {
         isOnline: isOnline
       }
     });
+  }
+
+
+  isScreenSmall = window.innerWidth < 450;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.isScreenSmall = event.target.innerWidth < 450;
   }
 
 }

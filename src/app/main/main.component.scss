@@ -113,6 +113,23 @@ app-search-bar {
   height: 20px;
 }
 
+.person-icon {
+  border: 2px solid black;
+  border-radius: 100%;
+}
+
+.rectangle-centered {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 35px;
+}
+
+.hide-above-450px {
+  display: none;
+}
+
 /* TODO mit ng deep werden alle Komponenten in dem Programm beeinflusst. Bitte noch eine Klasse davor setzen. :)  */
 /* 
   ::ng-deep .cdk-overlay-pane>* {
