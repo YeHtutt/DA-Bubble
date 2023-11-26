@@ -17,11 +17,13 @@
             'no-padding': editChannelName
           }">
                 <div class="edit-channel">
-                    <div class="width-100">
+                    <div class="width-100 title-container">
                         <div class="flex-between">
                             <h3>Channel-Name</h3>
-                            <button class="edit-btn" (click)="saveChannelName()"
-                                *ngIf="editChannelName">Speichern</button>
+                            <button class="edit-btn" (click)="saveChannelName()" *ngIf="editChannelName">
+                                <div *ngIf="!isMobile">Speichern</div>
+                                <mat-icon *ngIf="isMobile">check_circle_outline</mat-icon>
+                            </button>
                         </div>
                         <div class="flex-center" *ngIf="!editChannelName">
                             <mat-icon class="tag">tag</mat-icon>
@@ -31,8 +33,11 @@
                             <input [formControl]="channelNameInput" matInput>
                         </mat-form-field>
                     </div>
-                    <button class="edit-btn" (click)="toggleDescriptionInput()"
-                        *ngIf="!editChannelName">Bearbeiten</button>
+                    <button class="edit-btn" (click)="toggleDescriptionInput()" *ngIf="!editChannelName">
+                        <div *ngIf="!isMobile">Bearbeiten</div>
+                        <mat-icon *ngIf="isMobile">edit</mat-icon>
+
+                    </button>
                 </div>
             </div>
         </div>
@@ -44,8 +49,14 @@
             'no-padding': editDescription
           }">
                 <div class="edit-channel">
-                    <div class="width-100">
-                        <h3>Beschreibung</h3>
+                    <div class="width-100 title-container">
+                        <div class="flex-between">
+                            <h3>Beschreibung</h3>
+                            <button class="edit-btn" *ngIf="editDescription" (click)="saveDescription()">
+                                <div *ngIf="!isMobile">Speichern</div>
+                                <mat-icon *ngIf="isMobile">check_circle_outline</mat-icon>
+                            </button>
+                        </div>
                         <div class="flex-center" *ngIf="!editDescription">
                             <h3>{{channel.description}}</h3>
                         </div>
@@ -53,10 +64,9 @@
                             <input [formControl]="channelDescriptionInput" matInput>
                         </mat-form-field>
                     </div>
-                    <button class="edit-btn" *ngIf="!editDescription"
-                        (click)="toggleChannelNameInput()">Bearbeiten</button>
-                    <button class="edit-btn" *ngIf="editDescription" mat-stroked-button color="primary"
-                        (click)="saveDescription()">Speichern
+                    <button class="edit-btn" *ngIf="!editDescription" (click)="toggleChannelNameInput()">
+                        <div *ngIf="!isMobile">Bearbeiten</div>
+                        <mat-icon *ngIf="isMobile">edit</mat-icon>
                     </button>
                 </div>
                 <mat-divider></mat-divider>

@@ -140,7 +140,7 @@ export class ChannelChatComponent {
     }
   }
 
-  
+
   openChannelMenu() {
     this.dialog.open(EditChannelDialogComponent, {
       width: '750px',
@@ -155,10 +155,10 @@ export class ChannelChatComponent {
 
   openUserMenu() {
     this.dialog.open(OpenUserMenuDialogComponent, {
-      width: '710px',
+      width: 'auto',
       height: 'auto',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style',
+      panelClass: 'corner-right-top-dialog',
       autoFocus: false,
       data: { channel: this.channel }
     });
@@ -167,10 +167,10 @@ export class ChannelChatComponent {
 
   openPeopleUserlDialog() {
     this.dialog.open(AddPeopleDialogComponent, {
-      width: '710px',
+      width: 'auto',
       height: 'auto',
       hasBackdrop: true,
-      panelClass: 'dialog-main-style',
+      panelClass: 'corner-right-top-dialog',
       autoFocus: false,
       data: { channel: this.channel }
     });

@@ -1,8 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel';
 import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
-
 
 @Component({
   selector: 'app-open-user-menu-dialog',
@@ -16,8 +15,9 @@ export class OpenUserMenuDialogComponent {
   @Input() isMobile: boolean = false;
 
 
-  
+
   constructor(
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<OpenUserMenuDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
@@ -28,6 +28,16 @@ export class OpenUserMenuDialogComponent {
   }
 
 
-  openPeopleUserDialog() { }
+  openPeopleUserDialog() {
+    this.dialog.open(AddPeopleDialogComponent, {
+      width: 'auto',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'corner-right-top-dialog',
+      autoFocus: false,
+      data: { channel: this.channel }
+    });
+
+  }
 
 }

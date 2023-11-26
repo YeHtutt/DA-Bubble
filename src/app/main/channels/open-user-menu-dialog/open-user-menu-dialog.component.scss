@@ -5,15 +5,34 @@
     padding: 40px;
 }
 
+div {
+    font-size: 18px;
+}
+
+.add-user-btn {
+    color: var(--Black, #000);
+    font-family: 'Nunito';
+    font-size: 18px;
+    padding-top: 27px;
+    padding-inline: 0px !important;
+    transition: transform 500ms ease-in, color 500ms ease-in;
+    &:hover {
+        transform: scale(1.1);
+        color: #535AF1;
+    }
+
+}
+
 .close-user-menu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 20px;
 }
 
 h3 {
     color: var(--Black, #000);
-    font-family: Nunito;
+    font-family: 'Nunito';
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -52,7 +71,7 @@ h3 {
     display: flex;
     justify-content: flex-start;
     align-items: center;
- 
+
 }
 
 .add-user {
@@ -64,17 +83,11 @@ h3 {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin-right: 16px;
+
     mat-icon {
         color: black;
         font-size: 20px;
-        transition: transform 120ms ease-in, color 120ms ease-in;
+        
     }
-
-    &:hover {
-
-        mat-icon {
-            transform: scale(1.1);
-            color: #535AF1;
-        }
-    }
-}
+   }
