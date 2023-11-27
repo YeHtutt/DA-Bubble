@@ -120,13 +120,4 @@ export class MainComponent implements OnInit {
     });
   }
 
-
-  isScreenSmall = window.innerWidth < 450;
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-    this.isScreenSmall = event.target.innerWidth < 450;
-    this.checkMobileMode(event.target.innerWidth);
-  }
-
 }
