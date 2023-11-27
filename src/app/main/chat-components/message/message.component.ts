@@ -20,6 +20,7 @@ interface Reaction {
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
+
 export class MessageComponent {
 
   @Input() parentMessageId: any;
@@ -40,6 +41,9 @@ export class MessageComponent {
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
   @Output() messageLoaded = new EventEmitter<boolean>();
+  shiftPressed: boolean = false;
+  messageSending: boolean = false;
+  currentId: string = '';
 
 
   constructor(
@@ -56,7 +60,6 @@ export class MessageComponent {
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
 
-  currentId: string = '';
 
   ngOnInit() {
     this.getPDFurl();
@@ -75,7 +78,6 @@ export class MessageComponent {
   }
 
 
-
   ngAfterViewInit() {
     this.messageLoaded.emit(true);
   }
@@ -89,16 +91,19 @@ export class MessageComponent {
     return formattedTime;
   }
 
+
   openMenu() {
     this.checkIfEdit = !this.checkIfEdit;
     setTimeout(() => this.checkIfEdit = !this.checkIfEdit, 5000);
   }
+
 
   openEdit(messageText: string) {
     this.showEdit = !this.showEdit
     this.editMessage = messageText;
     this.getMessagePath();
   }
+
 
   getMessagePath() {
     const url = this.router.url;
@@ -107,13 +112,32 @@ export class MessageComponent {
     this.coll = urlParts.pop();
   }
 
+
   saveMessage(msgId: string) {
     this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
   }
 
+
+  sendByKey(event: KeyboardEvent) {
+    if (event.key == 'Shift') {
+      this.shiftPressed = event.type === 'keydown';
+    }
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+      this.messageSending = true;
+      this.saveMessage(this.message.messageId);
+    }
+  }
+
+
+  isEmptyOrWhitespace(): boolean {
+    return this.editMessage.replace(/\n/g, '').trim().length === 0;
+  }
+
+
   cancelEdit() {
     this.showEdit = !this.showEdit;
   }
+
 
   deleteMessage(msgId: string, filePath: string) {
     this.getMessagePath();
@@ -126,17 +150,20 @@ export class MessageComponent {
     this.isOpened = !this.isOpened;
   }
 
+
   addEmoji(emoji: string) {
     const text = `${emoji}`;
     this.editMessage += text;
     this.isOpened = false;
   }
 
+
   toggleReaction(event: Event) {
     event.stopPropagation();
     this.isReactionInputOpened = !this.isReactionInputOpened;
     // setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
   }
+
 
   toggleInReaction(event: Event) {
     event.stopPropagation();
@@ -170,21 +197,26 @@ export class MessageComponent {
     }
   }
 
+
   canDeleteReaction(index: number, reaction: Reaction | undefined) {
     return index !== -1 && reaction?.users.length === 1;
   }
+
 
   canAddNewReaction(index: number, reaction: Reaction | undefined) {
     return index === -1 && !reaction;
   }
 
+
   canAddUserToReaction(reaction: Reaction | undefined) {
     return reaction && !reaction.users.includes(this.currentUserName);
   }
 
+
   canRemoveUserFromReaction(reaction: Reaction | undefined) {
     return reaction && reaction.users.includes(this.currentUserName);
   }
+
 
   createReactionObject(emoji: string) {
     return {
@@ -193,14 +225,17 @@ export class MessageComponent {
     };
   }
 
+
   getHighestReactions() {
     const sortedReactions = this.message.reactions.sort((a: any, b: any) => b.users.length - a.users.length);
     return sortedReactions;
   }
 
+
   onOutsideClick(reaction: string): void {
     if (reaction == 'isReactionOpened') this.isReactionOpened = false;
     if (reaction == 'isReactionInputOpened') this.isReactionInputOpened = false;
+    if (reaction == 'isOpened') this.isOpened = false;
   }
 
 
@@ -211,9 +246,11 @@ export class MessageComponent {
     this.threadService.updateDoc(path, this.message, 'messageId', updatedFields);
   }
 
+
   saveReaction(path: any, updateObject: any) {
     this.threadService.updateDoc(path, this.message, 'messageId', updateObject);
   }
+
 
   async deleteReply(path: string) {
     await this.firebaseUtils.deleteCollection(path, this.message.messageId);
@@ -236,6 +273,7 @@ export class MessageComponent {
     }
   }
 
+
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
   }
@@ -250,6 +288,7 @@ export class MessageComponent {
     }
   }
 
+
   messageClasses(message: any) {
     return {
       'message-reverse': this.isUserAuthor(message),
@@ -257,9 +296,11 @@ export class MessageComponent {
     };
   }
 
+
   isUserAuthor(message: any) {
     return message.user.id === this.currentUser && message.origin === 'chat';
   }
+
 
   isChannelMessageFromCurrentUser(message: any) {
     return message.user.id === this.currentUser && message.origin === 'channel';
@@ -288,7 +329,4 @@ export class MessageComponent {
       }
     });
   }
-
-
-
 }
