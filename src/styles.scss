@@ -6,77 +6,129 @@
 @import "node_modules/@ctrl/ngx-emoji-mart/picker.css";
 
 
-
-html,
-body {
-  height: 100%;
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 200;
+  src: url('assets/fonts/Nunito-ExtraLight.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraLight.woff') format('woff');
 }
 
-
-body {
-  scroll-margin-block-end: 0;
-  scroll-margin-block-start: 0;
-  margin: 0;
-  padding: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  overflow-x: hidden;
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 300;
+  src: url('assets/fonts/Nunito-Light.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Light.woff') format('woff');
 }
 
-
-$hover-effect-color: #ECEEFE;
-$material-size: 24px !important;
-$main-color: #797EF3;
-$accent-color: #535AF1;
-$border-color: #ADB0D9;
-$active-color: #444DF2;
-
-
-.width-100 {
-  width: 100%;
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 400;
+  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
 }
 
-/****************************** MIXINS ***********************/
-
-
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 500;
+  src: url('assets/fonts/Nunito-Medium.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Medium.woff') format('woff');
 }
 
-@mixin flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 600;
+  src: url('assets/fonts/Nunito-SemiBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-SemiBold.woff') format('woff');
 }
 
-@mixin flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-
-h2 {
-  color: var(--Black, #000);
-  font-family: 'Nunito', sans-serif;
-  font-size: 24px;
-  font-style: normal;
+@font-face {
+  font-family: 'Nunito';
   font-weight: 700;
-  line-height: normal;
+  src: url('assets/fonts/Nunito-Bold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Bold.woff') format('woff');
 }
 
-h3 {
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 800;
+  src: url('assets/fonts/Nunito-ExtraBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 900;
+  src: url('assets/fonts/Nunito-Black.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 200;
+  src: url('assets/fonts/Nunito-ExtraLight.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 300;
+  src: url('assets/fonts/Nunito-Light.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 400;
+  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 500;
+  src: url('assets/fonts/Nunito-Medium.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 600;
+  src: url('assets/fonts/Nunito-SemiBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
   font-weight: 700;
-  font-size: 18px;
-  font-family: 'Nunito', sans-serif;
+  src: url('assets/fonts/Nunito-Bold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Bold.woff') format('woff');
 }
 
-div {
-  font-family: 'Nunito', sans-serif;
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 800;
+  src: url('assets/fonts/Nunito-ExtraBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 900;
+  src: url('assets/fonts/Nunito-Black.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Black.woff') format('woff');
 }
 
 
+*::-webkit-scrollbar {
+  display: none;
+}
 
+
+.dialog-main-style {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px !important;
+  }
+}
 
 .user-profile-view-dialog {
   position: absolute !important;
@@ -90,6 +142,7 @@ div {
       border-radius: 30px 30px 30px 30px !important;
     }
   }
+
 
   .mat-mdc-dialog-actions>* {
     background-color: #444DF2 !important;
@@ -121,8 +174,177 @@ div {
 }
 
 
+.channel-dialog {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px !important;
+  }
+}
 
 
+.corner-right-top-dialog {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px 0px 30px 30px;
+  }
+
+  position: absolute !important;
+  top: 180px !important;
+  right: 12px !important;
+}
+
+
+
+
+
+html,
+body {
+  height: 100%;
+}
+
+
+body {
+  scroll-margin-block-end: 0;
+  scroll-margin-block-start: 0;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+}
+
+
+.profile-menu {
+  border-radius: 30px 0px 30px 30px !important;
+  background: var(--White, #FFF) !important;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20) !important;
+  z-index: 9000;
+  padding: 30px !important;
+
+  .mat-mdc-menu-item:not([disabled]):hover {
+    border-radius: 100px !important;
+    background: #ECEEFE !important;
+    color: #535AF1 !important;
+  }
+}
+
+
+[hidden] {
+  display: none !important;
+}
+
+$hover-effect-color: #ECEEFE;
+$material-size: 24px !important;
+$main-color: #797EF3;
+$accent-color: #535AF1;
+$border-color: #ADB0D9;
+$active-color: #444DF2;
+
+h2 {
+  color: var(--Black, #000);
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 18px;
+  font-family: 'Nunito', sans-serif;
+}
+
+div {
+  font-family: 'Nunito', sans-serif;
+}
+
+
+.mat-typography {
+
+  h2,
+  h3 {
+    margin: 0 !important;
+  }
+}
+
+.mat-tree-node {
+  flex: 0;
+}
+
+.mat-icon {
+  font-size: 24px !important;
+  height: 24px !important;
+  width: 24px !important;
+}
+
+.mat-mdc-unelevated-button>.mat-icon {
+  margin-left: 0px !important;
+  height: 24px !important;
+  width: 24px !important;
+  font-weight: 500;
+}
+
+.highest-node {
+  .mat-mdc-icon-button {
+    padding: 0px !important;
+    border-radius: 4px !important;
+    --mdc-icon-button-state-layer-size: 24px !important;
+    --mdc-icon-button-icon-size: 24px !important;
+
+    .mat-mdc-button-persistent-ripple {
+      border-radius: 0% !important;
+    }
+
+    .mat-mdc-button-touch-target {
+      position: absolute;
+      height: 24px !important;
+      width: 24px !important;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .mdc-button,
+  .mat-mdc-button,
+  .mat-unthemed,
+  .mat-mdc-button-base {
+    min-width: $material-size;
+    height: $material-size !important;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .mat-mdc-tab-body-wrapper {
+    height: 100%;
+  }
+}
+
+.mat-divider {
+  border-top-color: $border-color !important;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+/****************************** MIXINS ***********************/
+
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
 
 
 /****************************** MAIN INPUT STYLES ***********************/
@@ -219,7 +441,11 @@ button {
   }
 }
 
-
+.mdc-fab--extended {
+  border-radius: 25px !important;
+  padding: 12px 25px 12px 25px !important;
+  height: 49px !important;
+}
 
 /************************** AUTH COPONENT MATERIAL STYLES **********************/
 
@@ -286,12 +512,6 @@ button {
 
 /************************** SCROLLBAR STYLES **********************/
 
-*::-webkit-scrollbar {
-  display: none;
-}
-
-
-
 /* For Webkit browsers (Chrome, Safari, newer versions of Edge) */
 ::-webkit-scrollbar {
   width: 5px; // Adjust width for vertical scrollbar
@@ -311,25 +531,37 @@ button {
   scrollbar-color: #444DF2;
 }
 
-.profile-menu {
-  border-radius: 30px 0px 30px 30px !important;
-  background: var(--White, #FFF) !important;
-  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20) !important;
-  z-index: 9000;
-  padding: 30px !important;
 
-  .mat-mdc-menu-item:not([disabled]):hover {
-    border-radius: 100px !important;
-    background: #ECEEFE !important;
-    color: #535AF1 !important;
+/************************** GENERAL MATERIAL STYLES **********************/
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336 !important;
+
+  .mdc-snackbar__surface {
+    border-radius: 50px !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    display: flex !important;
+    justify-content: center;
   }
 }
 
+.success-snackbar {
+  --mdc-snackbar-container-color: #444DF2 !important;
 
-[hidden] {
-  display: none !important;
+  .mdc-snackbar__surface {
+    border-radius: 50px !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    display: flex !important;
+    justify-content: center;
+  }
+
+  border-radius: 30px 30px 0px 30px;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20);
 }
-
 
 .emoji-mart,
 .emoji-mart-category-label span,
@@ -341,12 +573,116 @@ button {
 }
 
 
+.mat-mdc-standard-chip {
+  border-radius: var(--mdc-chip-container-shape-radius);
+  --mdc-chip-container-shape-family: rounded;
+  --mdc-chip-container-shape-radius: 35px 35px 35px 35px;
+  --mdc-chip-with-avatar-avatar-shape-family: rounded;
+  --mdc-chip-with-avatar-avatar-shape-radius: -1px 8px 6px 9px;
+  --mdc-chip-with-avatar-avatar-size: 28px;
+  --mdc-chip-with-icon-icon-size: 15px;
+  height: 30px !important;
+}
+
+
+.mat-mdc-standard-chip {
+  --mdc-chip-disabled-label-text-color: #ECEEFE;
+  --mdc-chip-elevated-container-color: #ECEEFE;
+  --mdc-chip-elevated-disabled-container-color: #e0e0e0;
+  --mdc-chip-focus-state-layer-color: #ECEEFE;
+  --mdc-chip-focus-state-layer-opacity: 0.12;
+  --mdc-chip-label-text-color: #212121;
+  --mdc-chip-with-icon-icon-color: #212121;
+  --mdc-chip-with-icon-disabled-icon-color: #212121;
+  --mdc-chip-with-icon-selected-icon-color: #212121;
+  --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: #212121;
+  --mdc-chip-with-trailing-icon-trailing-icon-color: #212121;
+}
+
+.mdc-evolution-chip-set__chips {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--trailing {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+  min-width: 100%;
+  overflow: auto;
+}
+
+.user-panel {
+  max-width: 95vw !important;
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px 30px 30px 30px;
+  }
+
+}
+
+@media(max-width: 750px) {
+
+  .top-left-right-dialog {
+    position: absolute !important;
+    bottom: 0 !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      border-radius: 30px 30px 0px 0px !important;
+    }
+  }
+
+
+  .channel-dialog {
+    max-width: 100svw !important;
+    max-height: 100svh !important;
+    height: 100% !important;
+
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      border-radius: 0px !important;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  app-edit-channel-dialog {
+    overflow: scroll;
+    height: 100%;
+  }
+}
+
+
 @media(max-width: 450px) {
 
   .user-profile-view-dialog {
     top: unset !important;
     right: unset !important;
   }
+
+  .corner-right-top-dialog {
+    position: absolute !important;
+    top: 130px !important;
+    max-width: 95vw !important;
+    width: 95vw !important;
+  }
+
+
+  .top-left-right-dialog {
+    position: absolute !important;
+    /* bottom: 130px !important; */
+    max-width: 100vw !important;
+
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      border-radius: 30px 30px 0px 0px;
+      background: var(--White, #FFF);
+      box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.20);
+    }
+  }
+
 
 
   .cdk-overlay-connected-position-bounding-box {
