@@ -9,8 +9,7 @@ $app-primary: mat.define-palette(palette.$my-light-palette, 500);
 $app-accent: mat.define-palette(palette.$my-light-palette, A100, A200, A700);
 
 // Use your own "app" define-light-theme function instead of "mat" one.
-$app-theme: app.define-light-theme(
-  (color: (primary: $app-primary,
+$app-theme: app.define-light-theme((color: (primary: $app-primary,
         accent: $app-accent,
       )));
 
@@ -31,3 +30,115 @@ body {
 
 @include mat.all-component-colors($app-theme);
 
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 200;
+  src: url('assets/fonts/Nunito-ExtraLight.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 300;
+  src: url('assets/fonts/Nunito-Light.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 400;
+  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 500;
+  src: url('assets/fonts/Nunito-Medium.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 600;
+  src: url('assets/fonts/Nunito-SemiBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 700;
+  src: url('assets/fonts/Nunito-Bold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 800;
+  src: url('assets/fonts/Nunito-ExtraBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 900;
+  src: url('assets/fonts/Nunito-Black.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 200;
+  src: url('assets/fonts/Nunito-ExtraLight.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 300;
+  src: url('assets/fonts/Nunito-Light.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 400;
+  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 500;
+  src: url('assets/fonts/Nunito-Medium.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 600;
+  src: url('assets/fonts/Nunito-SemiBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 700;
+  src: url('assets/fonts/Nunito-Bold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 800;
+  src: url('assets/fonts/Nunito-ExtraBold.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 900;
+  src: url('assets/fonts/Nunito-Black.woff2') format('woff2');
+  src: url('assets/fonts/Nunito-Black.woff') format('woff');
+}
