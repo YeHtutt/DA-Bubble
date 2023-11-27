@@ -27,7 +27,7 @@ export class EditChannelDialogComponent {
   editDescription: boolean = false;
   isOutlineVisible: boolean = true;
   isMobile: boolean = false;
-  openingInChat: boolean = false;
+  openingInChat: boolean = this.data.openingInChat;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,15 +36,14 @@ export class EditChannelDialogComponent {
     public dialogRef: MatDialogRef<EditChannelDialogComponent>,
     public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
-   
+
   ) { }
 
 
   ngOnInit() {
     this.currentUserId = this.userService.getFromLocalStorage()
     this.checkMobileMode(window.innerWidth);
-    
-  }
+     }
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
@@ -55,7 +54,7 @@ export class EditChannelDialogComponent {
   onResize(event: any) {
     this.checkMobileMode(event.target.innerWidth);
   }
-  
+
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;

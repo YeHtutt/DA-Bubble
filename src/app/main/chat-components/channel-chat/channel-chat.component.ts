@@ -149,12 +149,15 @@ export class ChannelChatComponent {
       hasBackdrop: true,
       panelClass: 'channel-dialog',
       autoFocus: false,
-      data: { channel: this.channel }
+      data: {
+        channel: this.channel,
+        openingInChat: false
+      }
     });
   }
 
 
-  openUserMenu(openingInChat: boolean) {
+  openUserMenu() {
     this.dialog.open(OpenUserMenuDialogComponent, {
       width: 'auto',
       height: 'auto',
@@ -163,7 +166,7 @@ export class ChannelChatComponent {
       autoFocus: false,
       data: {
         channel: this.channel,
-        openingInChat: openingInChat
+        openingInChat: true
       }
     });
   }

@@ -45,7 +45,16 @@ export class MainComponent implements OnInit {
   filteredChannel: any = [];
   usersAndChannels: any = [];
   searchOutput: boolean = false;
+  isMobile = false;
   public currentUser: UserProfile = new UserProfile();
+
+
+
+
+  private checkMobileMode(width: number): void {
+    this.isMobile = width <= 750;
+    console.log(this.isMobile);
+  }
 
 
 
@@ -144,6 +153,7 @@ export class MainComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.isScreenSmall = event.target.innerWidth < 450;
+    this.checkMobileMode(event.target.innerWidth);
   }
 
 }

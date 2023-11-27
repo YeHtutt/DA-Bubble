@@ -47,7 +47,6 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ChannelsComponent } from './main/channels/channels.component';
 import { MainComponent } from './main/main.component';
 import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
-
 import { SidenavComponent } from './main/sidenav/sidenav.component';
 import { ThreadsComponent } from './main/threads/threads.component';
 import { EditChannelDialogComponent } from './main/channels/edit-channel-dialog/edit-channel-dialog.component';

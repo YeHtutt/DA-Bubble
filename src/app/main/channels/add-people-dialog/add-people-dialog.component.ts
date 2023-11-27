@@ -16,6 +16,8 @@ import { FormControl } from '@angular/forms';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Channel } from 'src/app/models/channel';
 import { NotificationService } from 'src/app/services/notification.service';
+import { DrawerService } from 'src/app/services/drawer.service';
+
 
 @Component({
   selector: 'app-add-people-dialog',
@@ -53,6 +55,7 @@ export class AddPeopleDialogComponent {
     private cdRef: ChangeDetectorRef,
     private channelService: ChannelService,
     private notificationsService: NotificationService,
+    public drawerService: DrawerService
   ) {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
@@ -66,7 +69,7 @@ export class AddPeopleDialogComponent {
 
   ngOnInit() {
     this.getUsersNotInChannel();
-    console.log(this.openingInChat)
+    this.drawerService.checkMobileMode(window.innerWidth);
   }
 
 

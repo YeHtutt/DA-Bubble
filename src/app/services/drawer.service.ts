@@ -16,7 +16,8 @@ export class DrawerService {
   constructor() { }
 
   ngOnInit() {
-
+    this.checkMobileMode(window.innerWidth);
+    console.log(this.isMobile);
   }
 
   ngOnDestroy() {
@@ -78,8 +79,7 @@ export class DrawerService {
 
 
   checkMobileMode(width: number): void {
-    this.isMobile = width <= 750;
-    console.log(this.isMobile);
+    this.isMobile = width <= 750;    
   }
 
 

@@ -31,8 +31,8 @@ export class OpenUserMenuDialogComponent {
   addUserDialog() {
     let dialogStyle;
     console.log(this.openingInChat)
-    if (!this.openingInChat) { dialogStyle = 'corner-right-top-dialog'; }
-    if (this.openingInChat) { dialogStyle = 'top-left-right-dialog'; }
+    if (this.openingInChat) { dialogStyle = 'corner-right-top-dialog'; }
+    if (!this.openingInChat) { dialogStyle = 'top-left-right-dialog'; }
     this.dialog.open(AddPeopleDialogComponent, {
       width: 'auto',
       height: 'auto',
