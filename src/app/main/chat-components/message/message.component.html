@@ -100,9 +100,10 @@
     <div class="edit-box">
         <textarea [(ngModel)]="editMessage" (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
         <div class="button-box">
-            <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
+            <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
             <app-emoji-picker class="edit-emoji" *ngIf="isOpened"
-                (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
+                (emojiSelectedEvent)="addEmoji($event)" appClickOutside
+                (clickOutside)="onOutsideClick('isOpened')"></app-emoji-picker>
             <div class="button-right">
                 <button (click)="cancelEdit()" class="cancel-btn" mat-fab extended color="primary">Abbrechen</button>
                 <button (click)="message.type === 'message' ? saveMessage(message.messageId) : saveReply(collPath)"

@@ -337,5 +337,4 @@ export class ChannelChatComponent {
     this.isMobile = width <= 750;
     console.log(this.isMobile);
   }
-
 }

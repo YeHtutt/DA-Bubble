@@ -146,7 +146,8 @@ export class MessageComponent {
   }
 
 
-  toggleEmoji() {
+  toggleEmoji(event: Event) {
+    event.stopPropagation();
     this.isOpened = !this.isOpened;
   }
 
