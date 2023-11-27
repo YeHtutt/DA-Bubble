@@ -36,8 +36,12 @@ export class MainComponent implements OnInit {
     public drawerService: DrawerService,
     public threadService: ThreadService,
     private authService: AuthenticationService
-  ) {
-    window.addEventListener('beforeunload', () => this.updateUserStatus());
+  ) {}
+
+
+  @HostListener('window:beforeunload', ['$event'])
+  handleBeforeUnload(event: Event) {
+    this.updateUserStatus();
   }
 
 
@@ -91,36 +95,6 @@ export class MainComponent implements OnInit {
       autoFocus: false,
     });
   }
-
-
-
-  // async searchData() {
-  //   const searchResult = await this.searchService.searchUsersAndChannels(this.search)
-  //   this.filteredUser = searchResult.filteredUser;
-  //   this.filteredChannel = searchResult.filteredChannel;
-  // }
-
-
-  // deleteSearch() {
-  //   this.search = '';
-  //   this.filteredUser = [];
-  //   this.filteredChannel = [];
-  //   this.toggleSearchOutput();
-  // }
-
-
-  // toggleSearchOutput() {
-  //   this.searchOutput = !this.searchOutput;
-  // }
-
-
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
-  //     this.searchOutput = false;
-  //   }
-  // }
 
 
   openProfileDialogInSearch(node: any) {
