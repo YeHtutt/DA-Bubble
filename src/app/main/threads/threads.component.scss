@@ -153,10 +153,12 @@ main {
 
 .chat-action-box {
     display: flex;
+    align-items: center;
     gap: 5px;
 
     hr {
         margin: 0;
+        min-height: 30px;
     }
 }
 
@@ -238,6 +240,36 @@ app-emoji-picker {
 app-emoji-picker {
     position: absolute;
     bottom: 50px;
+}
+
+// FILE UPLOAD
+
+.file-to-upload {
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        .delete-btn {
+            display: flex !important;
+        }
+    }
+}
+
+.delete-btn {
+    cursor: pointer;
+    display: none !important;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-radius: 100%;
+    background: grey;
+    color: white;
+    font-size: 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px !important;
+    height: 20px !important;
 }
 
 // MEDIA-QUERIES
