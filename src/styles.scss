@@ -6,195 +6,6 @@
 @import "node_modules/@ctrl/ngx-emoji-mart/picker.css";
 
 
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 200;
-  src: url('assets/fonts/Nunito-ExtraLight.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-ExtraLight.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 300;
-  src: url('assets/fonts/Nunito-Light.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Light.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 400;
-  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 500;
-  src: url('assets/fonts/Nunito-Medium.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Medium.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 600;
-  src: url('assets/fonts/Nunito-SemiBold.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-SemiBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 700;
-  src: url('assets/fonts/Nunito-Bold.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Bold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 800;
-  src: url('assets/fonts/Nunito-ExtraBold.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-ExtraBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 900;
-  src: url('assets/fonts/Nunito-Black.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Black.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 200;
-  src: url('assets/fonts/Nunito-ExtraLight.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-ExtraLight.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 300;
-  src: url('assets/fonts/Nunito-Light.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Light.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 400;
-  src: url('assets/fonts/Nunito-Regular.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Regular.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 500;
-  src: url('assets/fonts/Nunito-Medium.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Medium.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 600;
-  src: url('assets/fonts/Nunito-SemiBold.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-SemiBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 700;
-  src: url('assets/fonts/Nunito-Bold.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Bold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 800;
-  src: url('assets/fonts/Nunito-ExtraBold.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-ExtraBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  font-weight: 900;
-  src: url('assets/fonts/Nunito-Black.woff2') format('woff2');
-  src: url('assets/fonts/Nunito-Black.woff') format('woff');
-}
-
-
-*::-webkit-scrollbar {
-  display: none;
-}
-
-
-.dialog-main-style {
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 30px !important;
-  }
-}
-
-.user-profile-view-dialog {
-  position: absolute !important;
-  top: 85px !important;
-  right: 15px !important;
-
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 30px 0px 30px 30px !important;
-
-    @media(max-width: 767px) {
-      border-radius: 30px 30px 30px 30px !important;
-    }
-  }
-
-
-  .mat-mdc-dialog-actions>* {
-    background-color: #444DF2 !important;
-  }
-
-  .mat-mdc-button.mat-unthemed {
-    color: white !important;
-  }
-
-  .mat-mdc-button {
-    box-sizing: border-box !important;
-    padding: 20px 25px !important;
-    border-radius: 30px !important;
-  }
-
-
-  .cdk-overlay-connected-position-bounding-box {
-    top: 0 !important;
-    right: 0 !important;
-    height: 969px;
-    width: 1339px;
-    align-items: flex-end;
-    justify-content: flex-start;
-  }
-
-  .dialog-main-style {
-    height: auto !important;
-  }
-}
-
-
-.channel-dialog {
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 30px !important;
-  }
-}
-
-
-.corner-right-top-dialog {
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 30px 0px 30px 30px;
-  }
-
-  position: absolute !important;
-  top: 180px !important;
-  right: 12px !important;
-}
-
-
-
-
-
 html,
 body {
   height: 100%;
@@ -224,6 +35,8 @@ body {
     color: #535AF1 !important;
   }
 }
+
+
 
 
 [hidden] {
@@ -257,71 +70,6 @@ div {
 }
 
 
-.mat-typography {
-
-  h2,
-  h3 {
-    margin: 0 !important;
-  }
-}
-
-.mat-tree-node {
-  flex: 0;
-}
-
-.mat-icon {
-  font-size: 24px !important;
-  height: 24px !important;
-  width: 24px !important;
-}
-
-.mat-mdc-unelevated-button>.mat-icon {
-  margin-left: 0px !important;
-  height: 24px !important;
-  width: 24px !important;
-  font-weight: 500;
-}
-
-.highest-node {
-  .mat-mdc-icon-button {
-    padding: 0px !important;
-    border-radius: 4px !important;
-    --mdc-icon-button-state-layer-size: 24px !important;
-    --mdc-icon-button-icon-size: 24px !important;
-
-    .mat-mdc-button-persistent-ripple {
-      border-radius: 0% !important;
-    }
-
-    .mat-mdc-button-touch-target {
-      position: absolute;
-      height: 24px !important;
-      width: 24px !important;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  .mdc-button,
-  .mat-mdc-button,
-  .mat-unthemed,
-  .mat-mdc-button-base {
-    min-width: $material-size;
-    height: $material-size !important;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  .mat-mdc-tab-body-wrapper {
-    height: 100%;
-  }
-}
-
-.mat-divider {
-  border-top-color: $border-color !important;
-}
-
 .width-100 {
   width: 100%;
 }
@@ -346,56 +94,6 @@ div {
   flex-direction: column;
 }
 
-
-/****************************** MAIN INPUT STYLES ***********************/
-
-html {
-  --mdc-outlined-text-field-outline-color: #ADB0D9;
-  --mdc-outlined-text-field-hover-outline-color: #444DF2;
-  --mdc-snackbar-container-shape: 50% !important;
-  --mat-standard-button-toggle-disabled-state-text-color: white !important;
-  --mat-standard-button-toggle-disabled-state-background-color: #686868 !important;
-  --mat-standard-button-toggle-disabled-selected-state-text-color: rgba(0, 0, 0, 0.87);
-  --mat-standard-button-toggle-disabled-selected-state-background-color: #bdbdbd;
-}
-
-
-.mat-mdc-fab[disabled],
-.mat-mdc-mini-fab[disabled] {
-  --mdc-fab-container-color: #686868 !important;
-  --mdc-fab-icon-color: white !important;
-  --mat-mdc-fab-color: white !important;
-}
-
-.mat-mdc-form-field-infix {
-  display: flex;
-}
-
-
-.mat-mdc-form-field-infix {
-  min-height: 56px;
-  height: 60px;
-
-  @media(max-width: 767px) {
-    min-height: 45px;
-    height: 45px;
-  }
-}
-
-
-.mdc-notched-outline__trailing {
-  border-top-right-radius: 42px !important;
-  border-bottom-right-radius: 42px !important;
-  min-width: 0px !important;
-}
-
-
-.mdc-notched-outline__leading {
-  border-top-left-radius: 42px !important;
-  border-bottom-left-radius: 42px !important;
-  min-width: 42px !important;
-}
-
 /****************************** BUTTON STYLES ***************************/
 
 button {
@@ -407,11 +105,6 @@ button {
   display: flex;
   align-items: center;
   background-color: transparent;
-}
-
-.mat-mdc-radio-button.mat-primary {
-  --mdc-radio-unselected-hover-icon-color: #444DF2;
-  --mdc-radio-unselected-icon-color: #ADB0D9;
 }
 
 
@@ -439,12 +132,6 @@ button {
     background-color: #535AF1;
     color: white
   }
-}
-
-.mdc-fab--extended {
-  border-radius: 25px !important;
-  padding: 12px 25px 12px 25px !important;
-  height: 49px !important;
 }
 
 /************************** AUTH COPONENT MATERIAL STYLES **********************/
@@ -525,6 +212,11 @@ button {
 }
 
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
+
 /* For Firefox */
 * {
   scrollbar-width: thin;
@@ -534,34 +226,55 @@ button {
 
 /************************** GENERAL MATERIAL STYLES **********************/
 
-.error-snackbar {
-  --mdc-snackbar-container-color: #f44336 !important;
-
-  .mdc-snackbar__surface {
-    border-radius: 50px !important;
-  }
-
-  .mat-mdc-snack-bar-label {
-    display: flex !important;
-    justify-content: center;
+.dialog-main-style {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px !important;
   }
 }
 
-.success-snackbar {
-  --mdc-snackbar-container-color: #444DF2 !important;
+.user-profile-view-dialog {
+  position: absolute !important;
+  top: 85px !important;
+  right: 15px !important;
 
-  .mdc-snackbar__surface {
-    border-radius: 50px !important;
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px 0px 30px 30px !important;
+
+    @media(max-width: 767px) {
+      border-radius: 30px 30px 30px 30px !important;
+    }
   }
 
-  .mat-mdc-snack-bar-label {
-    display: flex !important;
-    justify-content: center;
+
+  .mat-mdc-dialog-actions>* {
+    background-color: #444DF2 !important;
   }
 
-  border-radius: 30px 30px 0px 30px;
-  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20);
+  .mat-mdc-button.mat-unthemed {
+    color: white !important;
+  }
+
+  .mat-mdc-button {
+    box-sizing: border-box !important;
+    padding: 20px 25px !important;
+    border-radius: 30px !important;
+  }
+
+
+  .cdk-overlay-connected-position-bounding-box {
+    top: 0 !important;
+    right: 0 !important;
+    height: 969px;
+    width: 1339px;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .dialog-main-style {
+    height: auto !important;
+  }
 }
+
 
 .emoji-mart,
 .emoji-mart-category-label span,
@@ -573,87 +286,6 @@ button {
 }
 
 
-.mat-mdc-standard-chip {
-  border-radius: var(--mdc-chip-container-shape-radius);
-  --mdc-chip-container-shape-family: rounded;
-  --mdc-chip-container-shape-radius: 35px 35px 35px 35px;
-  --mdc-chip-with-avatar-avatar-shape-family: rounded;
-  --mdc-chip-with-avatar-avatar-shape-radius: -1px 8px 6px 9px;
-  --mdc-chip-with-avatar-avatar-size: 28px;
-  --mdc-chip-with-icon-icon-size: 15px;
-  height: 30px !important;
-}
-
-
-.mat-mdc-standard-chip {
-  --mdc-chip-disabled-label-text-color: #ECEEFE;
-  --mdc-chip-elevated-container-color: #ECEEFE;
-  --mdc-chip-elevated-disabled-container-color: #e0e0e0;
-  --mdc-chip-focus-state-layer-color: #ECEEFE;
-  --mdc-chip-focus-state-layer-opacity: 0.12;
-  --mdc-chip-label-text-color: #212121;
-  --mdc-chip-with-icon-icon-color: #212121;
-  --mdc-chip-with-icon-disabled-icon-color: #212121;
-  --mdc-chip-with-icon-selected-icon-color: #212121;
-  --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: #212121;
-  --mdc-chip-with-trailing-icon-trailing-icon-color: #212121;
-}
-
-.mdc-evolution-chip-set__chips {
-  display: flex !important;
-  align-items: center !important;
-}
-
-.mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--trailing {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-}
-
-.mat-mdc-chip-set .mdc-evolution-chip-set__chips {
-  min-width: 100%;
-  overflow: auto;
-}
-
-.user-panel {
-  max-width: 95vw !important;
-
-  .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 30px 30px 30px 30px;
-  }
-
-}
-
-@media(max-width: 750px) {
-
-  .top-left-right-dialog {
-    position: absolute !important;
-    bottom: 0 !important;
-    max-width: 100vw !important;
-    width: 100% !important;
-
-    .mat-mdc-dialog-container .mdc-dialog__surface {
-      border-radius: 30px 30px 0px 0px !important;
-    }
-  }
-
-
-  .channel-dialog {
-    max-width: 100svw !important;
-    max-height: 100svh !important;
-    height: 100% !important;
-
-    .mat-mdc-dialog-container .mdc-dialog__surface {
-      border-radius: 0px !important;
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  app-edit-channel-dialog {
-    overflow: scroll;
-    height: 100%;
-  }
-}
 
 
 @media(max-width: 450px) {
@@ -682,8 +314,6 @@ button {
       box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.20);
     }
   }
-
-
 
   .cdk-overlay-connected-position-bounding-box {
     top: unset !important;
