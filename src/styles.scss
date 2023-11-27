@@ -286,7 +286,11 @@ button {
 }
 
 
-
+.user-profile-edit-menu {
+  .mat-mdc-menu-content {
+      max-width: 225px !important;
+  }
+}
 
 @media(max-width: 450px) {
 
@@ -374,6 +378,15 @@ button {
     .cdk-overlay-connected-position-bounding-box {
       top: -155px !important;
       left: 180px !important;
+    }
+  }
+
+  .user-profile-edit-menu {
+    position: absolute !important;
+    top: 450px !important;
+    left: 100px !important;
+    .mat-mdc-menu-content {
+        max-width: 225px !important;
     }
   }
 
