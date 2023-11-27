@@ -28,10 +28,12 @@ export class MessageService {
   currentUserId: any;
   groupedMessages: any = [];
 
+
   ngOnDestroy() {
     this.unsubMessages();
     this.unsubReactions();
   }
+
 
   constructor(
     private firestore: Firestore = inject(Firestore),
@@ -61,6 +63,7 @@ export class MessageService {
       this.notificationService.showError(`Es ist ein Netzwerk Fehler aufgetreten: ${error}`);
     }
   }
+
 
   async sendChannelMessage(receiver: any, message: Message, newMessage: boolean) {
     this.uploadMessage('channel', receiver.channelId, 'message', message);
@@ -100,6 +103,7 @@ export class MessageService {
     }
   }
 
+
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
       chatId: `${this.currentUserId}_${receiver}`,
@@ -108,10 +112,6 @@ export class MessageService {
       user2: receiver,
     });
   }
-
-
-
-
 
 
   async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
@@ -273,6 +273,7 @@ export class MessageService {
     updateDoc(msgRef, { reactions: reaction })
   }
 
+
   async updateCount(path: any, count: number, time: any) {
     const msgRef = await this.firebaseUtils.getDoc(path);
     updateDoc(msgRef, {
@@ -280,8 +281,6 @@ export class MessageService {
       timeOflastReply: time
     });
   }
-
-
 
 
   async chatExists(user1: string, user2: string): Promise<boolean> {
@@ -292,6 +291,7 @@ export class MessageService {
     const result2 = await getDocs(query2);
     return !result1.empty || !result2.empty;
   }
+
 
   async getExistingChatId(user1: string, user2: string): Promise<string> {
     const chatCollection = collection(this.firestore, 'chat');
@@ -307,5 +307,4 @@ export class MessageService {
     }
     return '';
   }
-
 }
