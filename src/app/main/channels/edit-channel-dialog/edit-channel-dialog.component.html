@@ -22,7 +22,7 @@
                             <h3>Channel-Name</h3>
                             <button class="edit-btn" (click)="saveChannelName()" *ngIf="editChannelName">
                                 <div *ngIf="!isMobile">Speichern</div>
-                                <mat-icon *ngIf="isMobile">check_circle_outline</mat-icon>
+                                <mat-icon *ngIf="isMobile"   class="edit-mat-btn">check_circle_outline</mat-icon>
                             </button>
                         </div>
                         <div class="flex-center" *ngIf="!editChannelName">
@@ -35,7 +35,7 @@
                     </div>
                     <button class="edit-btn" (click)="toggleDescriptionInput()" *ngIf="!editChannelName">
                         <div *ngIf="!isMobile">Bearbeiten</div>
-                        <mat-icon *ngIf="isMobile">edit</mat-icon>
+                        <mat-icon *ngIf="isMobile"  class="edit-mat-btn">edit</mat-icon>
 
                     </button>
                 </div>
@@ -54,7 +54,7 @@
                             <h3>Beschreibung</h3>
                             <button class="edit-btn" *ngIf="editDescription" (click)="saveDescription()">
                                 <div *ngIf="!isMobile">Speichern</div>
-                                <mat-icon *ngIf="isMobile">check_circle_outline</mat-icon>
+                                <mat-icon *ngIf="isMobile" class="edit-mat-btn">check_circle_outline</mat-icon>
                             </button>
                         </div>
                         <div class="flex-center" *ngIf="!editDescription">
@@ -66,7 +66,7 @@
                     </div>
                     <button class="edit-btn" *ngIf="!editDescription" (click)="toggleChannelNameInput()">
                         <div *ngIf="!isMobile">Bearbeiten</div>
-                        <mat-icon *ngIf="isMobile">edit</mat-icon>
+                        <mat-icon *ngIf="isMobile" class="edit-mat-btn">edit</mat-icon>
                     </button>
                 </div>
                 <mat-divider></mat-divider>

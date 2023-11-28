@@ -39,7 +39,7 @@ export class MainComponent implements OnInit {
     public drawerService: DrawerService,
     public threadService: ThreadService,
     private authService: AuthenticationService
-  ) {}
+  ) { }
 
 
   @HostListener('window:beforeunload', ['$event'])
@@ -52,8 +52,6 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
-    this.statusUpdateSubscription = interval(this.heartbeatInterval)
-      .subscribe(() => this.updateUserStatus(true));
   }
 
   ngOnDestroy() {
@@ -66,7 +64,7 @@ export class MainComponent implements OnInit {
     this.isMobile = width <= 750;
     console.log(this.isMobile);
   }
-  
+
   updateUserStatus(status: boolean) {
     this.userFbService.updateUserOnlineStatus(this.userId, status)
   }
