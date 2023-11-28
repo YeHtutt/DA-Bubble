@@ -132,6 +132,7 @@ export class ChatComponent {
     this.messageService.sendMessage(this.createMessageObject(), this.chatId, false, '').then(() => this.messageSending = false);
     this.text = '';
     this.fileUpload = undefined;
+    this.fileType = '';
   }
 
 
@@ -156,7 +157,7 @@ export class ChatComponent {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '' && !this.messageSending) {
       this.messageSending = true;
       this.send();
     }
@@ -267,5 +268,6 @@ export class ChatComponent {
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
+    this.fileType = '';
   }
 }

@@ -10,11 +10,12 @@
             <span class="user-name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
-        <div [ngClass]="messageClasses(message)" class="message">
-            {{message.text}}
+        <div *ngIf="!this.isEmptyOrWhitespace(message.text)" [ngClass]="messageClasses(message)" class="message">
+            <span>{{message.text}}</span>
+            <br>
             <span *ngIf="message.textEdited" class="edited-msg">(bearbeitet)</span>
         </div>
-        <div *ngIf="message.fileUpload !== []" class="show-attachment">
+        <div *ngIf="pdfFile || imageFile" class="show-attachment">
             <a href="{{!isPDF ? imageFile?.url : pdfFile?.url}}" target="_blank"><img
                     src="{{!isPDF ? imageFile?.url : 'assets/img/icons/pdf.png'}}"
                     [ngStyle]="{'max-width': !isPDF ? '350px' : '64px', 'width': '100%'}"></a>

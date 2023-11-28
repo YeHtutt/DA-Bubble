@@ -190,7 +190,7 @@ export class ChannelChatComponent {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '' && !this.messageSending) {
       this.messageSending = true;
       this.sendMessageTo(this.channelId);
     }
@@ -204,11 +204,13 @@ export class ChannelChatComponent {
 
   sendMessageTo(docId: string) {
     this.createMessageObject().then(async createdMessage => {
+      if (this.isEmptyOrWhitespace()) this.text = '';
       this.message = createdMessage;
       this.receiver = await this.channelService.getSingleChannel(docId);
       this.messageService.sendMessage(this.message, this.receiver, false, '');
       this.text = '';
       this.fileUpload = undefined;
+      this.fileType = '';
       this.messageSending = false;
     });
   }
@@ -323,6 +325,7 @@ export class ChannelChatComponent {
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;
+    this.fileType = '';
   }
 
 

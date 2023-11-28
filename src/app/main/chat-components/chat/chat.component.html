@@ -49,8 +49,8 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="text.length == 0" (click)="send()"><mat-icon
-                        [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}"
+                <button [disabled]="this.isEmptyOrWhitespace() && fileType === ''" (click)="send()"><mat-icon
+                        [ngStyle]="{'color' : this.isEmptyOrWhitespace() && fileType === '' ? 'grey' : '#535AF1'}"
                         class="send-btn">send</mat-icon></button>
             </div>
         </div>

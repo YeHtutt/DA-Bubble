@@ -122,15 +122,15 @@ export class MessageComponent {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace(this.editMessage) && !this.messageSending) {
       this.messageSending = true;
       this.saveMessage(this.message.messageId);
     }
   }
 
 
-  isEmptyOrWhitespace(): boolean {
-    return this.editMessage.replace(/\n/g, '').trim().length === 0;
+  isEmptyOrWhitespace(text: string): boolean {
+    return text.replace(/\n/g, '').trim().length === 0;
   }
 
 

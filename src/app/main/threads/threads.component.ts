@@ -216,6 +216,7 @@ export class ThreadsComponent {
     // Reset the message input.
     this.text = '';
     this.fileUploadThread = undefined;
+    this.fileTypeThread = '';
   }
 
 
@@ -227,7 +228,7 @@ export class ThreadsComponent {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() && !this.messageSending) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileTypeThread !== '' && !this.messageSending) {
       this.messageSending = true;
       this.sendReplyTo();
     }
@@ -281,5 +282,6 @@ export class ThreadsComponent {
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUploadThread = undefined;
+    this.fileTypeThread = '';
   }
 }

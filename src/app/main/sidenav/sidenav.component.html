@@ -13,8 +13,10 @@
   <mat-drawer [class.side-nav-mobile]="isMobile" #drawer [opened]="true" class="sidenav" mode="side">
     <div class="mat-drawer-box">
       <div class="sidenav-header sticky">
-        <img class="workspace-logo" src="../assets/img/workspace.png">
-        <span>Code learning</span>
+        <div class="logo-box">
+          <img class="workspace-logo" src="../assets/img/workspace.png">
+          <span>Code learning</span>
+        </div>
         <div [routerLink]="['message']" class="edit-div">
           <img class="edit-icon" src="../assets/img/edit_square.png">
           <div class="bg-div"></div>

@@ -47,16 +47,22 @@ mat-drawer {
 
 .sidenav-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   font-size: 18px;
   font-weight: 600;
   color: black;
   margin-bottom: 15px;
+  padding-bottom: 15px;
 
   span {
     margin-right: 21px;
   }
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
 }
 
 .workspace-logo {

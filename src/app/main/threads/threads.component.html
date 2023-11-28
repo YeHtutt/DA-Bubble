@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="text.length == 0" (click)="sendReplyTo()"><mat-icon [ngStyle]="{'color' : text.length == 0 ? 'grey' : '#535AF1'}" class="send-btn">send</mat-icon></button>
+                <button [disabled]="this.isEmptyOrWhitespace() && fileTypeThread === ''" (click)="sendReplyTo()"><mat-icon [ngStyle]="{'color' : this.isEmptyOrWhitespace() && fileTypeThread === '' ? 'grey' : '#535AF1'}" class="send-btn">send</mat-icon></button>
             </div>
         </div>
         <div #endScrollElement></div>
