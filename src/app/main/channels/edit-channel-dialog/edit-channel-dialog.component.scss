@@ -9,7 +9,11 @@
 }
 
 
-
+.edit-mat-btn {
+    border-radius: 40px;
+    background: var(--Bg-color, #ECEEFE);
+    padding: 3px;
+}
 
 .main-content {
     gap: 20px;

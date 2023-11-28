@@ -173,3 +173,10 @@ img {
 .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
     background-color: transparent !important;
 }
+
+@media(max-width: 750px) {
+    .member-input {
+        width: 100%;
+    }
+
+}

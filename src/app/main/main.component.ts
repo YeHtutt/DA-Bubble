@@ -36,7 +36,7 @@ export class MainComponent implements OnInit {
     public drawerService: DrawerService,
     public threadService: ThreadService,
     private authService: AuthenticationService
-  ) {}
+  ) { }
 
 
   @HostListener('window:beforeunload', ['$event'])
@@ -50,6 +50,7 @@ export class MainComponent implements OnInit {
     // this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
+    this.checkMobileMode(window.innerWidth);
   }
 
   ngOnDestroy() {
@@ -61,7 +62,7 @@ export class MainComponent implements OnInit {
     this.isMobile = width <= 750;
     console.log(this.isMobile);
   }
-  
+
   updateUserStatus() {
     this.userFbService.updateUserOnlineStatus(this.userId, false)
   }
