@@ -28,16 +28,16 @@
 
   <mat-menu #menu="matMenu" class="profile-menu">
     <div class="rectangle-centered">
-      <img [ngClass]="{'hide-above-450px': !isScreenSmall}" src="../assets/img/rectangle.png">
+      <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="../assets/img/rectangle.png">
     </div>
     <button class="menu-btn" mat-menu-item (click)="openUserProfile()">
       <div>
-        <img [ngClass]="{'hide-above-450px': !isScreenSmall}"  class="person-icon" src="../assets/img/person.png"><span>Profile</span>
+        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"  class="person-icon" src="../assets/img/person.png"><span>Profile</span>
       </div>
     </button>
     <button class="menu-btn" mat-menu-item (click)="userLoggedout()">
       <div>
-        <img [ngClass]="{'hide-above-450px': !isScreenSmall}" src="../assets/img/logout.png"><span>Logout</span>
+        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="../assets/img/logout.png"><span>Logout</span>
       </div>
     </button>
   </mat-menu>

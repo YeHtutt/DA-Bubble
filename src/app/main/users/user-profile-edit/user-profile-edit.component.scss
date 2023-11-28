@@ -189,3 +189,13 @@ mat-icon {
         bottom: -6px;
     }
 }
+
+.dropdown-container {
+    .mat-mdc-icon-button {
+        --mat-mdc-button-persistent-ripple-color: none !important;
+        --mat-mdc-button-ripple-color: none !important;
+        --mdc-icon-button-icon-color: none !important;
+        --mat-mdc-button-persistent-ripple-color: none !important;
+        --mat-mdc-button-ripple-color: none !important;
+    }
+}

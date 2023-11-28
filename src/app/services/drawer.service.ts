@@ -17,12 +17,15 @@ export class DrawerService {
 
   ngOnInit() {
     this.checkMobileMode(window.innerWidth);
+    this.checkScreenSizeForResponsive(window.innerWidth)
     console.log(this.isMobile);
   }
+
 
   ngOnDestroy() {
     this.drawerSub.unsubscribe();
   }
+
 
   initDrawerListener() {
     if (this.drawer) {
@@ -32,32 +35,39 @@ export class DrawerService {
     }
   }
 
+
   setDrawer(drawer: MatDrawer) {
     this.drawer = drawer;
     this.initDrawerListener();
   }
 
+
   open() {
     if (this.checkScreenSize()) this.drawer?.open();
   }
+
 
   close() {
     if (this.checkScreenSize()) this.drawer?.close();
   }
 
+
   closeWithoutCondition() {
     this.drawer?.close();
   }
 
+
   toggle() {
     this.drawer?.toggle();
   }
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
     this.checkMobileMode(event.target.innerWidth);
   }
+
 
   checkScreenSize() {
     if (window.innerWidth < 750) {
@@ -66,6 +76,7 @@ export class DrawerService {
       return false;
     }
   }
+
 
   checkScreenSizeForResponsive(width: number) {
     if (window.innerWidth < width) {
@@ -76,12 +87,7 @@ export class DrawerService {
   }
 
 
-
-
   checkMobileMode(width: number): void {
     this.isMobile = width <= 750;    
   }
-
-
-
 }

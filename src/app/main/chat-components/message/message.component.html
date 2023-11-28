@@ -10,11 +10,12 @@
             <span class="user-name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
-        <div [ngClass]="messageClasses(message)" class="message">
-            {{message.text}}
+        <div *ngIf="!this.isEmptyOrWhitespace(message.text)" [ngClass]="messageClasses(message)" class="message">
+            <span>{{message.text}}</span>
+            <br>
             <span *ngIf="message.textEdited" class="edited-msg">(bearbeitet)</span>
         </div>
-        <div *ngIf="message.fileUpload !== []" class="show-attachment">
+        <div *ngIf="pdfFile || imageFile" class="show-attachment">
             <a href="{{!isPDF ? imageFile?.url : pdfFile?.url}}" target="_blank"><img
                     src="{{!isPDF ? imageFile?.url : 'assets/img/icons/pdf.png'}}"
                     [ngStyle]="{'max-width': !isPDF ? '350px' : '64px', 'width': '100%'}"></a>
@@ -26,7 +27,7 @@
                 (emojiSelectedEvent)="updateMessageReactions($event, message.messageId)"></app-emoji-picker>
             <div class="reaction-btn" *ngFor="let reaction of message.reactions"
                 (click)="updateMessageReactions(reaction.reactionEmoji, message.messageId)">
-                <span class="reaction-emoji">{{reaction.reactionEmoji}}</span><span
+                <span class="reaction-emoji-btn">{{reaction.reactionEmoji}}</span><span
                     class="reaction-count">{{reaction.users.length}}</span>
                 <div class="hover-card-reactions">
                     <span>{{reaction.reactionEmoji}}</span>
@@ -98,11 +99,12 @@
 </div>
 <div *ngIf="showEdit" class="edit-container" [ngClass]="{'edit-container-thread-style' : message.origin === ''}">
     <div class="edit-box">
-        <textarea [(ngModel)]="editMessage"></textarea>
+        <textarea [(ngModel)]="editMessage" (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
         <div class="button-box">
-            <mat-icon (click)="toggleEmoji()" class="action-btn-style">sentiment_satisfied</mat-icon>
+            <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
             <app-emoji-picker class="edit-emoji" *ngIf="isOpened"
-                (emojiSelectedEvent)="addEmoji($event)"></app-emoji-picker>
+                (emojiSelectedEvent)="addEmoji($event)" appClickOutside
+                (clickOutside)="onOutsideClick('isOpened')"></app-emoji-picker>
             <div class="button-right">
                 <button (click)="cancelEdit()" class="cancel-btn" mat-fab extended color="primary">Abbrechen</button>
                 <button (click)="message.type === 'message' ? saveMessage(message.messageId) : saveReply(collPath)"

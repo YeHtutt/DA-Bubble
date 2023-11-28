@@ -170,6 +170,4 @@ export class UsersFirebaseService implements OnInit {
       throw error;
     }
   }
-
-
 }

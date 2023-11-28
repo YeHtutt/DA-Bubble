@@ -1,17 +1,14 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DrawerService } from 'src/app/services/drawer.service';
-import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
-import { Auth } from '@angular/fire/auth';
 
 
 @Component({
@@ -21,25 +18,6 @@ import { Auth } from '@angular/fire/auth';
 })
 export class MainComponent implements OnInit {
 
-  ngOnInit(): void {
-    this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
-    this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
-    this.getCurrentUser();
-  }
-
-  constructor(
-    private Route: ActivatedRoute,
-    private router: Router,
-    public userFbService: UsersFirebaseService,
-    private auth: Auth,
-    private afAuth: AngularFireAuth,
-    public dialog: MatDialog,
-    private searchService: SearchService,
-    public drawerService: DrawerService,
-    public threadService: ThreadService,
-    private authService: AuthenticationService,
-  ) { }
-
   public search: string = '';
   filteredUser: any = [];
   filteredChannel: any = [];
@@ -47,21 +25,46 @@ export class MainComponent implements OnInit {
   searchOutput: boolean = false;
   isMobile = false;
   public currentUser: UserProfile = new UserProfile();
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+  isMenuOpen = false;
+  userId: string | null = '';
+
+  constructor(
+    private router: Router,
+    public userFbService: UsersFirebaseService,
+    public dialog: MatDialog,
+    public drawerService: DrawerService,
+    public threadService: ThreadService,
+    private authService: AuthenticationService
+  ) {}
 
 
+  @HostListener('window:beforeunload', ['$event'])
+  handleBeforeUnload(event: Event) {
+    this.updateUserStatus();
+  }
+
+
+  ngOnInit(): void {
+    this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
+    // this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
+    this.getCurrentUser();
+    this.userId = this.userFbService.getFromLocalStorage();
+  }
+
+  ngOnDestroy() {
+    this.updateUserStatus();
+  }
 
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
     console.log(this.isMobile);
   }
-
-
-
-  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
-
-
-  isMenuOpen = false;
+  
+  updateUserStatus() {
+    this.userFbService.updateUserOnlineStatus(this.userId, false)
+  }
 
   closeMenu() {
     if (this.menuTrigger) {
@@ -94,36 +97,6 @@ export class MainComponent implements OnInit {
   }
 
 
-
-  // async searchData() {
-  //   const searchResult = await this.searchService.searchUsersAndChannels(this.search)
-  //   this.filteredUser = searchResult.filteredUser;
-  //   this.filteredChannel = searchResult.filteredChannel;
-  // }
-
-
-  // deleteSearch() {
-  //   this.search = '';
-  //   this.filteredUser = [];
-  //   this.filteredChannel = [];
-  //   this.toggleSearchOutput();
-  // }
-
-
-  // toggleSearchOutput() {
-  //   this.searchOutput = !this.searchOutput;
-  // }
-
-
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
-  //     this.searchOutput = false;
-  //   }
-  // }
-
-
   openProfileDialogInSearch(node: any) {
     const userId = node.id;
     const userName = node.name;
@@ -145,15 +118,6 @@ export class MainComponent implements OnInit {
         isOnline: isOnline
       }
     });
-  }
-
-
-  isScreenSmall = window.innerWidth < 450;
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-    this.isScreenSmall = event.target.innerWidth < 450;
-    this.checkMobileMode(event.target.innerWidth);
   }
 
 }
