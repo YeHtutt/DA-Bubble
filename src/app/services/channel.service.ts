@@ -171,7 +171,7 @@ export class ChannelService {
       if (docSnapshot.exists()) {
         callback(docSnapshot.data());
       } else {
-        console.log('Document does not exist!');
+        //console.log('Document does not exist!');
       }
     });
   }
@@ -183,7 +183,7 @@ export class ChannelService {
       const plainChannelObject = channel.toJSON();
       await updateDoc(docRef, plainChannelObject);
     } else {
-      console.error("Channel ID is missing");
+      //console.error("Channel ID is missing");
     }
   }
 

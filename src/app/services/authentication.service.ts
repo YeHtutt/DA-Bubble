@@ -96,7 +96,7 @@ export class AuthenticationService {
         this.notificationService.showSuccess('Login erfolgreich');
       }
       ).catch((error) => {
-        console.error(error);
+        //console.error(error);
         this.notificationService.showError('Login fehlgeschlagen!');
       });
   }

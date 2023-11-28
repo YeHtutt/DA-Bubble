@@ -64,7 +64,7 @@ export class SignUpComponent {
         }, 2000);
       },
       (error) => {
-        console.error('SignUp error:', error);
+        //console.error('SignUp error:', error);
         this.sighUpSuccess = false;
         this.openSnackBar();
       }
