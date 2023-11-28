@@ -44,10 +44,11 @@ export class MessageComponent {
   shiftPressed: boolean = false;
   messageSending: boolean = false;
   currentId: string = '';
+  userOnlineStatus?: boolean;
 
 
   constructor(
-    private userService: UsersFirebaseService,
+    public userService: UsersFirebaseService,
     private messageService: MessageService,
     public threadService: ThreadService,
     private router: Router,
@@ -66,6 +67,7 @@ export class MessageComponent {
     this.route.params.subscribe(params => {
       let channelId = params['channelId'];
       let chatId = params['chatId'];
+      this.loadUserOnlineStatus();
       if (channelId) {
         this.currentId = channelId;
         this.origin = 'channel'
@@ -80,6 +82,11 @@ export class MessageComponent {
 
   ngAfterViewInit() {
     this.messageLoaded.emit(true);
+  }
+
+
+  async loadUserOnlineStatus() {
+    await this.userService.getUser(this.message.user.id).then((user: any) => this.userOnlineStatus = user.isOnline);  
   }
 
 

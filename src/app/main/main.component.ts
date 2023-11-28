@@ -9,6 +9,7 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
+import { Subscription, interval } from 'rxjs';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class MainComponent implements OnInit {
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   isMenuOpen = false;
   userId: string | null = '';
+  private statusUpdateSubscription?: Subscription;
+  private readonly heartbeatInterval = 60000;
 
   constructor(
     private router: Router,
@@ -41,19 +44,21 @@ export class MainComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {
-    this.updateUserStatus();
+    setTimeout(() => this.updateUserStatus(false), 5000);
   }
 
 
   ngOnInit(): void {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
-    // this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
+    this.statusUpdateSubscription = interval(this.heartbeatInterval)
+      .subscribe(() => this.updateUserStatus(true));
   }
 
   ngOnDestroy() {
-    this.updateUserStatus();
+    this.updateUserStatus(false);
+    this.statusUpdateSubscription?.unsubscribe();
   }
 
 
@@ -62,8 +67,8 @@ export class MainComponent implements OnInit {
     console.log(this.isMobile);
   }
   
-  updateUserStatus() {
-    this.userFbService.updateUserOnlineStatus(this.userId, false)
+  updateUserStatus(status: boolean) {
+    this.userFbService.updateUserOnlineStatus(this.userId, status)
   }
 
   closeMenu() {

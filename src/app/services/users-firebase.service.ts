@@ -170,4 +170,15 @@ export class UsersFirebaseService implements OnInit {
       throw error;
     }
   }
+
+  async isUserOnline(userID: string) {
+    try {
+      const userRef = doc(this.firestore, 'users', userID);
+      await getDoc(userRef).then((user: any) => {
+        return user.data();
+      })
+    } catch (error) {
+      throw error;
+    }
+  }
 }
