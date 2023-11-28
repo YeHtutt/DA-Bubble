@@ -10,8 +10,8 @@ import { Observable, Subscription } from 'rxjs';
 export class ScrollButtonComponent {
 
   @Output() EmitScrollDown = new EventEmitter<void>();
-  @Input() chatData: any
-  messages: Observable<any> = new Observable()
+  @Input() chatData: any;
+  messages: Observable<any> = new Observable();
   private messageSubscription: Subscription = new Subscription();
   messageCount: number = 0;
   newMessageCount: number = 0;

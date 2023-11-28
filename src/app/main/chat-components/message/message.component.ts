@@ -142,7 +142,7 @@ export class MessageComponent {
   deleteMessage(msgId: string, filePath: string) {
     this.getMessagePath();
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId);
-    this.onDelete(filePath);
+    if(filePath) this.onDelete(filePath);
   }
 
 
