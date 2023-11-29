@@ -210,7 +210,7 @@ export class ThreadsComponent {
         this.messageService.updateCount(path, newCount, this.currentTime);
       })
       .catch(error => {
-        console.error("Error sending reply: ", error);
+        //console.error("Error sending reply: ", error);
       });
 
     // Reset the message input.

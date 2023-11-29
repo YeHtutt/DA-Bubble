@@ -36,7 +36,7 @@ export class FileStorageService {
         throw new Error('File upload failed');
       }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       throw error;
     }
   }
@@ -47,7 +47,7 @@ export class FileStorageService {
       fileUpload.url = url;
       return fileUpload;
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       throw error;
     }
   }
@@ -58,7 +58,7 @@ export class FileStorageService {
     try {
       fileRef.delete();
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
   }
 

@@ -55,7 +55,7 @@ export class ThreadService {
         this.replies.push(Message.fromJSON({ ...reply.data(), replyId: reply.id }));
       });
       this.replyCount = this.replies.length; // Update the replyCount here
-      console.log('reply' + this.replyCount);
+      //console.log('reply' + this.replyCount);
     });
   }
 
@@ -82,7 +82,7 @@ export class ThreadService {
     await addDoc(ref, message)
       .catch((err) => { console.log(err) })
       .then((docRef: any) => {
-        console.log("Thread written with ID", docRef?.id)
+        //console.log("Thread written with ID", docRef?.id)
         updateDoc(docRef, { replyId: docRef.id });
       });
   }
@@ -90,22 +90,22 @@ export class ThreadService {
 
   async updateReply(path: string, reply: Message) {
     if (reply.messageId) {
-      console.log(path, reply)
+      //console.log(path, reply)
       let docRef = this.firebaseService.getSingleDocRef(`${path}`, reply.messageId);
       await updateDoc(docRef, reply.toJSON())
     } else {
-      console.error("Channel ID is missing");
+      //console.error("Channel ID is missing");
     }
   }
 
 
   async updateDoc(path: string, doc: any, idField: string, updatedFields: any) {
     if (doc[idField]) {
-      console.log(path, doc);
+      //console.log(path, doc);
       let docRef = this.firebaseService.getSingleDocRef(path, doc[idField]);
       await updateDoc(docRef, { ...updatedFields });
     } else {
-      console.error("ID is missing");
+      //console.error("ID is missing");
     }
   }
 

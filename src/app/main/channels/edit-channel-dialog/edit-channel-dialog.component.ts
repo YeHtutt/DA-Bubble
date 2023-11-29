@@ -58,7 +58,7 @@ export class EditChannelDialogComponent {
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
-    console.log(this.isMobile);
+    //console.log(this.isMobile);
   }
 
 
@@ -96,7 +96,7 @@ export class EditChannelDialogComponent {
     } catch (error) {
       // Handle any errors that occur during the process
       this.notificationService.showError('Ein Fehler ist aufgetreten beim Verlassen des Channels.');
-      console.error(error);
+      //console.error(error);
     }
   }
 

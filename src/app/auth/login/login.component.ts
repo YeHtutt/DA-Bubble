@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
         } 
       },
       (error) => {
-        console.error('Login error:', error);
+        //console.error('Login error:', error);
         this.loginSuccess = false;
         this.authService.setIsAuthenticated(false);
         this.openSnackBar();
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
       }
     },
     (error) => {
-      console.error('Login error:', error);
+      //console.error('Login error:', error);
       this.loginSuccess = false;
       this.authService.setIsAuthenticated(false);
       this.openSnackBar();

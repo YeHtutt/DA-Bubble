@@ -101,7 +101,7 @@ export class ChannelChatComponent {
           this.channel = channelData;
         });
       }).catch(err => {
-        console.error("Error fetching channel data:", err);
+        //console.error("Error fetching channel data:", err);
       });
     });
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });

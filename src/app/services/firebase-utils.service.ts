@@ -41,11 +41,11 @@ export class FirebaseUtilsService {
     try {
       // Add the document to the specified collection
       const docRef = await addDoc(this.getColl(path), item);
-      console.log("Document written with ID:", docRef.id);
+      //console.log("Document written with ID:", docRef.id);
       // Update the document with the ID
       await updateDoc(docRef, { [fieldId]: docRef.id });
     } catch (err) {
-      console.error("Error adding document:", err);
+      //console.error("Error adding document:", err);
       throw err; // Rethrow to allow caller to handle the error
     }
   }
@@ -54,11 +54,11 @@ export class FirebaseUtilsService {
   async addColl(item: {}, ref: string, fieldId: string) {
     try {
       const docRef = await addDoc(this.getColl(ref), item);
-      console.log("Document written with ID", docRef.id);
+      //console.log("Document written with ID", docRef.id);
       // Update the document with the ID
       await updateDoc(docRef, { [fieldId]: docRef.id });
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   }
 
@@ -85,11 +85,11 @@ export class FirebaseUtilsService {
     try {
       // Add the document to the specified collection
       const docRef = await addDoc(this.getColl(path), item);
-      console.log("Document written with ID", docRef.id);
+      //console.log("Document written with ID", docRef.id);
       // Update the document with the ID
       await updateDoc(docRef, { [fieldId]: docRef.id });
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       throw err;
     }
   }

@@ -54,6 +54,17 @@
     }
 }
 
+.user-avatar-container {
+    position: relative;
+    height: 60px;
+
+    img:last-of-type {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
 
 .user-avatar {
     width: 60px;
@@ -209,6 +220,7 @@
         bottom: -40px;
         background-color: rgb(236, 101, 101);
         border: unset;
+
         &:hover {
             background-color: rgb(214, 17, 17);
             color: white;
@@ -296,7 +308,7 @@
     left: 0;
     top: 32px;
     z-index: 2;
-} 
+}
 
 .reaction-emoji-inside {
     position: absolute;
