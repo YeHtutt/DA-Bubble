@@ -33,13 +33,19 @@ export class CreateChannelDialogComponent {
 
   ngOnInit() {
     this.channelService.getAllChannels();
+    this.subscribeToChannelNameChanges();
   }
 
 
+  subscribeToChannelNameChanges() {
+    this.channelNameInput.valueChanges.subscribe(() => {
+      this.validateInput();
+    });
+  }
+
   addChannel() {
     if (this.channelNameInput.invalid) {
-      this.notificationService.checkInputLength(this.channelNameInput);
-      this.validateInput()
+
       return;
     };
     this.setChannelProperties();
@@ -84,18 +90,28 @@ export class CreateChannelDialogComponent {
   }
 
   getErrorMessage() {
-    if (this.channelNameInput.hasError('required'))       return 'Du musst einen Namen eingeben.';    
-    if (this.checkForDoubledChannels())       return 'Der Channel exisiert bereits.';      
+    if (this.channelNameInput.hasError('required')) return 'Du musst einen Namen eingeben.';
+    if (this.checkForDoubledChannels()) return 'Der Channel exisiert bereits.';
+    if (this.channelNameInput.hasError('minlength')) return 'Der Channel sollte wenigstens drei Buchstaben haben';
     return '';
   }
 
 
   validateInput() {
-    this.notificationService.checkInputLength(this.channelNameInput);
-    if (this.checkForDoubledChannels()) {
-      console.log('double detected')
+    const channelName = this.channelNameInput.value;
+
+    // Prüfen Sie auf doppelte Channel-Namen und setzen Sie einen Fehler, falls vorhanden
+    if (this.channelService.channels.some(checkChannel => checkChannel.channelName === channelName)) {
+      this.channelNameInput.setErrors({ duplicated: true });
+    } else {
+      // Entfernen Sie benutzerdefinierte Fehler, wenn keine Duplikate gefunden werden
+      // Dies stellt sicher, dass die Fehlermeldung sofort verschwindet, sobald der Name eindeutig ist
+      if (this.channelNameInput.hasError('duplicated')) {
+        this.channelNameInput.setErrors(null);
+      }
     }
   }
+
 
 
   checkForDoubledChannels() {
