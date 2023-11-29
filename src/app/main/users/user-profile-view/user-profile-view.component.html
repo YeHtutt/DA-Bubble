@@ -1,7 +1,7 @@
 <div class="user-profile-view-container">
     <div class="profile-view-header">
         <div mat-dialog-title>Profile</div>
-        <mat-icon (click)="closeDialog()" class="dialog-close-button">close</mat-icon>
+        <button class="basic-button close-btn" (click)="this.dialog.closeAll();"><mat-icon>close</mat-icon></button>
     </div>
     <div class="profile-view-img">
         <img class="profile-img" src="{{ this.userFbService.loggedInUserImg }}" />
@@ -9,10 +9,12 @@
     <div class="profile-view-name">
         <div class="profile-edit-container">
             <div> {{ this.userFbService.loggedInUserName }} </div>
-            <a *ngIf="!this.drawerService.checkScreenSizeForResponsive(450)" (click)="closeDialog(); openProfileEditDialog()">Bearbeiten</a>
-            <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" (click)="closeDialog(); openProfileEditDialog()" src="../assets/img/edit.png">
+            <a *ngIf="!this.drawerService.checkScreenSizeForResponsive(450)"
+                (click)="closeDialog(); openProfileEditDialog()">Bearbeiten</a>
+            <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"
+                (click)="closeDialog(); openProfileEditDialog()" src="../assets/img/edit.png">
         </div>
-        
+
         <div class="flex-row">
             <img src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID">
             <p *ngIf="this.userFbService.loggedInUserID">Anwesend</p>
