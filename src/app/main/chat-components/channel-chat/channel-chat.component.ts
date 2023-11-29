@@ -338,6 +338,5 @@ export class ChannelChatComponent {
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
-    console.log(this.isMobile);
-  }
+    }
 }

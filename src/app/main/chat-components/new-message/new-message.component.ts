@@ -111,7 +111,6 @@ export class NewMessageComponent {
   selectReceiver(receiver: any) {
     this.search = receiver.name || `# ${receiver.channelName}`;
     this.receiver = receiver;
-    console.log(this.receiver)
     this.filteredChannel = [];
     this.filteredUser = [];
   }

@@ -233,7 +233,6 @@ export class MessageService {
     let docId: any;
     if (await directChat.chatId.includes(this.currentUserId)) {
       docId = await this.createDirectChat(directChat);
-      console.log('true')
     } else {
       docId = await this.checkIfChatExists(directChat);
     }

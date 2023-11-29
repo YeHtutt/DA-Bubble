@@ -60,8 +60,7 @@ export class MainComponent implements OnInit {
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
-    console.log(this.isMobile);
-  }
+      }
 
   updateUserStatus() {
     this.userFbService.updateUserOnlineStatus(this.userId, false)
