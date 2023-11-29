@@ -6,7 +6,7 @@
     <div class="form-group relative">
         <div class="dropdown-container">
             <img class="user-img" src="{{ currentPic }}" (click)="this.setNewPic(currentPic)">
-            <mat-menu #menu="matMenu" class="user-profile-edit-menu">
+            <mat-menu #menu="matMenu" class="user-profile-edit-menu profile-menu">
                 <button mat-menu-item (click)="openAvatarDialog()">Avatare auswählen</button>
                 <label mat-menu-item for="file">
                     Eigenes Bild auswählen
