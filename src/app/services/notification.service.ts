@@ -35,7 +35,12 @@ export class NotificationService {
     });
   }
 
- 
+  showInfo(message: string): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: ['info-snackbar']
+    });
+  }
 
 }
 

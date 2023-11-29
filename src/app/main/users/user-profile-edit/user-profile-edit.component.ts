@@ -39,7 +39,7 @@ export class UserProfileEditComponent {
   })
 
 
-  onEdit() {
+  async onEdit() {
     if (this.userEditForm.valid) {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
@@ -50,6 +50,7 @@ export class UserProfileEditComponent {
         this.usersFbService.updateUserProfile(currentUserID, formData) //mit currentUserID und formDatas
           .then(() => {
             this.profileEditSuccess = true;
+            //this.updateFirebaseAuthEmail(formData.email);
             this.openSnackBar();
           })
           .catch((error: any) => {
@@ -58,10 +59,28 @@ export class UserProfileEditComponent {
           });
       }
     }
+
+  //   if (currentUserID) {
+  //     try {
+  //       await this.usersFbService.updateUserEmail(currentUserID, formData.email);
+  //       const userProfileUpdateResult = await this.usersFbService.updateUserProfile(currentUserID, formData);
+
+  //       if (userProfileUpdateResult.success) {
+  //         this.profileEditSuccess = true;
+  //         this.openSnackBar();
+  //       } else {
+  //         this.profileEditSuccess = false;
+  //         this.openSnackBar();
+  //       }
+  //     } catch (error) {
+  //       console.error('Error updating user profile:', error);
+  //       this.profileEditSuccess = false;
+  //       this.openSnackBar();
+  //     }
+  //   }
+  // }
     this.dialog.closeAll();
   }
-
-
   
 
   /** user Profilbild mit eigene Bilder aus dem PC zu aktualisieren*/
@@ -120,6 +139,14 @@ export class UserProfileEditComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  showNameRequiredNotification() {
+    this.notificationService.showInfo('Bitte füllen Sie im Feld Ihr gewünschter Name aus!');
+  }
+
+  showEmailRequiredNotification() {
+    this.notificationService.showInfo('Sie können Ihre Email Adresse ändern, falls Sie es möchten.');
   }
 
 }
