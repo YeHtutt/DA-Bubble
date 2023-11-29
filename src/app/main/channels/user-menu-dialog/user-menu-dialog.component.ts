@@ -31,8 +31,7 @@ export class UserMenuDialogComponent {
 
   ngOnInit() {
     this.getAllUsers();
-    console.log(this.channel.usersData)
-  }
+   }
 
 
   async getAllUsers() {

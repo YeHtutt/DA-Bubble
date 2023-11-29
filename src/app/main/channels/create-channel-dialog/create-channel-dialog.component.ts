@@ -45,7 +45,6 @@ export class CreateChannelDialogComponent {
 
   addChannel() {
     if (this.channelNameInput.invalid) {
-
       return;
     };
     this.setChannelProperties();
@@ -61,7 +60,6 @@ export class CreateChannelDialogComponent {
       creationTime: this.firebaseUtils.getDateTime(),
       creator: creator,
       usersData: [],
-
     };
     this.openAddUserlDialog();
   }
@@ -122,4 +120,3 @@ export class CreateChannelDialogComponent {
 
 
 }
-

@@ -3,9 +3,8 @@ import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnaps
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { docData } from 'rxfire/firestore';
-import { Observable, map } from 'rxjs';
-import { FirebaseUtilsService } from './firebase-utils.service';
+
+
 
 
 interface User {
@@ -26,16 +25,17 @@ export class UsersFirebaseService implements OnInit {
 
 
 
-  @Input() loggedInUserID: any;
-  @Input() loggedInUserImg: any;
-  @Input() loggedInUserName: any;
-  @Input() loggedInUserEmail: any;
+  loggedInUserID: any;
+  loggedInUserImg: any;
+  loggedInUserName: any;
+  loggedInUserEmail: any;
 
 
 
   constructor(
     private firestore: Firestore,
     private auth: Auth, private AngFirestore: AngularFirestore,
+
   ) { }
 
   ngOnInit() {
@@ -79,7 +79,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+
+
+
   async getUser(uid: any) {
+
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
