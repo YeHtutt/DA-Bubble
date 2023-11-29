@@ -26,7 +26,8 @@ export class UserProfileEditComponent {
     });
   }
 
-  constructor(public dialog: MatDialog, public usersFbService: UsersFirebaseService,
+  constructor(
+    public dialog: MatDialog, public usersFbService: UsersFirebaseService,
     private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>,
     private notificationService: NotificationService) {
 
@@ -59,6 +60,9 @@ export class UserProfileEditComponent {
     }
     this.dialog.closeAll();
   }
+
+
+  
 
   /** user Profilbild mit eigene Bilder aus dem PC zu aktualisieren*/
   onSelect(event: any) {

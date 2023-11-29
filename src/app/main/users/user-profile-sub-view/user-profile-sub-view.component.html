@@ -1,7 +1,7 @@
 <div class="user-profile-sub-view-container">
     <div class="profile-sub-view-header">
         <div mat-dialog-title>Profile</div>
-        <mat-icon class="hover-style" (click)="closeDialog()" class="dialog-close-button">close</mat-icon>
+        <button class="basic-button close-btn" (click)="this.dialog.closeAll();"><mat-icon>close</mat-icon></button>
     </div>
     <div class="profile-sub-view-img">
         <img class="profile-img" [src]="userPhotoURL" />

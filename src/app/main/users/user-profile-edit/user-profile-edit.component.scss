@@ -1,3 +1,11 @@
+@import "../../../../styles.scss";
+
+
+.headline {
+    width: 100%;
+    @include flex-between;
+}
+
 .relative {
     position: relative;
 }
