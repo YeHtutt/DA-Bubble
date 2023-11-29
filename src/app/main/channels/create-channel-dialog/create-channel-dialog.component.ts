@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ChannelService } from 'src/app/services/channel.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserProfile } from 'src/app/models/user-profile';
-import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-users-dialog.component';
+import { ChannelService } from 'src/app/services/channel.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-users-dialog.component';
 
 
 @Component({

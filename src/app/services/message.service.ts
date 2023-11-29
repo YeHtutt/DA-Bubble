@@ -1,18 +1,24 @@
+import { DatePipe } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
-  addDoc, collection, doc, getDoc, query, updateDoc, deleteDoc, getDocs, orderBy, onSnapshot, where
+  addDoc, collection,
+  deleteDoc,
+  doc, getDoc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query, updateDoc,
+  where
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { Channel } from '../models/channel';
+import { DirectChat } from '../models/direct-chat';
 import { Message } from '../models/message';
 import { UserProfile } from '../models/user-profile';
-import { Channel } from '../models/channel';
-import { Router } from '@angular/router';
-import { DirectChat } from '../models/direct-chat';
-import { NotificationService } from './notification.service';
-import { FileUpload } from '../models/file-upload';
-import { UsersFirebaseService } from './users-firebase.service';
-import { DatePipe } from '@angular/common';
 import { FirebaseUtilsService } from './firebase-utils.service';
+import { NotificationService } from './notification.service';
+import { UsersFirebaseService } from './users-firebase.service';
 
 
 type ReceiverType = UserProfile | Channel;

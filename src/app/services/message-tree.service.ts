@@ -1,20 +1,14 @@
-import { Injectable } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
+import { Injectable } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { FirebaseUtilsService } from './firebase-utils.service';
 import { UserProfile } from '../models/user-profile';
+import { FirebaseUtilsService } from './firebase-utils.service';
 
 
 import {
-  Firestore, collection,
-  doc, onSnapshot,
-  addDoc, getDoc, getDocs, updateDoc,
-  deleteDoc, orderBy,
-  where, query,
-  limit,
-  collectionData
+  onSnapshot
 } from '@angular/fire/firestore';
 
 

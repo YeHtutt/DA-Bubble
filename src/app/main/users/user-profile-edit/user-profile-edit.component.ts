@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { UsersFirebaseService } from '../../../services/users-firebase.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { UsersFirebaseService } from '../../../services/users-firebase.service';
 import { UserProfileChooseAvatarComponent } from '../user-profile-choose-avatar/user-profile-choose-avatar.component';
 
 

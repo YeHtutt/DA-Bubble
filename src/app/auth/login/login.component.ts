@@ -1,12 +1,9 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { FormBuilder } from '@angular/forms';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { Auth } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/services/notification.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
   selector: 'app-login',

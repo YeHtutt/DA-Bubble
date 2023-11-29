@@ -3,14 +3,14 @@ import { Injectable, inject } from '@angular/core';
 import { UsersFirebaseService } from './users-firebase.service';
 
 import {
-  Firestore, collection,
-  doc, onSnapshot,
-  addDoc, getDoc, updateDoc,
-  deleteDoc, orderBy,
-  where, query,
-  limit,
-  collectionData,
-  getDocs, setDoc
+  Firestore,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 
 

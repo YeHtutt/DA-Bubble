@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ChannelService } from 'src/app/services/channel.service';
 import { Subscription } from 'rxjs';
-import { MessageService } from 'src/app/services/message.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelService } from 'src/app/services/channel.service';
 import { DrawerService } from 'src/app/services/drawer.service';
+import { MessageService } from 'src/app/services/message.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
 
 
 @Component({

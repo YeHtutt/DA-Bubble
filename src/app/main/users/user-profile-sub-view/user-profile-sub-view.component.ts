@@ -1,10 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { UserProfileEditComponent } from '../user-profile-edit/user-profile-edit.component';
+import { Router } from '@angular/router';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { MessageService } from 'src/app/services/message.service';
-import { Router } from '@angular/router';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
   selector: 'app-user-profile-sub-view',

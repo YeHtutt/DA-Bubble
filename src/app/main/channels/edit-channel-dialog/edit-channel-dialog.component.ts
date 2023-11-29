@@ -1,12 +1,11 @@
-import { Component, Inject, HostListener } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { ChannelService } from 'src/app/services/channel.service';
+import { Component, HostListener, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NotificationService } from 'src/app/services/notification.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel';
+import { ChannelService } from 'src/app/services/channel.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
+import { NotificationService } from 'src/app/services/notification.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
   selector: 'app-edit-channel-dialog',

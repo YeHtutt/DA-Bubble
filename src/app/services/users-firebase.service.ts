@@ -1,11 +1,10 @@
-import { Injectable, Input, OnInit } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc, collectionData } from '@angular/fire/firestore';
-import { UserProfile } from '../models/user-profile';
+import { Injectable, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { docData } from 'rxfire/firestore';
-import { Observable, Subject, map } from 'rxjs';
-import { FirebaseUtilsService } from './firebase-utils.service';
+import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Observable, Subject } from 'rxjs';
+import { UserProfile } from '../models/user-profile';
+
 
 
 interface User {

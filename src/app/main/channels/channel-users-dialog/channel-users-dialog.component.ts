@@ -1,17 +1,16 @@
-import { Component, ElementRef, ViewChild, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { UserProfile } from 'src/app/models/user-profile';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ChangeDetectorRef, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ChangeDetectorRef } from '@angular/core';
+import { UserProfile } from 'src/app/models/user-profile';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 
 

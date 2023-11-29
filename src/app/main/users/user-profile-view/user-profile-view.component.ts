@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DrawerService } from 'src/app/services/drawer.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfileEditComponent } from '../user-profile-edit/user-profile-edit.component';
-import { DrawerService } from 'src/app/services/drawer.service';
 
 @Component({
   selector: 'app-user-profile-view',
