@@ -1,3 +1,32 @@
+.relative {
+    position: relative;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mgn-t {
+    margin-top: 10px;
+}
+
+.menu-btn {
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0px;
+    right: 20px;
+    border: solid 1px #444ddf;
+
+    mat-icon {
+        color: black;
+    }
+}
+
+
 .profile-edit-contianer {
     display: flex;
     padding: 33px;
@@ -170,7 +199,7 @@
     }
 }
 
-mat-icon {
+/* mat-icon {
     position: relative;
     left: -60px;
     bottom: -3px;
@@ -188,7 +217,7 @@ mat-icon {
         left: -40px;
         bottom: -6px;
     }
-}
+} */
 
 .dropdown-container {
     .mat-mdc-icon-button {

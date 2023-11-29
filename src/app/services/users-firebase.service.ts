@@ -5,6 +5,7 @@ import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { docData } from 'rxfire/firestore';
 import { Observable, map } from 'rxjs';
+import { FirebaseUtilsService } from './firebase-utils.service';
 
 
 interface User {
@@ -22,13 +23,20 @@ export class UsersFirebaseService implements OnInit {
   user: UserProfile = new UserProfile;
   id: any;
 
+
+
+
   @Input() loggedInUserID: any;
   @Input() loggedInUserImg: any;
   @Input() loggedInUserName: any;
   @Input() loggedInUserEmail: any;
 
 
-  constructor(private firestore: Firestore, private auth: Auth, private AngFirestore: AngularFirestore) { }
+
+  constructor(
+    private firestore: Firestore,
+    private auth: Auth, private AngFirestore: AngularFirestore,
+  ) { }
 
   ngOnInit() {
   }
@@ -181,4 +189,7 @@ export class UsersFirebaseService implements OnInit {
       throw error;
     }
   }
+
+
+
 }

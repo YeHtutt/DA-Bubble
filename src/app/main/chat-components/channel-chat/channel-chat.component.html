@@ -16,10 +16,10 @@
                     <div class="user-amount-box">{{channel?.usersData.length}}</div>
                 </div>
                 <div *ngIf="!this.isMobile"  class="add-user" (click)="openAddUserDialog()">
-                    <mat-icon>person_add</mat-icon>
+                    <mat-icon class="material-icons-outlined">person_add_outlined</mat-icon>
                 </div>
                 <div *ngIf="this.isMobile" class="add-user" (click)="openUserMenu()">
-                    <mat-icon>person_add</mat-icon>
+                    <mat-icon class="material-icons-outlined">person_add</mat-icon>
                 </div>
             </div>
         </header>
