@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
         this.loginSuccess = true;
         this.authService.setIsAuthenticated(true);
         this.openSnackBar();
-        this.router.navigate([`/main`]);
+       
       }
     },
     (error) => {
