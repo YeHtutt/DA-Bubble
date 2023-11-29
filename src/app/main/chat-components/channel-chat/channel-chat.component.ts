@@ -138,6 +138,10 @@ export class ChannelChatComponent {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.classList.add('animation-message');
+      setTimeout(() => {
+        element.classList.remove('animation-message');
+      }, 1200);
     }
   }
 
