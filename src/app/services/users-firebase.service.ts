@@ -1,5 +1,5 @@
 import { Injectable, Input, OnInit } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnapshot, getDoc, collectionData } from '@angular/fire/firestore';
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -171,14 +171,9 @@ export class UsersFirebaseService implements OnInit {
     }
   }
 
-  async isUserOnline(userID: string) {
-    try {
-      const userRef = doc(this.firestore, 'users', userID);
-      await getDoc(userRef).then((user: any) => {
-        return user.data();
-      })
-    } catch (error) {
-      throw error;
-    }
-  }
+  // async getAllUserOnlineStatus() {
+  //   const collRef = collection(this.firestore, 'users');
+  //   const users$ = collectionData(collRef);
+  //   return users$;
+  // }
 }

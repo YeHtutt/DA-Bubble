@@ -390,5 +390,20 @@ button {
 
 }
 
+.animation-message {
+  animation: lightUp 1500ms infinite;
+}
+
+@keyframes lightUp {
+  0%, 100% {
+    background-color: rgb(255, 206, 117);
+    opacity: 0;
+  }
+  50% {
+    background-color: rgb(251, 185, 62);
+    opacity: 1;
+  }
+}
+
 /*for Nest Hub*/
 @media screen and (min-width: 1024px) and (max-height: 600px) {}

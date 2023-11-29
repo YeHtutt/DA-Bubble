@@ -48,7 +48,7 @@ export class MainComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
