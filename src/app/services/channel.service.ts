@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { UsersFirebaseService } from './users-firebase.service';
 import { NotificationService } from './notification.service';
-
+import { UserProfile } from '../models/user-profile';
 
 import {
   Firestore, collection,
@@ -38,8 +38,9 @@ interface ExampleFlatNode {
 
 
 export class ChannelService {
-  
- 
+
+  unsubUsers: any;
+  users: any;
   firestore: Firestore = inject(Firestore);
   channelContent: Channel[] = [];
   channelTree: ChannelsNode[] = [];
@@ -52,7 +53,7 @@ export class ChannelService {
   unsubChannelContent: any;
   currentUserId = this.userService.getFromLocalStorage()
 
-  
+
   constructor(
     private firebaseUtils: FirebaseUtilsService,
     private userService: UsersFirebaseService,
@@ -222,5 +223,26 @@ export class ChannelService {
     const docRef = doc(this.firestore, "channel", docId);
     const channelDoc = (await getDoc(docRef)).data();
     return Channel.fromJSON(channelDoc);
+  }
+
+
+  getAllUsers() {
+    return this.unsubUsers = onSnapshot(this.firebaseUtils.getColl('users'), (list: any) => {
+      list.forEach((element: any) => {
+        const channelObj = this.setUserObj(element.data(), element.id);
+        this.users.push(channelObj);
+      });
+    });
+  }
+
+
+  setUserObj(obj: any, docId: string) {
+    return new UserProfile({
+      name: obj.name,
+      email: obj.email,
+      id: docId,
+      photoURL: obj.photoURL,
+      isOnline: obj.isOnline,
+    });
   }
 }

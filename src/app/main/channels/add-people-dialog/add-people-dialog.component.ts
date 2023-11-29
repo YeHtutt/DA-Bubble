@@ -66,6 +66,7 @@ export class AddPeopleDialogComponent {
       })
     );
   }
+  
 
   ngOnInit() {
     this.getUsersNotInChannel();
