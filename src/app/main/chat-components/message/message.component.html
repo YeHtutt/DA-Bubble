@@ -2,8 +2,8 @@
     [ngClass]="{'message-container-reverse': this.currentUser == message.user.id && message.origin === 'chat'}"
     class="message-container" id="{{message.messageId}}">
     <div class="user-avatar-container">
-        <img class="user-avatar" src="{{ message.user.photoURL }}" alt="">
-        <img src="{{userOnlineStatus ? 'assets/img/Online.png' : 'assets/img/Offline.png'}}" alt="">
+        <img class="user-avatar" src="{{ messageUser?.photoURL }}" alt="">
+        <img src="{{messageUser?.isOnline ? 'assets/img/Online.png' : 'assets/img/Offline.png'}}" alt="">
     </div>
     <div *ngIf="!showEdit"
         [ngClass]="{'content-container-reverse': currentUser == message.user.id && message.origin === 'chat'}"

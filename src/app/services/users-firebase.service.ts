@@ -3,8 +3,9 @@ import { Firestore, collection, addDoc, getDocs, updateDoc, setDoc, doc, onSnaps
 import { UserProfile } from '../models/user-profile';
 import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
-
+import { docData } from 'rxfire/firestore';
+import { Observable, Subject, map } from 'rxjs';
+import { FirebaseUtilsService } from './firebase-utils.service';
 
 
 interface User {
@@ -38,8 +39,7 @@ export class UsersFirebaseService implements OnInit {
 
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   async addUserToFirebase(user: any, uid: string) {
 
@@ -95,6 +95,32 @@ export class UsersFirebaseService implements OnInit {
     this.loggedInUserName = name;
     this.loggedInUserEmail = email;
     this.loggedInUserImg = photoURL;
+  }
+
+  // getCurrentUserSubject() {
+  //   const uid = this.getFromLocalStorage();
+  //   const unsub = onSnapshot(doc(this.firestore, "users", `${uid}`), (doc) => {
+  //     return doc.data();
+  //   });
+  // }
+
+  private unsubscribeFn?: () => void;
+
+  getCurrentUserSubject() {
+    const userSubject = new Subject<any>();
+    const uid = this.getFromLocalStorage();
+    const unsubscribeFn = onSnapshot(doc(this.firestore, "users", `${uid}`), (doc) => {
+      if (doc.exists()) {
+        userSubject.next(doc.data());
+      } else {
+        userSubject.error(new Error("No such document"));
+      }
+    }, error => userSubject.error(error));
+
+    return {
+      observable: userSubject.asObservable(),
+      unsubscribe: unsubscribeFn
+    };
   }
 
 
@@ -183,9 +209,9 @@ export class UsersFirebaseService implements OnInit {
     }
   }
 
-  // async getAllUserOnlineStatus() {
-  //   const collRef = collection(this.firestore, 'users');
-  //   const users$ = collectionData(collRef);
-  //   return users$;
-  // }
+
+  getAllUserOnlineStatus(): Observable<UserProfile[]> {
+    const collRef = collection(this.firestore, 'users');
+    return collectionData(collRef) as Observable<UserProfile[]>;
+  }
 }

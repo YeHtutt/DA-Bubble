@@ -31,6 +31,8 @@ export class MainComponent implements OnInit {
   userId: string | null = '';
   private statusUpdateSubscription?: Subscription;
   private readonly heartbeatInterval = 60000;
+  loggedinUser: any;
+  userSubject?: any;
 
   constructor(
     private router: Router,
@@ -52,11 +54,15 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
+    this.userSubject = this.userFbService.getCurrentUserSubject();
+    this.userSubject.observable.subscribe((user: any) => { this.loggedinUser = user; });
   }
 
   ngOnDestroy() {
     this.updateUserStatus(false);
     this.statusUpdateSubscription?.unsubscribe();
+    this.userSubject.unsubscribe.unsubscribeFn();
+    this.userSubject.observable.unsubscribe();
   }
 
 
