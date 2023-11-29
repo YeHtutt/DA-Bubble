@@ -76,7 +76,7 @@ import { SearchBarComponent } from './main/search-bar/search-bar.component';
 
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
-import { OpenUserMenuDialogComponent } from './main/channels/open-user-menu-dialog/open-user-menu-dialog.component';
+import { UserMenuDialogComponent } from './main/channels/user-menu-dialog/user-menu-dialog.component';
 import { UserProfileChooseAvatarComponent } from './main/users/user-profile-choose-avatar/user-profile-choose-avatar.component';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
@@ -114,7 +114,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     SearchBarComponent,
     ClickOutsideDirective,
     ScrollButtonComponent,
-    OpenUserMenuDialogComponent,
+    UserMenuDialogComponent,
     UserProfileChooseAvatarComponent
   ],
   imports: [

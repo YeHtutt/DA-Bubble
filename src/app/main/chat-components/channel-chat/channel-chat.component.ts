@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { EditChannelDialogComponent } from '../../channels/edit-channel-dialog/edit-channel-dialog.component';
-import { OpenUserMenuDialogComponent } from '../../channels/open-user-menu-dialog/open-user-menu-dialog.component';
+import { UserMenuDialogComponent } from '../../channels/user-menu-dialog/user-menu-dialog.component';
 
 /* Models */
 
@@ -158,7 +158,7 @@ export class ChannelChatComponent {
 
 
   openUserMenu() {
-    this.dialog.open(OpenUserMenuDialogComponent, {
+    this.dialog.open(UserMenuDialogComponent, {
       width: 'auto',
       height: 'auto',
       hasBackdrop: true,

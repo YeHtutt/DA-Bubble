@@ -4,11 +4,11 @@ import { Channel } from 'src/app/models/channel';
 import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
 
 @Component({
-  selector: 'app-open-user-menu-dialog',
-  templateUrl: './open-user-menu-dialog.component.html',
-  styleUrls: ['./open-user-menu-dialog.component.scss']
+  selector: 'app-user-menu-dialog',
+  templateUrl: './user-menu-dialog.component.html',
+  styleUrls: ['./user-menu-dialog.component.scss']
 })
-export class OpenUserMenuDialogComponent {
+export class UserMenuDialogComponent {
 
 
   channel: Channel = new Channel(this.data.channel);
@@ -18,7 +18,7 @@ export class OpenUserMenuDialogComponent {
 
   constructor(
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<OpenUserMenuDialogComponent>,
+    public dialogRef: MatDialogRef<UserMenuDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
