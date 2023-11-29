@@ -18,14 +18,7 @@ export class NotificationService {
 
 
 
-  checkInputLength(inputField: any): void {
-    if (inputField.hasError('required')) {
-      this.showError('Channel name is required!');
-    } else if (inputField.hasError('minlength')) {
-      this.showError('Input should have at least 3 letters!');
-    }
-   
-  }
+
 
   /* Notification */
 
