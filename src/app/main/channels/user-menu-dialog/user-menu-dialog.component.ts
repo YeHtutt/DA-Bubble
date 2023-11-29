@@ -2,6 +2,9 @@ import { Component, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel';
 import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UserProfile } from 'src/app/models/user-profile';
+
 
 @Component({
   selector: 'app-user-menu-dialog',
@@ -10,7 +13,8 @@ import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog
 })
 export class UserMenuDialogComponent {
 
-
+  allUsers: UserProfile[] = [];
+  allUsersArray: any[] = [];
   channel: Channel = new Channel(this.data.channel);
   @Input() isMobile: boolean = false;
   openingInChat: boolean = this.data.openingInChat;
@@ -20,7 +24,40 @@ export class UserMenuDialogComponent {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<UserMenuDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private userService: UsersFirebaseService
   ) { }
+
+
+
+  ngOnInit() {
+    this.getAllUsers();
+    console.log(this.channel.usersData)
+  }
+
+
+  async getAllUsers() {
+    this.allUsers = await this.userService.getUsers();
+    this.allUsers.forEach((user: UserProfile) => {
+      let userToJSON = user.toJSON();
+      this.allUsersArray.push(userToJSON);
+    });
+
+    this.updateUserOnlineStatus();
+  }
+
+
+  // I'm assuming 'id' is the unique identifier for each user. Replace 'id' with the appropriate key.
+  updateUserOnlineStatus() {
+    this.channel.usersData.forEach((channelUser: any) => {
+      // Find the matching user in allUsersArray
+      const matchedUser = this.allUsersArray.find(user => user.id === channelUser.id);
+      if (matchedUser) {
+        // Update the isOnline status
+        channelUser.isOnline = matchedUser.isOnline;
+      }
+    });
+  }
+
 
 
   closeCreateChannelDialog() {

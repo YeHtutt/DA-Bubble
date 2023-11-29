@@ -1,9 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { ActivatedRoute } from '@angular/router';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { UserProfile } from '../models/user-profile';
 
@@ -43,8 +42,7 @@ interface ExampleFlatNode {
 })
 
 export class MessageTreeService {
-  unsubUsers: any;
-  users: any;
+
 
   unsubChat: any;
   messageTree: MessagesNode[] = [];
@@ -118,17 +116,7 @@ export class MessageTreeService {
   }
 
 
-  getAllUsers() {
-    return this.unsubUsers = onSnapshot(this.firebaseUtils.getColl('users'), (list: any) => {
-      list.forEach((element: any) => {
-        const channelObj = this.setDirectMessageObj(element.data(), element.id);
-        this.users.push(channelObj);
-      });
-      this.dataSource.data
-      this.dataLoaded.next(true);
-    });
-  }
-
+ 
   setDirectMessageObj(obj: any, docId: string): MessagesNode {
     return new UserProfile({
       name: obj.name,
