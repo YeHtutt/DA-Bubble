@@ -8,6 +8,9 @@ import { FileStorageService } from 'src/app/services/file-storage.service';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { UserProfile } from 'src/app/models/user-profile';
+import { User } from '@angular/fire/auth';
+import { Observable, Subscription } from 'rxjs';
 
 
 interface Reaction {
@@ -26,6 +29,7 @@ export class MessageComponent {
   @Input() parentMessageId: any;
   @Input() collPath: any;
   @Input() message: any;
+  @Input() users$: Observable<UserProfile[]> = new Observable;
   public currentUser: string;
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
@@ -44,7 +48,9 @@ export class MessageComponent {
   shiftPressed: boolean = false;
   messageSending: boolean = false;
   currentId: string = '';
-  userOnlineStatus?: boolean;
+  // userOnlineStatus?: boolean;
+  messageUser?: UserProfile;
+  usersSub: Subscription = new Subscription();
 
 
   constructor(
@@ -67,7 +73,8 @@ export class MessageComponent {
     this.route.params.subscribe(params => {
       let channelId = params['channelId'];
       let chatId = params['chatId'];
-      this.loadUserOnlineStatus();
+      // this.users$ = this.userService.getAllUserOnlineStatus();
+      this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
       if (channelId) {
         this.currentId = channelId;
         this.origin = 'channel'
@@ -84,9 +91,19 @@ export class MessageComponent {
     this.messageLoaded.emit(true);
   }
 
+  ngOnDestroy() {
+    this.usersSub.unsubscribe();
+  }
 
-  async loadUserOnlineStatus() {
-    await this.userService.getUser(this.message.user.id).then((user: any) => this.userOnlineStatus = user.isOnline);  
+
+  // async loadUserOnlineStatus() {
+  //   await this.userService.getUser(this.message.user.id).then((user: any) => this.userOnlineStatus = user.isOnline);  
+  // }
+
+  getUserForMessage(users: any[]) {
+    users.forEach((user: UserProfile) => {
+      if(this.message.user.id === user.id) this.messageUser = user;
+    })
   }
 
 

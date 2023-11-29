@@ -25,7 +25,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { MessageSelectionService } from 'src/app/services/message-selection.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, from, tap } from 'rxjs';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class ChannelChatComponent {
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
   messages: Message[] = [];
-  allUsers: UserProfile[] = [];
+  filteredUsersForTag: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
   scrollElement: any;
@@ -70,6 +70,10 @@ export class ChannelChatComponent {
   isElementVisible: boolean = false;
   searchMessage: boolean = false;
   messageSelectionSub: Subscription = new Subscription();
+  allUsers: UserProfile[] = [];
+  allUsers$: Observable<UserProfile[]> = new Observable;
+  isLoading: boolean = true;
+  
 
 
   constructor(
@@ -100,6 +104,7 @@ export class ChannelChatComponent {
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
+        this.allUsers$ = this.userService.getAllUserOnlineStatus()
       }).catch(err => {
         //console.error("Error fetching channel data:", err);
       });
@@ -266,7 +271,7 @@ export class ChannelChatComponent {
 
   async searchUserToTag(tag: string) {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(tag, this.searchMessage);
-    this.allUsers = searchResult.filteredUser;
+    this.filteredUsersForTag = searchResult.filteredUser;
   }
 
 
@@ -343,5 +348,5 @@ export class ChannelChatComponent {
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
-    }
+  }
 }

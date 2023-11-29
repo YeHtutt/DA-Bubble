@@ -29,7 +29,7 @@
                     <div class="message-date"><span>{{ messageGroup.date }}</span></div>
                 </div>
                 <app-message *ngFor="let msg of this.messageGroup.messages; let i = index"
-                    [message]="msg"></app-message>
+                    [message]="msg" [users$]="allUsers$"></app-message>
             </div>
             <div #endScrollElement></div>
         </main>
