@@ -43,10 +43,13 @@ interface ExampleFlatNode {
 })
 
 export class MessageTreeService {
+  unsubUsers: any;
+  users: any;
 
+  unsubChat: any;
   messageTree: MessagesNode[] = [];
-  themes: any;
   unsubMessage: any;
+  themes: any;
   currentUserId = this.userService.getFromLocalStorage()
 
   constructor(
@@ -96,7 +99,7 @@ export class MessageTreeService {
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   public dataLoaded = new BehaviorSubject<boolean>(false);
 
-  unsubChat: any;
+
 
 
   subUserMessagesList() {
@@ -115,14 +118,14 @@ export class MessageTreeService {
   }
 
 
-  getChannelContent(docId: string) {
-    const docRef = doc(this.firebaseUtils.getColl('users'), docId);
-    return this.unsubChat = onSnapshot(docRef, (docSnapshot) => {
-      if (docSnapshot.exists()) {
-        return this.setDirectMessageObj(docSnapshot.data(), docSnapshot.id);
-      } else {
-        return console.log('Document does not exist!');
-      }
+  getAllUsers() {
+    return this.unsubUsers = onSnapshot(this.firebaseUtils.getColl('users'), (list: any) => {
+      list.forEach((element: any) => {
+        const channelObj = this.setDirectMessageObj(element.data(), element.id);
+        this.users.push(channelObj);
+      });
+      this.dataSource.data
+      this.dataLoaded.next(true);
     });
   }
 

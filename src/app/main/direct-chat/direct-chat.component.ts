@@ -52,6 +52,7 @@ export class DirectChatComponent {
     this.subscriptions.push(sub);
   }
 
+
   async selectReceiver(receiverId: any) {
     const chatAlreadyExists = await this.messageService.chatExists(this.currentUser.id, receiverId);
     if (!chatAlreadyExists) {

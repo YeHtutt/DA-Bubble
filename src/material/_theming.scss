@@ -100,6 +100,18 @@ html {
   --mat-standard-button-toggle-disabled-selected-state-background-color: #bdbdbd;
 }
 
+.mat-mdc-form-field-infix {
+  min-height: 56px;
+  height: 60px;
+}
+
+
+.mdc-notched-outline__trailing {
+  border-top-right-radius: 42px !important;
+  border-bottom-right-radius: 42px !important;
+  min-width: 0px !important;
+}
+
 
 .mat-mdc-fab[disabled],
 .mat-mdc-mini-fab[disabled] {
@@ -114,10 +126,6 @@ html {
 
 
 .mat-mdc-form-field-infix {
-  //für Login Formfield auskommentiert
-  /*min-height: 56px;
-  height: 60px;*/
-
   @media(max-width: 767px) {
     min-height: 45px;
     height: 45px;

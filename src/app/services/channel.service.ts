@@ -57,7 +57,7 @@ export class ChannelService {
     private firebaseUtils: FirebaseUtilsService,
     private userService: UsersFirebaseService,
     private notificationService: NotificationService) {
-    this.unsubChannelTree = this.subChannelList();
+    this.unsubChannelTree = this.subChannelTree();
   }
 
 
@@ -109,10 +109,9 @@ export class ChannelService {
       this.dataSource.data
       this.dataLoaded.next(true);
     });
-
   }
 
-  subChannelList() {
+  subChannelTree() {
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       this.channelTree = [];
       this.populateChannelsAndMore(list);
@@ -171,7 +170,7 @@ export class ChannelService {
       if (docSnapshot.exists()) {
         callback(docSnapshot.data());
       } else {
-        //console.log('Document does not exist!');
+        this.notificationService.showError('Der Channel existiert nicht')
       }
     });
   }
