@@ -134,6 +134,7 @@ export class ChannelChatComponent {
     this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
   }
 
+
   scrollToMessage(id: string) {
     const element = document.getElementById(id);
     if (element) {

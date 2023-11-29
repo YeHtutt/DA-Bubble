@@ -23,6 +23,7 @@
             <div class="message-container">
                 <div class="message-content module line-clamp">
                     <span>{{message.text}}</span>
+                    <img class="file-upload-logo" *ngIf="message.fileUpload.length !== 0" src="assets/img/file.png" alt="">
                 </div>
                 <div class="message-info">
                     <span>{{message.user.name}}</span>
