@@ -80,7 +80,7 @@ export class UsersFirebaseService implements OnInit {
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
     this.getCurrentUserData(user.name, user.email, user.photoURL);
-    return user;
+    return new UserProfile(user);  // Changed it so it gives back a user Object
   }
 
   getCurrentUserData(name: any, email: any, photoURL: any) {

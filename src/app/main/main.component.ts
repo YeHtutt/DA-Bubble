@@ -32,7 +32,8 @@ export class MainComponent implements OnInit {
   private statusUpdateSubscription?: Subscription;
   private readonly heartbeatInterval = 60000;
   loggedinUser: any;
-  userSubject?: any;
+  userSubjectUnSub: Subscription = new Subscription();
+  private unsubscribeUserFn!: () => void;
 
   constructor(
     private router: Router,
@@ -54,15 +55,20 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
-    this.userSubject = this.userFbService.getCurrentUserSubject();
-    this.userSubject.observable.subscribe((user: any) => { this.loggedinUser = user; });
+    this.getUserDataAndSubscribe()
   }
 
   ngOnDestroy() {
     this.updateUserStatus(false);
     this.statusUpdateSubscription?.unsubscribe();
-    this.userSubject.unsubscribe.unsubscribeFn();
-    this.userSubject.observable.unsubscribe();
+    this.unsubscribeUserFn();
+    this.userSubjectUnSub.unsubscribe();
+  }
+
+  getUserDataAndSubscribe() {
+    const observable = this.userFbService.getCurrentUserSubject();
+    this.unsubscribeUserFn = observable.unsubscribe;
+    this.userSubjectUnSub = observable.observable.subscribe((user: any) => { this.loggedinUser = user });
   }
 
 
