@@ -96,15 +96,6 @@ export class UsersFirebaseService implements OnInit {
     this.loggedInUserImg = photoURL;
   }
 
-  // getCurrentUserSubject() {
-  //   const uid = this.getFromLocalStorage();
-  //   const unsub = onSnapshot(doc(this.firestore, "users", `${uid}`), (doc) => {
-  //     return doc.data();
-  //   });
-  // }
-
-  private unsubscribeFn?: () => void;
-
   getCurrentUserSubject() {
     const userSubject = new Subject<any>();
     const uid = this.getFromLocalStorage();

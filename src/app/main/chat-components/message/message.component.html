@@ -10,7 +10,7 @@
         class="content-container">
         <div [ngClass]="{'creator-info-reverse': currentUser == message.user.id && message.origin === 'chat'}"
             class="creator-info">
-            <span class="user-name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
+            <span class="user-name" (click)="openProfileDialog(message.user)">{{ messageUser?.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
         <div *ngIf="!this.isEmptyOrWhitespace(message.text)" [ngClass]="messageClasses(message)" class="message">
