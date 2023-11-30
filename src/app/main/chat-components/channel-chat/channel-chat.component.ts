@@ -71,7 +71,6 @@ export class ChannelChatComponent {
   searchMessage: boolean = false;
   messageSelectionSub: Subscription = new Subscription();
   allUsers: UserProfile[] = [];
-  allUsers$: Observable<UserProfile[]> = new Observable;
   isLoading: boolean = true;
   
 
@@ -104,7 +103,6 @@ export class ChannelChatComponent {
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
         });
-        // this.allUsers$ = this.userService.getAllUserOnlineStatus()
       }).catch(err => {
         //console.error("Error fetching channel data:", err);
       });
