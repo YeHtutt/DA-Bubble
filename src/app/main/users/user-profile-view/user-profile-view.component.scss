@@ -113,6 +113,11 @@
                 line-height: normal;
                 color: #1381FF;
                 cursor: pointer;
+                transition: filter 0.3s;
+
+                &:hover {
+                    filter: brightness(0.8);
+                }
             }
 
             img {
@@ -157,6 +162,11 @@
             font-style: normal;
             font-weight: 400;
             line-height: normal;
+            transition: filter 0.3s;
+
+            &:hover {
+                filter: brightness(0.8);
+            }
         }
     }
 
