@@ -27,7 +27,7 @@
             </div>
             <mat-form-field appearance="outline" color="primary" class="width-100 mgn-t">
                 <input matInput placeholder="{{ this.usersFbService.loggedInUserName }}" formControlName="name"
-                    type="text">
+                    type="text" (mouseenter)="showNameRequiredNotification()">
                 <mat-error *ngIf="userEditForm.get('name')?.hasError('required')">Name eingeben</mat-error>
             </mat-form-field>
         </div>
@@ -38,7 +38,7 @@
             </div>
             <mat-form-field appearance="outline" color="primary" class="width-100 mgn-t">
                 <input matInput placeholder="{{ this.usersFbService.loggedInUserEmail }}" formControlName="email"
-                    type="email">
+                    type="email" (mouseenter)="showEmailRequiredNotification()">
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('required')">Email eingeben</mat-error>
                 <mat-error *ngIf="userEditForm.get('email')?.hasError('email')">Richtige Email eingeben</mat-error>
             </mat-form-field>
