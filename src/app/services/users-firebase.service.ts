@@ -22,9 +22,6 @@ export class UsersFirebaseService implements OnInit {
   user: UserProfile = new UserProfile;
   id: any;
 
-
-
-
   loggedInUserID: any;
   loggedInUserImg: any;
   loggedInUserName: any;
@@ -50,6 +47,10 @@ export class UsersFirebaseService implements OnInit {
       throw error;
     }
   }
+
+
+  
+
 
 
   saveToLocalStorage(idValue: any) {
