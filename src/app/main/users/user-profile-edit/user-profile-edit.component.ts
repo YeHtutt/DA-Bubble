@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UsersFirebaseService } from '../../../services/users-firebase.service';
 import { UserProfileChooseAvatarComponent } from '../user-profile-choose-avatar/user-profile-choose-avatar.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -29,9 +30,9 @@ export class UserProfileEditComponent {
   constructor(
     public dialog: MatDialog, public usersFbService: UsersFirebaseService,
     private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>,
-    private notificationService: NotificationService) {
-
-  }
+    private notificationService: NotificationService,
+    private authService: AuthenticationService
+  ) { }
 
   userEditForm = new FormGroup({
     "email": new FormControl('', [Validators.required, Validators.email]),
@@ -44,44 +45,34 @@ export class UserProfileEditComponent {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
       this.saveNewPic(this.currentPic, currentUserID);
-
-      if (currentUserID) {
-        // Aktualisieren Sie das Benutzerprofil in Firestore
-        this.usersFbService.updateUserProfile(currentUserID, formData) //mit currentUserID und formDatas
-          .then(() => {
-            this.profileEditSuccess = true;
-            //this.updateFirebaseAuthEmail(formData.email);
-            this.openSnackBar();
-          })
-          .catch((error: any) => {
-            this.profileEditSuccess = false;
-            this.openSnackBar();
-          });
-      }
+      this.changeEmailInAuth(formData.email);
+      this.changeEmailInFirebase(currentUserID, formData);
     }
-
-  //   if (currentUserID) {
-  //     try {
-  //       await this.usersFbService.updateUserEmail(currentUserID, formData.email);
-  //       const userProfileUpdateResult = await this.usersFbService.updateUserProfile(currentUserID, formData);
-
-  //       if (userProfileUpdateResult.success) {
-  //         this.profileEditSuccess = true;
-  //         this.openSnackBar();
-  //       } else {
-  //         this.profileEditSuccess = false;
-  //         this.openSnackBar();
-  //       }
-  //     } catch (error) {
-  //       console.error('Error updating user profile:', error);
-  //       this.profileEditSuccess = false;
-  //       this.openSnackBar();
-  //     }
-  //   }
-  // }
     this.dialog.closeAll();
   }
-  
+
+  changeEmailInAuth(newEmail: any) {
+    this.authService.updateEmail(newEmail).then(() => {
+      this.notificationService.showSuccess('E-Mail erfolgreich geändert');
+    }).catch(error => {
+      this.notificationService.showError('Fehler beim Ändern der E-Mail');
+    });
+  }
+
+
+  changeEmailInFirebase(currentUserID: string | null, formData: Object) {
+    // Aktualisieren Sie das Benutzerprofil in Firestore
+    this.usersFbService.updateUserProfile(currentUserID!, formData) //mit currentUserID und formDatas
+      .then(() => {
+        this.profileEditSuccess = true;
+        this.openSnackBar();
+      })
+      .catch((error: any) => {
+        this.profileEditSuccess = false;
+        this.openSnackBar();
+      });
+  }
+
 
   /** user Profilbild mit eigene Bilder aus dem PC zu aktualisieren*/
   onSelect(event: any) {

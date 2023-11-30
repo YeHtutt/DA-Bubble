@@ -1,17 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'src/app/services/message.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { ThreadService } from 'src/app/services/thread.service';
-import { FileUpload } from 'src/app/models/file-upload';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { UserProfile } from 'src/app/models/user-profile';
-import { User } from '@angular/fire/auth';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { PresenceService } from 'src/app/services/presence.service';
+import { FileUpload } from 'src/app/models/file-upload';
+import { UserProfile } from 'src/app/models/user-profile';
+import { FileStorageService } from 'src/app/services/file-storage.service';
+import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { MessageService } from 'src/app/services/message.service';
+import { ThreadService } from 'src/app/services/thread.service';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 
 
 interface Reaction {
@@ -62,8 +60,7 @@ export class MessageComponent {
     private fileService: FileStorageService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private firebaseUtils: FirebaseUtilsService,
-    private presence: PresenceService
+    private firebaseUtils: FirebaseUtilsService
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);

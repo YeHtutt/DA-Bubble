@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-// import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Observable, firstValueFrom, map, of, switchMap, tap } from 'rxjs';
 import { Auth, authState, onAuthStateChanged, signOut } from '@angular/fire/auth';
-import { getDatabase, ref, serverTimestamp } from 'firebase/database';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { serverTimestamp } from 'firebase/database';
+import { Observable, firstValueFrom, map, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +43,6 @@ export class PresenceService {
     const connection = this.db.object('.info/connected').valueChanges().pipe(
       map(connected => connected ? 'online' : 'offline')
     );
-
 
     return new Observable(subscriber => {
       onAuthStateChanged(this.afAuth, user => {

@@ -198,42 +198,4 @@ export class UsersFirebaseService implements OnInit {
     const collRef = collection(this.firestore, 'users');
     return collectionData(collRef) as Observable<UserProfile[]>;
   }
-
-
-  // async getAuthUser(): Promise<FirebaseAuthUser | null> {
-  //   try {
-  //     const userCredential = await this.auth.currentUser;
-  //     return userCredential || null;
-  //   } catch (error) {
-  //     console.error('Error getting auth user:', error);
-  //     return null;
-  //   }
-  // }
-
-
-  // async updateUserEmail(userId: any, newEmail: any): Promise<void> {
-  //   try {
-  //     const user = await this.auth.currentUser;
-  //     if (user) {
-  //       await user.updateEmail(newEmail);
-  //     } else {
-  //       throw new Error('User not found');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating user email:', error);
-  //     throw error;
-  //   }
-  // }
-
-
-  // async updateUserProfile(userID: string, formData: any): Promise<{ success: boolean }> {
-  //   try {
-  //     const userRef = doc(this.firestore, 'users', userID);
-  //     await setDoc(userRef, formData, { merge: true });
-  //     return { success: true };
-  //   } catch (error) {
-  //     console.error('Error updating user profile:', error);
-  //     return { success: false };
-  //   }
-  // }
 }
