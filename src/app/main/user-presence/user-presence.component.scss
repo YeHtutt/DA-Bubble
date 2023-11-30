@@ -1,0 +1,22 @@
+.online-status {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.online-status-small {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.is-online {
+    background-color: #92C83E;
+}
+
+.is-offline {
+    background-color: #686868;
+}
+
+.is-away {
+    background-color: orange;
+}

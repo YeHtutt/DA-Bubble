@@ -3,7 +3,7 @@
     class="message-container" id="{{message.messageId}}">
     <div class="user-avatar-container">
         <img class="user-avatar" src="{{ messageUser?.photoURL }}" alt="">
-        <img src="{{messageUser?.isOnline ? 'assets/img/Online.png' : 'assets/img/Offline.png'}}" alt="">
+        <app-user-presence [userID]="messageUser?.id"></app-user-presence>
     </div>
     <div *ngIf="!showEdit"
         [ngClass]="{'content-container-reverse': currentUser == message.user.id && message.origin === 'chat'}"

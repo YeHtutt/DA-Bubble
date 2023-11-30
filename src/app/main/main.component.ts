@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserProfile } from 'src/app/models/user-profile';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DrawerService } from 'src/app/services/drawer.service';
@@ -10,6 +10,7 @@ import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
+import { PresenceService } from '../services/presence.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class MainComponent implements OnInit {
   loggedinUser: any;
   userSubjectUnSub: Subscription = new Subscription();
   private unsubscribeUserFn!: () => void;
+  
 
   constructor(
     private router: Router,
@@ -41,7 +43,8 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     public drawerService: DrawerService,
     public threadService: ThreadService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private presence: PresenceService
   ) { }
 
 
@@ -55,7 +58,7 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
-    this.getUserDataAndSubscribe()
+    this.getUserDataAndSubscribe();
   }
 
   ngOnDestroy() {
@@ -96,6 +99,7 @@ export class MainComponent implements OnInit {
 
   userLoggedout() {
     this.authService.logout();
+    this.presence.signOut();
     this.router.navigate(['/login']);
   }
 

@@ -11,6 +11,7 @@ import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { User } from '@angular/fire/auth';
 import { Observable, Subscription } from 'rxjs';
+import { PresenceService } from 'src/app/services/presence.service';
 
 
 interface Reaction {
@@ -50,6 +51,7 @@ export class MessageComponent {
   messageUser?: UserProfile;
   users$: Observable<UserProfile[]> = new Observable;
   usersSub: Subscription = new Subscription();
+  
 
 
   constructor(
@@ -60,7 +62,8 @@ export class MessageComponent {
     private fileService: FileStorageService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private firebaseUtils: FirebaseUtilsService
+    private firebaseUtils: FirebaseUtilsService,
+    private presence: PresenceService
   ) {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);

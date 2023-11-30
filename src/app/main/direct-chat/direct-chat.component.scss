@@ -7,17 +7,18 @@
 
 .open-panel {
   transition: color 0.2s ease, transform 0.2s ease;
+
   &:hover {
-      cursor: pointer;
-      color: #535AF1;
+    cursor: pointer;
+    color: #535AF1;
 
-      img {
-          filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
-      }
+    img {
+      filter: brightness(0) saturate(100%) invert(30%) sepia(79%) saturate(1665%) hue-rotate(223deg) brightness(97%) contrast(95%);
+    }
 
-      .main-icon {
-          scale: 1.2;
-      }
+    .main-icon {
+      scale: 1.2;
+    }
   }
 }
 
@@ -298,6 +299,7 @@ mat-toolbar {
 }
 
 .contact {
+  position: relative;
   display: flex;
   align-items: center;
   margin: 0 0 0 27px;
@@ -324,6 +326,17 @@ mat-toolbar {
     background-color: #ECEEFE;
     border-radius: 30px;
     cursor: pointer;
+  }
+}
+
+app-user-presence {
+  position: absolute;
+  left: 33px;
+  bottom: 2px;
+
+  div {
+    width: 12px;
+    height: 12px;
   }
 }
 
