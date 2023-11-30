@@ -29,7 +29,7 @@ export class MessageComponent {
   @Input() parentMessageId: any;
   @Input() collPath: any;
   @Input() message: any;
-  @Input() users$: Observable<UserProfile[]> = new Observable;
+  @Output() messageLoaded = new EventEmitter<boolean>();
   public currentUser: string;
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
@@ -44,12 +44,11 @@ export class MessageComponent {
   isPDF: boolean = false;
   imageFile?: FileUpload;
   pdfFile?: FileUpload;
-  @Output() messageLoaded = new EventEmitter<boolean>();
   shiftPressed: boolean = false;
   messageSending: boolean = false;
   currentId: string = '';
-  // userOnlineStatus?: boolean;
   messageUser?: UserProfile;
+  users$: Observable<UserProfile[]> = new Observable;
   usersSub: Subscription = new Subscription();
 
 
@@ -73,8 +72,7 @@ export class MessageComponent {
     this.route.params.subscribe(params => {
       let channelId = params['channelId'];
       let chatId = params['chatId'];
-      // this.users$ = this.userService.getAllUserOnlineStatus();
-      this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
+      this.loadUserData();
       if (channelId) {
         this.currentId = channelId;
         this.origin = 'channel'
@@ -91,14 +89,17 @@ export class MessageComponent {
     this.messageLoaded.emit(true);
   }
 
+
   ngOnDestroy() {
     this.usersSub.unsubscribe();
   }
 
 
-  // async loadUserOnlineStatus() {
-  //   await this.userService.getUser(this.message.user.id).then((user: any) => this.userOnlineStatus = user.isOnline);  
-  // }
+  loadUserData() {
+    this.users$ = this.userService.getAllUserOnlineStatus();
+    this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
+  }
+
 
   getUserForMessage(users: any[]) {
     users.forEach((user: UserProfile) => {
