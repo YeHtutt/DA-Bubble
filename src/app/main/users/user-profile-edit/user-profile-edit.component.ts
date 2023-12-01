@@ -47,7 +47,7 @@ export class UserProfileEditComponent {
       this.saveNewPic(this.currentPic, currentUserID);
       this.changeEmailInAuth(formData.email);
       this.changeEmailInFirebase(currentUserID, formData);
-      this.usersFbService.changeUserInMessages(currentUserID!);
+      // this.usersFbService.changeUserInMessages(currentUserID!);
     }
     this.dialog.closeAll();
   }
