@@ -2,8 +2,9 @@ import { Injectable, OnInit } from '@angular/core';
 import { Auth, User as FirebaseAuthUser } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { UserProfile } from '../models/user-profile';
+import { Message } from '../models/message';
 
 
 
@@ -194,8 +195,57 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
-  getAllUserOnlineStatus(): Observable<UserProfile[]> {
+  getAllUserData(): Observable<UserProfile[]> {
     const collRef = collection(this.firestore, 'users');
     return collectionData(collRef) as Observable<UserProfile[]>;
+  }
+
+  // Funktions to change user in messages when users change their names
+
+  async changeUserInMessages(uid: string) {
+    const user = await this.getUser(uid);
+    const colls: string[] = ['chat', 'channel'];
+    const allMsgIds: string[] = await this.collectAllMsgIds(colls);
+    console.log(allMsgIds)
+    this.changeUser(allMsgIds, user)
+  }
+
+  async collectAllMsgIds(colls: string[]) {
+    const promises: Promise<string[]>[] = colls.map(coll => this.getMessageIds(coll));
+    const messagesIdArrays: string[][] = await Promise.all(promises);
+    const messagesId: string[] = messagesIdArrays.reduce((acc, val) => [...acc, ...val], []);
+    return messagesId;
+  }
+
+  async getMessageIds(coll: string) {
+    const channelId: string[] = await this.getCollectionDocIDs(coll);
+    const promises: Promise<string[]>[] = channelId.map(docId =>
+      this.getCollectionDocIDs(`${coll}/${docId}/message`).then(messageIds =>
+        messageIds.map(messageId => `${coll}/${docId}/message/${messageId}`)
+      )
+    );
+    const messagesIdArrays: string[][] = await Promise.all(promises);
+    const messagesId: string[] = messagesIdArrays.reduce((acc, val) => [...acc, ...val], []);
+    return messagesId;
+  }
+
+  async getCollectionDocIDs(coll: string) {
+    const docIds: string[] = [];
+    const querySnapshot = await getDocs(collection(this.firestore, coll));
+    querySnapshot.forEach((doc) => {
+      docIds.push(doc.id)
+    });
+    return docIds;
+  }
+
+  changeUser(allMsgIds: string[], user: any) {
+    allMsgIds.forEach((msgPath: string) => {
+      const docRef = doc(this.firestore, msgPath);
+      getDoc(docRef).then((msg: any) => {
+        if (msg.data().user.id === user.id) {
+          updateDoc(docRef, { user: user.toJSON() });
+        }
+      });
+    })
   }
 }

@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
 import { MessageSelectionService } from 'src/app/services/message-selection.service';
+import { Message } from 'src/app/models/message';
+import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UserProfile } from 'src/app/models/user-profile';
 
 
 @Component({
@@ -24,15 +27,23 @@ export class SearchBarComponent {
   constructor(
     private searchService: SearchService,
     public dialog: MatDialog,
-    public messageSelectionService: MessageSelectionService
-    ) {}
+    public messageSelectionService: MessageSelectionService,
+    private userService: UsersFirebaseService
+  ) { }
 
   async searchData() {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(this.search, this.messageSearch)
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
     this.filteredMessages = searchResult.filteredMessages
+    // this.updateUserOnMessage(searchResult.filteredMessages)
   }
+
+  // async updateUserOnMessage(messages: []) {
+  //   if (messages.length > 0) {
+  //     const test = messages.map((msg: Message) => this.userService.getUser(msg.user.id).then((user: UserProfile) => msg.user.name = user.name))
+  //   }
+  // }
 
   onMessageSelect(messageId: string) {
     this.messageSelectionService.selectMessage(messageId);
