@@ -4,7 +4,7 @@
       <button mat-flat-button class="child-node-btn" (click)="this.drawerService.close(); this.threadService.closeThread()" [routerLink]="['channel/' + node.channelId]">
         <div>{{node.channelName}}</div>
         <mat-icon *ngIf="level == 1" class="tag">tag</mat-icon>
-        <mat-icon *ngIf="level == 2">lock</mat-icon>
+        <mat-icon *ngIf="level == 2" class="material-icons-outlined">lock</mat-icon>
       </button>
     </mat-tree-node>
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
@@ -17,7 +17,7 @@
                 {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
               </mat-icon>
             </button>
-            <img src="../../../assets/img/channels-icon.png">
+            <mat-icon class="material-icons-outlined">workspaces</mat-icon>
             <h3>{{node.channelName}}</h3>
           </div>
           <mat-icon class="basic-button" (click)="openCreateChannelDialog()">add</mat-icon>
@@ -32,7 +32,7 @@
                 {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
               </mat-icon>
             </button>
-            <h3 class="other-groups"><mat-icon>group_work</mat-icon>{{node.channelName}}</h3>
+            <h3 class="other-groups"><mat-icon>workspaces</mat-icon>{{node.channelName}}</h3>
           </div>
         </div>
       </div>
