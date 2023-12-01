@@ -1,8 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { DirectChat } from 'src/app/models/direct-chat';
+import { UserProfile } from 'src/app/models/user-profile';
 import { MessageService } from 'src/app/services/message.service';
+import { PresenceService } from 'src/app/services/presence.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
@@ -11,30 +14,33 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
   styleUrls: ['./user-profile-sub-view.component.scss']
 })
 export class UserProfileSubViewComponent {
-  userPhotoURL: string;
-  userName: string;
-  userEmail: string;
+  userPhotoURL?: string;
+  userName?: string;
+  userEmail?: string;
   userId: string;
+  presence$: Observable<any> = new Observable();
+  
+
+  constructor(public dialog: MatDialog, 
+    public userFbService: UsersFirebaseService,
+    public dialogRef: MatDialogRef<UserProfileSubViewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private messageService: MessageService,
+    private router: Router,
+    private presenceService: PresenceService
+    ) {
+    this.userId = data.id;
+    this.userFbService.getUser(data.id).then((user: UserProfile) => {
+      this.userPhotoURL = user.photoURL;
+      this.userName = user.name;
+      this.userEmail = user.email;
+    });
+  }
 
 
   ngOnInit() {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
-  }
-  
-
-  constructor(public dialog: MatDialog, public userFbService: UsersFirebaseService,
-    public dialogRef: MatDialogRef<UserProfileSubViewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private messageService: MessageService,
-    private router: Router) {
-    this.userPhotoURL = data.photoURL;
-    this.userName = data.name;
-    this.userEmail = data.email;
-    this.userId = data.id;
-  }
-
-
-  onNoClick() {
-
+    this.presence$ = this.presenceService.getPresence(this.userId);
+    
   }
 
 

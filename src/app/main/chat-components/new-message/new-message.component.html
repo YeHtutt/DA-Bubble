@@ -25,7 +25,7 @@
             </div>
         </header>
         <div class="input-message-container">
-            <textarea [(ngModel)]="text" placeholder="Starte eine neue Nachricht"></textarea>
+            <textarea [(ngModel)]="text" placeholder="Starte eine neue Nachricht" (keyup)="sendByKey($event)" (keydown)="sendByKey($event)"></textarea>
             <div class="control-container">
                 <div class="chat-action-box">
                     <div class="file-upload-button">

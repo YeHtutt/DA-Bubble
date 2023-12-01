@@ -16,10 +16,12 @@
         </div>
 
         <div class="flex-row">
-            <img src="assets/img/Online.png" *ngIf="this.userFbService.loggedInUserID">
-            <p *ngIf="this.userFbService.loggedInUserID">Anwesend</p>
-            <img src="assets/img/Offline.png" *ngIf="!this.userFbService.loggedInUserID">
-            <p *ngIf="!this.userFbService.loggedInUserID">Abwesend</p>
+            <app-user-presence [userID]="userFbService.loggedInUserID"></app-user-presence>
+            <ng-container *ngIf="presence$ | async as presence">
+                <p *ngIf="presence.status === 'online'">Anwesend</p>
+                <p *ngIf="presence.status === 'offline'">Abwesend</p>
+                <p *ngIf="presence.status === 'away'">Beschäftigt</p>
+            </ng-container>
         </div>
     </div>
     <div class="profile-view-email">

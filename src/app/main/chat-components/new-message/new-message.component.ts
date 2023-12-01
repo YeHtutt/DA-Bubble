@@ -37,6 +37,8 @@ export class NewMessageComponent {
   fileUpload?: FileUpload;
   fileType: string = '';
   searchMessage: boolean = false;
+  shiftPressed: boolean = false;
+  messageSending: boolean = false;
 
 
   constructor(
@@ -50,6 +52,7 @@ export class NewMessageComponent {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
+
   send() {
     if (this.receiver instanceof UserProfile) {
       let origin = 'chat';
@@ -60,6 +63,22 @@ export class NewMessageComponent {
     }
     this.text = '';
     this.fileUpload = undefined;
+  }
+
+
+  sendByKey(event: KeyboardEvent) {
+    if (event.key == 'Shift') {
+      this.shiftPressed = event.type === 'keydown';
+    }
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '' && !this.messageSending) {
+      this.messageSending = true;
+      this.send();
+    }
+  }
+
+
+  isEmptyOrWhitespace(): boolean {
+    return this.text.replace(/\n/g, '').trim().length === 0;
   }
 
 
@@ -76,6 +95,7 @@ export class NewMessageComponent {
     this.fileUpload = undefined;
   }
 
+
   createDirectChatObject(receiver: UserProfile): DirectChat {
     return new DirectChat({
       chatId: `${this.currentUser.id}_${receiver.id}`,
@@ -84,6 +104,7 @@ export class NewMessageComponent {
       user2: receiver.id,
     });
   }
+
 
   createMessageObject(origin: string) {
     return new Message({
@@ -108,12 +129,14 @@ export class NewMessageComponent {
     this.filteredChannel = searchResult.filteredChannel;
   }
 
+
   selectReceiver(receiver: any) {
     this.search = receiver.name || `# ${receiver.channelName}`;
     this.receiver = receiver;
     this.filteredChannel = [];
     this.filteredUser = [];
   }
+
 
   toggleSearchOutput() {
     this.searchOutput = !this.searchOutput;
@@ -136,14 +159,17 @@ export class NewMessageComponent {
     setTimeout(() => this.showTagMenu = !this.showTagMenu, 8000);
   }
 
+
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
   }
 
+
   toggleEmoji() {
     this.isOpened = !this.isOpened;
   }
+
 
   addEmoji(emoji: string) {
     const text = `${emoji}`;
@@ -169,11 +195,13 @@ export class NewMessageComponent {
     }
   }
 
+
   setFileType(type: string) {
     if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
     if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
     if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
+
 
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
