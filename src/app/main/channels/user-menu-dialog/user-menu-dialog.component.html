@@ -8,8 +8,9 @@
     <div class="users-list">
         <div *ngFor="let user of this.channel.usersData" class="user-in-list">
             <img class="profil-icon" src="{{ user.photoURL }}">
-            <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
-            <img *ngIf="!user.isOnline" class="online-status" src="assets/img/Offline.png">
+            <!-- <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
+            <img *ngIf="!user.isOnline" class="online-status" src="assets/img/Offline.png"> -->
+            <app-user-presence [mini]="true" [userID]="user.id"></app-user-presence>
             <div>{{user.name}}</div>
         </div>
     </div>

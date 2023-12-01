@@ -57,12 +57,12 @@
 .user-avatar-container {
     position: relative;
     height: 60px;
+}
 
-    img:last-of-type {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-    }
+app-user-presence {
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 

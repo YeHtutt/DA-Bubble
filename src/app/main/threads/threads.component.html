@@ -7,10 +7,10 @@
     </header>
     <main #scroller>
         <div class="avatar-message-container">
-            <img class="avatar" src="{{ message.user.photoURL }}" alt="">
+            <img class="avatar" src="{{ userThread.photoURL }}" alt="">
             <div class="message-time">
                 <div class="name-time">
-                    <h3>{{ message.user.name }}</h3>
+                    <h3>{{ userThread.name }}</h3>
                     <span>{{getTimeOfDate(message.time)}} Uhr</span>
                 </div>
                 <div class="message-bubble">

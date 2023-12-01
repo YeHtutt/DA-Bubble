@@ -1,0 +1,8 @@
+<div *ngIf="presence$ | async as presence" class="online-status"
+[ngClass]="{
+    'is-online': presence.status === 'online',
+    'is-away': presence.status === 'away',
+    'is-offline': presence.status === 'offline',
+    'online-status-small': mini
+}">
+</div>

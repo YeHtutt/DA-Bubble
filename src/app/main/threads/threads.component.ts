@@ -31,7 +31,7 @@ export class ThreadsComponent {
   collPath = '';
   parentMessageId: string = '';
   thread: any;
-
+  userThread: UserProfile = new UserProfile();
   fileUploadThread?: FileUpload;
   fileTypeThread: string = '';
   imageFile?: FileUpload;
@@ -81,6 +81,7 @@ export class ThreadsComponent {
         this.getPDFurl(message);
         this.collPath = `${message.origin}/${this.currentId}/message/${message.messageId}/thread`
         this.threadService.subReplies(this.collPath);
+        this.userService.getUser(this.message.user.id).then((user: UserProfile) => this.userThread = user);
       })
     );
 
@@ -218,10 +219,6 @@ export class ThreadsComponent {
     this.fileUploadThread = undefined;
     this.fileTypeThread = '';
   }
-
-
-
-
 
 
   sendByKey(event: KeyboardEvent) {

@@ -3,8 +3,7 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePaddingIndent="0px" class="child-node contact"
     (click)="selectReceiver(node.id)">
     <img class="profil-icon" src="{{ node.photoURL }}">
-    <img *ngIf="node.isOnline" class="online-status" src="assets/img/Online.png">
-    <img *ngIf="!node.isOnline" class="online-status" src="assets/img/Offline.png">
+    <app-user-presence [mini]="true" [userID]="node.id"></app-user-presence>
     <div>{{node.name}}</div>
   </mat-tree-node>
   <mat-tree-node *matTreeNodeDef="let node;when: messageTreeService.hasChild" class="highest-node">

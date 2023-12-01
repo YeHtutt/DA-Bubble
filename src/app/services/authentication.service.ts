@@ -112,4 +112,10 @@ export class AuthenticationService {
     this.isAuthenticated = value;
   }
 
+  async updateEmail(newEmail: string): Promise<void> {
+    return this.afAuth.currentUser.then(user => {
+      return user?.updateEmail(newEmail);
+    });
+  }
+
 }

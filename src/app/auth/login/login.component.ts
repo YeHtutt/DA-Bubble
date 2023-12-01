@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { PresenceService } from 'src/app/services/presence.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private usersFbService: UsersFirebaseService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private presence: PresenceService
   ) {
   }
 
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(email, password).subscribe(() => {
         const user = this.authService.getCurrentUser();
-
+        this.presence.setPresence('online');
         if (user) {
           this.usersFbService.getLoggedInUser(user.uid);
           this.usersFbService.saveToLocalStorage(user.uid);
