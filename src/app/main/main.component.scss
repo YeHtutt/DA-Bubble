@@ -38,7 +38,8 @@ app-search-bar {
 }
 
 .left-side {
-  width: 366px;
+  width: calc(25% - 25px);
+  padding-left: 25px;
 }
 
 .backdrop {
@@ -146,7 +147,7 @@ mat-drawer {
 .mat-drawer-container {
   height: calc(100vh - 100px);
   background-color: #ECEEFE;
-  padding: 0 25px 25px 25px;
+  padding: 0 25px 20px 25px;
   display: flex;
   gap: 20px;
 }
@@ -156,13 +157,21 @@ mat-drawer {
 }
 
 
-
-
-mat-drawer-content {
-  width: 100%;
-
+.drawer-content-open {
+  transition: width 0.4s ease-in-out;
+  transition-delay: 0.2s;
 }
 
+
+
+.drawer-content-closed {
+  width: 100%;
+}
+
+.drawer-content-open {
+  width: 75%;
+
+}
 
 
 

@@ -84,7 +84,7 @@
       <mat-icon>edit_square</mat-icon>
     </button>
   </mat-drawer>
-  <mat-drawer-content [class.drawer-open]="!isDrawerOpen">
+  <mat-drawer-content [class.drawer-content-open]="isDrawerOpen" [class.drawer-content-closed]="!isDrawerOpen">
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
