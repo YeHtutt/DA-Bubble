@@ -35,6 +35,13 @@ app-search-bar {
 .logo-search-box {
   display: flex;
   align-items: center;
+
+}
+
+.search-and-profile {
+  display: flex;
+  width: calc(75% - 20px);
+  justify-content: space-between;
 }
 
 .left-side {
@@ -42,15 +49,6 @@ app-search-bar {
   padding-left: 25px;
 }
 
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
 
 .search-box {
   position: relative;
@@ -65,7 +63,6 @@ app-search-bar {
   padding: 0 45px;
   font-size: 24px;
   font-weight: 400;
-  margin-left: 127px;
 }
 
 .profil-box {
@@ -161,8 +158,6 @@ mat-drawer {
   transition: width 0.4s ease-in-out;
   transition-delay: 0.2s;
 }
-
-
 
 .drawer-content-closed {
   width: 100%;
