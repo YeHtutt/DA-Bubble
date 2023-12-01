@@ -13,6 +13,8 @@ import { FileUpload } from 'src/app/models/file-upload';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MessageSelectionService } from 'src/app/services/message-selection.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -52,6 +54,8 @@ export class ChatComponent {
   private observer?: IntersectionObserver;
   isElementVisible: boolean = false;
   searchMessage: boolean = false;
+  messageSelectionSub: Subscription = new Subscription();
+  allUsers: UserProfile[] = [];
 
 
   constructor(
@@ -63,7 +67,8 @@ export class ChatComponent {
     public threadService: ThreadService,
     public dialog: MatDialog,
     private fileService: FileStorageService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private messageSelectionService: MessageSelectionService
   ) {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
@@ -75,19 +80,26 @@ export class ChatComponent {
       this.getReceiverData();
       this.firebaseUtils.getDocData('chat', this.chatId).then(() => {
         this.messageService.subMessage('chat', this.chatId);
+        setTimeout(() => this.scrollDown(), 500);
       }).catch(err => {
         //console.error("Error fetching channel data:", err);
       });
     });
+    this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
+    this.loadUserData();
   }
+
 
   ngAfterViewInit() {
     this.initIntersectionObserver();
   }
 
+
   ngOnDestroy() {
     if (this.observer) this.observer.disconnect();
+    if (this.messageSelectionSub) this.messageSelectionSub.unsubscribe();
   }
+
 
   initIntersectionObserver() {
     this.observer = new IntersectionObserver((entries) => {
@@ -106,9 +118,32 @@ export class ChatComponent {
     return this.messageService.messages
   }
 
+
+  trackByFunction(index: number, item: any) {
+    return item.messageId; // oder eine eindeutige Eigenschaft der Nachricht
+  }
+
+
+  async loadUserData() {
+    this.userService.getUsers().then((users: any) => this.allUsers = users);
+  }
+
+
   scrollDown() {
     this.scrollElement = this.scrollElementRef?.nativeElement;
     this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
+  }
+
+
+  scrollToMessage(id: string) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.classList.add('animation-message');
+      setTimeout(() => {
+        element.classList.remove('animation-message');
+      }, 1200);
+    }
   }
 
 
@@ -133,6 +168,8 @@ export class ChatComponent {
     this.text = '';
     this.fileUpload = undefined;
     this.fileType = '';
+    this.messageSelectionService.selectMessage('true');
+    setTimeout(() => this.scrollDown(), 500);
   }
 
 
@@ -259,11 +296,13 @@ export class ChatComponent {
     }
   }
 
+
   setFileType(type: string) {
     if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
     if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
     if (type.includes('pdf')) this.fileType = 'assets/img/icons/pdf.png';
   }
+
 
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);

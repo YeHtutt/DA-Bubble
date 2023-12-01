@@ -7,7 +7,7 @@
             </div>
         </header>
         <main #scroller>
-            <app-message *ngFor="let msg of getAllMessages()" [message]="msg"></app-message>
+            <app-message *ngFor="let msg of getAllMessages(); trackBy: trackByFunction" [message]="msg" [allUsers]="allUsers"></app-message>
             <div *ngIf="!chatExists" class="new-conversation-container">
                 <div class="user-info-box">
                     <img src="{{receiver.photoURL}}" alt="">
