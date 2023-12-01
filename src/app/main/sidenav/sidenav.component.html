@@ -8,7 +8,6 @@
     </span>
     <div>{{ isDrawerOpen ? 'Workspace-menu schließen' : 'Workspace-menu öffnen' }} </div>
 </button>
-
 <mat-drawer-container class="mat-drawer-container" autosize>
     <mat-drawer [class.side-nav-mobile]="isMobile" #drawer [opened]="true"  mode="side">
         <div class="sidenav">
@@ -37,7 +36,6 @@
             </button>
         </div>
     </mat-drawer>
-
     <mat-drawer-content [style.margin-left]>
         <router-outlet></router-outlet>
     </mat-drawer-content>

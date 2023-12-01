@@ -15,10 +15,8 @@
   z-index: 200;
 }
 
-mat-drawer {
-  height: calc(100vh - 100px);
 
-}
+
 
 .mat-drawer-inner-container {
   position: relative;
@@ -30,7 +28,7 @@ mat-drawer {
 }
 
 .mat-drawer-container {
-  height: calc(100vh - 100px);
+  height: calc(100% - 100px);
   background-color: #ECEEFE;
 }
 
@@ -48,7 +46,7 @@ mat-drawer {
   width: fit-content;
   padding: 20px 30px;
   background-color: white;
-  height: calc(100vh - 100px);
+  height: calc(100% - 40px);
 }
 
 .sidenav-header {
