@@ -237,31 +237,6 @@ mat-toolbar {
   }
 }
 
-.add-channel {
-  display: flex;
-  align-items: center;
-  margin: 20px 0 20px 37px;
-  font-size: 16px;
-  font-weight: 500;
-  color: black;
-
-  span {
-    margin-top: 2px;
-  }
-
-  &:hover {
-    cursor: pointer;
-
-    :first-child {
-      color: #535AF1;
-    }
-
-    span {
-      color: #535AF1;
-    }
-  }
-}
-
 .add-icon {
   height: 22px;
   width: 22px;
