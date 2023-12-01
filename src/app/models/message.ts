@@ -25,7 +25,6 @@ export class Message {
         this.fileUpload = obj ? obj.fileUpload : [];
         this.threadCount = obj ? obj.threadCount : '';
         this.timeOflastReply = obj ? obj.timeOflastReply : '';
-
     }
 
     public toJSON() {
