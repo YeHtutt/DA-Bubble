@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
@@ -71,6 +71,7 @@ export class ChannelChatComponent {
   searchMessage: boolean = false;
   messageSelectionSub: Subscription = new Subscription();
   isLoading: boolean = true;
+  resetNewMessage = new EventEmitter<any>();
   
 
 
@@ -220,6 +221,7 @@ export class ChannelChatComponent {
       this.fileUpload = undefined;
       this.fileType = '';
       this.messageSending = false;
+      this.messageSelectionService.selectMessage('true');
     });
   }
 
