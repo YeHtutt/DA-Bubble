@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Auth, User as FirebaseAuthUser } from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
@@ -27,7 +27,7 @@ export class UsersFirebaseService implements OnInit {
   loggedInUserName: any;
   loggedInUserEmail: any;
 
-  private unsubscribeFn?: () => void;
+
 
   constructor(
     private firestore: Firestore,
@@ -47,10 +47,6 @@ export class UsersFirebaseService implements OnInit {
       throw error;
     }
   }
-
-
-  
-
 
 
   saveToLocalStorage(idValue: any) {
@@ -79,7 +75,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+
+
+
   async getUser(uid: any) {
+
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
@@ -93,6 +93,14 @@ export class UsersFirebaseService implements OnInit {
     this.loggedInUserImg = photoURL;
   }
 
+  // getCurrentUserSubject() {
+  //   const uid = this.getFromLocalStorage();
+  //   const unsub = onSnapshot(doc(this.firestore, "users", `${uid}`), (doc) => {
+  //     return doc.data();
+  //   });
+  // }
+
+  private unsubscribeFn?: () => void;
 
   getCurrentUserSubject() {
     const userSubject = new Subject<any>();
@@ -177,7 +185,7 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
-  // User updaten ins Firestore
+  //User updaten ins Firestore
   async updateUserProfile(userID: string, formData: any) {
     try {
       const userRef = doc(this.firestore, 'users', userID);
@@ -202,42 +210,4 @@ export class UsersFirebaseService implements OnInit {
     const collRef = collection(this.firestore, 'users');
     return collectionData(collRef) as Observable<UserProfile[]>;
   }
-
-
-  // async getAuthUser(): Promise<FirebaseAuthUser | null> {
-  //   try {
-  //     const userCredential = await this.auth.currentUser;
-  //     return userCredential || null;
-  //   } catch (error) {
-  //     console.error('Error getting auth user:', error);
-  //     return null;
-  //   }
-  // }
-
-
-  // async updateUserEmail(userId: any, newEmail: any): Promise<void> {
-  //   try {
-  //     const user = await this.auth.currentUser;
-  //     if (user) {
-  //       await user.updateEmail(newEmail);
-  //     } else {
-  //       throw new Error('User not found');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating user email:', error);
-  //     throw error;
-  //   }
-  // }
-
-
-  // async updateUserProfile(userID: string, formData: any): Promise<{ success: boolean }> {
-  //   try {
-  //     const userRef = doc(this.firestore, 'users', userID);
-  //     await setDoc(userRef, formData, { merge: true });
-  //     return { success: true };
-  //   } catch (error) {
-  //     console.error('Error updating user profile:', error);
-  //     return { success: false };
-  //   }
-  // }
 }
