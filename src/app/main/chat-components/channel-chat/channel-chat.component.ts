@@ -70,7 +70,6 @@ export class ChannelChatComponent {
   isElementVisible: boolean = false;
   searchMessage: boolean = false;
   messageSelectionSub: Subscription = new Subscription();
-  allUsers: UserProfile[] = [];
   isLoading: boolean = true;
   
 
