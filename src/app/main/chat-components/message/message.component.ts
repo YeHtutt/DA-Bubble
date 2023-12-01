@@ -90,11 +90,6 @@ export class MessageComponent {
   }
 
 
-  ngOnDestroy() {
-    this.usersSub.unsubscribe();
-  }
-
-
   loadUserData() {
     this.users$ = this.userService.getAllUserData();
     this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));

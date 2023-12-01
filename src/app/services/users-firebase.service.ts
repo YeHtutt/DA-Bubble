@@ -218,8 +218,7 @@ export class UsersFirebaseService implements OnInit {
     const user = await this.getUser(uid);
     const colls: string[] = ['chat', 'channel'];
     const allMsgIds: string[] = await this.collectAllMsgIds(colls);
-    console.log(allMsgIds)
-    this.changeUser(allMsgIds, user)
+    this.changeUser(allMsgIds, user);
   }
 
   async collectAllMsgIds(colls: string[]) {
@@ -255,7 +254,9 @@ export class UsersFirebaseService implements OnInit {
       const docRef = doc(this.firestore, msgPath);
       getDoc(docRef).then((msg: any) => {
         if (msg.data().user.id === user.id) {
-          updateDoc(docRef, { user: user.toJSON() });
+          try {
+            updateDoc(docRef, { user: user.toJSON() });
+          } catch (error) { }
         }
       });
     })
