@@ -16,8 +16,6 @@
 }
 
 
-
-
 .mat-drawer-inner-container {
   position: relative;
 }
@@ -407,6 +405,17 @@ app-search-bar {
 
   .sidenav-header {
     display: none !important;
+  }
+
+
+  mat-drawer {
+    padding-right: 0px;
+  }
+
+  .sidenav {
+    border-radius: 0px;
+    width: 100%;
+    padding: 20px 0px;
   }
 
   .toggle-box {

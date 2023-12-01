@@ -3,7 +3,7 @@
         <h3>Leute hinzufügen</h3>
     </div>
     <mat-radio-group class="flex-column" [(ngModel)]="selectedOption" (change)="onRadioChange()">
-        <mat-radio-button color="primary" value="all">Alle Mitglieder von <span>{{channel.channelName}}</span>
+        <mat-radio-button color="primary" value="all">Alle Mitglieder zu <span>{{channel.channelName}}</span>
             hinzufügen</mat-radio-button>
         <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
     </mat-radio-group>

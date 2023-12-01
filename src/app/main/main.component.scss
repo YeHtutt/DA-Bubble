@@ -8,7 +8,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - 50px);
+  width: calc(100% - 25px);
   height: 50px;
   padding: 25px;
 }
@@ -244,6 +244,10 @@ app-search-bar {
 @media (max-width: 750px) {
   .logo-search-box {
     display: none;
+  }
+
+  .main {
+    padding: 0px
   }
 }
 
