@@ -96,7 +96,7 @@ export class MessageComponent {
 
 
   loadUserData() {
-    this.users$ = this.userService.getAllUserOnlineStatus();
+    this.users$ = this.userService.getAllUserData();
     this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
   }
 
