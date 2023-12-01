@@ -66,7 +66,6 @@ export class MessageComponent {
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
 
-
   ngOnInit() {
     this.getPDFurl();
     this.route.params.subscribe(params => {
