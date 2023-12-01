@@ -39,7 +39,7 @@ export class ChatComponent {
   chatExists: boolean = false;
   currentUser: UserProfile = new UserProfile;
   public receiver: UserProfile = new UserProfile;
-  allUsers: UserProfile[] = [];
+  filteredUsersForTag: UserProfile[] = [];
   showTagMenu: boolean = false;
   isOpened: boolean = false;
   fileUpload?: FileUpload;
@@ -187,7 +187,7 @@ export class ChatComponent {
 
   async searchUserToTag(tag: string) {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(tag, this.searchMessage);
-    this.allUsers = searchResult.filteredUser;
+    this.filteredUsersForTag = searchResult.filteredUser;
   }
 
   tagUser(user: string) {
