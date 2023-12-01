@@ -108,6 +108,7 @@ export class ChannelChatComponent {
     });
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
     this.checkMobileMode(window.innerWidth);
+   
   }
 
   ngAfterViewInit() {

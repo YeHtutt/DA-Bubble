@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <section class="message-section">
+    <section class="message-section" [ngClass]="{'mgn-l': drawerService.isDrawerOpen}">
         <header>
             <div class="channel-info-box" (click)="openChannelMenu()">
                 <span>{{channel?.channelName}}</span>

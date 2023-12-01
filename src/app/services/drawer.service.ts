@@ -18,7 +18,7 @@ export class DrawerService {
   ngOnInit() {
     this.checkMobileMode(window.innerWidth);
     this.checkScreenSizeForResponsive(window.innerWidth)
-      }
+  }
 
 
   ngOnDestroy() {
@@ -30,6 +30,7 @@ export class DrawerService {
     if (this.drawer) {
       this.drawerSub = this.drawer.openedChange.subscribe((isOpen: boolean) => {
         this.isDrawerOpen = isOpen;
+        console.log(this.isDrawerOpen)
       });
     }
   }
@@ -87,6 +88,6 @@ export class DrawerService {
 
 
   checkMobileMode(width: number): void {
-    this.isMobile = width <= 750;    
+    this.isMobile = width <= 750;
   }
 }
