@@ -2,7 +2,7 @@
     [ngClass]="{'message-container-reverse': this.currentUser == message.user.id && message.origin === 'chat'}"
     class="message-container" id="{{message.messageId}}">
     <div class="user-avatar-container">
-        <img class="user-avatar" src="{{ message.user.photoURL }}" alt="">
+        <img *ngIf="messageUser?.photoURL !== ''" class="user-avatar" src="{{ messageUser?.photoURL }}" alt="">
         <app-user-presence [userID]="message.user.id"></app-user-presence>
     </div>
     <div *ngIf="!showEdit"
@@ -10,7 +10,7 @@
         class="content-container">
         <div [ngClass]="{'creator-info-reverse': currentUser == message.user.id && message.origin === 'chat'}"
             class="creator-info">
-            <span class="user-name" (click)="openProfileDialog(message.user)">{{ message.user.name }}</span>
+            <span class="user-name" (click)="openProfileDialog(message.user)">{{ messageUser?.name }}</span>
             <span>{{getTimeOfDate(message.time)}} Uhr</span>
         </div>
         <div *ngIf="!this.isEmptyOrWhitespace(message.text)" [ngClass]="messageClasses(message)" class="message">
