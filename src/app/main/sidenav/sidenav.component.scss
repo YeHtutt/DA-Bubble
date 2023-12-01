@@ -17,11 +17,16 @@
 
 mat-drawer {
   height: calc(100vh - 100px);
-  border-radius: 30px;
+
 }
 
 .mat-drawer-inner-container {
   position: relative;
+}
+
+mat-drawer {
+  padding-right: 20px;
+  background-color: #ECEEFE;
 }
 
 .mat-drawer-container {
@@ -39,8 +44,11 @@ mat-drawer {
 }
 
 .sidenav {
+  border-radius: 30px;
   width: fit-content;
   padding: 20px 30px;
+  background-color: white;
+  height: calc(100vh - 100px);
 }
 
 .sidenav-header {
