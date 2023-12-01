@@ -51,14 +51,15 @@
 
 .message-section {
     background-color: white;
-     border-radius: 30px;  
+    border-radius: 30px;
     position: relative;
     width: 100%;
+    margin-left: 20px;
 }
 
 .thread-section {
-    background-color: white;   
-    border-radius: 30px; 
+    background-color: white;
+    border-radius: 30px;
     position: relative;
 }
 
@@ -357,7 +358,7 @@ app-emoji-picker {
 @media (min-width: 960px) {
 
     .thread-section {
-        left: 0px;        
+        left: 0px;
     }
 }
 
