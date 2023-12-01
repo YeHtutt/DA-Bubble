@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Auth, User as FirebaseAuthUser } from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, Subject, map } from 'rxjs';
@@ -28,7 +28,7 @@ export class UsersFirebaseService implements OnInit {
   loggedInUserName: any;
   loggedInUserEmail: any;
 
-  private unsubscribeFn?: () => void;
+
 
   constructor(
     private firestore: Firestore,
@@ -76,7 +76,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+
+
+
   async getUser(uid: any) {
+
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
@@ -90,6 +94,14 @@ export class UsersFirebaseService implements OnInit {
     this.loggedInUserImg = photoURL;
   }
 
+  // getCurrentUserSubject() {
+  //   const uid = this.getFromLocalStorage();
+  //   const unsub = onSnapshot(doc(this.firestore, "users", `${uid}`), (doc) => {
+  //     return doc.data();
+  //   });
+  // }
+
+  private unsubscribeFn?: () => void;
 
   getCurrentUserSubject() {
     const userSubject = new Subject<any>();
@@ -174,7 +186,7 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
-  // User updaten ins Firestore
+  //User updaten ins Firestore
   async updateUserProfile(userID: string, formData: any) {
     try {
       const userRef = doc(this.firestore, 'users', userID);
