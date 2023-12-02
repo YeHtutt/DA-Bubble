@@ -20,12 +20,12 @@ export class AuthenticationService {
   user: UserProfile;
   private isAuthenticated = false;
 
-   
+
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(private auth: Auth, private afAuth: AngularFireAuth, 
-    private userfbService: UsersFirebaseService, private router: Router, 
+  constructor(private auth: Auth, private afAuth: AngularFireAuth,
+    private userfbService: UsersFirebaseService, private router: Router,
     private usersFbService: UsersFirebaseService,
     private notificationService: NotificationService) {
     this.user = new UserProfile(); // user initialisiert
@@ -37,7 +37,7 @@ export class AuthenticationService {
 
   logout() {
     this.setIsAuthenticated(false);
-    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage() , false);
+    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage(), false);
     return from(this.auth.signOut().then(() => {
       this.userfbService.removeFromLocalStorage();
     }));
@@ -47,6 +47,7 @@ export class AuthenticationService {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap(({ user }) => {
         const uid = user.uid;
+        this.SendVerificationMail();
         this.addUidToUser(newUser, uid);
         this.userfbService.addUserToFirebase(newUser.toJSON(), user.uid);
         return updateProfile(user, { displayName: name });
@@ -107,8 +108,8 @@ export class AuthenticationService {
     return this.isAuthenticated;
   }
 
-   // Füge eine öffentliche Methode hinzu, um isAuthenticated festzulegen
-   setIsAuthenticated(value: boolean) {
+  // Füge eine öffentliche Methode hinzu, um isAuthenticated festzulegen
+  setIsAuthenticated(value: boolean) {
     this.isAuthenticated = value;
   }
 
@@ -117,5 +118,14 @@ export class AuthenticationService {
       return user?.updateEmail(newEmail);
     });
   }
+
+  SendVerificationMail() {
+    return this.afAuth.currentUser
+      .then((u: any) => u.sendEmailVerification())
+      .then(() => {
+        this.router.navigate(['verify-email']);
+      });
+  }
+
 
 }
