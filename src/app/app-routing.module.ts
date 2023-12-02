@@ -15,6 +15,7 @@ import { ImprintComponent } from './main/imprint/imprint.component';
 import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication.service';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
+import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
 
 
 
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent},
   { path: 'data-privacy', component: DataPrivacyComponent},
   { path: 'verify-email', component: VerificationEmailComponent},
+  { path: 'verification-success', component: VerifiedSuccessComponent},
 
   { path: 'main', component: MainComponent,
     children: [

@@ -4,7 +4,7 @@
         <div class="logo-content-normal">
             <img src="./assets/img/logo+text.png">
 
-            <div class="to-signup-top" *ngIf="!this.drawerService.isSmallScreen">
+            <div class="to-signup-top">
                 <div>Neu bei Bubble? </div>
                 <a [routerLink]="'/sign-up'">Konto Erstellen</a>
             </div>
@@ -65,7 +65,7 @@
             </form>
         </mat-card>
 
-        <div class="to-signup-below" *ngIf="this.drawerService.isSmallScreen">
+        <div class="to-signup-below">
             <div>Neu bei Bubble? </div>
             <a [routerLink]="'/sign-up'">Konto Erstellen</a>
         </div>
