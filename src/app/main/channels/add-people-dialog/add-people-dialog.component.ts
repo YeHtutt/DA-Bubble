@@ -97,6 +97,9 @@ export class AddPeopleDialogComponent {
     return notInChannel;
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
 
   closeAddPeopleDialog() {
     if (!this.openingInChat) {
