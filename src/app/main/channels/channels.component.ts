@@ -7,6 +7,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -25,16 +26,23 @@ export class ChannelsComponent {
     public messageService: MessageService,
     private userService: UsersFirebaseService,
     public drawerService: DrawerService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   ngOnInit() {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.expandChannels();
+      console.log(this.channelService.channelTree)
     });
     this.subscriptions.push(sub);
   }
 
+  selectLevel(level: string, nodeId: string) {
+    this.router.navigate(['main/channel/' + nodeId], { queryParams: { level: level } });
+  }
+  
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());

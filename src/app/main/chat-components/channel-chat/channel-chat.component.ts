@@ -74,7 +74,7 @@ export class ChannelChatComponent {
   usersSub: Subscription = new Subscription();
   allUsers: UserProfile[] = [];
   replyPath: any = '';
-  
+  level: string = '';
 
 
   constructor(
@@ -96,6 +96,7 @@ export class ChannelChatComponent {
 
 
   ngOnInit(): void {
+    // Subscribe to paramMap for channelId
     this.route.paramMap.subscribe((params) => {
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
@@ -106,13 +107,23 @@ export class ChannelChatComponent {
           setTimeout(() => this.scrollDown(), 500);
         });
       }).catch(err => {
-        //console.error("Error fetching channel data:", err);
+        // Handle error
       });
     });
+
+    // Subscribe to queryParams for level
+    this.route.queryParams.subscribe(params => {
+      this.level = params['level']; // Or params.level
+      // Now you can use 'level' as needed within your component
+      console.log('Channel Level:', this.level);
+    });
+
+    // Rest of your ngOnInit code...
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
     this.checkMobileMode(window.innerWidth);
     this.loadUserData();
   }
+
 
 
   ngAfterViewInit() {
@@ -125,7 +136,7 @@ export class ChannelChatComponent {
     if (this.messageSelectionSub) this.messageSelectionSub.unsubscribe();
   }
 
-  
+
   trackByFunction(index: number, item: any) {
     return item.messageId; // oder eine eindeutige Eigenschaft der Nachricht
   }
