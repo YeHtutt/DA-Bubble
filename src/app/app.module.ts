@@ -81,6 +81,7 @@ import { ScrollButtonComponent } from './main/scroll-button/scroll-button.compon
 import { UserProfileChooseAvatarComponent } from './main/users/user-profile-choose-avatar/user-profile-choose-avatar.component';
 import { UserPresenceComponent } from './main/user-presence/user-presence.component';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
+import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -120,7 +121,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     UserMenuDialogComponent,
     UserProfileChooseAvatarComponent,
     UserPresenceComponent,
-    VerificationEmailComponent
+    VerificationEmailComponent,
+    VerifiedSuccessComponent
   ],
   imports: [
     BrowserModule,

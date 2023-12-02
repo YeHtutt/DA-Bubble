@@ -15,8 +15,7 @@ export class DrawerService {
   isSmallScreen = false;
 
 
-  constructor(private breakpointObserver: BreakpointObserver) { 
-    this.checkMobileScreen();
+  constructor() { 
   }
 
   ngOnInit() {
@@ -68,7 +67,6 @@ export class DrawerService {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.checkMobileScreen();
     this.checkScreenSize();
     this.checkMobileMode(event.target.innerWidth);
   }
@@ -96,7 +94,4 @@ export class DrawerService {
     this.isMobile = width <= 750;
   }
 
-  checkMobileScreen(): void {
-    this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 749px)');
-  }
 }
