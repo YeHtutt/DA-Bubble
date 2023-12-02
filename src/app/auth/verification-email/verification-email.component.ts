@@ -10,14 +10,11 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class VerificationEmailComponent {
   userEmail: string = '';
 
-  constructor(private authService: AuthenticationService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public authService: AuthenticationService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.userEmail = this.authService.getCurrentUserEmail() || '';
   }
-
-  redirectToLogin(): void {
-    this.router.navigate(['/login']);
-  }
-
+  
 }
 
