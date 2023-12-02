@@ -19,7 +19,7 @@
   width: 100%;
   position: relative;
   overflow: scroll;
-  height: 100%;
+  height: calc(100% - 40px);
 }
 
 .mat-drawer-inner-container {
@@ -36,10 +36,6 @@ mat-drawer {
   background-color: #ECEEFE;
 }
 
-.mat-drawer-box {
-  width: 100%;
-  position: relative;
-}
 
 .menu-icon {
   cursor: pointer;
@@ -51,7 +47,7 @@ mat-drawer {
   padding: 20px 30px;
   background-color: white;
   height: calc(100% - 40px);
-  overflow: hidden;
+
 }
 
 .sidenav-header {
