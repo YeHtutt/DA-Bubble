@@ -76,11 +76,7 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
-
-
-
   async getUser(uid: any) {
-
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
     const user = this.setUserObject(querySnapshot.data())
@@ -88,20 +84,13 @@ export class UsersFirebaseService implements OnInit {
     return new UserProfile(user);  // Changed it so it gives back a user Object
   }
 
+
   getCurrentUserData(name: any, email: any, photoURL: any) {
     this.loggedInUserName = name;
     this.loggedInUserEmail = email;
     this.loggedInUserImg = photoURL;
   }
 
-  // getCurrentUserSubject() {
-  //   const uid = this.getFromLocalStorage();
-  //   const unsub = onSnapshot(doc(this.firestore, "users", `${uid}`), (doc) => {
-  //     return doc.data();
-  //   });
-  // }
-
-  private unsubscribeFn?: () => void;
 
   getCurrentUserSubject() {
     const userSubject = new Subject<any>();
@@ -166,7 +155,6 @@ export class UsersFirebaseService implements OnInit {
         photoURL: image
       })
     }
-
   }
 
 
@@ -196,6 +184,7 @@ export class UsersFirebaseService implements OnInit {
       throw error;
     }
   }
+  
 
   async updateUserOnlineStatus(userID: any, onlineStatus: boolean) {
     try {

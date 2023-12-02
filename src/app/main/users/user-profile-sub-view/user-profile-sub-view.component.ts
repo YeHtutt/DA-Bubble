@@ -19,15 +19,15 @@ export class UserProfileSubViewComponent {
   userEmail?: string;
   userId: string;
   presence$: Observable<any> = new Observable();
-  
 
-  constructor(public dialog: MatDialog, 
+
+  constructor(public dialog: MatDialog,
     public userFbService: UsersFirebaseService,
     public dialogRef: MatDialogRef<UserProfileSubViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private messageService: MessageService,
     private router: Router,
     private presenceService: PresenceService
-    ) {
+  ) {
     this.userId = data.id;
     this.userFbService.getUser(data.id).then((user: UserProfile) => {
       this.userPhotoURL = user.photoURL;
@@ -40,14 +40,25 @@ export class UserProfileSubViewComponent {
   ngOnInit() {
     this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.presence$ = this.presenceService.getPresence(this.userId);
-    
+
   }
 
 
-  async openChat() {
+  openChat() {
+    this.prepareChatSession();
+  }
+  
+
+  async prepareChatSession() {
     const directChat = this.createDirectChatObject();
-    const chatId = await this.messageService.createDirectChat(directChat);
-    this.router.navigateByUrl('/main/chat/' + chatId);
+    const chatExists = await this.messageService.chatExists(directChat.user1, directChat.user2)
+    if (!chatExists) {
+      const chatId = await this.messageService.createDirectChat(directChat);
+      this.router.navigateByUrl('/main/chat/' + chatId);
+    } else {
+      const chatId = await this.messageService.getExistingChatId(directChat.user1, directChat.user2);
+      this.router.navigateByUrl('/main/chat/' + chatId);
+    }
   }
 
 

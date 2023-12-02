@@ -169,6 +169,7 @@ export class ChatComponent {
     this.text = '';
     this.fileUpload = undefined;
     this.fileType = '';
+    this.messageSending = false;
     this.messageSelectionService.selectMessage('true');
     setTimeout(() => this.scrollDown(), 500);
   }
@@ -195,7 +196,7 @@ export class ChatComponent {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '' && !this.messageSending) {
+    if ( !this.messageSending && event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '') {
       this.messageSending = true;
       this.sendMessage();
     }

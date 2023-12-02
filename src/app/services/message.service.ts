@@ -53,24 +53,35 @@ export class MessageService {
 
   // SEND MESSAGE //
 
-  async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
-    let chatAlreadyExists: any;
-    if (directChat) chatAlreadyExists = await this.chatExists(directChat.user1, directChat.user2);
+  // async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
+  //   let chatAlreadyExists: any;
+  //   if (directChat) chatAlreadyExists = await this.chatExists(directChat.user1, directChat.user2);
 
+  //   try {
+  //     // If a message is sent with new Message to a user & redirect to the chat
+  //     if (receiver instanceof UserProfile && !chatAlreadyExists) {
+  //       this.sendNewChatMessage(directChat, message, newMessage);
+  //       // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
+  //     } else if (receiver instanceof Channel) {
+  //       this.sendChannelMessage(receiver, message, newMessage);
+  //     }
+  //     else if (receiver) {
+  //       // if a message is sent inside a user chat
+  //       // const chatId = await this.getExistingChatId(directChat.user1, directChat.user2);
+  //       // this.sendExcistingChatMessage(chatId, message);
+  //       this.sendMessageToChat(receiver.id, message);
+  //     }
+  //   } catch (error) {
+  //     this.notificationService.showError(`Es ist ein Netzwerk Fehler aufgetreten: ${error}`);
+  //   }
+  // }
+
+  async sendMessage(message: Message, receiver: any, newMessage: boolean) {
     try {
-      // If a message is sent with new Message to a user & redirect to the chat
-      if (receiver instanceof UserProfile && !chatAlreadyExists) {
-        console.log('send new')
-        this.sendNewChatMessage(directChat, message, newMessage);
-        // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
+      if (receiver instanceof UserProfile) {
+        this.createOrConfirmChat(receiver.id, message);
       } else if (receiver instanceof Channel) {
-        this.sendChannelMessage(receiver, message, newMessage);
-      }
-      else if (receiver) {
-        // if a message is sent inside a user chat
-        console.log('send existing')
-
-        this.sendExcistingChatMessage(receiver, message);
+        this.sendMessageToChannel(receiver, message, newMessage);
       }
     } catch (error) {
       this.notificationService.showError(`Es ist ein Netzwerk Fehler aufgetreten: ${error}`);
@@ -78,38 +89,33 @@ export class MessageService {
   }
 
 
-  async sendChannelMessage(receiver: any, message: Message, newMessage: boolean) {
+  async sendMessageToChannel(receiver: any, message: Message, newMessage: boolean) {
     this.uploadMessage('channel', receiver.channelId, 'message', message);
     if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
   }
 
 
-  sendMessageToChannel(id: string, message: Message) {
-    let path = `channel/${id}`;
+  async createOrConfirmChat(id: string, message: Message) {
+    const chatAlreadyExists: boolean = await this.chatExists(this.currentUserId, id);
 
-  }
-
-
-  async sendMessageToChat(id: string, message: Message) {
-
-    const chatAlreadyExists = await this.chatExists(this.currentUserId, id);
     if (chatAlreadyExists) {
-      const chatId = await this.getExistingChatId(this.currentUserId, id);
-      let path = `chat/${chatId}/message`;
-      this.uploadMessageWithPath(path, message);
-      this.router.navigate(['main/chat', chatId]);
-    }
-    else {
+      this.sendMessageToChat(id, message);
+    } else {
       if (!chatAlreadyExists) {
-        let newDirectChat = await this.createDirectChatObject(id).toJSON();
+        let newDirectChat = this.createDirectChatObject(id).toJSON();
         this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
-        const chatId = await this.getExistingChatId(this.currentUserId, id);
-        this.router.navigate(['main/chat', chatId]);
+        this.sendMessageToChat(id, message);
       }
     }
   }
+  
 
-
+  async sendMessageToChat(id: string, message: Message) {
+    const chatId = await this.getExistingChatId(this.currentUserId, id);
+    let path = `chat/${chatId}/message`;
+    this.uploadMessageWithPath(path, message);
+    this.router.navigate(['main/chat', chatId]);
+  }
 
 
   async uploadMessageWithPath(path: string, message: Message) {
@@ -122,7 +128,6 @@ export class MessageService {
   }
 
 
-
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
       chatId: `${this.currentUserId}_${receiver}`,
@@ -133,16 +138,16 @@ export class MessageService {
   }
 
 
-  async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
-    const docId = await this.getChatDocId(directChat);
-    this.uploadMessage('chat', docId, 'message', message);
-    if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
-  }
+  // async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
+  //   const docId = await this.getChatDocId(directChat);
+  //   this.uploadMessage('chat', docId, 'message', message);
+  //   if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
+  // }
 
 
-  sendExcistingChatMessage(receiver: string, message: Message) {
-    this.uploadMessage('chat', receiver, 'message', message);
-  }
+  // sendExcistingChatMessage(receiver: string, message: Message) {
+  //   this.uploadMessage('chat', receiver, 'message', message);
+  // }
 
 
   // adds a message to a chat/channel
@@ -219,27 +224,27 @@ export class MessageService {
 
   // DIRECT CHAT FUNKTIONS //
 
-  async getChats() {
-    let chats: any[] = [];
-    const collref = collection(this.firestore, `chat`);
-    const querySnapshot = await getDocs(collref);
-    querySnapshot.forEach((doc) => {
-      chats.push(doc.data());
-    });
-    return chats;
-  }
+  // async getChats() {
+  //   let chats: any[] = [];
+  //   const collref = collection(this.firestore, `chat`);
+  //   const querySnapshot = await getDocs(collref);
+  //   querySnapshot.forEach((doc) => {
+  //     chats.push(doc.data());
+  //   });
+  //   return chats;
+  // }
 
 
 
-  async getChatDocId(directChat: DirectChat) {
-    let docId: any;
-    if (await directChat.chatId.includes(this.currentUserId)) {
-      docId = await this.createDirectChat(directChat);
-    } else {
-      docId = await this.chatExists(directChat.chatId, this.currentUserId);
-    }
-    return docId;
-  }
+  // async getChatDocId(directChat: DirectChat) {
+  //   let docId: any;
+  //   if (await directChat.chatId.includes(this.currentUserId)) {
+  //     docId = await this.createDirectChat(directChat);
+  //   } else {
+  //     docId = await this.chatExists(directChat.chatId, this.currentUserId);
+  //   }
+  //   return docId;
+  // }
 
 
   // creates a new direct chat with user

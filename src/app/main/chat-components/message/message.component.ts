@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map, switchMap } from 'rxjs';
 import { FileUpload } from 'src/app/models/file-upload';
 import { UserProfile } from 'src/app/models/user-profile';
 import { FileStorageService } from 'src/app/services/file-storage.service';
@@ -28,7 +28,9 @@ export class MessageComponent {
   @Input() parentMessageId: any;
   @Input() collPath: any;
   @Input() message: any;
-  @Input() allUsers: UserProfile[] = [];
+  @Input() set allUsers(value: any) {
+    this.userIDSource.next(value);
+  }
   public currentUser: string;
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
@@ -48,8 +50,12 @@ export class MessageComponent {
   currentId: string = '';
   messageUser?: UserProfile;
   users$: Observable<UserProfile[]> = new Observable;
-  // usersSub: Subscription = new Subscription();
+  userInput: boolean = true;
+  private userIDSource = new BehaviorSubject<any>(new UserProfile());
+  private userObservable = this.userIDSource.asObservable();
+  subscription: Subscription = new Subscription;
   
+
 
 
   constructor(
@@ -68,10 +74,10 @@ export class MessageComponent {
 
   ngOnInit() {
     this.getPDFurl();
+    this.getUserForMessage();
     this.route.params.subscribe(params => {
       let channelId = params['channelId'];
       let chatId = params['chatId'];
-      this.getUserForMessage();
       if (channelId) {
         this.currentId = channelId;
         this.origin = 'channel'
@@ -82,18 +88,25 @@ export class MessageComponent {
       }
     });
   }
+  
 
-
-  // loadUserData() {
-  //   this.users$ = this.userService.getAllUserData();
-  //   this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
-  // }
+  ngOnDestroy() {
+    if (this.subscription) this.subscription.unsubscribe();
+  }
 
 
   getUserForMessage() {
-    this.allUsers.forEach((user: UserProfile) => {
-      if(this.message.user.id === user.id) this.messageUser = user;
-    })
+    this.subscription = this.userObservable.pipe(
+      map(users => users.find((user: UserProfile) => user.id === this.message.user.id))
+    ).subscribe({
+      next: matchedUser => {
+        if (matchedUser) {
+          this.messageUser = matchedUser;
+        }
+      },
+      error: error => {
+      }
+    });
   }
 
 
@@ -156,7 +169,7 @@ export class MessageComponent {
   deleteMessage(msgId: string, filePath: string) {
     this.getMessagePath();
     this.messageService.deleteMessageDoc(this.coll, this.docId, msgId);
-    if(filePath) this.onDelete(filePath);
+    if (filePath) this.onDelete(filePath);
   }
 
 
@@ -272,7 +285,7 @@ export class MessageComponent {
     let replyPath = `${this.origin}/${this.currentId}/${this.parentMessageId}`;
     let newTime = this.firebaseUtils.getColl(replyPath);
     let time = new Date();
-   /*  this.messageService.updateCount(replyPath, this.threadService.replyCount); */
+    /*  this.messageService.updateCount(replyPath, this.threadService.replyCount); */
   }
 
   // UPLOADED FILES

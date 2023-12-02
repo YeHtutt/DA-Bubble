@@ -56,10 +56,10 @@ export class NewMessageComponent {
   send() {
     if (this.receiver instanceof UserProfile) {
       let origin = 'chat';
-      this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true, this.createDirectChatObject(this.receiver),);
+      this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true);
     } else {
       let origin = 'channel';
-      this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true, '');
+      this.messageService.sendMessage(this.createMessageObject(origin), this.receiver, true);
     }
     this.text = '';
     this.fileUpload = undefined;
@@ -82,29 +82,14 @@ export class NewMessageComponent {
   }
 
 
-  sendMessage() {
-    console.log('new Message')
-    if (this.receiver instanceof UserProfile) {
-      let origin = 'chat';
-      this.messageService.sendMessageToChat(this.receiver.id, this.createMessageObject(origin));
-    }
-    if (this.receiver instanceof Channel) {
-      let origin = 'channel';
-      this.messageService.sendMessageToChannel(this.receiver.channelId, this.createMessageObject(origin));
-    }
-    this.text = '';
-    this.fileUpload = undefined;
-  }
-
-
-  createDirectChatObject(receiver: UserProfile): DirectChat {
-    return new DirectChat({
-      chatId: `${this.currentUser.id}_${receiver.id}`,
-      creationTime: new Date(),
-      user1: this.currentUser.id,
-      user2: receiver.id,
-    });
-  }
+  // createDirectChatObject(receiver: UserProfile): DirectChat {
+  //   return new DirectChat({
+  //     chatId: `${this.currentUser.id}_${receiver.id}`,
+  //     creationTime: new Date(),
+  //     user1: this.currentUser.id,
+  //     user2: receiver.id,
+  //   });
+  // }
 
 
   createMessageObject(origin: string) {

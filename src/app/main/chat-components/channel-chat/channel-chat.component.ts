@@ -106,8 +106,7 @@ export class ChannelChatComponent {
           this.channel = channelData;
           if (this.level) this.level = this.channelService.getLevel();
           else this.level = '1'
-          console.log(this.level);
-          setTimeout(() => this.scrollDown(), 500);
+          setTimeout(() => this.scrollDown(), 1000);
         });
       }).catch(err => {
         console.log(err);
@@ -237,7 +236,7 @@ export class ChannelChatComponent {
       if (this.isEmptyOrWhitespace()) this.text = '';
       this.message = createdMessage;
       this.receiver = await this.channelService.getSingleChannel(docId);
-      this.messageService.sendMessage(this.message, this.receiver, false, '');
+      this.messageService.sendMessage(this.message, this.receiver, false);
       this.text = '';
       this.fileUpload = undefined;
       this.fileType = '';
