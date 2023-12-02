@@ -1,0 +1,25 @@
+<div class="background-container">
+    <div class="verification-email-container">
+        <div class="logo-content-normal">
+            <img src="./assets/img/logo+text.png">
+        </div>
+
+        <mat-card>
+            <div class="return-to-login">
+                <img src="assets/img/arrow_back.png" [routerLink]="'/login'">
+            </div>
+            <div>
+                <h1>bitte verifizieren Sie Ihre E-Mail.</h1>
+                <span>
+                    Sie sind fast da! Wir haben eine E-Mail an {{ userEmail }} gesendet. <br>
+                    Klicken Sie einfach auf den Link in dieser E-Mail, um Ihre Anmeldung abzuschließen. <br>
+                    Wenn Sie ihn nicht sehen, müssen Sie möglicherweise Ihren Spam-Ordner überprüfen.
+                </span>
+                <br><br><br><br>
+                <span>Sie können die E-Mail immer noch nicht finden? Kein Problem!</span><br>
+                <button>E-Mail erneut senden</button>
+            </div>
+        </mat-card>
+
+    </div>
+</div>

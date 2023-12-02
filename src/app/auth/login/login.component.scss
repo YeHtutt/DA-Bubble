@@ -468,7 +468,7 @@ form {
         margin-bottom: 20px;
     }
 
-    @media screen and (min-width: 1024px) and (max-height: 600px){
+    @media screen and (min-width: 1024px) and (max-height: 600px) {
         padding-top: 10px;
     }
 }
@@ -481,22 +481,17 @@ form {
 .to-signup-below {
     position: static;
     margin-top: 30px;
+    display: none;
 
     a {
         text-decoration: none;
         color: #797EF3;
     }
 
-    @media(max-width: 650px) {
+    @media(max-width: 749px) {
+        display: block;
         margin-top: 0px;
         margin-bottom: 10px;
-    }
-}
-
-/* the elements are only visible if the screen width is smaller than 751px */
-@media screen and (min-width: 751px) {
-    .to-signup-below.hide-above-750px {
-        display: none;
     }
 }
 
@@ -507,11 +502,8 @@ form {
         text-decoration: none;
         color: #797EF3;
     }
-}
 
-/* the elements are only visible if the screen width is greater than 751px */
-@media screen and (max-width: 750px) {
-    .to-signup-top.hide-under-750px {
+    @media(max-width: 749px) {
         display: none;
     }
 }

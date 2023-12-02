@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DrawerService } from 'src/app/services/drawer.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PresenceService } from 'src/app/services/presence.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private usersFbService: UsersFirebaseService,
     private notificationService: NotificationService,
-    private presence: PresenceService
+    private presence: PresenceService,
+    public drawerService: DrawerService
   ) {
   }
 
@@ -118,10 +120,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  isScreenAbove750px = window.innerWidth > 750;
+  // isScreenAbove750px = window.innerWidth > 750;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-    this.isScreenAbove750px = event.target.innerWidth > 750;
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: any): void {
+  //   this.isScreenAbove750px = event.target.innerWidth > 750;
+  // }
 }
