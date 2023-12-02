@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, updateProfile, User } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile, getAuth, updateEmail } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { from, switchMap } from 'rxjs';
-import { UsersFirebaseService } from './users-firebase.service';
-import { UserProfile } from '../models/user-profile';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { from, switchMap } from 'rxjs';
+import { UserProfile } from '../models/user-profile';
 import { NotificationService } from './notification.service';
+import { UsersFirebaseService } from './users-firebase.service';
 
 
 
@@ -19,6 +19,7 @@ export class AuthenticationService {
   public currentUser: any;
   user: UserProfile;
   private isAuthenticated = false;
+  oobCode: string = '';
 
 
 
@@ -31,9 +32,11 @@ export class AuthenticationService {
     this.user = new UserProfile(); // user initialisiert
   }
 
+
   login(email: any, password: any) {
     return from(signInWithEmailAndPassword(this.auth, email, password));
   }
+
 
   logout() {
     this.setIsAuthenticated(false);
@@ -42,6 +45,7 @@ export class AuthenticationService {
       this.userfbService.removeFromLocalStorage();
     }));
   }
+
 
   signUp(name: string, email: string, password: string, newUser: UserProfile) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
@@ -55,23 +59,26 @@ export class AuthenticationService {
     );
   }
 
+
   addUidToUser(newUser: UserProfile, uid: string) {
     newUser.id = uid;
     return newUser;
   }
 
+
   getCurrentUser(): User | null {
     return this.auth.currentUser;
   }
+
 
   resetPassword(email: string) {
     return this.afAuth.sendPasswordResetEmail(email);
   }
 
+
   confirmResetPassword(oobCode: string, newPassword: string) {
     return this.afAuth.confirmPasswordReset(oobCode, newPassword);
   }
-
 
 
   signinWithGoogle() {
@@ -108,24 +115,31 @@ export class AuthenticationService {
     return this.isAuthenticated;
   }
 
+
   // Füge eine öffentliche Methode hinzu, um isAuthenticated festzulegen
   setIsAuthenticated(value: boolean) {
     this.isAuthenticated = value;
   }
 
-  async updateEmail(newEmail: string): Promise<void> {
-    return this.afAuth.currentUser.then(user => {
-      return user?.updateEmail(newEmail);
-    });
+
+  updateEmail(newEmail: string) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      updateEmail(user, `${newEmail}`).then(() => {
+      }).catch((error) => {
+        console.log('update email address error');
+      });
+    }
+
   }
 
-  SendVerificationMail() {
+
+  async SendVerificationMail() {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
         this.router.navigate(['verify-email']);
       });
   }
-
-
 }

@@ -53,11 +53,11 @@ export class UserProfileEditComponent {
   }
 
   changeEmailInAuth(newEmail: any) {
-    this.authService.updateEmail(newEmail).then(() => {
-      this.notificationService.showSuccess('E-Mail erfolgreich geändert');
-    }).catch(error => {
-      this.notificationService.showError('Fehler beim Ändern der E-Mail');
-    });
+    try {
+      this.authService.updateEmail(newEmail);
+    } catch (error) {
+      console.log('Change email failed')
+    }
   }
 
 

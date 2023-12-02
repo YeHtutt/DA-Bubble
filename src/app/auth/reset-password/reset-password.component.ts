@@ -41,9 +41,7 @@ export class ResetPasswordComponent {
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     }, { validators: passwordsMatchValidator() });
 
-    this.route.queryParams.subscribe(params => {
-      this.oobCode = params['oobCode'];
-    })
+    this.oobCode = this.authService.oobCode;
   }
 
   onSubmit() {
@@ -52,9 +50,10 @@ export class ResetPasswordComponent {
       .then(() => {
         this.resetPasswordSuccess = true;
         this.openSnackBar();
-        console.log('password changed successfully!');
+        this.notificationService.showSuccess('password changed successfully!');
       })
       .catch(error => {
+        this.notificationService.showError('password change failed');
         console.log('password change failed: ', error);
       });
     setTimeout(() => {
