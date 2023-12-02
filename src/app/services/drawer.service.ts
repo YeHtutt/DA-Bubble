@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { HostListener, Injectable } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
@@ -11,9 +12,12 @@ export class DrawerService {
   drawerSub: Subscription = new Subscription()
   isDrawerOpen: boolean = false;
   isMobile: boolean = false;
+  isSmallScreen = false;
 
 
-  constructor() { }
+  constructor(private breakpointObserver: BreakpointObserver) { 
+    this.checkMobileScreen();
+  }
 
   ngOnInit() {
     this.checkMobileMode(window.innerWidth);
@@ -64,6 +68,7 @@ export class DrawerService {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
+    this.checkMobileScreen();
     this.checkScreenSize();
     this.checkMobileMode(event.target.innerWidth);
   }
@@ -89,5 +94,9 @@ export class DrawerService {
 
   checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
+  }
+
+  checkMobileScreen(): void {
+    this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 749px)');
   }
 }
