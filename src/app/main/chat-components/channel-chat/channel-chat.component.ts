@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { EditChannelDialogComponent } from '../../channels/edit-channel-dialog/edit-channel-dialog.component';
@@ -104,6 +104,9 @@ export class ChannelChatComponent {
         this.messageService.subMessage('channel', this.channelId);
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
+          if (this.level) this.level = this.channelService.getLevel();
+          else this.level = '1'
+          console.log(this.level);
           setTimeout(() => this.scrollDown(), 500);
         });
       }).catch(err => {
@@ -112,12 +115,6 @@ export class ChannelChatComponent {
     });
 
 
-    // Subscribe to queryParams for level
-    this.route.queryParams.subscribe(params => {
-      this.level = params['level']; // Or params.level
-      // Now you can use 'level' as needed within your component
-
-    });
 
     // Rest of your ngOnInit code...
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
@@ -157,9 +154,9 @@ export class ChannelChatComponent {
   scrollDown() {
     if (this.level === '1') {
       this.scrollElement = this.scrollElementRef?.nativeElement;
-    this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
+      this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
     }
-      
+
   }
 
 
