@@ -82,6 +82,7 @@ import { UserProfileChooseAvatarComponent } from './main/users/user-profile-choo
 import { UserPresenceComponent } from './main/user-presence/user-presence.component';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
 import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
+import { DistributorComponent } from './auth/distributor/distributor.component';
 
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
@@ -122,7 +123,8 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     UserProfileChooseAvatarComponent,
     UserPresenceComponent,
     VerificationEmailComponent,
-    VerifiedSuccessComponent
+    VerifiedSuccessComponent,
+    DistributorComponent
   ],
   imports: [
     BrowserModule,

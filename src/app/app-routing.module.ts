@@ -16,7 +16,7 @@ import { MainComponent } from './main/main.component';
 import { AuthenticationService } from './services/authentication.service';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
 import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
-
+import { DistributorComponent } from './auth/distributor/distributor.component';
 
 
 let docId: any;
@@ -29,19 +29,21 @@ const routes: Routes = [
   { path: 'start', component: StartAnimationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'forget-password', component: ForgetPasswordComponent},
-  { path: 'reset-password', component: ResetPasswordComponent},
-  { path: 'choose-avatar', component: ChooseAvatarComponent},
-  { path: 'imprint', component: ImprintComponent},
-  { path: 'data-privacy', component: DataPrivacyComponent},
-  { path: 'verify-email', component: VerificationEmailComponent},
-  { path: 'verification-success', component: VerifiedSuccessComponent},
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'choose-avatar', component: ChooseAvatarComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'data-privacy', component: DataPrivacyComponent },
+  { path: 'verify-email', component: VerificationEmailComponent },
+  { path: 'verification-success', component: VerifiedSuccessComponent },
+  { path: 'distributor', component: DistributorComponent },
 
-  { path: 'main', component: MainComponent,
+  {
+    path: 'main', component: MainComponent,
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'message', component: NewMessageComponent },
-      { path: 'chat/:chatId', component: ChatComponent },          
+      { path: 'chat/:chatId', component: ChatComponent },
     ]
   },
 ];
