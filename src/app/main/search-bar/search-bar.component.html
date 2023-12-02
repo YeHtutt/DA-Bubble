@@ -1,7 +1,7 @@
 <input (click)="toggleSearchOutput()" (keyup)="searchData()" [(ngModel)]="search"
     placeholder="{{isMobile ? 'Gehe zu' : 'Code learning durchsuchen'}}"
     [ngStyle]="{ 'width.px': isMobile ? 160 : 'auto' }">
-<img src="../assets/img/search.png">
+<img src="assets/img/search.png">
 <div [ngStyle]="{'display': searchOutput ? 'block' : 'none'}"
     *ngIf="filteredChannel?.length > 0 || filteredUser?.length > 0 || filteredMessages?.length > 0"
     class="search-output-header">

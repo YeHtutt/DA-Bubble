@@ -11,7 +11,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 })
 export class ChooseAvatarComponent {
   avatars = ['avatar1.png', 'avatar2.png', 'avatar3.png', 'avatar4.png', 'avatar5.png', 'avatar6.png'];
-  currentPic = '../assets/img/avatar/person.png'; //default Pic
+  currentPic = 'assets/img/avatar/person.png'; //default Pic
   url = 'assets/img/avatar/';
   newUserID: any;
   avatarPic: boolean = true;
@@ -41,7 +41,7 @@ export class ChooseAvatarComponent {
   async saveNewPic() {
     this.usersfbService.saveUserPic(this.urlToSelectedAvatar);
     setTimeout(() => {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/verify-email'])
     })
   }
 

@@ -158,7 +158,7 @@ export class UsersFirebaseService implements OnInit {
     const docRef = doc(this.firestore, 'users', `${currentUserID}`);
     if (avatarPic) {
       await updateDoc(docRef, {
-        photoURL: '../assets/img/avatar/' + image
+        photoURL: 'assets/img/avatar/' + image
       }
       );
     } else {

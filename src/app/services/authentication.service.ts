@@ -139,7 +139,7 @@ export class AuthenticationService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['verify-email']);
+        // this.router.navigate(['verify-email']);
       });
   }
 }
