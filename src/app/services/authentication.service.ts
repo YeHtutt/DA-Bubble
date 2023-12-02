@@ -70,6 +70,11 @@ export class AuthenticationService {
     return this.auth.currentUser;
   }
 
+  getCurrentUserEmail(): string | null {
+    const user = this.getCurrentUser();
+    return user ? user.email : null;
+  }
+
 
   resetPassword(email: string) {
     return this.afAuth.sendPasswordResetEmail(email);
@@ -139,7 +144,7 @@ export class AuthenticationService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        // this.router.navigate(['verify-email']);
+        
       });
   }
 }
