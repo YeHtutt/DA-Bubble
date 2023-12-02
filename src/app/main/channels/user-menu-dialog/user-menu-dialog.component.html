@@ -1,11 +1,11 @@
 <div class="close-user-menu">
     <div class="close-user-menu-header">
         <h3>Mitglieder</h3>
-        <button class="basic-button close-btn" *ngIf="!isMobile" (click)="closeCreateChannelDialog()">
+        <button class="basic-button close-btn" *ngIf="!isMobile" (click)="closeDialog()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
-    <div class="users-list">
+    <div class="users-list scrollable-users-list">
         <div *ngFor="let user of this.channel.usersData" class="user-in-list">
             <img class="profil-icon" src="{{ user.photoURL }}">
             <!-- <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">

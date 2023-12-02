@@ -63,11 +63,12 @@ export class AddPeopleDialogComponent {
       })
     );
   }
-  
+
 
   ngOnInit() {
     this.getUsersNotInChannel();
     this.drawerService.checkMobileMode(window.innerWidth);
+    console.log(this.openingInChat)
   }
 
 
@@ -98,7 +99,19 @@ export class AddPeopleDialogComponent {
 
 
   closeAddPeopleDialog() {
-    this.dialogRef.close();
+    if (!this.openingInChat) {
+      const dialogContainer = document.querySelector('.top-left-right-dialog');
+      if (dialogContainer) {
+        dialogContainer.classList.add('closing');
+
+        setTimeout(() => {
+          this.dialogRef.close(); // Close the dialog after the animation
+        }, 500); // This duration should match your CSS animation duration
+      }
+    }
+    if (this.openingInChat) {
+      this.dialogRef.close();
+    }
   }
 
 
@@ -163,9 +176,6 @@ export class AddPeopleDialogComponent {
   }
 
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
 
 
   validateInput(): void {

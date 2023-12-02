@@ -26,6 +26,8 @@
     width: 434px;
 }
 
+
+
 .channel-name {
     color: var(--Purple-2, #797EF3);
     font-family: Nunito;
@@ -42,7 +44,6 @@
     padding: 40px;
     height: auto;
     @include flex-column;
-
     .flex-column {
         @include flex-column
     }

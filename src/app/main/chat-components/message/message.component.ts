@@ -28,7 +28,7 @@ export class MessageComponent {
   @Input() parentMessageId: any;
   @Input() collPath: any;
   @Input() message: any;
-  @Output() messageLoaded = new EventEmitter<boolean>();
+  @Input() allUsers: UserProfile[] = [];
   public currentUser: string;
   public checkIfEdit: boolean = false;
   public showEdit: boolean = false;
@@ -48,7 +48,7 @@ export class MessageComponent {
   currentId: string = '';
   messageUser?: UserProfile;
   users$: Observable<UserProfile[]> = new Observable;
-  usersSub: Subscription = new Subscription();
+  // usersSub: Subscription = new Subscription();
   
 
 
@@ -71,7 +71,7 @@ export class MessageComponent {
     this.route.params.subscribe(params => {
       let channelId = params['channelId'];
       let chatId = params['chatId'];
-      this.loadUserData();
+      this.getUserForMessage();
       if (channelId) {
         this.currentId = channelId;
         this.origin = 'channel'
@@ -84,19 +84,14 @@ export class MessageComponent {
   }
 
 
-  ngAfterViewInit() {
-    this.messageLoaded.emit(true);
-  }
+  // loadUserData() {
+  //   this.users$ = this.userService.getAllUserData();
+  //   this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
+  // }
 
 
-  loadUserData() {
-    this.users$ = this.userService.getAllUserData();
-    this.usersSub = this.users$.subscribe((users: any[]) => this.getUserForMessage(users));
-  }
-
-
-  getUserForMessage(users: any[]) {
-    users.forEach((user: UserProfile) => {
+  getUserForMessage() {
+    this.allUsers.forEach((user: UserProfile) => {
       if(this.message.user.id === user.id) this.messageUser = user;
     })
   }

@@ -21,7 +21,12 @@ div {
         transform: scale(1.1);
         color: #535AF1;
     }
+}
 
+
+.scrollable-users-list {
+    height: 200px;
+    overflow-y: scroll; 
 }
 
 .close-user-menu-header {

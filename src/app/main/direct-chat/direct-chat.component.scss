@@ -33,10 +33,7 @@ mat-drawer {
   border-radius: 30px;
 }
 
-.mat-drawer-container {
-  height: calc(100vh - 100px);
-  background-color: #ECEEFE;
-}
+
 
 .mat-drawer-box {
   width: 100%;
@@ -47,25 +44,7 @@ mat-drawer {
   cursor: pointer;
 }
 
-.sidenav {
-  width: 250px;
-  padding: 20px 30px;
-}
 
-.sidenav-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 600;
-  color: black;
-  margin-bottom: 15px;
-  position: relative;
-
-  span {
-    margin-right: 21px;
-  }
-}
 
 .workspace-logo {
   width: 40px;
@@ -106,13 +85,6 @@ mat-drawer {
   }
 }
 
-.toggle-sidenav {
-  position: absolute;
-  width: 50px;
-  background-color: blue;
-  left: 0;
-  top: 300px;
-}
 
 .toggle-box {
   width: 46px;

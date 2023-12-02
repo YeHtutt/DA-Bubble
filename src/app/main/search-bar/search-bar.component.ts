@@ -36,17 +36,12 @@ export class SearchBarComponent {
     this.filteredUser = searchResult.filteredUser;
     this.filteredChannel = searchResult.filteredChannel;
     this.filteredMessages = searchResult.filteredMessages
-    // this.updateUserOnMessage(searchResult.filteredMessages)
   }
 
-  // async updateUserOnMessage(messages: []) {
-  //   if (messages.length > 0) {
-  //     const test = messages.map((msg: Message) => this.userService.getUser(msg.user.id).then((user: UserProfile) => msg.user.name = user.name))
-  //   }
-  // }
 
   onMessageSelect(messageId: string) {
     this.messageSelectionService.selectMessage(messageId);
+    this.filteredMessages = [];
   }
 
   deleteSearch() {

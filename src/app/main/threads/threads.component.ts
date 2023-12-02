@@ -22,8 +22,8 @@ export class ThreadsComponent {
   @Output() replyCountUpdated = new EventEmitter<number>();
   private subscriptions = new Subscription();
   allUsers: UserProfile[] = [];
+  filteredUsers: UserProfile[] = [];
   currentUser: UserProfile = new UserProfile;
-
   currentId: string = '';
   messageCreator: any;
   message: any;
@@ -84,17 +84,20 @@ export class ThreadsComponent {
         this.userService.getUser(this.message.user.id).then((user: UserProfile) => this.userThread = user);
       })
     );
-
+    this.loadUserData();
   }
+
 
   ngAfterViewInit() {
     this.initIntersectionObserver();
   }
 
+
   ngOnDestroy(): void {
     if (this.observer) this.observer.disconnect();
     this.subscriptions.unsubscribe();
   }
+
 
   initIntersectionObserver() {
     this.observer = new IntersectionObserver((entries) => {
@@ -106,6 +109,17 @@ export class ThreadsComponent {
       this.observer.observe(this.endScrollElement?.nativeElement);
     }
   }
+
+
+  async loadUserData() {
+    this.userService.getUsers().then((users: any) => this.allUsers = users);
+  }
+
+
+  trackByFunction(index: number, item: any) {
+    return item.messageId; // oder eine eindeutige Eigenschaft der Nachricht
+  }
+
 
   scrollDown() {
     this.scrollElement = this.scrollElementRef?.nativeElement;
@@ -134,15 +148,18 @@ export class ThreadsComponent {
     if (!this.text.includes('@')) this.showTagMenu = false;
   }
 
+
   async toggleTagMenu(tag: string) {
     this.showTagMenu = !this.showTagMenu;
     this.searchUserToTag(tag);
   }
 
+
   async searchUserToTag(tag: string) {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(tag, this.searchMessage);
-    this.allUsers = searchResult.filteredUser;
+    this.filteredUsers = searchResult.filteredUser;
   }
+
 
   tagUser(user: string) {
     const atIndex = this.text.lastIndexOf('@');
@@ -154,14 +171,17 @@ export class ThreadsComponent {
     }
   }
 
+
   closeTagMenu() {
     this.showTagMenu = false;
   }
+
 
   toggleEmoji(event: Event) {
     event.stopPropagation();
     this.isOpened = !this.isOpened;
   }
+
 
   addEmoji(emoji: string) {
     const text = `${emoji}`;
@@ -169,13 +189,16 @@ export class ThreadsComponent {
     this.isOpened = false;
   }
 
+
   closeEmojiMenu(): void {
     this.isOpened = false
   }
 
+
   getAllReplies() {
     return this.threadService.replies
   }
+
 
   createMessageObject() {
     this.currentTime = new Date();
@@ -270,11 +293,13 @@ export class ThreadsComponent {
     }
   }
 
+
   setFileType(type: string) {
     if (type.includes('jpeg' || 'jpg')) this.fileTypeThread = 'assets/img/icons/jpg.png';
     if (type.includes('png')) this.fileTypeThread = 'assets/img/icons/png.png';
     if (type.includes('pdf')) this.fileTypeThread = 'assets/img/icons/pdf.png';
   }
+
 
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);

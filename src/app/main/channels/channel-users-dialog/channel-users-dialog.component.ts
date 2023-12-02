@@ -68,6 +68,10 @@ export class ChannelUsersDialogComponent {
   }
 
 
+  closeAddPeopleDialog() {
+    this.dialogRef.close();
+  }
+
   async getAllUsers() {
     this.allUsers = await this.userService.getUsers();
   }

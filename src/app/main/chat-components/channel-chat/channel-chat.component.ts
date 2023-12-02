@@ -14,18 +14,18 @@ import { UserProfile } from 'src/app/models/user-profile';
 
 /* Services */
 
+import { Subscription } from 'rxjs';
 import { FileUpload } from 'src/app/models/file-upload';
 import { ChannelService } from 'src/app/services/channel.service';
 import { DrawerService } from 'src/app/services/drawer.service';
 import { FileStorageService } from 'src/app/services/file-storage.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
+import { MessageSelectionService } from 'src/app/services/message-selection.service';
 import { MessageService } from 'src/app/services/message.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { MessageSelectionService } from 'src/app/services/message-selection.service';
-import { Observable, Subscription, from, tap } from 'rxjs';
 
 
 @Component({
@@ -71,6 +71,9 @@ export class ChannelChatComponent {
   searchMessage: boolean = false;
   messageSelectionSub: Subscription = new Subscription();
   isLoading: boolean = true;
+  usersSub: Subscription = new Subscription();
+  allUsers: UserProfile[] = [];
+  replyPath: any = '';
   
 
 
@@ -91,7 +94,6 @@ export class ChannelChatComponent {
     this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user });
   }
 
-  replyPath: any = '';
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -101,6 +103,7 @@ export class ChannelChatComponent {
         this.messageService.subMessage('channel', this.channelId);
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
+          setTimeout(() => this.scrollDown(), 500);
         });
       }).catch(err => {
         //console.error("Error fetching channel data:", err);
@@ -108,17 +111,25 @@ export class ChannelChatComponent {
     });
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
     this.checkMobileMode(window.innerWidth);
-   
+    this.loadUserData();
   }
+
 
   ngAfterViewInit() {
     this.initIntersectionObserver();
   }
 
+
   ngOnDestroy() {
     if (this.observer) this.observer.disconnect();
     if (this.messageSelectionSub) this.messageSelectionSub.unsubscribe();
   }
+
+  
+  trackByFunction(index: number, item: any) {
+    return item.messageId; // oder eine eindeutige Eigenschaft der Nachricht
+  }
+
 
   initIntersectionObserver() {
     this.observer = new IntersectionObserver((entries) => {
@@ -220,6 +231,8 @@ export class ChannelChatComponent {
       this.fileUpload = undefined;
       this.fileType = '';
       this.messageSending = false;
+      this.messageSelectionService.selectMessage('true');
+      setTimeout(() => this.scrollDown(), 500);
     });
   }
 
@@ -337,7 +350,6 @@ export class ChannelChatComponent {
   }
 
 
-
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkMobileMode(event.target.innerWidth);
@@ -346,5 +358,14 @@ export class ChannelChatComponent {
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
+  }
+
+  // async loadUserData() {
+  //   const users$ = this.userService.getAllUserData();
+  //   this.usersSub = users$.subscribe((user: any[]) => this.allUsers.push(new UserProfile(user)));
+  // }
+
+  async loadUserData() {
+    this.userService.getUsers().then((users: any) => this.allUsers = users);
   }
 }

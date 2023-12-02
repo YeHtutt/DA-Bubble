@@ -23,7 +23,8 @@ export class UserProfileEditComponent {
 
     //der Standardwert für das Email-Feld setzten
     this.userEditForm.patchValue({
-      email: this.usersFbService.loggedInUserEmail
+      email: this.usersFbService.loggedInUserEmail,
+      name: this.usersFbService.loggedInUserName
     });
   }
 
@@ -47,7 +48,6 @@ export class UserProfileEditComponent {
       this.saveNewPic(this.currentPic, currentUserID);
       this.changeEmailInAuth(formData.email);
       this.changeEmailInFirebase(currentUserID, formData);
-      // this.usersFbService.changeUserInMessages(currentUserID!);
     }
     this.dialog.closeAll();
   }
@@ -132,13 +132,4 @@ export class UserProfileEditComponent {
       console.log('The dialog was closed');
     });
   }
-
-  showNameRequiredNotification() {
-    this.notificationService.showInfo('Bitte füllen Sie im Feld Ihr gewünschter Name aus!');
-  }
-
-  showEmailRequiredNotification() {
-    this.notificationService.showInfo('Sie können Ihre Email Adresse ändern, falls Sie es möchten.');
-  }
-
 }
