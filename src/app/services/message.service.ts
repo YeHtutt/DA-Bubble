@@ -19,6 +19,7 @@ import { UserProfile } from '../models/user-profile';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
+import { User } from '@angular/fire/auth';
 
 
 type ReceiverType = UserProfile | Channel;
@@ -53,16 +54,22 @@ export class MessageService {
   // SEND MESSAGE //
 
   async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
+    let chatAlreadyExists: any;
+    if (directChat) chatAlreadyExists = await this.chatExists(directChat.user1, directChat.user2);
+
     try {
       // If a message is sent with new Message to a user & redirect to the chat
-      if (receiver instanceof UserProfile) {
+      if (receiver instanceof UserProfile && !chatAlreadyExists) {
+        console.log('send new')
         this.sendNewChatMessage(directChat, message, newMessage);
         // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
       } else if (receiver instanceof Channel) {
         this.sendChannelMessage(receiver, message, newMessage);
       }
-      else {
+      else if (receiver) {
         // if a message is sent inside a user chat
+        console.log('send existing')
+
         this.sendExcistingChatMessage(receiver, message);
       }
     } catch (error) {
@@ -77,11 +84,32 @@ export class MessageService {
   }
 
 
-  async sendMessageToChannel(origin: string, id: string, message: Message) {
-    let path = `${origin}/${id}/message`;
-    this.uploadMessageWithPath(path, message);
-    if (message) this.router.navigateByUrl('/main/channel/' + id);
+  sendMessageToChannel(id: string, message: Message) {
+    let path = `channel/${id}`;
+
   }
+
+
+  async sendMessageToChat(id: string, message: Message) {
+
+    const chatAlreadyExists = await this.chatExists(this.currentUserId, id);
+    if (chatAlreadyExists) {
+      const chatId = await this.getExistingChatId(this.currentUserId, id);
+      let path = `chat/${chatId}/message`;
+      this.uploadMessageWithPath(path, message);
+      this.router.navigate(['main/chat', chatId]);
+    }
+    else {
+      if (!chatAlreadyExists) {
+        let newDirectChat = await this.createDirectChatObject(id).toJSON();
+        this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
+        const chatId = await this.getExistingChatId(this.currentUserId, id);
+        this.router.navigate(['main/chat', chatId]);
+      }
+    }
+  }
+
+
 
 
   async uploadMessageWithPath(path: string, message: Message) {
@@ -93,21 +121,6 @@ export class MessageService {
     }
   }
 
-
-  async sendMessageToChat(id: string, message: Message) {
-    const chatAlreadyExists = await this.chatExists(this.currentUserId, id);
-    if (chatAlreadyExists) {
-      const chatId = await this.getExistingChatId(this.currentUserId, id);
-      this.router.navigate(['main/chat', chatId]);
-      this.uploadMessage('chat', chatId, 'message', message);
-    }
-    else {
-      if (!chatAlreadyExists) {
-        let newDirectChat = await this.createDirectChatObject(id).toJSON();
-        this.firebaseUtils.addCollWithCustomId(newDirectChat, 'chat', newDirectChat.chatId);
-      }
-    }
-  }
 
 
   createDirectChatObject(receiver: string): DirectChat {
@@ -125,8 +138,6 @@ export class MessageService {
     this.uploadMessage('chat', docId, 'message', message);
     if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
   }
-
-
 
 
   sendExcistingChatMessage(receiver: string, message: Message) {
@@ -219,28 +230,13 @@ export class MessageService {
   }
 
 
-  async checkIfChatExists(directChat: DirectChat) {
-    const chats = await this.getChats();
-    let chatExists: boolean = false;
-    if (chats) {
-      chats.forEach(chat => {
-        if (chat.user1 == directChat.user1 && chat.user2 == directChat.user2 || chat.user1 == directChat.user2 && chat.user2 == directChat.user1) {
-          chatExists = chat.chatId;
-        } else {
-          chatExists = false;
-        }
-      });
-    }
-    return chatExists;
-  }
-
 
   async getChatDocId(directChat: DirectChat) {
     let docId: any;
     if (await directChat.chatId.includes(this.currentUserId)) {
       docId = await this.createDirectChat(directChat);
     } else {
-      docId = await this.checkIfChatExists(directChat);
+      docId = await this.chatExists(directChat.chatId, this.currentUserId);
     }
     return docId;
   }

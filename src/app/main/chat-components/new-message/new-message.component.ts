@@ -83,13 +83,14 @@ export class NewMessageComponent {
 
 
   sendMessage() {
+    console.log('new Message')
     if (this.receiver instanceof UserProfile) {
       let origin = 'chat';
       this.messageService.sendMessageToChat(this.receiver.id, this.createMessageObject(origin));
     }
     if (this.receiver instanceof Channel) {
       let origin = 'channel';
-      this.messageService.sendMessageToChannel(origin, this.receiver.channelId, this.createMessageObject(origin));
+      this.messageService.sendMessageToChannel(this.receiver.channelId, this.createMessageObject(origin));
     }
     this.text = '';
     this.fileUpload = undefined;
