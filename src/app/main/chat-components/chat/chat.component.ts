@@ -163,8 +163,9 @@ export class ChatComponent {
   }
 
 
-  send() {
-    this.messageService.sendMessage(this.createMessageObject(), this.chatId, false, '').then(() => this.messageSending = false);
+  async sendMessage() {
+    let path = `chat/${this.chatId}/message`
+    await this.messageService.uploadMessageWithPath(path, this.createMessageObject());
     this.text = '';
     this.fileUpload = undefined;
     this.fileType = '';
@@ -196,7 +197,7 @@ export class ChatComponent {
     }
     if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '' && !this.messageSending) {
       this.messageSending = true;
-      this.send();
+      this.sendMessage();
     }
   }
 

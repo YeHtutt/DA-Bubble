@@ -57,7 +57,7 @@ export class DirectChatComponent {
     const chatAlreadyExists = await this.messageService.chatExists(this.currentUser.id, receiverId);
     if (!chatAlreadyExists) {
       let newDirectChat = this.createDirectChatObject(receiverId).toJSON();
-      this.firebaseUtils.addCollWithCustomId(newDirectChat, 'chat', newDirectChat.chatId);
+      await this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
     }
     const chatId = await this.messageService.getExistingChatId(this.currentUser.id, receiverId);
     this.router.navigate(['/main/chat', chatId]);
@@ -67,7 +67,7 @@ export class DirectChatComponent {
 
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
-      chatId: `${this.currentUser.id}_${receiver}`,
+      chatId: '',
       creationTime: new Date(),
       user1: this.currentUser.id,
       user2: receiver,
@@ -80,22 +80,8 @@ export class DirectChatComponent {
   }
 
 
-  createMessageObject() {
-    return new Message({
-      text: this.text,
-      time: new Date(),
-      messageId: '',
-      user: this.currentUser.toJSON(),
-      type: 'message',
-      textEdited: false
-    });
-  }
-
-
   getCreatorId() {
     return this.userService.getFromLocalStorage();
   }
-
-
 }
 

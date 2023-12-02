@@ -40,9 +40,10 @@ export class ChannelsComponent {
   }
 
   selectLevel(level: string, nodeId: string) {
-    this.router.navigate(['main/channel/' + nodeId], { queryParams: { level: level } });
+    this.channelService.setLevel(`${level}`);
+    this.router.navigate(['main/channel/' + nodeId]);
   }
-  
+
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());

@@ -50,7 +50,15 @@ export class ChannelService {
   unsubMessage: any;
   unsubChannelContent: any;
   currentUserId = this.userService.getFromLocalStorage()
+  level: string = '';
 
+  setLevel(level: string) {
+    this.level = level;
+  }
+
+  getLevel() {
+    return this.level;
+  } 
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
