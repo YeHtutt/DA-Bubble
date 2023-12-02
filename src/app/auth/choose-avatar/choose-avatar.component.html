@@ -1,7 +1,7 @@
 <div class="background-container">
 <div class="avatar-container">
     <div class="logo-content-normal">
-        <img src="./assets/img/logo+text.png">
+        <img src="assets/img/logo+text.png">
     </div>
     <mat-card>
         <mat-card-title>Wähle deinen Avatar</mat-card-title>
@@ -15,7 +15,7 @@
 
             <div class="all-profile-pics">
                 <div  *ngFor="let avatar of avatars" (click)="this.setNewPic(avatar)">
-                    <img src="../assets/img/avatar/{{ avatar }}">
+                    <img src="assets/img/avatar/{{ avatar }}">
                 </div>
             </div>
 

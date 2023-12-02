@@ -3,7 +3,7 @@
   <div class="left-side">
     <img
       *ngIf="this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize() || !this.drawerService.checkScreenSize()"
-      class="logo" src="../assets/img/logo+text.png">
+      class="logo" src="assets/img/logo+text.png">
     <img (click)="this.drawerService.open(); this.threadService.closeThread()"
       *ngIf="!this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize()" class="open-menu"
       src="assets/img/open-menu-button.png" alt="">
@@ -24,22 +24,22 @@
         </app-user-presence>
     </div>
     <button mat-icon-button>
-      <img class="arrow-down" src="../assets/img/arrow-down.png"></button>
+      <img class="arrow-down" src="assets/img/arrow-down.png"></button>
   </div>
   <div class="backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
 
   <mat-menu #menu="matMenu" class="profile-menu">
     <div class="rectangle-centered">
-      <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="../assets/img/rectangle.png">
+      <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="assets/img/rectangle.png">
     </div>
     <button class="menu-btn" mat-menu-item (click)="openUserProfile()">
       <div>
-        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"  class="person-icon" src="../assets/img/person.png"><span>Profile</span>
+        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"  class="person-icon" src="assets/img/person.png"><span>Profile</span>
       </div>
     </button>
     <button class="menu-btn" mat-menu-item (click)="userLoggedout()">
       <div>
-        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="../assets/img/logout.png"><span>Logout</span>
+        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="assets/img/logout.png"><span>Logout</span>
       </div>
     </button>
   </mat-menu>
