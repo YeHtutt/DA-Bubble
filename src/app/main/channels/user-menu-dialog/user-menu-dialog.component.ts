@@ -59,7 +59,7 @@ export class UserMenuDialogComponent {
 
 
 
-  closeCreateChannelDialog() {
+  closeDialog() {
     this.dialogRef.close();
   }
 

@@ -1,6 +1,6 @@
 <div class="invitation-dialog-container">
-    <div *ngIf="drawerService.isMobile" class="rectangle-container">
-        <div class="rectangle"></div>
+    <div *ngIf="drawerService.isMobile && !openingInChat" class="rectangle-container">
+        <div class="rectangle"></div>    
     </div>
     <div class="header">
         <h2>Leute hinzufügen</h2>
