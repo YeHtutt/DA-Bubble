@@ -15,6 +15,12 @@
   z-index: 200;
 }
 
+.mat-drawer-box {
+  width: 100%;
+  position: relative;
+  overflow: scroll;
+  height: 100%;
+}
 
 .mat-drawer-inner-container {
   position: relative;
@@ -45,6 +51,7 @@ mat-drawer {
   padding: 20px 30px;
   background-color: white;
   height: calc(100% - 40px);
+  overflow: hidden;
 }
 
 .sidenav-header {
@@ -54,7 +61,6 @@ mat-drawer {
   font-size: 18px;
   font-weight: 600;
   color: black;
-  margin-bottom: 15px;
   padding-bottom: 15px;
 
   span {
@@ -398,6 +404,12 @@ app-search-bar {
 
 @media (max-width: 750px) {
 
+  .mat-drawer-container {
+    height: calc(100% - 60px);
+    background-color: #ECEEFE;
+  }
+
+
   app-search-bar {
     display: flex !important;
     justify-content: space-between;
@@ -414,8 +426,8 @@ app-search-bar {
 
   .sidenav {
     border-radius: 0px;
-    width: 100%;
-    padding: 20px 0px;
+    width: calc(100% - 40px);
+    padding: 20px 20px 20px 20px;
   }
 
   .toggle-box {

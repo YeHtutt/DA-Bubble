@@ -11,17 +11,17 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
     <mat-drawer [class.side-nav-mobile]="isMobile" #drawer [opened]="true"  mode="side">
         <div class="sidenav">
-            <div class="mat-drawer-box" >
-                <div class="sidenav-header sticky">
-                    <div class="logo-box">
-                        <img class="workspace-logo" src="../assets/img/workspace.png">
-                        <span>Code learning</span>
-                    </div>
-                    <div [routerLink]="['message']" class="edit-div">
-                        <img class="edit-icon" src="../assets/img/edit_square.png">
-                        <div class="bg-div"></div>
-                    </div>
+            <div class="sidenav-header sticky">
+                <div class="logo-box">
+                    <img class="workspace-logo" src="../assets/img/workspace.png">
+                    <span>Code learning</span>
                 </div>
+                <div [routerLink]="['message']" class="edit-div">
+                    <img class="edit-icon" src="../assets/img/edit_square.png">
+                    <div class="bg-div"></div>
+                </div>
+            </div>
+            <div class="mat-drawer-box" >
                 <div class="sticky scrollbar" *ngIf="isMobile">
                     <app-search-bar [isMobile]="true"></app-search-bar>
                 </div>

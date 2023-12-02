@@ -7,16 +7,24 @@
 
 .invitation-dialog-container {
     padding: 40px;
-    width: calc(90% - 80px);
     height: auto;
     @include flex-column;
-    margin: auto;
+    width: 566px;
+    gap: 20px;
+    
 
     .flex-column {
         @include flex-column
     }
 }
 
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 span {
     color: $accent-color;
@@ -159,6 +167,7 @@ img {
     padding: 4px 8px;
     border-radius: 30px;
     cursor: pointer;
+
     &:hover {
         background-color: #ECEEFE;
     }
@@ -166,4 +175,4 @@ img {
 
 .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
     background-color: transparent !important;
-  }
+}

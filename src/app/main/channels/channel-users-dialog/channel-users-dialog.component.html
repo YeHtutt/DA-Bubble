@@ -1,6 +1,7 @@
 <div class="invitation-dialog-container">
-    <div>
+    <div class="header">
         <h3>Leute hinzufügen</h3>
+        <button class="basic-button close-btn" (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
     </div>
     <mat-radio-group class="flex-column" [(ngModel)]="selectedOption" (change)="onRadioChange()">
         <mat-radio-button color="primary" value="all">Alle Mitglieder zu <span>{{channel.channelName}}</span>
