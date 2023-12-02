@@ -2,6 +2,40 @@
     box-sizing: border-box;
 }
 
+.closed-main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profil-icon {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+app-user-presence {
+    position: absolute;
+    left: 45px;
+    bottom: 0;
+}
+
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.user-in-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
 
 .date-border {
     width: 95%;
@@ -57,7 +91,7 @@
 }
 
 .mgn-l {
-    margin-left: 20px;   
+    margin-left: 20px;
 }
 
 

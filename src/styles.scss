@@ -230,6 +230,29 @@ button {
   scrollbar-width: none;
 }
 
+@-moz-document url-prefix() {
+  html,body{overflow: hidden !important;}
+}
+
+@-moz-document url-prefix() { /* Disable scrollbar Firefox */
+  html{
+    scrollbar-width: none;
+  }
+}
+body {
+  margin: 0; /* remove default margin */
+  scrollbar-width: none; /* Also needed to disable scrollbar Firefox */
+  -ms-overflow-style: none;  /* Disable scrollbar IE 10+ */
+  overflow-y: scroll;
+}
+body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
+}
+
+body {
+  scrollbar-width: none;
+}
 
 ::-webkit-scrollbar-thumb {
   background-color: #444DF2; // Color of the scrollbar

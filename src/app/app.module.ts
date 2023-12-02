@@ -161,6 +161,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de-DE' },
+    
     DatePipe,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
   ],

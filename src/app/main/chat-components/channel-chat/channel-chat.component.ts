@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AddPeopleDialogComponent } from '../../channels/add-people-dialog/add-people-dialog.component';
 import { EditChannelDialogComponent } from '../../channels/edit-channel-dialog/edit-channel-dialog.component';
@@ -107,15 +107,16 @@ export class ChannelChatComponent {
           setTimeout(() => this.scrollDown(), 500);
         });
       }).catch(err => {
-        // Handle error
+        console.log(err);
       });
     });
+
 
     // Subscribe to queryParams for level
     this.route.queryParams.subscribe(params => {
       this.level = params['level']; // Or params.level
       // Now you can use 'level' as needed within your component
-      console.log('Channel Level:', this.level);
+
     });
 
     // Rest of your ngOnInit code...
@@ -123,7 +124,6 @@ export class ChannelChatComponent {
     this.checkMobileMode(window.innerWidth);
     this.loadUserData();
   }
-
 
 
   ngAfterViewInit() {
@@ -155,8 +155,11 @@ export class ChannelChatComponent {
 
 
   scrollDown() {
-    this.scrollElement = this.scrollElementRef?.nativeElement;
+    if (this.level === '1') {
+      this.scrollElement = this.scrollElementRef?.nativeElement;
     this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
+    }
+      
   }
 
 

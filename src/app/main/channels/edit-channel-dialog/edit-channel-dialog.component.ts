@@ -44,6 +44,7 @@ export class EditChannelDialogComponent {
     this.checkMobileMode(window.innerWidth);
      }
 
+
   toggleEdit() {
     this.isEditing = !this.isEditing;
   }
@@ -59,7 +60,6 @@ export class EditChannelDialogComponent {
     this.isMobile = width <= 750;
     //console.log(this.isMobile);
   }
-
 
 
   toggleOutline() {
@@ -100,9 +100,6 @@ export class EditChannelDialogComponent {
   }
 
 
-  closeSnackbar() { }
-
-
   toggleDescriptionInput() {
     this.editChannelName = !this.editChannelName;
   }
@@ -133,7 +130,5 @@ export class EditChannelDialogComponent {
     this.channelService.updateChannel(this.channel);
     this.toggleChannelNameInput();
   }
-
-
 
 }
