@@ -14,6 +14,7 @@ export class FileStorageService {
     private storage: AngularFireStorage,
   ) { }
 
+
   ngOnDestroy() {
     this.uploadSubscription?.unsubscribe();
   }
@@ -41,13 +42,13 @@ export class FileStorageService {
     }
   }
 
+
   async getDownloadURL(fileRef: any, fileUpload: FileUpload): Promise<FileUpload> {
     try {
       const url: string = await lastValueFrom(fileRef.getDownloadURL());
       fileUpload.url = url;
       return fileUpload;
     } catch (error) {
-      //console.error(error);
       throw error;
     }
   }
@@ -58,8 +59,7 @@ export class FileStorageService {
     try {
       fileRef.delete();
     } catch (error) {
-      //console.log(error)
+      throw error;
     }
   }
-
 }

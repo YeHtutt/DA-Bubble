@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { DrawerService } from 'src/app/services/drawer.service';
@@ -7,7 +8,6 @@ import { MessageService } from 'src/app/services/message.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -27,17 +27,17 @@ export class ChannelsComponent {
     private userService: UsersFirebaseService,
     public drawerService: DrawerService,
     public threadService: ThreadService,
-    private route: ActivatedRoute,
     private router: Router
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
+
 
   ngOnInit() {
     const sub = this.channelService.dataLoaded.subscribe(loaded => {
       if (loaded) this.channelService.expandChannels();
-      console.log(this.channelService.channelTree)
     });
     this.subscriptions.push(sub);
   }
+
 
   selectLevel(level: string, nodeId: string) {
     this.channelService.setLevel(`${level}`);

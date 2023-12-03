@@ -9,8 +9,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class DistributorComponent {
 
-
-
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthenticationService) {
     this.route.queryParams.subscribe(params => {
       const mode = params['mode'];
@@ -20,9 +18,11 @@ export class DistributorComponent {
     })
   }
 
+
   saveCodeInService(oobCode: string) {
     this.authService.oobCode = oobCode;
   }
+
 
   routeToFinalDestination(mode: string) {
     if (mode === 'verifyEmail') {

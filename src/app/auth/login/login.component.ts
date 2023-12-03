@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -13,6 +13,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  
   userID: any;
   loginSuccess: boolean | null = null;
 
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+
   submit() {
     if (!this.loginForm.valid) {
       return;
@@ -72,6 +74,7 @@ export class LoginComponent implements OnInit {
       )
     }
   }
+
 
   fillGuestForm() {
     const guestEmail = 'guest@user.com';
@@ -112,6 +115,7 @@ export class LoginComponent implements OnInit {
     this.authService.setIsAuthenticated(true);
   }
 
+
   openSnackBar() {
     if (this.loginSuccess == true) {
       this.notificationService.showSuccess('Login erfolgreich');
@@ -119,11 +123,4 @@ export class LoginComponent implements OnInit {
       this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben!')
     }
   }
-
-  // isScreenAbove750px = window.innerWidth > 750;
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: any): void {
-  //   this.isScreenAbove750px = event.target.innerWidth > 750;
-  // }
 }

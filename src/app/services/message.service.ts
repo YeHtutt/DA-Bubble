@@ -21,8 +21,6 @@ import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
 
 
-type ReceiverType = UserProfile | Channel;
-
 @Injectable({
   providedIn: 'root'
 })
@@ -51,29 +49,6 @@ export class MessageService {
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
   // SEND MESSAGE //
-
-  // async sendMessage(message: Message, receiver: any, newMessage: boolean, directChat: any) {
-  //   let chatAlreadyExists: any;
-  //   if (directChat) chatAlreadyExists = await this.chatExists(directChat.user1, directChat.user2);
-
-  //   try {
-  //     // If a message is sent with new Message to a user & redirect to the chat
-  //     if (receiver instanceof UserProfile && !chatAlreadyExists) {
-  //       this.sendNewChatMessage(directChat, message, newMessage);
-  //       // if a message is sent with new Message to a channel or inside a channel & redirect to the channel
-  //     } else if (receiver instanceof Channel) {
-  //       this.sendChannelMessage(receiver, message, newMessage);
-  //     }
-  //     else if (receiver) {
-  //       // if a message is sent inside a user chat
-  //       // const chatId = await this.getExistingChatId(directChat.user1, directChat.user2);
-  //       // this.sendExcistingChatMessage(chatId, message);
-  //       this.sendMessageToChat(receiver.id, message);
-  //     }
-  //   } catch (error) {
-  //     this.notificationService.showError(`Es ist ein Netzwerk Fehler aufgetreten: ${error}`);
-  //   }
-  // }
 
   async sendMessage(message: Message, receiver: any, newMessage: boolean) {
     try {
@@ -135,18 +110,6 @@ export class MessageService {
       user2: receiver,
     });
   }
-
-
-  // async sendNewChatMessage(directChat: any, message: Message, newMessage: boolean) {
-  //   const docId = await this.getChatDocId(directChat);
-  //   this.uploadMessage('chat', docId, 'message', message);
-  //   if (newMessage) this.router.navigateByUrl('/main/chat/' + docId);
-  // }
-
-
-  // sendExcistingChatMessage(receiver: string, message: Message) {
-  //   this.uploadMessage('chat', receiver, 'message', message);
-  // }
 
 
   // adds a message to a chat/channel
@@ -222,29 +185,6 @@ export class MessageService {
 
 
   // DIRECT CHAT FUNKTIONS //
-
-  // async getChats() {
-  //   let chats: any[] = [];
-  //   const collref = collection(this.firestore, `chat`);
-  //   const querySnapshot = await getDocs(collref);
-  //   querySnapshot.forEach((doc) => {
-  //     chats.push(doc.data());
-  //   });
-  //   return chats;
-  // }
-
-
-
-  // async getChatDocId(directChat: DirectChat) {
-  //   let docId: any;
-  //   if (await directChat.chatId.includes(this.currentUserId)) {
-  //     docId = await this.createDirectChat(directChat);
-  //   } else {
-  //     docId = await this.chatExists(directChat.chatId, this.currentUserId);
-  //   }
-  //   return docId;
-  // }
-
 
   // creates a new direct chat with user
   async createDirectChat(directChat: DirectChat) {

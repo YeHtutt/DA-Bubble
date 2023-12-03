@@ -1,14 +1,14 @@
 <div class="user-profile-view-container">
     <div class="profile-view-header">
         <div mat-dialog-title>Profile</div>
-        <button class="basic-button close-btn" (click)="this.dialog.closeAll();"><mat-icon>close</mat-icon></button>
+        <button class="basic-button close-btn" (click)="dialog.closeAll();"><mat-icon>close</mat-icon></button>
     </div>
     <div class="profile-view-img">
-        <img class="profile-img" src="{{ this.userFbService.loggedInUserImg }}" />
+        <img class="profile-img" src="{{ currentUser.photoURL }}" />
     </div>
     <div class="profile-view-name">
         <div class="profile-edit-container">
-            <div> {{ this.userFbService.loggedInUserName }} </div>
+            <div> {{ currentUser.name }} </div>
             <a *ngIf="!this.drawerService.checkScreenSizeForResponsive(450)"
                 (click)="closeDialog(); openProfileEditDialog()">Bearbeiten</a>
             <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"
@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex-row">
-            <app-user-presence [userID]="userFbService.loggedInUserID"></app-user-presence>
+            <app-user-presence [userID]="currentUser.id"></app-user-presence>
             <ng-container *ngIf="presence$ | async as presence">
                 <p *ngIf="presence.status === 'online'">Anwesend</p>
                 <p *ngIf="presence.status === 'offline'">Abwesend</p>
@@ -26,6 +26,6 @@
     </div>
     <div class="profile-view-email">
         <p class="flex-center"><mat-icon class="material-icons-outlined">mail</mat-icon>E-Mail-Adresse</p>
-        <a href="mailto:{{this.userFbService.loggedInUserEmail}}"> {{this.userFbService.loggedInUserEmail}} </a>
+        <a href="mailto:{{currentUser.email}}"> {{currentUser.email}} </a>
     </div>
 </div>

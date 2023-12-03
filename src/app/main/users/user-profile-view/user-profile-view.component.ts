@@ -5,6 +5,7 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfileEditComponent } from '../user-profile-edit/user-profile-edit.component';
 import { PresenceService } from 'src/app/services/presence.service';
 import { Observable } from 'rxjs';
+import { UserProfile } from 'src/app/models/user-profile';
 
 @Component({
   selector: 'app-user-profile-view',
@@ -14,24 +15,20 @@ import { Observable } from 'rxjs';
 export class UserProfileViewComponent implements OnInit {
 
   presence$: Observable<any> = new Observable();
-
-  ngOnInit() {
-    this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
-    this.presence$ = this.presenceService.getPresence(this.userFbService.loggedInUserID);
-  }
+  currentUser: UserProfile = new UserProfile();
 
   constructor(
-    public dialog: MatDialog, 
-    public userFbService: UsersFirebaseService, 
+    public dialog: MatDialog,
+    public userFbService: UsersFirebaseService,
     public drawerService: DrawerService,
     private presenceService: PresenceService
-    ) {
+  ) {}
 
+  async ngOnInit() {
+    this.currentUser = await this.userFbService.getUser(this.userFbService.getFromLocalStorage());
+    this.presence$ = this.presenceService.getPresence(this.currentUser.id);
   }
 
-  onNoClick(){
-    
-  }
 
   closeDialog() {
     this.dialog.closeAll();

@@ -24,8 +24,8 @@ export class SignUpComponent {
     private usersFbService: UsersFirebaseService,
     private auth: Auth,
     private notificationService: NotificationService,
-  ) {
-  }
+  ) {}
+
 
   signUpForm: any = new FormGroup({
     "name": new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -33,6 +33,7 @@ export class SignUpComponent {
     "password": new FormControl('', [Validators.required, Validators.minLength(6)]),
     "agreement": new FormControl(false, [Validators.requiredTrue])
   })
+
 
   get name() {
     return this.signUpForm.get('name');
@@ -70,6 +71,7 @@ export class SignUpComponent {
       )
   }
 
+
   fillUserObject(name: string, email: string) {
     this.user.email = email;
     this.user.name = name;
@@ -83,5 +85,4 @@ export class SignUpComponent {
       this.notificationService.showError('Die Benutzer/Email existiert schon bereit, bitte geben Sie die neue Angaben!')
     }
   }
-
 }

@@ -14,5 +14,4 @@ export class EmojiPickerComponent {
   emojiSelected(event: any) {
     this.emojiSelectedEvent.emit(event.emoji.native);
   }
-
 }

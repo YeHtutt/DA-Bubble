@@ -134,7 +134,7 @@ export class ChannelChatComponent {
 
 
   trackByFunction(index: number, item: any) {
-    return item.messageId; // oder eine eindeutige Eigenschaft der Nachricht
+    return item.messageId; 
   }
 
 
@@ -168,50 +168,6 @@ export class ChannelChatComponent {
         element.classList.remove('animation-message');
       }, 1200);
     }
-  }
-
-
-  openChannelMenu() {
-    this.dialog.open(EditChannelDialogComponent, {
-      width: '750px',
-      height: 'auto',
-      hasBackdrop: true,
-      panelClass: 'channel-dialog',
-      autoFocus: false,
-      data: {
-        channel: this.channel,
-        openingInChat: false
-      }
-    });
-  }
-
-
-  openUserMenu() {
-    this.dialog.open(UserMenuDialogComponent, {
-      width: 'auto',
-      height: 'auto',
-      hasBackdrop: true,
-      panelClass: 'corner-right-top-dialog',
-      autoFocus: false,
-      data: {
-        channel: this.channel,
-        openingInChat: true
-      }
-    });
-  }
-
-
-  openAddUserDialog() {
-    this.dialog.open(AddPeopleDialogComponent, {
-      width: 'auto',
-      height: 'auto',
-      hasBackdrop: true,
-      panelClass: 'corner-right-top-dialog',
-      autoFocus: false,
-      data: {
-        channel: this.channel
-      }
-    });
   }
 
 
@@ -366,16 +322,57 @@ export class ChannelChatComponent {
 
   }
 
+
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
   }
 
-  // async loadUserData() {
-  //   const users$ = this.userService.getAllUserData();
-  //   this.usersSub = users$.subscribe((user: any[]) => this.allUsers.push(new UserProfile(user)));
-  // }
 
   async loadUserData() {
     this.userService.getUsers().then((users: any) => this.allUsers = users);
+  }
+
+
+  openChannelMenu() {
+    this.dialog.open(EditChannelDialogComponent, {
+      width: '750px',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'channel-dialog',
+      autoFocus: false,
+      data: {
+        channel: this.channel,
+        openingInChat: false
+      }
+    });
+  }
+
+
+  openUserMenu() {
+    this.dialog.open(UserMenuDialogComponent, {
+      width: 'auto',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'corner-right-top-dialog',
+      autoFocus: false,
+      data: {
+        channel: this.channel,
+        openingInChat: true
+      }
+    });
+  }
+
+
+  openAddUserDialog() {
+    this.dialog.open(AddPeopleDialogComponent, {
+      width: 'auto',
+      height: 'auto',
+      hasBackdrop: true,
+      panelClass: 'corner-right-top-dialog',
+      autoFocus: false,
+      data: {
+        channel: this.channel
+      }
+    });
   }
 }

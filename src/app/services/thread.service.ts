@@ -13,25 +13,23 @@ import { FirebaseUtilsService } from './firebase-utils.service';
 
 export class ThreadService {
 
+  unsubReplies: any;
+  replies: Message[] = [];
+  replyCount: number = 0;
+  threadIsOpen: boolean = false;
+  private _message = new BehaviorSubject<Message>(new Message());
+  message$ = this._message.asObservable();
 
   constructor(
     private firestore: Firestore = inject(Firestore),
     private firebaseService: FirebaseUtilsService,
     private drawerService: DrawerService
-  ) { }
+  ) {}
 
-  unsubReplies: any;
-  replies: Message[] = [];
-  replyCount: number = 0;
 
   ngOnDestroy() {
     this.unsubReplies();
   }
-
-  threadIsOpen: boolean = false;
-
-  private _message = new BehaviorSubject<Message>(new Message());
-  message$ = this._message.asObservable();
 
 
   openThread(message: Message) {
@@ -39,6 +37,7 @@ export class ThreadService {
     this._message.next(message);
     if (!this.drawerService.checkScreenSize() && this.drawerService.checkScreenSizeForResponsive(1200) && this.threadIsOpen) this.drawerService.closeWithoutCondition();
   }
+
 
   closeThread() {
     this.threadIsOpen = false;
@@ -77,6 +76,7 @@ export class ThreadService {
     });
   }
 
+
   async addReplyToCollection(path: string, message: {}) {
     let ref = collection(this.firestore, path);
     await addDoc(ref, message)
@@ -108,9 +108,4 @@ export class ThreadService {
       //console.error("ID is missing");
     }
   }
-
 }
-
-
-
-

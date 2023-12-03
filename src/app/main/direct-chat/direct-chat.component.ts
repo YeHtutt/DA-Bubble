@@ -20,17 +20,6 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 })
 export class DirectChatComponent {
 
-  constructor(
-    public messageTreeService: MessageTreeService,
-    public dialog: MatDialog,
-    private userService: UsersFirebaseService,
-    private router: Router,
-    private firebaseUtils: FirebaseUtilsService,
-    private drawerService: DrawerService,
-    private threadService: ThreadService,
-    private messageService: MessageService,
-  ) { this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user }); }
-
   private subscriptions: Subscription[] = [];
   chatId: string = '';
   chat: any;
@@ -41,6 +30,18 @@ export class DirectChatComponent {
   public receiver: UserProfile = new UserProfile;
   public search: string = '';
   filteredUser: any = [];
+  
+
+  constructor(
+    public messageTreeService: MessageTreeService,
+    public dialog: MatDialog,
+    private userService: UsersFirebaseService,
+    private router: Router,
+    private firebaseUtils: FirebaseUtilsService,
+    private drawerService: DrawerService,
+    private threadService: ThreadService,
+    private messageService: MessageService,
+  ) { this.userService.getUser(this.userService.getFromLocalStorage()).then((user: any) => { this.currentUser = user }); }
 
 
   ngOnInit() {
@@ -65,6 +66,7 @@ export class DirectChatComponent {
     if (this.threadService.threadIsOpen) this.threadService.closeThread();
   }
 
+
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
       chatId: '',
@@ -84,4 +86,3 @@ export class DirectChatComponent {
     return this.userService.getFromLocalStorage();
   }
 }
-
