@@ -1,7 +1,7 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Injectable, inject } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Channel } from '../models/channel';
 import { UserProfile } from '../models/user-profile';
 import { FirebaseUtilsService } from './firebase-utils.service';
@@ -51,14 +51,16 @@ export class ChannelService {
   unsubChannelContent: any;
   currentUserId = this.userService.getFromLocalStorage()
   level: string = '';
+  private levelSubject = new BehaviorSubject<string>('1');
 
   setLevel(level: string) {
-    this.level = level;
+    this.levelSubject.next(level);
   }
 
-  getLevel() {
-    return this.level;
-  } 
+
+ getLevelObservable(): Observable<string> {
+  return this.levelSubject.asObservable();
+}
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,

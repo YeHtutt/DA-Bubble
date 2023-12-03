@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* export const environment = {
   firebase: {
     projectId: 'da-bubble-dffea',
@@ -12,21 +11,6 @@
 }; */
 
  export const environment = {
-=======
-// export const environment = {
-//   firebase: {
-//     projectId: 'da-bubble-dffea',
-//     appId: '1:780185020934:web:f7602f0a757e22aec93187',
-//     storageBucket: 'da-bubble-dffea.appspot.com',
-//     apiKey: 'AIzaSyAeb-mzkt7PIkcnhXr5KIMbH65pMS5BX7A',
-//     authDomain: 'da-bubble-dffea.firebaseapp.com',
-//     messagingSenderId: '780185020934',
-//     databaseURL: "https://da-bubble-dffea-default-rtdb.europe-west1.firebasedatabase.app"
-//   },
-// };
-
-export const environment = {
->>>>>>> c6fc057bcc56c68fbf695389846252f719457306
   firebase: {
     apiKey: "AIzaSyBy5E5j_g2LkufuTQSHAKaDByWL-A3tNoU",
     authDomain: "da-bubble-a97af.firebaseapp.com",
