@@ -195,8 +195,8 @@ export class ChannelUsersDialogComponent {
   }
 
 
-  private _filter(value: string): any[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: any): any[] {
+    const filterValue = value.name.toLowerCase();
     // Filter out users that have already been added
     return this.allUsers.filter((user: any) => user.name.toLowerCase().includes(filterValue) && !this.users.some(u => u.id === user.id));
   }
