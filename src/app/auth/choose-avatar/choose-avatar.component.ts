@@ -10,15 +10,16 @@ import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
   styleUrls: ['./choose-avatar.component.scss']
 })
 export class ChooseAvatarComponent {
+
   avatars = ['avatar1.png', 'avatar2.png', 'avatar3.png', 'avatar4.png', 'avatar5.png', 'avatar6.png'];
   currentPic = 'assets/img/avatar/person.png'; //default Pic
   url = 'assets/img/avatar/';
   newUserID: any;
   avatarPic: boolean = true;
   urlToSelectedAvatar: string = '';
-
   user: UserProfile = new UserProfile;
   newUserName: string = '';
+
 
   constructor(private router: Router, private usersfbService: UsersFirebaseService, private auth: Auth, private route: ActivatedRoute) {
     // Retrieve user's name from the route state
@@ -37,6 +38,7 @@ export class ChooseAvatarComponent {
       this.avatarPic = true;
     }
   }
+
 
   async saveNewPic() {
     this.usersfbService.saveUserPic(this.urlToSelectedAvatar);
@@ -67,5 +69,4 @@ export class ChooseAvatarComponent {
       window.alert('Bitte nur png, jpg oder jpeg senden');
     }
   }
-
 }

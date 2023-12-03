@@ -10,6 +10,7 @@ import { MessageSelectionService } from 'src/app/services/message-selection.serv
 })
 export class ScrollButtonComponent {
 
+
   @Output() EmitScrollDown = new EventEmitter<void>();
   @Input() chatData: any;
   messages: Observable<any> = new Observable();
@@ -21,9 +22,12 @@ export class ScrollButtonComponent {
   messageSelectionSub: Subscription = new Subscription();
   reset: boolean = false;
 
-  constructor(private firestore: Firestore = inject(Firestore), private mss: MessageSelectionService) {
 
-  }
+  constructor(
+    private firestore: Firestore = inject(Firestore), 
+    private mss: MessageSelectionService
+    ) {}
+    
 
   ngOnInit() {
     this.getMessageLength();
@@ -35,13 +39,16 @@ export class ScrollButtonComponent {
     });
   }
 
+
   ngOnDestroy() {
     if (this.messageSubscription) this.messageSubscription.unsubscribe();
   }
 
+
   resetNewMessageCount() {
     this.newMessageCount = 0;
   }
+
 
   getMessageLength() {
     const collRef = collection(this.firestore, `${this.chatData.collPath}`);
@@ -56,6 +63,7 @@ export class ScrollButtonComponent {
     if (count > this.messageCount && !this.checked) this.increaseCounter(count);  // when new message comes in 
   }
 
+
   increaseCounter(count: number) {
     this.newMessageCount++;
     this.messageCount = count;
@@ -66,6 +74,7 @@ export class ScrollButtonComponent {
       this.reset = false;
     }
   }
+
 
   scrollDown() {
     this.EmitScrollDown.emit();

@@ -24,12 +24,14 @@ export class SearchBarComponent {
   @Input() isMobile: boolean = false;
   @Input() messageSearch: boolean = false;
 
+  
   constructor(
     private searchService: SearchService,
     public dialog: MatDialog,
     public messageSelectionService: MessageSelectionService,
     private userService: UsersFirebaseService
   ) { }
+
 
   async searchData() {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(this.search, this.messageSearch)
@@ -44,6 +46,7 @@ export class SearchBarComponent {
     this.filteredMessages = [];
   }
 
+
   deleteSearch() {
     this.search = '';
     this.filteredUser = [];
@@ -56,6 +59,7 @@ export class SearchBarComponent {
     this.searchOutput = !this.searchOutput;
   }
 
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -63,6 +67,7 @@ export class SearchBarComponent {
       this.searchOutput = false;
     }
   }
+
 
   openProfileDialogInSearch(node: any) {
     const userId = node.id;
@@ -87,6 +92,7 @@ export class SearchBarComponent {
     });
   }
 
+
   formatTimestamp(timestamp: { seconds: number; nanoseconds: number }): string {
     const date = new Date(timestamp.seconds * 1000);
     const day = date.getDate();
@@ -94,5 +100,4 @@ export class SearchBarComponent {
     const month = monthNames[date.getMonth()];
     return `${day}. ${month}`;
   }
-
 }

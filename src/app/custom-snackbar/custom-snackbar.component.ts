@@ -15,8 +15,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   `
 })
 
-
 export class CustomSnackbarComponent {
+
   message: string = '';
 
   constructor(
@@ -26,13 +26,13 @@ export class CustomSnackbarComponent {
     this.message = data.message;
   }
 
+
   onAccept(): void {
     this.dialogRef.close(true);
   }
+
 
   onCancel(): void {
     this.dialogRef.close(false);
   }
 }
-
-

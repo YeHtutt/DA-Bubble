@@ -11,11 +11,11 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./forget-password.component.scss']
 })
 export class ForgetPasswordComponent {
+
   forgetPasswordForm: FormGroup;
   sendEmailSuccess: boolean | null = null;
 
   constructor(private formBuilder: FormBuilder,
-    private authService: AuthenticationService,
     private router: Router,
     private afauth: AngularFireAuth, 
     private notificationService: NotificationService
@@ -25,6 +25,7 @@ export class ForgetPasswordComponent {
     });
   }
 
+
   onSubmit() {
     const email = this.forgetPasswordForm.value.email;
     this.afauth.sendPasswordResetEmail(email);
@@ -32,6 +33,7 @@ export class ForgetPasswordComponent {
     this.openSnackBar();
     this.router.navigate(['/login'])
   }
+
 
   openSnackBar() {
     if (this.sendEmailSuccess == true) {

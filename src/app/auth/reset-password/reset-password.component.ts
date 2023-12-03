@@ -25,9 +25,11 @@ export function passwordsMatchValidator(): ValidatorFn {
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
+
   resetPasswordForm: FormGroup;
   oobCode: string = '';
   resetPasswordSuccess: boolean | null = null;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,6 +46,7 @@ export class ResetPasswordComponent {
     this.oobCode = this.authService.oobCode;
   }
 
+  
   onSubmit() {
     const password = this.resetPasswordForm.value.password;
     this.authService.confirmResetPassword(this.oobCode, password)

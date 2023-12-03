@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./start-animation.component.scss']
 })
 export class StartAnimationComponent {
+  
     isIntro = true;
 
     constructor(private router: Router) {

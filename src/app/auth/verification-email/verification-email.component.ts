@@ -8,13 +8,13 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./verification-email.component.scss']
 })
 export class VerificationEmailComponent {
+  
   userEmail: string = '';
 
   constructor(public authService: AuthenticationService, private route: ActivatedRoute, private router: Router) { }
 
+
   ngOnInit(): void {
     this.userEmail = this.authService.getCurrentUserEmail() || '';
   }
-  
 }
-

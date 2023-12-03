@@ -34,5 +34,4 @@ export class VerifiedSuccessComponent {
       this.router.navigate(['/login'])
     }, 4000);
   }
-
 }
