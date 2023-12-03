@@ -4,6 +4,7 @@ import { Channel } from 'src/app/models/channel';
 import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
 import { UserProfile } from 'src/app/models/user-profile';
+import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 
 
 @Component({
@@ -77,7 +78,29 @@ export class UserMenuDialogComponent {
         openingInChat: this.openingInChat
       }
     });
+  }
 
+
+  openProfileDialog(node: any) {
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
+    const userEmail = node.email;
+    const isOnline = node.isOnline;
+    this.dialog.open(UserProfileSubViewComponent, {
+      width: '500px',
+      height: '727px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+      data: {
+        id: userId,
+        name: userName,
+        photoURL: userPhotoURL,
+        email: userEmail,
+        isOnline: isOnline
+      }
+    });
   }
 
 }

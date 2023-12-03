@@ -355,6 +355,7 @@ app-user-presence {
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
+    max-width: 300px;
 
     mat-icon {
         cursor: pointer;
