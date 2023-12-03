@@ -402,6 +402,7 @@ app-user-presence {
     text-align: center;
     opacity: 0;
     transition: opacity 225ms ease-in-out;
+    z-index: 5;
 }
 
 

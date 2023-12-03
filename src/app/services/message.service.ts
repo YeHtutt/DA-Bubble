@@ -19,7 +19,6 @@ import { UserProfile } from '../models/user-profile';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
-import { User } from '@angular/fire/auth';
 
 
 type ReceiverType = UserProfile | Channel;

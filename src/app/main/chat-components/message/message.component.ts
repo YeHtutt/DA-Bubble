@@ -142,6 +142,7 @@ export class MessageComponent {
 
   saveMessage(msgId: string) {
     this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
+    this.showEdit = !this.showEdit
   }
 
 
@@ -198,6 +199,12 @@ export class MessageComponent {
     this.isReactionOpened = !this.isReactionOpened;
   }
 
+  closeAllEmojiWindows() {
+    this.isReactionInputOpened = false;
+    this.isReactionOpened = false
+    this.isOpened = false;
+  }
+
 
   async updateMessageReactions(emoji: string, msgId: string) {
 
@@ -223,6 +230,7 @@ export class MessageComponent {
     } else if (this.message.type === 'reply') {
       this.saveReaction(this.collPath, updateObject);
     }
+    this.closeAllEmojiWindows();
   }
 
 
