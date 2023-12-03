@@ -29,11 +29,12 @@ export class UserProfileSubViewComponent {
     private presenceService: PresenceService
   ) {
     this.userId = data.id;
-    this.userFbService.getUser(data.id).then((user: UserProfile) => {
+    const user = this.userFbService.getUser(data.id).then((user: UserProfile) => {
       this.userPhotoURL = user.photoURL;
       this.userName = user.name;
       this.userEmail = user.email;
     });
+    console.log(user)
   }
 
 

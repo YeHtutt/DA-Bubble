@@ -248,15 +248,15 @@ export class ThreadsComponent {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileTypeThread !== '' && !this.messageSending) {
+    if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace(this.text) || this.fileTypeThread !== '' && !this.messageSending) {
       this.messageSending = true;
       this.sendReplyTo();
     }
   }
 
 
-  isEmptyOrWhitespace(): boolean {
-    return this.text.replace(/\n/g, '').trim().length === 0;
+  isEmptyOrWhitespace(message: string): boolean {
+    return message.replace(/\n/g, '').trim().length === 0;
   }
 
   // UPLOADED FILES

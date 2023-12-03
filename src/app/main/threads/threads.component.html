@@ -13,7 +13,7 @@
                     <h3>{{ userThread.name }}</h3>
                     <span>{{getTimeOfDate(message.time)}} Uhr</span>
                 </div>
-                <div class="message-bubble">
+                <div *ngIf="!this.isEmptyOrWhitespace(message.text)" class="message-bubble">
                     {{message.text}}
                 </div>
                 <div *ngIf="message.fileUpload !== []" class="show-attachement">
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="this.isEmptyOrWhitespace() && fileTypeThread === ''" (click)="sendReplyTo()"><mat-icon [ngStyle]="{'color' : this.isEmptyOrWhitespace() && fileTypeThread === '' ? 'grey' : '#535AF1'}" class="send-btn">send</mat-icon></button>
+                <button [disabled]="this.isEmptyOrWhitespace(text) && fileTypeThread === ''" (click)="sendReplyTo()"><mat-icon [ngStyle]="{'color' : this.isEmptyOrWhitespace(text) && fileTypeThread === '' ? 'grey' : '#535AF1'}" class="send-btn">send</mat-icon></button>
             </div>
         </div>
         <div #endScrollElement></div>

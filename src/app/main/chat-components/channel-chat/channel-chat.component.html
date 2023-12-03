@@ -10,10 +10,8 @@
             <h3>Wende dich an eines der folgenden Mitglieder, um dich einzuladen.</h3>
             <mat-divider></mat-divider>
             <div class="users-list scrollable-users-list">
-                <div *ngFor="let user of this.channel?.usersData" class="user-in-list">
+                <div *ngFor="let user of this.channel?.usersData" class="user-in-list" (click)="openProfileDialog(user.id)">
                     <img class="profil-icon" src="{{ user.photoURL }}">
-                    <!-- <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
-                    <img *ngIf="!user.isOnline" class="online-status" src="assets/img/Offline.png"> -->
                     <app-user-presence [mini]="false" [userID]="user.id"></app-user-presence>
                     <div>{{user.name}}</div>
                 </div>
