@@ -1,22 +1,16 @@
 @import "../../../../styles.scss";
 
 
-.d-none {
-    display: none;
-}
-
 .invitation-dialog-container {
     padding: 40px;
     height: auto;
     @include flex-column;
     width: 566px;
     gap: 20px;
-
     .flex-column {
         @include flex-column
     }
 }
-
 
 
 .header {
@@ -25,14 +19,17 @@
     align-items: center;
 }
 
+
 span {
     color: $accent-color;
 }
+
 
 .mat-form-field {
     width: 90%;
 
 }
+
 
 .create-btn {
     display: flex;
@@ -47,14 +44,13 @@ span {
     margin-bottom: 16px !important;
 }
 
-.channel {
 
+.channel {
     mat-icon {
         font-weight: bold;
         font-style: italic;
         margin-left: 4px;
     }
-
     span {
         display: flex;
         gap: 28px;
@@ -62,11 +58,13 @@ span {
     }
 }
 
+
 .user {
     display: flex;
     align-items: center;
     gap: 16px;
 }
+
 
 .user,
 .channel {
@@ -80,10 +78,6 @@ span {
 }
 
 
-
-/* Input */
-
-
 .user {
     display: flex;
 
@@ -94,12 +88,14 @@ span {
     }
 }
 
+
 .user-thumbnail {
     width: 30px;
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
 }
+
 
 .mdc-list-item__primary-text {
     display: flex !important;
@@ -114,11 +110,13 @@ span {
     align-items: center;
 }
 
+
 .flex-column {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+
 
 .user-thumbnail {
     width: 30px;
@@ -128,19 +126,21 @@ span {
 }
 
 
-
 .mdc-list-item__primary-text {
     display: flex !important;
     align-items: center !important;
 }
 
+
 .example-chip-list {
     width: 100%;
 }
 
+
 .remove-btn {
     min-width: 40px;
 }
+
 
 .chip-row {
     .user-chip {
@@ -150,13 +150,13 @@ span {
 }
 
 
-
 img {
     height: 20px;
     width: 20px;
     margin-right: 8px;
     border-radius: 50%;
 }
+
 
 .user-chip-search {
     width: 100%;
@@ -171,6 +171,7 @@ img {
         background-color: #ECEEFE;
     }
 }
+
 
 .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
     background-color: transparent !important;

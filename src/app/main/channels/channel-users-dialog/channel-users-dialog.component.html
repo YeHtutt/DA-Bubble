@@ -23,9 +23,9 @@
             </mat-chip-grid>
             <input placeholder="Nutzer hinzufügen" #userInput [formControl]="userCtrl" [matChipInputFor]="chipGrid"
                 [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="add($event)" (input)="validateInput()"  />
+                (matChipInputTokenEnd)="add($event)" (input)="validateInput()" />
 
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" class="user-chip-menu">
                 <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
                     <div class="user-chip-search">
                         <img src="{{user.photoURL}}">

@@ -10,7 +10,7 @@
     <div class="channel-name"><mat-icon>tag</mat-icon>{{channel.channelName}}</div>
     <form class="width-100">
         <mat-form-field class="member-input" appearance="outline">
-            <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
+            <mat-chip-grid #chipGrid aria-label="Benutzer auswählen" >
                 <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">
                     <div class="user-chip">
                         <img src="{{user.photoURL}}">
@@ -26,7 +26,7 @@
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"
                 (input)="validateInput()" />
 
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" class="user-chip-menu">
                 <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
                     <div class="user-chip-search">
                         <img src="{{user.photoURL}}">
