@@ -1,49 +1,53 @@
 <div class="main">
-<header>
-  <div class="left-side">
-    <img
-      *ngIf="this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize() || !this.drawerService.checkScreenSize()"
-      class="logo" src="assets/img/logo+text.png">
-    <img (click)="this.drawerService.open(); this.threadService.closeThread()"
-      *ngIf="!this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize()" class="open-menu"
-      src="assets/img/open-menu-button.png" alt="">
-    <div class="logo-search-box">
-      <div class="search-box">
-        <app-search-bar [messageSearch]="true"></app-search-bar>
+  <header>
+    <div class="left-side">
+      <div class="logo-container"
+        *ngIf="this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize() || !this.drawerService.checkScreenSize()">
+        <img class="logo" src="assets/img/logo+text.png">
       </div>
+      <img (click)="this.drawerService.open(); this.threadService.closeThread()"
+        *ngIf="!this.drawerService.isDrawerOpen && this.drawerService.checkScreenSize()" class="open-menu"
+        src="assets/img/open-menu-button.png" alt="">
     </div>
-  </div>
-  <div class="profil-box" *ngIf="currentUser" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"
-    (menuOpened)="isMenuOpen = true" (menuClosed)="isMenuOpen = false">
-    <span class="profil-name">{{ loggedinUser?.name}}</span>
-    <div class="align-right" style="position: relative;">
-      <img class="avatar" src="{{ currentUser.photoURL }}">
-        <app-user-presence [userID]="currentUser.id" style="position: absolute !important;
+    <div class="profile-search-container">
+      <div class="logo-search-box">
+        <div class="search-box">
+          <app-search-bar [messageSearch]="true"></app-search-bar>
+        </div>
+      </div>
+      <div class="profil-box" *ngIf="currentUser" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"
+        (menuOpened)="isMenuOpen = true" (menuClosed)="isMenuOpen = false">
+        <span class="profil-name">{{ loggedinUser?.name}}</span>
+        <div class="align-right" style="position: relative;">
+          <img class="avatar" src="{{ currentUser.photoURL }}">
+          <app-user-presence [userID]="currentUser.id" style="position: absolute !important;
         bottom: 2px !important;
         right: 5px !important;">
-        </app-user-presence>
-    </div>
-   
-    <button mat-icon-button>
-      <img class="arrow-down" src="assets/img/arrow-down.png"></button>
-  </div>
-  <div class="backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+          </app-user-presence>
+        </div>
+        <button mat-icon-button>
+          <img class="arrow-down" src="assets/img/arrow-down.png"></button>
+      </div>
+      <div class="backdrop" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
 
-  <mat-menu #menu="matMenu" class="profile-menu">
-    <div class="rectangle-centered">
-      <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="assets/img/rectangle.png">
+      <mat-menu #menu="matMenu" class="profile-menu">
+        <div class="rectangle-centered">
+          <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="assets/img/rectangle.png">
+        </div>
+        <button class="menu-btn" mat-menu-item (click)="openUserProfile()">
+          <div>
+            <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" class="person-icon"
+              src="assets/img/person.png"><span>Profile</span>
+          </div>
+        </button>
+        <button class="menu-btn" mat-menu-item (click)="userLoggedout()">
+          <div>
+            <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"
+              src="assets/img/logout.png"><span>Logout</span>
+          </div>
+        </button>
+      </mat-menu>
     </div>
-    <button class="menu-btn" mat-menu-item (click)="openUserProfile()">
-      <div>
-        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)"  class="person-icon" src="assets/img/person.png"><span>Profile</span>
-      </div>
-    </button>
-    <button class="menu-btn" mat-menu-item (click)="userLoggedout()">
-      <div>
-        <img *ngIf="this.drawerService.checkScreenSizeForResponsive(450)" src="assets/img/logout.png"><span>Logout</span>
-      </div>
-    </button>
-  </mat-menu>
-</header>
-<app-sidenav></app-sidenav>
+  </header>
+  <app-sidenav></app-sidenav>
 </div>
