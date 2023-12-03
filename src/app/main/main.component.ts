@@ -2,15 +2,15 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UserProfile } from 'src/app/models/user-profile';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DrawerService } from 'src/app/services/drawer.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { PresenceService } from '../services/presence.service';
 import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
-import { PresenceService } from '../services/presence.service';
 
 
 @Component({
@@ -55,11 +55,12 @@ export class MainComponent implements OnInit {
 
 
   async ngOnInit() {
-    this.router.navigate(['/main/channel/MLYdOZo8nhH04EOnjoUg']);
+    this.router.navigate(['/main/channel/ZBHjb7VZGnM469oCUYXs']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
     this.getUserDataAndSubscribe();
   }
+
 
   ngOnDestroy() {
     this.updateUserStatus(false);
@@ -67,6 +68,7 @@ export class MainComponent implements OnInit {
     this.unsubscribeUserFn();
     this.userSubjectUnSub.unsubscribe();
   }
+
 
   getUserDataAndSubscribe() {
     const observable = this.userFbService.getCurrentUserSubject();
@@ -79,10 +81,12 @@ export class MainComponent implements OnInit {
     this.isMobile = width <= 750;
       }
 
+
   updateUserStatus(status: boolean) {
     this.userFbService.updateUserOnlineStatus(this.userId, status)
   }
 
+  
   closeMenu() {
     if (this.menuTrigger) {
       this.menuTrigger.closeMenu();

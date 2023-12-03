@@ -9,7 +9,7 @@
     <div>
         <h3>Channel-Name</h3>
         <mat-form-field appearance="outline" class="mat-input">
-            <input [formControl]="channelNameInput" matInput placeholder="# e.g. marketing">
+            <input [formControl]="channelNameInput" matInput placeholder="# e.g. marketing" (blur)="validateInput()">
             <mat-error *ngIf="channelNameInput.invalid">{{getErrorMessage()}}</mat-error>           
         </mat-form-field>
     </div>

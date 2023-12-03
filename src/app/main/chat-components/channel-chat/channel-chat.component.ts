@@ -76,7 +76,7 @@ export class ChannelChatComponent {
   allUsers: UserProfile[] = [];
   replyPath: any = '';
   level: string = '';
-
+  private levelSubscription: Subscription | undefined;
 
   constructor(
     public dialog: MatDialog,
@@ -99,14 +99,15 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     // Subscribe to paramMap for channelId
     this.route.paramMap.subscribe((params) => {
+      this.channelService.getLevelObservable().subscribe(level => {
+        this.level = level;        
+      });
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
-          if (this.level) this.level = this.channelService.getLevel();
-          else this.level = '1'
           setTimeout(() => this.scrollDown(), 1000);
         });
       }).catch(err => {
@@ -114,7 +115,7 @@ export class ChannelChatComponent {
       });
     });
 
-
+   
 
     // Rest of your ngOnInit code...
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
@@ -131,6 +132,9 @@ export class ChannelChatComponent {
   ngOnDestroy() {
     if (this.observer) this.observer.disconnect();
     if (this.messageSelectionSub) this.messageSelectionSub.unsubscribe();
+    if (this.levelSubscription) {
+      this.levelSubscription.unsubscribe();
+    }
   }
 
 

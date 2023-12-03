@@ -411,6 +411,14 @@ app-emoji-picker {
 
 @media (max-width: 960px) {
 
+    header {
+        padding: 20px;
+    }
+
+    .channel-info-box span {
+        font-size: 18px;
+    }
+
     .thread-section {
         position: absolute;
         left: 0px;

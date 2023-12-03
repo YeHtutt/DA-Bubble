@@ -1,6 +1,7 @@
 import { Component, HostListener, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Channel } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/services/channel.service';
 import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
@@ -35,7 +36,7 @@ export class EditChannelDialogComponent {
     public dialogRef: MatDialogRef<EditChannelDialogComponent>,
     public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
-
+    private router: Router,
   ) { }
 
 
@@ -114,6 +115,7 @@ export class EditChannelDialogComponent {
     if (this.currentUserId == this.channel.creator.id) {
       this.firestoreUtils.deleteCollection('channel', this.channel.channelId);
     }
+    this.router.navigate(['/main/channel/ZBHjb7VZGnM469oCUYXs']);
     this.closeCreateChannelDialog();
   }
 

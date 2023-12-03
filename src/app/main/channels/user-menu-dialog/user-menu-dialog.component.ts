@@ -40,7 +40,6 @@ export class UserMenuDialogComponent {
       let userToJSON = user.toJSON();
       this.allUsersArray.push(userToJSON);
     });
-
     this.updateUserOnlineStatus();
   }
 
@@ -56,7 +55,6 @@ export class UserMenuDialogComponent {
       }
     });
   }
-
 
 
   closeDialog() {
