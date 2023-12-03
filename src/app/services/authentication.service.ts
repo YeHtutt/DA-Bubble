@@ -7,7 +7,8 @@ import { from, switchMap } from 'rxjs';
 import { UserProfile } from '../models/user-profile';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
-
+import { ChannelService } from './channel.service';
+import { Channel } from '../models/channel';
 
 
 
@@ -28,7 +29,8 @@ export class AuthenticationService {
   constructor(private auth: Auth, private afAuth: AngularFireAuth,
     private userfbService: UsersFirebaseService, private router: Router,
     private usersFbService: UsersFirebaseService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private channelService: ChannelService) {
     this.user = new UserProfile(); // user initialisiert
   }
 
@@ -54,9 +56,18 @@ export class AuthenticationService {
         this.SendVerificationMail();
         this.addUidToUser(newUser, uid);
         this.userfbService.addUserToFirebase(newUser.toJSON(), user.uid);
+        this.addToGeneralChannel(user.uid);
         return updateProfile(user, { displayName: name });
       })
     );
+  }
+
+/* ID */
+  async addToGeneralChannel(user: string) {
+    const userData = (await this.usersFbService.getUser(user)).toJSON();
+    let channel = (await this.channelService.getSingleChannel('W1y1PNesrIl7kbXs1YQU')).toJSON();
+    channel.usersData.push(userData);
+    this.channelService.updateChannel(new Channel(channel));
   }
 
 
@@ -86,6 +97,7 @@ export class AuthenticationService {
   }
 
 
+  /* ID */
   signinWithGoogle() {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(this.auth, googleProvider)
@@ -105,7 +117,7 @@ export class AuthenticationService {
           setDoc(collRef, this.user.toJSON());
         }
         this.usersFbService.saveToLocalStorage(result.user.uid);
-        this.router.navigate([`/main`]);
+        this.router.navigate([`/main/channel/W1y1PNesrIl7kbXs1YQU`]);
         this.notificationService.showSuccess('Login erfolgreich');
       }
       ).catch((error) => {
@@ -144,7 +156,7 @@ export class AuthenticationService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        
+
       });
   }
 }

@@ -53,9 +53,10 @@ export class MainComponent implements OnInit {
     setTimeout(() => this.updateUserStatus(false), 5000);
   }
 
+  /* ID */
 
   async ngOnInit() {
-    this.router.navigate(['/main/channel/ZBHjb7VZGnM469oCUYXs']);
+    this.router.navigate(['/main/channel/W1y1PNesrIl7kbXs1YQU']);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
     this.getUserDataAndSubscribe();
