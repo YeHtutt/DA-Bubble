@@ -26,6 +26,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SearchService } from 'src/app/services/search.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 
 
 @Component({
@@ -372,6 +373,29 @@ export class ChannelChatComponent {
       autoFocus: false,
       data: {
         channel: this.channel
+      }
+    });
+  }
+
+
+  openProfileDialog(node: any) {
+    const userId = node.id;
+    const userName = node.name;
+    const userPhotoURL = node.photoURL;
+    const userEmail = node.email;
+    const isOnline = node.isOnline;
+    this.dialog.open(UserProfileSubViewComponent, {
+      width: '500px',
+      height: '727px',
+      hasBackdrop: true,
+      panelClass: 'dialog-main-style',
+      autoFocus: false,
+      data: {
+        id: userId,
+        name: userName,
+        photoURL: userPhotoURL,
+        email: userEmail,
+        isOnline: isOnline
       }
     });
   }
