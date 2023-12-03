@@ -374,14 +374,30 @@ md-sidenav.md-sidenav-opening {
       width: 100vw !important;
       display: flex !important;
       justify-content: space-between !important;
+
     }
   }
 
+  .profile-menu {
+    animation: slideInFromBottom 0.25s ease-out forwards;
+  }
 
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  
   .mat-mdc-menu-content,
-  .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {   
+  .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {
     width: 70% !important;
     margin: auto !important;
+
     div {
       padding-left: 20px;
       padding-right: 20px;

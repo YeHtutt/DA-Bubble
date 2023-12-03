@@ -6,7 +6,7 @@
         <main class="closed-main">
             <h3>Wende dich an eines der folgenden Mitglieder, um dich einzuladen.</h3>
             <mat-divider></mat-divider>
-            <div class="users-list scrollable-users-list">
+            <div class="users-list scrollable-users-list" >
                 <div *ngFor="let user of this.channel?.usersData" class="user-in-list">
                     <img class="profil-icon" src="{{ user.photoURL }}">
                     <!-- <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
