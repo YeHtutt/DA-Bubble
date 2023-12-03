@@ -26,32 +26,9 @@ $border-color: #ADB0D9;
 $active-color: #444DF2;
 
 
-md-sidenav.md-sidenav-opened,
-md-sidenav.md-sidenav-opening {
-  box-shadow: 0 0 0 0 !important;
-}
-
-
-.mat-drawer-side {
-  box-shadow: none;
-  border-right-color: var(--mat-sidenav-container-divider-color);
-  border-right-width: 1px;
-  border-right-style: unset;
-}
-
-
-.material-icons-outlined,
-.material-icons.material-icons--outlined {
-  font-family: 'Material Icons Outlined';
-}
-
-
-
-
 [hidden] {
   display: none !important;
 }
-
 
 
 h2 {
@@ -62,6 +39,7 @@ h2 {
   font-weight: 700;
   line-height: normal;
 }
+
 
 h3 {
   font-weight: 700;
@@ -78,8 +56,12 @@ div {
   width: 100%;
 }
 
-/****************************** MIXINS ***********************/
 
+.d-none {
+  display: none;
+}
+
+/****************************** MIXINS ***********************/
 
 @mixin flex-center {
   display: flex;
@@ -139,8 +121,6 @@ button {
 }
 
 /************************** AUTH COPONENT MATERIAL STYLES **********************/
-
-/* auth components input field styles */
 
 .register-outline-field {
 
@@ -203,35 +183,15 @@ button {
 
 /************************** SCROLLBAR STYLES **********************/
 
-/* For Webkit browsers (Chrome, Safari, newer versions of Edge) */
-::-webkit-scrollbar {
-  width: 5px; // Adjust width for vertical scrollbar
-  height: 5px; // Adjust height for horizontal scrollbar
-}
-
 *::-webkit-scrollbar {
   display: none;
 }
+
 
 * {
   scrollbar-width: none;
 }
 
-@-moz-document url-prefix() {
-
-  html,
-  body {
-    overflow: hidden !important;
-  }
-}
-
-@-moz-document url-prefix() {
-
-  /* Disable scrollbar Firefox */
-  html {
-    scrollbar-width: none;
-  }
-}
 
 body {
   margin: 0;
@@ -243,11 +203,6 @@ body {
   overflow-y: scroll;
 }
 
-body::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-  /* Disable scrollbar Chrome/Safari/Webkit */
-}
 
 body {
   scrollbar-width: none;
@@ -260,6 +215,24 @@ body {
 
 
 /************************** GENERAL MATERIAL STYLES **********************/
+md-sidenav.md-sidenav-opened,
+md-sidenav.md-sidenav-opening {
+  box-shadow: 0 0 0 0 !important;
+}
+
+
+.mat-drawer-side {
+  box-shadow: none;
+  border-right-color: var(--mat-sidenav-container-divider-color);
+  border-right-width: 1px;
+  border-right-style: unset;
+}
+
+
+.material-icons-outlined,
+.material-icons.material-icons--outlined {
+  font-family: 'Material Icons Outlined';
+}
 
 
 .profile-menu {
@@ -283,6 +256,7 @@ body {
   }
 }
 
+
 .user-profile-view-dialog {
   position: absolute !important;
   top: 85px !important;
@@ -301,9 +275,11 @@ body {
     background-color: #444DF2 !important;
   }
 
+
   .mat-mdc-button.mat-unthemed {
     color: white !important;
   }
+
 
   .mat-mdc-button {
     box-sizing: border-box !important;
@@ -320,6 +296,7 @@ body {
     align-items: flex-end;
     justify-content: flex-start;
   }
+
 
   .dialog-main-style {
     height: auto !important;
@@ -342,6 +319,10 @@ body {
     max-width: 225px !important;
   }
 }
+
+
+/************************** MEDIA QUERIES **********************/
+
 
 @media(max-width: 450px) {
 
@@ -462,9 +443,6 @@ body {
     opacity: 1;
   }
 }
-
-
-
 
 
 /*for Nest Hub*/
