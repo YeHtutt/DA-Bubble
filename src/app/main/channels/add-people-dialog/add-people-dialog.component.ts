@@ -45,8 +45,7 @@ export class AddPeopleDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private usersService: UsersFirebaseService,
-    private firebaseUtils: FirebaseUtilsService,
+    private usersService: UsersFirebaseService,   
     private dialogRef: MatDialogRef<AddPeopleDialogComponent>,
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef,
@@ -67,8 +66,7 @@ export class AddPeopleDialogComponent {
 
   ngOnInit() {
     this.getUsersNotInChannel();
-    this.drawerService.checkMobileMode(window.innerWidth);
-    console.log(this.openingInChat)
+    this.drawerService.checkMobileMode(window.innerWidth);    
   }
 
 
