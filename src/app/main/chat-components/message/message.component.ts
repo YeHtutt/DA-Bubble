@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { FileUpload } from 'src/app/models/file-upload';
 import { UserProfile } from 'src/app/models/user-profile';
 import { FileStorageService } from 'src/app/services/file-storage.service';
@@ -105,6 +105,7 @@ export class MessageComponent {
         }
       },
       error: error => {
+        console.log('Keine User übereinstimmung gefunden');
       }
     });
   }

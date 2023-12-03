@@ -18,9 +18,12 @@ export class SearchService {
   chatPath: any;
   private messageSubscription?: Subscription;
 
-  constructor(private userService: UsersFirebaseService, private channelService: ChannelService, private firestore: Firestore = inject(Firestore), private router: Router) {
-
-  }
+  constructor(
+    private userService: UsersFirebaseService, 
+    private channelService: ChannelService, 
+    private firestore: Firestore = inject(Firestore), 
+    private router: Router
+    ) {}
 
   ngOnDestroy() {
     this.messageSubscription?.unsubscribe();
