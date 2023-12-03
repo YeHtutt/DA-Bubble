@@ -100,8 +100,8 @@ export class ChannelUsersDialogComponent {
       this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
-
     this.notification.showSuccess('Channel wurde erstellt');
+    this.closeDialog();
   }
 
 

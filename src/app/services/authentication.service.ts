@@ -7,7 +7,8 @@ import { from, switchMap } from 'rxjs';
 import { UserProfile } from '../models/user-profile';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
-
+import { ChannelService } from './channel.service';
+import { Channel } from '../models/channel';
 
 
 
@@ -28,7 +29,8 @@ export class AuthenticationService {
   constructor(private auth: Auth, private afAuth: AngularFireAuth,
     private userfbService: UsersFirebaseService, private router: Router,
     private usersFbService: UsersFirebaseService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private channelService: ChannelService) {
     this.user = new UserProfile(); // user initialisiert
   }
 
@@ -54,10 +56,23 @@ export class AuthenticationService {
         this.SendVerificationMail();
         this.addUidToUser(newUser, uid);
         this.userfbService.addUserToFirebase(newUser.toJSON(), user.uid);
+        this.addToGeneralChannel(user.uid);
         return updateProfile(user, { displayName: name });
       })
     );
   }
+
+
+  async addToGeneralChannel(user: string) {
+    const userData = (await this.usersFbService.getUser(user)).toJSON();
+    let channel = (await this.channelService.getSingleChannel('55ThrZnmt53hxbAm4jk2')).toJSON();
+    channel.usersData.push(userData);
+    this.channelService.updateChannel(new Channel(channel));
+  }
+
+
+
+
 
 
   addUidToUser(newUser: UserProfile, uid: string) {
@@ -144,7 +159,7 @@ export class AuthenticationService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        
+
       });
   }
 }
