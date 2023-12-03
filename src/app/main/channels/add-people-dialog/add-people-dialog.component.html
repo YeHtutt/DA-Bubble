@@ -2,7 +2,7 @@
     <div *ngIf="drawerService.isMobile && !openingInChat" class="rectangle-container">
         <div class="rectangle"></div>    
     </div>
-    <div class="header">
+    <div class="headline">
         <h2>Leute hinzufügen</h2>
         <button *ngIf="drawerService.isMobile" class="basic-button close-btn" (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
         <button *ngIf="!drawerService.isMobile" class="basic-button close-btn" (click)="closeDialog()"><mat-icon>close</mat-icon></button>
