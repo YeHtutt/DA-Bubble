@@ -1,4 +1,4 @@
-export const environment = {
+/* export const environment = {
   firebase: {
     projectId: 'da-bubble-dffea',
     appId: '1:780185020934:web:f7602f0a757e22aec93187',
@@ -8,9 +8,9 @@ export const environment = {
     messagingSenderId: '780185020934',
     databaseURL: "https://da-bubble-dffea-default-rtdb.europe-west1.firebasedatabase.app"
   },
-};
+}; */
 
-/* export const environment = {
+ export const environment = {
   firebase: {
     apiKey: "AIzaSyBy5E5j_g2LkufuTQSHAKaDByWL-A3tNoU",
     authDomain: "da-bubble-a97af.firebaseapp.com",
@@ -20,4 +20,4 @@ export const environment = {
     appId: "1:658582190460:web:22b8dadc94101442c0ccf9",
     databaseURL: "https://da-bubble-a97af-default-rtdb.europe-west1.firebasedatabase.app"
   }
-}; */
+}; 
