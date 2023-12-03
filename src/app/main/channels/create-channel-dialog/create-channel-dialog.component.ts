@@ -16,10 +16,10 @@ import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-use
 })
 export class CreateChannelDialogComponent {
 
-  channelNameInput = new FormControl('', [Validators.required, Validators.minLength(3)]);
+
   channelDescription: string = '';
   channel: any;
-
+  channelNameInput = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(12)]);
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
@@ -39,9 +39,10 @@ export class CreateChannelDialogComponent {
 
   subscribeToChannelNameChanges() {
     this.channelNameInput.valueChanges.subscribe(() => {
-      this.validateInput();
+      this.validateInput();    
     });
   }
+  
 
   addChannel() {
     if (this.channelNameInput.invalid) {
@@ -90,9 +91,11 @@ export class CreateChannelDialogComponent {
   getErrorMessage() {
     if (this.channelNameInput.hasError('required')) return 'Du musst einen Namen eingeben.';
     if (this.checkForDoubledChannels()) return 'Der Channel exisiert bereits.';
-    if (this.channelNameInput.hasError('minlength')) return 'Der Channel sollte wenigstens drei Buchstaben haben';
+    if (this.channelNameInput.hasError('minlength')) return 'Der Channelname sollte wenigstens drei Buchstaben haben';
+    if (this.channelNameInput.hasError('maxlength')) return 'Der Channelname darf nicht länger als 12 Buchstaben sein';
     return '';
   }
+
 
 
   validateInput() {
