@@ -1,11 +1,9 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MessageSelectionService } from 'src/app/services/message-selection.service';
 import { SearchService } from 'src/app/services/search.service';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
-import { MessageSelectionService } from 'src/app/services/message-selection.service';
-import { Message } from 'src/app/models/message';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { UserProfile } from 'src/app/models/user-profile';
+import { DrawerService } from 'src/app/services/drawer.service';
 
 
 @Component({
@@ -29,7 +27,7 @@ export class SearchBarComponent {
     private searchService: SearchService,
     public dialog: MatDialog,
     public messageSelectionService: MessageSelectionService,
-    private userService: UsersFirebaseService
+    private drawerService: DrawerService
   ) { }
 
 
@@ -44,6 +42,7 @@ export class SearchBarComponent {
   onMessageSelect(messageId: string) {
     this.messageSelectionService.selectMessage(messageId);
     this.filteredMessages = [];
+    if(this.drawerService.checkScreenSize() && this.drawerService.isDrawerOpen) this.drawerService.toggle();
   }
 
 
@@ -51,21 +50,18 @@ export class SearchBarComponent {
     this.search = '';
     this.filteredUser = [];
     this.filteredChannel = [];
-    this.toggleSearchOutput();
+    this.searchOutput = false;
   }
 
 
-  toggleSearchOutput() {
-    this.searchOutput = !this.searchOutput;
+  openSearchOutput(event: Event) {
+    event.stopPropagation();
+    this.searchOutput = true;
   }
 
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('input') && !target.closest('.searchOutputHeader')) {
-      this.searchOutput = false;
-    }
+  closeSearch() {
+    this.searchOutput = false;
   }
 
 

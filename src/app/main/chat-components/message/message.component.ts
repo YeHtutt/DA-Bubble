@@ -143,7 +143,7 @@ export class MessageComponent {
 
   saveMessage(msgId: string) {
     this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
-    this.showEdit = !this.showEdit
+    this.showEdit = !this.showEdit;
   }
 
 
@@ -153,7 +153,7 @@ export class MessageComponent {
     }
     if (event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace(this.editMessage) && !this.messageSending) {
       this.messageSending = true;
-      this.saveMessage(this.message.messageId);
+      this.message.type === 'message' ? this.saveMessage(this.message.messageId) : this.saveReply(this.collPath);
     }
   }
 
@@ -202,7 +202,7 @@ export class MessageComponent {
 
   closeAllEmojiWindows() {
     this.isReactionInputOpened = false;
-    this.isReactionOpened = false
+    this.isReactionOpened = false;
     this.isOpened = false;
   }
 
@@ -279,8 +279,10 @@ export class MessageComponent {
   /* Thread(Reply) functions */
 
   saveReply(path: any) {
-    const updatedFields = { text: this.editMessage || '' };
+    const updatedFields = { text: this.editMessage || '', textEdited: true  };
     this.threadService.updateDoc(path, this.message, 'messageId', updatedFields);
+    this.messageSending = false;
+    this.showEdit = !this.showEdit;
   }
 
 
