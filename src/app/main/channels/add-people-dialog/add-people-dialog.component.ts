@@ -55,16 +55,21 @@ export class AddPeopleDialogComponent {
   ) {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(''),
-      map((user: string | null) => this._filter(user))
+      map((user: string | null) => user ? this._filter(user) : this.usersNotInChannel.slice())
     );
   }
 
 
   ngOnInit() {
+    console.log('open dialog')
     this.getAllUsers().then(() => {
       this.getUsersNotInChannel();
+      this.updateFilteredUsers();
     });
     this.drawerService.checkMobileMode(window.innerWidth);
+    this.filteredUsers.subscribe(users => {
+      console.log('Aktualisierte filteredUsers:', users);
+    });
   }
 
   async getAllUsers() {
@@ -79,6 +84,14 @@ export class AddPeopleDialogComponent {
     this.usersNotInChannelSubject.next(this.usersNotInChannel);
     if (this.usersNotInChannel.length === 0) this.userCtrl.disable();
     else this.userCtrl.enable();
+
+  }
+
+  private updateFilteredUsers(): void {
+    this.filteredUsers = this.userCtrl.valueChanges.pipe(
+      startWith(''),
+      map((user: string | null) => user ? this._filter(user) : this.usersNotInChannel.slice())
+    );
   }
 
 
@@ -112,16 +125,19 @@ export class AddPeopleDialogComponent {
 
 
   addUsers() {
-    this.channel.usersData.push(...this.users);
+
+    let usersAsJSON = this.users.map((user: UserProfile) => user.toJSON());
+    this.channel.usersData.push(...usersAsJSON);
     this.updateUsersNotInChannel();
     this.channelService.updateChannel(this.channel);
-    let names: any = []; // Initialize `names` as an empty array
+    let names: any = [];
     this.users.forEach((user) => {
-      names.push(user.name); // Now you can push items into `names`
+      names.push(user.name);
     });
-    this.notificationsService.showSuccess(`${names.join(', ')} erfolgreich hinzugefügt`); // Use `names` here, not `this.users`
+    this.notificationsService.showSuccess(`${names.join(', ')} erfolgreich hinzugefügt`);
     this.dialogRef.close();
   }
+
 
 
   pushCertainUsersToChannel() {
@@ -135,25 +151,35 @@ export class AddPeopleDialogComponent {
   remove(name: string): void {
     const index = this.users.findIndex((user: any) => user.name === name);
     if (index >= 0) {
+      // Benutzer aus der Liste der ausgewählten Benutzer entfernen
+      const removedUser = this.users[index];
       this.users.splice(index, 1);
-      this.updateUsersNotInChannel();
+
+      // Benutzer wieder zur Liste der nicht im Kanal befindlichen Benutzer hinzufügen
+      if (!this.usersNotInChannel.some(u => u.id === removedUser.id)) {
+        this.usersNotInChannel.push(removedUser);
+      }
+
+      // Aktualisieren der Listen und der Ansicht
+      this.updateFilteredUsers();
       this.announcer.announce(`Removed ${name}`);
+      this.cdRef.detectChanges(); // Stellen Sie sicher, dass Änderungen erkannt werden
     }
   }
+
 
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
-  
-    // Check if the user is already added to the users array
     if (!this.users.some(u => u.id === selectedUser.id)) {
       this.users.push(selectedUser);
-      this.userInput.nativeElement.value = '';
-      this.userCtrl.setValue('');
-      this.updateUsersNotInChannel(); // Update the list of users not in the channel
+      this.usersNotInChannel = this.usersNotInChannel.filter(u => u.id !== selectedUser.id);
+      this.updateFilteredUsers(); // Aktualisieren Sie die gefilterten Benutzer
     }
+    this.userInput.nativeElement.value = '';
+    this.userCtrl.setValue(null);
   }
-  
+
   private refreshUserControl(): void {
     // Triggering a null value change to refresh the filteredUsers Observable
     this.userCtrl.setValue('');
@@ -171,7 +197,7 @@ export class AddPeopleDialogComponent {
 
   private refreshFilteredUsers(): void {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
-      startWith(''),
+      startWith(null),
       map((user: string | null) => this._filter(user))
     );
   }
@@ -191,9 +217,15 @@ export class AddPeopleDialogComponent {
   }
 
   private _filter(value: any): any[] {
-    const filterValue = value.name ? value.name.toLowerCase() : '';
-    return this.usersNotInChannel.filter(user => user.name.toLowerCase().includes(filterValue));
+    // Überprüfen Sie, ob der Wert null ist und geben Sie im Fall von null die gesamte Benutzerliste zurück
+    if (value === null) {
+      return this.usersNotInChannel;
+    }
+  
+    const filterValue = value.name.toLowerCase();
+    return this.usersNotInChannel.filter(user => user.name.toLowerCase().includes(filterValue) && !this.users.some(u => u.id === user.id));
   }
+  
 
   validateInput(): void {
     const inputValue = this.userCtrl.value?.trim();
@@ -209,23 +241,17 @@ export class AddPeopleDialogComponent {
 
   add(event: MatChipInputEvent): void {
     const inputName = (event.value || '').trim();
-  
-    // Find the user in the usersNotInChannel array
     const userToAdd = this.usersNotInChannel.find(u => u.name === inputName);
-    console.log(this.usersNotInChannel)
-  
-    // Check if the user is found and not already added
+
     if (userToAdd && !this.users.some(u => u.id === userToAdd.id)) {
       this.users.push(userToAdd);
-      
-      // Remove the added user from usersNotInChannel
+      this.updateFilteredUsers();
       this.usersNotInChannel = this.usersNotInChannel.filter(u => u.id !== userToAdd.id);
-      // Update the filteredUsers Observable
-      this.refreshFilteredUsers();
+      this.updateFilteredUsers(); // Aktualisieren Sie die gefilterten Benutzer
     }
-  
-    // Clear the input field
+
     event.chipInput!.clear();
   }
-  
+
+
 }
