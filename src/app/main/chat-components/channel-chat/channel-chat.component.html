@@ -1,12 +1,15 @@
 <div class="dashboard">
     <section class="message-section" *ngIf="this.level=== '2'">
         <header>
-            <h2>{{channel?.channelName}} geschlossen</h2>
+            <div class="channel-info-box">
+                <mat-icon class="material-icons-outlined">lock</mat-icon>
+                <span>{{channel?.channelName}} geschlossen</span>
+            </div>
         </header>
         <main class="closed-main">
             <h3>Wende dich an eines der folgenden Mitglieder, um dich einzuladen.</h3>
             <mat-divider></mat-divider>
-            <div class="users-list scrollable-users-list" >
+            <div class="users-list scrollable-users-list">
                 <div *ngFor="let user of this.channel?.usersData" class="user-in-list">
                     <img class="profil-icon" src="{{ user.photoURL }}">
                     <!-- <img *ngIf="user.isOnline" class="online-status" src="assets/img/Online.png">
@@ -20,6 +23,7 @@
     <section class="message-section" *ngIf="this.level=== '1'">
         <header>
             <div class="channel-info-box" (click)="openChannelMenu()">
+                <mat-icon class="tag">tag</mat-icon>
                 <span>{{channel?.channelName}}</span>
                 <mat-icon>expand_more</mat-icon>
             </div>
