@@ -1,11 +1,18 @@
 @import "../../../../styles.scss";
 
-.d-none {
-    display: none;
-}
 
 .header {
     @include flex-between;
+}
+
+
+.invitation-dialog-container {
+    padding: 40px;
+    height: auto;
+    @include flex-column;
+    .flex-column {
+        @include flex-column
+    }
 }
 
 .rectangle-container {
@@ -40,14 +47,6 @@
     margin-bottom: 20px;
 }
 
-.invitation-dialog-container {
-    padding: 40px;
-    height: auto;
-    @include flex-column;
-    .flex-column {
-        @include flex-column
-    }
-}
 
 
 .mat-form-field {
