@@ -102,6 +102,7 @@ export class ChannelUsersDialogComponent {
     };
 
     this.notification.showSuccess('Channel wurde erstellt');
+    this.closeAddPeopleDialog();
   }
 
 
