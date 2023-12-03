@@ -61,7 +61,7 @@ export class SidenavComponent {
   }
 
   checkScreenSize() {
-    if(window.innerWidth < 750) this.isMobile = true;
+    if(window.innerWidth <= 750) this.isMobile = true;
     if(window.innerWidth > 750) this.isMobile = false;
   }
 
