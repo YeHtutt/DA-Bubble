@@ -42,7 +42,7 @@
             </div>
         </header>
         <main #scroller>
-            <div *ngFor="let messageGroup of this.messageService.groupedMessages">
+            <div *ngFor="let messageGroup of this.messageService.groupedMessages; trackBy: trackByFunction">
                 <div class="date-border">
                     <div class="message-date"><span>{{ messageGroup.date }}</span></div>
                 </div>
