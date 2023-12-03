@@ -29,17 +29,16 @@ export class UserProfileSubViewComponent {
     private presenceService: PresenceService
   ) {
     this.userId = data.id;
-    const user = this.userFbService.getUser(data.id).then((user: UserProfile) => {
+    this.userFbService.getUser(data.id).then((user: UserProfile) => {
       this.userPhotoURL = user.photoURL;
       this.userName = user.name;
       this.userEmail = user.email;
     });
-    console.log(user)
   }
 
 
   ngOnInit() {
-    this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
+    // this.userFbService.getLoggedInUser(this.userFbService.getFromLocalStorage());
     this.presence$ = this.presenceService.getPresence(this.userId);
 
   }
