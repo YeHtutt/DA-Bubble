@@ -62,17 +62,13 @@ export class AuthenticationService {
     );
   }
 
-
+/* ID */
   async addToGeneralChannel(user: string) {
     const userData = (await this.usersFbService.getUser(user)).toJSON();
-    let channel = (await this.channelService.getSingleChannel('55ThrZnmt53hxbAm4jk2')).toJSON();
+    let channel = (await this.channelService.getSingleChannel('W1y1PNesrIl7kbXs1YQU')).toJSON();
     channel.usersData.push(userData);
     this.channelService.updateChannel(new Channel(channel));
   }
-
-
-
-
 
 
   addUidToUser(newUser: UserProfile, uid: string) {
@@ -101,6 +97,7 @@ export class AuthenticationService {
   }
 
 
+  /* ID */
   signinWithGoogle() {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(this.auth, googleProvider)
@@ -120,7 +117,7 @@ export class AuthenticationService {
           setDoc(collRef, this.user.toJSON());
         }
         this.usersFbService.saveToLocalStorage(result.user.uid);
-        this.router.navigate([`/main`]);
+        this.router.navigate([`/main/channel/W1y1PNesrIl7kbXs1YQU`]);
         this.notificationService.showSuccess('Login erfolgreich');
       }
       ).catch((error) => {
