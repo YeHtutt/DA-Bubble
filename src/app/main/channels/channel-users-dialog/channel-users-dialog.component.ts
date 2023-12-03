@@ -27,14 +27,14 @@ export class ChannelUsersDialogComponent {
   text: string = '';
   separatorKeysCodes: number[] = [ENTER, COMMA];
   userCtrl = new FormControl('');
-  filteredUsers: Observable<any[]>;
-  allUsers: any = [];
-  users: any[] = [];
   addedUsers: UserProfile[] = [];
   isKnownUser: boolean = false;
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
   currentUserId: string | null = '';
   channelCreator = this.channel.creator
+  allUsers: any = [];
+  users: any[] = [];
+  filteredUsers: Observable<any[]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,8 +46,6 @@ export class ChannelUsersDialogComponent {
     private notification: NotificationService,
 
   ) {
-
-
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(null),
       map((user: string | null) => {
@@ -71,6 +69,7 @@ export class ChannelUsersDialogComponent {
   closeAddPeopleDialog() {
     this.dialogRef.close();
   }
+
 
   async getAllUsers() {
     this.allUsers = await this.userService.getUsers();
@@ -126,45 +125,30 @@ export class ChannelUsersDialogComponent {
     if (index >= 0) {
       const removedUser = this.users[index]; // Capture the user before removing
       this.users.splice(index, 1);
-      this.allUsers.push(removedUser);
+
+      // Re-add the removed user to the allUsers array
+      if (!this.allUsers.some((u: any) => u.id === removedUser.id)) {
+        this.allUsers.push(removedUser);
+      }
+
       this.announcer.announce(`Removed ${name}`);
+      this.updateFilteredUsers(); // Update the filtered users list
     }
   }
 
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
-    this.users.push(selectedUser);
-    this.userInput.nativeElement.value = '';
-    this.userCtrl.setValue(null);
-    this.checkKnownUsers();
-    const index = this.allUsers.findIndex((user: any) => user.name === selectedUser.name);
-    if (index !== -1) {
-      this.allUsers.splice(index, 1);
+
+    // Check if the user is already added
+    if (!this.users.some(u => u.id === selectedUser.id)) {
+      this.users.push(selectedUser);
+      this.userInput.nativeElement.value = '';
+      this.userCtrl.setValue(null);
+      // Remove the user from allUsers
+      this.allUsers = this.allUsers.filter((u: any) => u.id !== selectedUser.id);
     }
-  }
-
-
-  checkKnownUsers(): void {
-    for (let user of this.users) {
-      if (!this.allUsers.some((knownUser: any) => knownUser.name === user.name) &&
-        !this.users.some((addedUser: any) => addedUser.name === user.name)) {
-        this.isKnownUser = false;
-        this.cdRef.detectChanges();
-        return;
-      }
-    }
-    this.isKnownUser = true;
-    this.cdRef.detectChanges();
-  }
-
-
-  private _filter(value: any): any[] {
-    if (typeof value !== 'string') {
-      return [];
-    }
-    const filterValue = value.toLowerCase();
-    return this.allUsers.filter((user: any) => user.name.toLowerCase().includes(filterValue));
+    this.updateFilteredUsers();
   }
 
 
@@ -184,21 +168,38 @@ export class ChannelUsersDialogComponent {
     this.cdRef.detectChanges();
   }
 
+
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    if (value) {
-      this.users.push({ name: value });
+    // Find the user object from allUsers
+    const userToAdd = this.allUsers.find((u: any) => u.name === value);
+
+    if (userToAdd && !this.users.some(u => u.id === userToAdd.id)) {
+      this.users.push(userToAdd);
+      // Update allUsers to remove the added user
+      this.allUsers = this.allUsers.filter((u: any) => u.id !== userToAdd.id);
+      this.updateFilteredUsers();
     }
     event.chipInput!.clear();
-    this.checkKnownUsers();
+  }
+  
+
+  private updateFilteredUsers(): void {
+    this.filteredUsers = this.userCtrl.valueChanges.pipe(
+      startWith(''),
+      map((user: string | null) => {
+        let usersToShow = this.allUsers.filter((u: any) => u.id !== this.channelCreator.id);
+        return user ? this._filter(user) : usersToShow;
+      }),
+    );
   }
 
-  // Function to check if a given name is part of allUsers
-  isUserKnown(name: string): boolean {
-    return this.allUsers.some((user: any) => user.name === name);
+
+  private _filter(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    // Filter out users that have already been added
+    return this.allUsers.filter((user: any) => user.name.toLowerCase().includes(filterValue) && !this.users.some(u => u.id === user.id));
   }
-
-
 
 
 }

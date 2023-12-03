@@ -35,17 +35,17 @@ export class AddPeopleDialogComponent {
   addedUsers: UserProfile[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   userCtrl = new FormControl('');
-  filteredUsers: Observable<any[]>;
   allUsers: any = [];
   users: any[] = [];
   isKnownUser: boolean = false;
   usersNotInChannel: UserProfile[] = [];
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
+  filteredUsers: Observable<any[]>;
 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private usersService: UsersFirebaseService,   
+    private usersService: UsersFirebaseService,
     private dialogRef: MatDialogRef<AddPeopleDialogComponent>,
     private announcer: LiveAnnouncer,
     private cdRef: ChangeDetectorRef,
@@ -54,19 +54,22 @@ export class AddPeopleDialogComponent {
     public drawerService: DrawerService
   ) {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
-      startWith(null),
-      switchMap((user: string | null) => {
-        return this.usersNotInChannelSubject.asObservable().pipe(
-          map(users => user ? this._filter(user) : users.slice())
-        );
-      })
+      startWith(''),
+      map((user: string | null) => this._filter(user))
     );
   }
 
 
   ngOnInit() {
-    this.getUsersNotInChannel();
-    this.drawerService.checkMobileMode(window.innerWidth);    
+    this.getAllUsers().then(() => {
+      this.getUsersNotInChannel();
+    });
+    this.drawerService.checkMobileMode(window.innerWidth);
+  }
+
+  async getAllUsers() {
+    this.allUsers = await this.usersService.getUsers();
+    this.updateUsersNotInChannel();
   }
 
 
@@ -81,19 +84,11 @@ export class AddPeopleDialogComponent {
 
   filterUsersNotInChannel() {
     let usersInChannel = this.channel.usersData.map((user: any) => UserProfile.fromJSON(user));
-    let notInChannel: UserProfile[] = [];
-    for (let oneUser of this.allUsers) {
-      let found = false;
-      for (let channelUser of usersInChannel) {
-        if (oneUser.email === channelUser.email) {
-          found = true;
-          break;
-        }
-      }
-      if (!found) notInChannel.push(oneUser.toJSON());
-    }
-    return notInChannel;
+    return this.allUsers.filter((oneUser: any) =>
+      !usersInChannel.some((channelUser: any) => oneUser.email === channelUser.email)
+    );
   }
+
 
   closeDialog() {
     this.dialogRef.close();
@@ -140,6 +135,7 @@ export class AddPeopleDialogComponent {
     const index = this.users.findIndex((user: any) => user.name === name);
     if (index >= 0) {
       this.users.splice(index, 1);
+      this.updateUsersNotInChannel();
       this.announcer.announce(`Removed ${name}`);
     }
   }
@@ -147,14 +143,35 @@ export class AddPeopleDialogComponent {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
-    this.users.push(selectedUser);
-    this.userInput.nativeElement.value = '';
-    this.userCtrl.setValue(null);
-    this.checkKnownUsers();
-    const index = this.usersNotInChannel.findIndex((user: any) => user.name === selectedUser.name);
-    if (index !== -1) this.usersNotInChannel.splice(index, 1);
+  
+    if (!this.users.some(u => u.id === selectedUser.id)) {
+      this.users.push(selectedUser);
+      this.userInput.nativeElement.value = '';
+      this.refreshUserControl();
+      this.updateUsersNotInChannel();
+    }
+  }
+  
+  private refreshUserControl(): void {
+    // Triggering a null value change to refresh the filteredUsers Observable
+    this.userCtrl.setValue('');
+  }
+  
+
+  updateUsersNotInChannel() {
+    let usersInChannelIds = new Set(this.channel.usersData.map((user: any) => user.id));
+    this.usersNotInChannel = this.allUsers.filter((oneUser: any) => !usersInChannelIds.has(oneUser.id));
+    this.refreshFilteredUsers();
+    console.log(usersInChannelIds)
   }
 
+  private refreshFilteredUsers(): void {
+    this.filteredUsers = this.userCtrl.valueChanges.pipe(
+      startWith(''),
+      map((user: string | null) => this._filter(user))
+    );
+  }
+  
 
   checkKnownUsers(): void {
     for (let user of this.users) {
@@ -169,15 +186,10 @@ export class AddPeopleDialogComponent {
     this.cdRef.detectChanges();
   }
 
-
-  private _filter(value: any): any[] {
-    if (typeof value !== 'string') return [];
-    const filterValue = value.toLowerCase();
-    return this.usersNotInChannel.filter((user: any) => user.name.toLowerCase().includes(filterValue));
+  private _filter(value: string | null): any[] {
+    const filterValue = (typeof value === 'string') ? value.toLowerCase() : '';
+    return this.usersNotInChannel.filter(user => user.name.toLowerCase().includes(filterValue));
   }
-
-
-
 
   validateInput(): void {
     const inputValue = this.userCtrl.value?.trim();

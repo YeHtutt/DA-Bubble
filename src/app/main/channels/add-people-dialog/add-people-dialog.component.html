@@ -1,16 +1,18 @@
 <div class="invitation-dialog-container">
     <div *ngIf="drawerService.isMobile && !openingInChat" class="rectangle-container">
-        <div class="rectangle"></div>    
+        <div class="rectangle"></div>
     </div>
     <div class="headline">
         <h2>Leute hinzufügen</h2>
-        <button *ngIf="drawerService.isMobile" class="basic-button close-btn" (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
-        <button *ngIf="!drawerService.isMobile" class="basic-button close-btn" (click)="closeDialog()"><mat-icon>close</mat-icon></button>
+        <button *ngIf="drawerService.isMobile" class="basic-button close-btn"
+            (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
+        <button *ngIf="!drawerService.isMobile" class="basic-button close-btn"
+            (click)="closeDialog()"><mat-icon>close</mat-icon></button>
     </div>
     <div class="channel-name"><mat-icon>tag</mat-icon>{{channel.channelName}}</div>
     <form class="width-100">
         <mat-form-field class="member-input" appearance="outline">
-            <mat-chip-grid #chipGrid aria-label="Benutzer auswählen" >
+            <mat-chip-grid #chipGrid aria-label="Benutzer auswählen">
                 <mat-chip-row class="chip-row" *ngFor="let user of users" (removed)="remove(user.name)">
                     <div class="user-chip">
                         <img src="{{user.photoURL}}">
@@ -37,5 +39,5 @@
         </mat-form-field>
     </form>
     <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()"
-        [disabled]="!isKnownUser">Hinzufügen</button>
+        [disabled]="users.length === 0">Erstellen</button>
 </div>
