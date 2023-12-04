@@ -114,10 +114,6 @@ export class ChannelChatComponent {
         console.log(err);
       });
     });
-
-
-
-    // Rest of your ngOnInit code...
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
     this.checkMobileMode(window.innerWidth);
     this.loadUserData();
@@ -132,9 +128,7 @@ export class ChannelChatComponent {
   ngOnDestroy() {
     if (this.observer) this.observer.disconnect();
     if (this.messageSelectionSub) this.messageSelectionSub.unsubscribe();
-    if (this.levelSubscription) {
-      this.levelSubscription.unsubscribe();
-    }
+    if (this.levelSubscription) this.levelSubscription.unsubscribe();
   }
 
 
@@ -160,7 +154,6 @@ export class ChannelChatComponent {
       this.scrollElement = this.scrollElementRef?.nativeElement;
       this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
     }
-
   }
 
 
@@ -177,9 +170,7 @@ export class ChannelChatComponent {
 
 
   sendByKey(event: KeyboardEvent) {
-    if (event.key == 'Shift') {
-      this.shiftPressed = event.type === 'keydown';
-    }
+    if (event.key == 'Shift') this.shiftPressed = event.type === 'keydown';
     if (!this.messageSending && event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '') {
       this.messageSending = true;
       this.sendMessageTo(this.channelId);
