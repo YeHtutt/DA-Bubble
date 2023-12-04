@@ -14,7 +14,7 @@ import { UserProfileViewComponent } from './users/user-profile-view/user-profile
 
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-dashboard',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })

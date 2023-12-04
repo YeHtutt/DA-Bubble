@@ -55,6 +55,7 @@ export class ChannelService {
 
   setLevel(level: string) {
     this.levelSubject.next(level);
+    
   }
 
 
@@ -79,6 +80,7 @@ export class ChannelService {
 
 
   private _transformer = (node: ChannelsNode, level: number) => {
+    console.log(`Node: ${node.channelName}, Level: ${level}`);  // Debugging line
     const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
       expandable: isExpandable,
@@ -87,6 +89,7 @@ export class ChannelService {
       level: level,
     };
   };
+  
 
 
   treeControl = new FlatTreeControl<ExampleFlatNode>(
@@ -110,6 +113,7 @@ export class ChannelService {
 
 
   getAllChannels() {
+    console.log(this.currentUserId);
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
