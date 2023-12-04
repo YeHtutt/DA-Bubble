@@ -100,7 +100,6 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     // Subscribe to paramMap for channelId
     this.route.paramMap.subscribe((params) => {
-      this.channelService.getLevelObservable().subscribe(level => this.level = level );
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
         this.channel = channelData;
@@ -108,6 +107,9 @@ export class ChannelChatComponent {
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
           this.getUsersForDialog(channelData)
+          this.channelService.getLevelObservable().subscribe(level => {
+            this.level = level;
+          });
           setTimeout(() => this.scrollDown(), 1000);
         });
       }).catch(err => {
