@@ -52,6 +52,7 @@ export class ChannelChatComponent {
   id: string = '';
   channelId: any = '';
   channel: any;
+  channelUserData: UserProfile[] = [];
   ref: any;
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
@@ -104,7 +105,8 @@ export class ChannelChatComponent {
       });
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
-        this.channel = channelData;
+        this.getUsersForDialog(channelData)
+        console.log(channelData)
         this.messageService.subMessage('channel', this.channelId);
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
@@ -335,6 +337,18 @@ export class ChannelChatComponent {
 
   async loadUserData() {
     this.userService.getUsers().then((users: any) => this.allUsers = users);
+  }
+
+
+  async getUsersForDialog(channelData: any) {
+    await this.loadUserData();
+    channelData.usersData.forEach((channelUser: any) => {
+      // Find the matching user in allUsersArray
+      const matchedUser = this.allUsers.find(user => user.id === channelUser.id);
+      if (matchedUser) {
+        this.channelUserData.push(matchedUser)
+      }
+    });
   }
 
 

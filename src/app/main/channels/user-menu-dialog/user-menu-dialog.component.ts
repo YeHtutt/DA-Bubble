@@ -19,6 +19,7 @@ export class UserMenuDialogComponent {
   channel: Channel = new Channel(this.data.channel);
   @Input() isMobile: boolean = false;
   openingInChat: boolean = this.data.openingInChat;
+  channelUsers: UserProfile[] = [];
 
 
   constructor(
@@ -41,18 +42,17 @@ export class UserMenuDialogComponent {
       let userToJSON = user.toJSON();
       this.allUsersArray.push(userToJSON);
     });
-    this.updateUserOnlineStatus();
+    this.getUsersForDialog();
   }
 
 
   // I'm assuming 'id' is the unique identifier for each user. Replace 'id' with the appropriate key.
-  updateUserOnlineStatus() {
+  getUsersForDialog() {
     this.channel.usersData.forEach((channelUser: any) => {
       // Find the matching user in allUsersArray
       const matchedUser = this.allUsersArray.find(user => user.id === channelUser.id);
       if (matchedUser) {
-        // Update the isOnline status
-        channelUser.isOnline = matchedUser.isOnline;
+        this.channelUsers.push(matchedUser)
       }
     });
   }

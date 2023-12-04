@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="users-list scrollable-users-list">
-        <div *ngFor="let user of this.channel.usersData" class="user-in-list" (click)="openProfileDialog(user)">
+        <div *ngFor="let user of channelUsers" class="user-in-list" (click)="openProfileDialog(user)">
             <img class="profil-icon" src="{{ user.photoURL }}">
             <app-user-presence [mini]="true" [userID]="user.id"></app-user-presence>
             <div>{{user.name}}</div>

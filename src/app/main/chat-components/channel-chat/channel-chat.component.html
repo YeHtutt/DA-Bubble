@@ -28,7 +28,7 @@
             <div class="user-channel-info-box">
                 <div class="user-in-channel-box" (click)="openUserMenu()">
                     <div class="user-avatar-box">
-                        <div *ngFor="let user of channel?.usersData;let i=index;">
+                        <div *ngFor="let user of channelUserData;let i=index;">
                             <img *ngIf="i < 3" [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL"
                                 alt="User image">
                         </div>
