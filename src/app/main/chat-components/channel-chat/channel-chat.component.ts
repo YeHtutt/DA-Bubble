@@ -14,7 +14,7 @@ import { UserProfile } from 'src/app/models/user-profile';
 
 /* Services */
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { FileUpload } from 'src/app/models/file-upload';
 import { ChannelService } from 'src/app/services/channel.service';
 import { DrawerService } from 'src/app/services/drawer.service';
@@ -52,7 +52,7 @@ export class ChannelChatComponent {
   id: string = '';
   channelId: any = '';
   channel: any;
-  channelUserData: UserProfile[] = [];
+  channelUserData$: Observable<any> = new Observable();
   ref: any;
   currentUser: UserProfile = new UserProfile;
   receiver: Channel = new Channel;
@@ -100,15 +100,14 @@ export class ChannelChatComponent {
   ngOnInit(): void {
     // Subscribe to paramMap for channelId
     this.route.paramMap.subscribe((params) => {
-      this.channelService.getLevelObservable().subscribe(level => {
-        this.level = level;        
-      });
+      this.channelService.getLevelObservable().subscribe(level => this.level = level );
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
-        this.getUsersForDialog(channelData)
+        this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
           this.channel = channelData;
+          this.getUsersForDialog(channelData)
           setTimeout(() => this.scrollDown(), 1000);
         });
       }).catch(err => {
@@ -116,7 +115,7 @@ export class ChannelChatComponent {
       });
     });
 
-   
+
 
     // Rest of your ngOnInit code...
     this.messageSelectionSub = this.messageSelectionService.selectedMessageId$.subscribe(id => { if (id) this.scrollToMessage(id) });
@@ -140,7 +139,7 @@ export class ChannelChatComponent {
 
 
   trackByFunction(index: number, item: any) {
-    return item.messageId; 
+    return item.messageId;
   }
 
 
@@ -340,14 +339,15 @@ export class ChannelChatComponent {
 
 
   async getUsersForDialog(channelData: any) {
+    let userData: UserProfile[] = [];
     await this.loadUserData();
     channelData.usersData.forEach((channelUser: any) => {
-      // Find the matching user in allUsersArray
       const matchedUser = this.allUsers.find(user => user.id === channelUser.id);
       if (matchedUser) {
-        this.channelUserData.push(matchedUser)
+        userData.push(matchedUser);
       }
     });
+    this.channelUserData$ = of(userData);
   }
 
 
