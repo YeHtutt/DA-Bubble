@@ -62,13 +62,13 @@
             </div>
         </div>
         <div class="reply-information">
-            <button *ngIf="message.threadCount > 1" (click)="this.threadService.openThread(message)"
+            <button *ngIf="message.threadCount > 1"  (click)="this.threadService.openThread(message)"
                 class="answer-button">
                 {{message.threadCount}} Antworten</button>
-            <button *ngIf="message.threadCount == 1" (click)="this.threadService.openThread(message)"
+            <button *ngIf="message.threadCount == 1"   (click)="this.threadService.openThread(message)"
                 class="answer-button">
                 {{message.threadCount}} Antwort</button>
-            <div class="last-message-time" *ngIf="message.timeOflastReply !== ''">
+            <div class="last-message-time" *ngIf="message.timeOflastReply !== '' || 0">
                 letzte Antwort {{getTimeOfDate(message.timeOflastReply)}}
             </div>
         </div>

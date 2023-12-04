@@ -53,8 +53,7 @@ export class ThreadService {
       list.forEach((reply) => {
         this.replies.push(Message.fromJSON({ ...reply.data(), replyId: reply.id }));
       });
-      this.replyCount = this.replies.length; // Update the replyCount here
-      //console.log('reply' + this.replyCount);
+      this.replyCount = this.replies.length; 
     });
   }
 

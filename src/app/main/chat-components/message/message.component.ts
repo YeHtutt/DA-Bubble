@@ -54,7 +54,7 @@ export class MessageComponent {
   private userIDSource = new BehaviorSubject<any>(new UserProfile());
   private userObservable = this.userIDSource.asObservable();
   subscription: Subscription = new Subscription;
-  
+
 
 
 
@@ -88,7 +88,7 @@ export class MessageComponent {
       }
     });
   }
-  
+
 
   ngOnDestroy() {
     if (this.subscription) this.subscription.unsubscribe();
@@ -279,7 +279,7 @@ export class MessageComponent {
   /* Thread(Reply) functions */
 
   saveReply(path: any) {
-    const updatedFields = { text: this.editMessage || '', textEdited: true  };
+    const updatedFields = { text: this.editMessage || '', textEdited: true };
     this.threadService.updateDoc(path, this.message, 'messageId', updatedFields);
     this.messageSending = false;
     this.showEdit = !this.showEdit;
@@ -293,10 +293,22 @@ export class MessageComponent {
 
   async deleteReply(path: string) {
     await this.firebaseUtils.deleteCollection(path, this.message.messageId);
-    let replyPath = `${this.origin}/${this.currentId}/${this.parentMessageId}`;
-    let newTime = this.firebaseUtils.getColl(replyPath);
-    let time = new Date();
-    /*  this.messageService.updateCount(replyPath, this.threadService.replyCount); */
+
+    let parentPath = `${this.origin}/${this.currentId}/message/${this.parentMessageId}`;
+    let replyPath = `${this.origin}/${this.currentId}/message/${this.parentMessageId}/thread`;
+
+    let count = await this.threadService.fetchUpdatedCount(replyPath) as number; // Make sure this is awaited
+    console.log('in delete' + count);
+    let timeOfLastReply;
+
+    if (count > 0) {
+      let replyDoc = await this.firebaseUtils.getColl(replyPath)
+      const lastMessage = await this.messageService.getLastMessageFromSubcollection(replyDoc);
+      timeOfLastReply = lastMessage ? lastMessage.time : new Date();
+    } else {
+      timeOfLastReply = "";
+    }
+    await this.messageService.updateCount(parentPath, count, timeOfLastReply);
   }
 
   // UPLOADED FILES

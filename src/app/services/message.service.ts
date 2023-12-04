@@ -9,7 +9,9 @@ import {
   onSnapshot,
   orderBy,
   query, updateDoc,
-  where
+  where,
+  CollectionReference,
+  DocumentData, limit
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Channel } from '../models/channel';
@@ -82,7 +84,7 @@ export class MessageService {
       }
     }
   }
-  
+
 
   async sendMessageToChat(id: string, message: Message) {
     const chatId = await this.getExistingChatId(this.currentUserId, id);
@@ -225,7 +227,21 @@ export class MessageService {
       threadCount: count,
       timeOflastReply: time
     });
+    console.log('in update' + count)
   }
+
+  async getLastMessageFromSubcollection(subCollRef: CollectionReference<DocumentData>): Promise<Message | null> {
+    const q = query(subCollRef, orderBy('time', 'desc'), limit(1));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) {
+      return null;
+    } else {
+      // Assuming that the data is compatible with the Message class structure
+      const lastMessage = snapshot.docs[0].data() as Message;
+      return new Message(lastMessage);
+    }
+  }
+
 
 
   async chatExists(user1: string, user2: string): Promise<boolean> {
