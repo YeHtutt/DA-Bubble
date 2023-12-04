@@ -101,7 +101,9 @@ export class ChannelChatComponent {
     // Subscribe to paramMap for channelId
     this.route.paramMap.subscribe((params) => {
       this.channelService.getLevelObservable().subscribe(level => {
-        this.level = level;        
+        this.level = level;     
+        console.log(this.level);
+        
       });
       this.channelId = params.get('channelId');
       this.firebaseUtils.getDocData('channel', this.channelId).then(channelData => {
