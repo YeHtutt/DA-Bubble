@@ -4,7 +4,7 @@
         <button class="basic-button close-btn" (click)="closeAddPeopleDialog()"><mat-icon>close</mat-icon></button>
     </div>
     <mat-radio-group class="flex-column" [(ngModel)]="selectedOption" (change)="onRadioChange()">
-        <mat-radio-button color="primary" value="all">Alle Mitglieder zu <span>{{channel.channelName}}</span>
+        <mat-radio-button color="primary" id="radioOne" value="all">Alle Mitglieder zu <span>{{channel.channelName}}</span>
             hinzufügen</mat-radio-button>
         <mat-radio-button color="primary" value="individual">Bestimmte Leute hinzufügen</mat-radio-button>
     </mat-radio-group>
@@ -36,5 +36,6 @@
         </mat-form-field>
     </form>
     <button class="create-btn" mat-fab extended color="primary" (click)="addUsers()"
-    [disabled]="users.length === 0">Erstellen</button>
+    [disabled]="shouldDisableCreateButton()">Erstellen</button>
+
 </div>

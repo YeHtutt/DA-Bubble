@@ -62,7 +62,7 @@ export class AuthenticationService {
     );
   }
 
-/* ID */
+  /* ID */
   async addToGeneralChannel(user: string) {
     const userData = (await this.usersFbService.getUser(user)).toJSON();
     let channel = (await this.channelService.getSingleChannel('W1y1PNesrIl7kbXs1YQU')).toJSON();
@@ -98,33 +98,36 @@ export class AuthenticationService {
 
 
   /* ID */
-  signinWithGoogle() {
-    const googleProvider = new GoogleAuthProvider();
-    signInWithPopup(this.auth, googleProvider)
-      .then((result: any) => {
-        console.log("signInWithRedirect reuslt:", result);
-        if (result && result.user) {
-          const collRef = doc(this.firestore, 'users', result.user.uid);
-          this.userUID = result.user.uid;
-          this.currentUser = result.user;
-          this.user = new UserProfile({
-            id: result.user.uid,
-            name: result.user.displayName,
-            email: result.user.email,
-            photoURL: result.user.photoURL,
-            isOnline: false,
-          })
-          setDoc(collRef, this.user.toJSON());
-        }
-        this.usersFbService.saveToLocalStorage(result.user.uid);
-        this.router.navigate([`/main/channel/W1y1PNesrIl7kbXs1YQU`]);
-        this.notificationService.showSuccess('Login erfolgreich');
+  async signinWithGoogle() {
+    try {
+      const googleProvider = new GoogleAuthProvider();
+      const result = await signInWithPopup(this.auth, googleProvider);
+
+      console.log("signInWithPopup result:", result);
+      if (result && result.user) {
+        const collRef = doc(this.firestore, 'users', result.user.uid);
+        this.userUID = result.user.uid;
+        this.currentUser = result.user;
+        this.user = new UserProfile({
+          id: result.user.uid,
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL: result.user.photoURL,
+          isOnline: false,
+        });
+
+        await setDoc(collRef, this.user.toJSON());
       }
-      ).catch((error) => {
-        //console.error(error);
-        this.notificationService.showError('Login fehlgeschlagen!');
-      });
+
+      this.usersFbService.saveToLocalStorage(result.user.uid);
+      this.router.navigate([`/main/channel/W1y1PNesrIl7kbXs1YQU`]);
+      this.notificationService.showSuccess('Login erfolgreich');
+    } catch (error) {
+      console.error(error);
+      this.notificationService.showError('Login fehlgeschlagen!');
+    }
   }
+
 
 
   // Füge eine öffentliche Methode hinzu, um isAuthenticated abzurufen

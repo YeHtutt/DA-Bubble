@@ -101,6 +101,8 @@ export class MessageTreeService {
         const messageObj = this.setDirectMessageObj(element.data(), element.id);
         let currentUser = this.userService.getFromLocalStorage();
         if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
+        console.log(currentUser)
+        console.log(this.messageTree)
       });
       this.messageTree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       this.themes = [{ name: 'Direktnachrichten', children: this.messageTree }];
