@@ -71,12 +71,29 @@ export class ChannelUsersDialogComponent {
   }
 
 
+  shouldDisableCreateButton(): boolean {
+    const isUserListEmpty = this.users.length === 0;
+    const isAllSelected = this.selectedOption === 'all';
+  
+    console.log('User List Empty:', isUserListEmpty);
+    console.log('All Selected:', isAllSelected);
+  
+    if (isAllSelected) {
+      return false;
+    }
+  
+    return isUserListEmpty;
+  }
+  
+  
+
   async getAllUsers() {
     this.allUsers = await this.userService.getUsers();
   }
 
 
   onRadioChange(): void {
+    
     if (this.selectedOption === 'all') {
       while (this.users.length > 0) {
         this.remove(this.users[0].name);
@@ -86,6 +103,7 @@ export class ChannelUsersDialogComponent {
       this.isKnownUser = false;
     }
     this.openUsernameInput();
+    this.cdRef.detectChanges();
   }
 
 
@@ -96,6 +114,7 @@ export class ChannelUsersDialogComponent {
     };
     if (this.selectedOption === 'individual') {
       this.pushCertainUsersToChannel();
+      console.log(this.channelCreator)
       this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
