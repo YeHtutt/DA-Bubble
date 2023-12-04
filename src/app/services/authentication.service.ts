@@ -64,11 +64,25 @@ export class AuthenticationService {
 
   /* ID */
   async addToGeneralChannel(user: string) {
+    // Retrieve user data
     const userData = (await this.usersFbService.getUser(user)).toJSON();
+
+    // Retrieve the channel data
     let channel = (await this.channelService.getSingleChannel('W1y1PNesrIl7kbXs1YQU')).toJSON();
-    channel.usersData.push(userData);
-    this.channelService.updateChannel(new Channel(channel));
+
+    // Check if the user already exists in the channel
+    if (!channel.usersData.some((u: any) => u.id === userData.id)) {
+      // If the user doesn't exist, add them to the channel
+      channel.usersData.push(userData);
+
+      // Update the channel with the new user list
+      this.channelService.updateChannel(new Channel(channel));
+    } else {
+      // If the user already exists in the channel, you might want to do something else
+      console.log('User already exists in the channel');
+    }
   }
+
 
 
   addUidToUser(newUser: UserProfile, uid: string) {
@@ -117,16 +131,22 @@ export class AuthenticationService {
         });
 
         await setDoc(collRef, this.user.toJSON());
+
+        // Check and add the user to the general channel
+        await this.addToGeneralChannel(result.user.uid);
+
+        this.usersFbService.saveToLocalStorage(result.user.uid);
+        this.notificationService.showSuccess('Login erfolgreich');
       }
 
-      this.usersFbService.saveToLocalStorage(result.user.uid);
+      // Navigate to the main channel view
       this.router.navigate([`/main/channel/W1y1PNesrIl7kbXs1YQU`]);
-      this.notificationService.showSuccess('Login erfolgreich');
     } catch (error) {
       console.error(error);
       this.notificationService.showError('Login fehlgeschlagen!');
     }
   }
+
 
 
 

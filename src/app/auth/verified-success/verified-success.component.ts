@@ -32,6 +32,6 @@ export class VerifiedSuccessComponent {
     }
     setTimeout(() => {
       this.router.navigate(['/login'])
-    }, 4000);
+    }, 1000);
   }
 }
