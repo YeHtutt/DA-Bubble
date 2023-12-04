@@ -61,7 +61,7 @@ export class DirectChatComponent {
       await this.firebaseUtils.addColl(newDirectChat, 'chat', 'chatId');
     }
     const chatId = await this.messageService.getExistingChatId(this.currentUser.id, receiverId);
-    this.router.navigate(['/main/chat', chatId]);
+    this.router.navigate(['/dashboard/chat', chatId]);
     this.drawerService.close();
     if (this.threadService.threadIsOpen) this.threadService.closeThread();
   }

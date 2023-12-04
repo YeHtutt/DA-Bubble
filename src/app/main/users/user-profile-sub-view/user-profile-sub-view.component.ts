@@ -54,10 +54,10 @@ export class UserProfileSubViewComponent {
     const chatExists = await this.messageService.chatExists(directChat.user1, directChat.user2)
     if (!chatExists) {
       const chatId = await this.messageService.createDirectChat(directChat);
-      this.router.navigateByUrl('/main/chat/' + chatId);
+      this.router.navigateByUrl('/dashboard/chat/' + chatId);
     } else {
       const chatId = await this.messageService.getExistingChatId(directChat.user1, directChat.user2);
-      this.router.navigateByUrl('/main/chat/' + chatId);
+      this.router.navigateByUrl('/dashboard/chat/' + chatId);
     }
   }
 

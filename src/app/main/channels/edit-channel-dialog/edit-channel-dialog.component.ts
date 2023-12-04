@@ -115,7 +115,7 @@ export class EditChannelDialogComponent {
     if (this.currentUserId == this.channel.creator.id) {
       this.firestoreUtils.deleteCollection('channel', this.channel.channelId);
     }
-    this.router.navigate(['/main/channel/W1y1PNesrIl7kbXs1YQU']);
+    this.router.navigate(['/dashboard/channel/W1y1PNesrIl7kbXs1YQU']);
     this.closeCreateChannelDialog();
   }
 

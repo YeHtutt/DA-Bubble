@@ -65,7 +65,7 @@ export class MessageService {
 
   async sendMessageToChannel(receiver: any, message: Message, newMessage: boolean) {
     this.uploadMessage('channel', receiver.channelId, 'message', message);
-    if (newMessage) this.router.navigateByUrl('/main/channel/' + receiver.channelId);
+    if (newMessage) this.router.navigateByUrl('/dashboard/channel/' + receiver.channelId);
   }
 
 
