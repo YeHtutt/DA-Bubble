@@ -113,7 +113,7 @@ export class AuthenticationService {
           name: result.user.displayName,
           email: result.user.email,
           photoURL: result.user.photoURL,
-          isOnline: false,
+          isOnline: true,
         });
 
         await setDoc(collRef, this.user.toJSON());
