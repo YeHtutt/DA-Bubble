@@ -20,7 +20,7 @@
         <span class="profil-name">{{ loggedinUser?.name}}</span>
         <div class="align-right" style="position: relative;">
           <img class="avatar" src="{{ loggedinUser?.photoURL }}">
-          <app-user-presence [userID]="currentUser.id" style="position: absolute !important;
+          <app-user-presence [userID]="loggedinUser?.id" style="position: absolute !important;
         bottom: 2px !important;
         right: 5px !important;">
           </app-user-presence>

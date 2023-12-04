@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'distributor', component: DistributorComponent },
 
   {
-    path: 'main', component: MainComponent,
+    path: 'dashboard', component: MainComponent,
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'message', component: NewMessageComponent },

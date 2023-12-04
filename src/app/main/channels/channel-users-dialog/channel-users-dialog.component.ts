@@ -75,9 +75,6 @@ export class ChannelUsersDialogComponent {
     const isUserListEmpty = this.users.length === 0;
     const isAllSelected = this.selectedOption === 'all';
   
-    console.log('User List Empty:', isUserListEmpty);
-    console.log('All Selected:', isAllSelected);
-  
     if (isAllSelected) {
       return false;
     }

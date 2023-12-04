@@ -41,7 +41,7 @@ export class ChannelsComponent {
 
   selectLevel(level: string, nodeId: string) {
     this.channelService.setLevel(`${level}`);
-    this.router.navigate(['main/channel/' + nodeId]);
+    this.router.navigate(['dashboard/channel/' + nodeId]);
   }
 
 

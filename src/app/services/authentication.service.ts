@@ -140,7 +140,7 @@ export class AuthenticationService {
       }
 
       // Navigate to the main channel view
-      this.router.navigate([`/main/channel/W1y1PNesrIl7kbXs1YQU`]);
+      this.router.navigate([`/dashboard/channel/W1y1PNesrIl7kbXs1YQU`]);
     } catch (error) {
       console.error(error);
       this.notificationService.showError('Login fehlgeschlagen!');

@@ -61,14 +61,14 @@ export class AddPeopleDialogComponent {
 
 
   ngOnInit() {
-    console.log('open dialog')
+    // console.log('open dialog')
     this.getAllUsers().then(() => {
       this.getUsersNotInChannel();
       this.updateFilteredUsers();
     });
     this.drawerService.checkMobileMode(window.innerWidth);
     this.filteredUsers.subscribe(users => {
-      console.log('Aktualisierte filteredUsers:', users);
+      // console.log('Aktualisierte filteredUsers:', users);
     });
   }
 
