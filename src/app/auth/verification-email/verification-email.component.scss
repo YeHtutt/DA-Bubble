@@ -51,6 +51,19 @@ mat-card {
     background: var(--White, #FFF);
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
 
+    .return-to-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 25px;
+        padding: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: lightgray;
+        }
+    }
+
     h1 {
         font-size: 32px;
         font-weight: 700;
