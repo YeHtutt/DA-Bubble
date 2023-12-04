@@ -88,7 +88,7 @@ export class MessageService {
     const chatId = await this.getExistingChatId(this.currentUserId, id);
     let path = `chat/${chatId}/message`;
     this.uploadMessageWithPath(path, message);
-    this.router.navigate(['main/chat', chatId]);
+    this.router.navigate(['dashboard/chat', chatId]);
   }
 
 
