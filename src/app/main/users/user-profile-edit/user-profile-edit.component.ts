@@ -31,7 +31,8 @@ export class UserProfileEditComponent {
   constructor(
     public dialog: MatDialog, public usersFbService: UsersFirebaseService,
     private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthenticationService
   ) { }
 
   userEditForm = new FormGroup({
