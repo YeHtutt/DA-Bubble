@@ -124,18 +124,23 @@ export class NewMessageComponent {
   }
 
 
-  toggleSearchOutput() {
-    this.searchOutput = !this.searchOutput;
+  openSearchOutput(event: Event) {
+    event.stopPropagation();
+    this.searchOutput = true;
+  }
+
+  closeSearch() {
+    this.searchOutput = false;
   }
 
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('input') && !target.closest('.searchOutput')) {
-      this.searchOutput = false;
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   if (!target.closest('input') && !target.closest('.searchOutput')) {
+  //     this.searchOutput = false;
+  //   }
+  // }
 
 
   async openTagMenu() {
