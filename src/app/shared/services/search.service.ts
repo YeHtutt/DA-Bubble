@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Message } from '../models/message';
+import { Message } from '../../models/message';
 import { ChannelService } from './channel.service';
 import { UsersFirebaseService } from './users-firebase.service';
 

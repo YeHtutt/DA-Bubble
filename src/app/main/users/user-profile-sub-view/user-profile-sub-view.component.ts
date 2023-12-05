@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { UserProfile } from 'src/app/models/user-profile';
-import { MessageService } from 'src/app/services/message.service';
-import { PresenceService } from 'src/app/services/presence.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { PresenceService } from 'src/app/shared/services/presence.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 @Component({
   selector: 'app-user-profile-sub-view',

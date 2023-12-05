@@ -1,12 +1,12 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { ThreadService } from 'src/app/services/thread.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
 
 
 

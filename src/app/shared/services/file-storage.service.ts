@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Subscription, lastValueFrom } from 'rxjs';
-import { FileUpload } from '../models/file-upload';
+import { FileUpload } from '../../models/file-upload';
 
 @Injectable({
   providedIn: 'root'

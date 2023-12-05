@@ -3,10 +3,10 @@ import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Channel } from 'src/app/models/channel';
-import { ChannelService } from 'src/app/services/channel.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelService } from 'src/app/shared/services/channel.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 @Component({
   selector: 'app-edit-channel-dialog',

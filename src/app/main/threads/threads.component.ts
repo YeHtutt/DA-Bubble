@@ -1,17 +1,17 @@
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ThreadService } from 'src/app/services/thread.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
 import { Subscription } from 'rxjs';
-import { SearchService } from 'src/app/services/search.service';
+import { SearchService } from 'src/app/shared/services/search.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { Message } from 'src/app/models/message';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { FileUpload } from 'src/app/models/file-upload';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { MessageService } from 'src/app/services/message.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-threads',

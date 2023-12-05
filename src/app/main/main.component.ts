@@ -4,11 +4,11 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserProfile } from 'src/app/models/user-profile';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { ThreadService } from 'src/app/services/thread.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { PresenceService } from '../services/presence.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
+import { PresenceService } from '../shared/services/presence.service';
 import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
 

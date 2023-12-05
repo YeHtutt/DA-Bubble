@@ -124,6 +124,10 @@ button {
 
 .register-outline-field {
 
+  .mat-mdc-form-field-flex {
+    margin-left: 2px !important;
+  }
+
   .mdc-text-field--outlined {
     --mdc-outlined-text-field-outline-width: 0px !important;
     --mdc-outlined-text-field-focus-outline-width: 0px !important;
@@ -134,7 +138,9 @@ button {
     border-top-left-radius: 100px !important;
     border-bottom-left-radius: 100px !important;
     min-width: 100px !important;
+
   }
+
 
   .mat-mdc-form-field-infix {
     background-color: #ECEEFE !important;
@@ -144,7 +150,7 @@ button {
 
   .mat-mdc-form-field-icon-prefix,
   .mat-mdc-form-field-icon-suffix {
-    padding: 0 0px 0 0;
+    padding: 0 0 0 0;
     background-color: #ECEEFE !important;
     border-top-left-radius: 100px !important;
     border-bottom-left-radius: 100px !important;
@@ -392,7 +398,7 @@ md-sidenav.md-sidenav-opening {
     }
   }
 
-  
+
   .mat-mdc-menu-content,
   .mat-mdc-menu-content .mat-mdc-menu-item .mat-mdc-menu-item-text {
     width: 70% !important;

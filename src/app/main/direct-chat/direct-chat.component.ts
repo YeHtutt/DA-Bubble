@@ -5,12 +5,12 @@ import { Subscription } from 'rxjs';
 import { DirectChat } from 'src/app/models/direct-chat';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { MessageTreeService } from 'src/app/services/message-tree.service';
-import { MessageService } from 'src/app/services/message.service';
-import { ThreadService } from 'src/app/services/thread.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { MessageTreeService } from 'src/app/shared/services/message-tree.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
 @Component({

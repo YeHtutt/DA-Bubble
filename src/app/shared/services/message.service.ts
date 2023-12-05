@@ -14,10 +14,10 @@ import {
   DocumentData, limit
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Channel } from '../models/channel';
-import { DirectChat } from '../models/direct-chat';
-import { Message } from '../models/message';
-import { UserProfile } from '../models/user-profile';
+import { Channel } from '../../models/channel';
+import { DirectChat } from '../../models/direct-chat';
+import { Message } from '../../models/message';
+import { UserProfile } from '../../models/user-profile';
 import { FirebaseUtilsService } from './firebase-utils.service';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
@@ -227,7 +227,6 @@ export class MessageService {
       threadCount: count,
       timeOflastReply: time
     });
-    console.log('in update' + count)
   }
 
   async getLastMessageFromSubcollection(subCollRef: CollectionReference<DocumentData>): Promise<Message | null> {

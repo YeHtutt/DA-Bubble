@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, addDoc, collection, getDocs, onSnapshot, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { Message } from '../models/message';
+import { Message } from '../../models/message';
 import { DrawerService } from './drawer.service';
 import { FirebaseUtilsService } from './firebase-utils.service';
 

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 @Component({
   selector: 'app-choose-avatar',

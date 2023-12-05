@@ -4,9 +4,9 @@ import { Auth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
 @Component({

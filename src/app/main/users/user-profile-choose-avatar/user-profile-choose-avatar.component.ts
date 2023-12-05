@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 @Component({
   selector: 'app-user-profile-choose-avatar',

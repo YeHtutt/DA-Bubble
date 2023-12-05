@@ -16,16 +16,16 @@ import { UserProfile } from 'src/app/models/user-profile';
 
 import { Observable, Subscription, of } from 'rxjs';
 import { FileUpload } from 'src/app/models/file-upload';
-import { ChannelService } from 'src/app/services/channel.service';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { MessageSelectionService } from 'src/app/services/message-selection.service';
-import { MessageService } from 'src/app/services/message.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { SearchService } from 'src/app/services/search.service';
-import { ThreadService } from 'src/app/services/thread.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelService } from 'src/app/shared/services/channel.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { MessageSelectionService } from 'src/app/shared/services/message-selection.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { SearchService } from 'src/app/shared/services/search.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 
 

@@ -170,7 +170,6 @@ mat-mdc-card-subtitle {
 
 
 
-
 form {
     display: flex;
     flex-direction: column;
@@ -195,6 +194,19 @@ form {
         box-sizing: border-box;
         padding: 18px 32px;
         gap: 30px;
+
+        &:hover {
+            border: 1px solid #444DF2;
+
+            .google-login-btn {
+                color: #444DF2;
+
+                &:hover {
+                    scale: 1.05;
+                }
+            }
+        }
+
 
         @media (max-width: 650px) {
             width: 100%;

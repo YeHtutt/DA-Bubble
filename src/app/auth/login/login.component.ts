@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { PresenceService } from 'src/app/services/presence.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { PresenceService } from 'src/app/shared/services/presence.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 @Component({
   selector: 'app-login',

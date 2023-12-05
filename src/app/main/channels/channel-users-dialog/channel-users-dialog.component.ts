@@ -8,9 +8,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UserProfile } from 'src/app/models/user-profile';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
 

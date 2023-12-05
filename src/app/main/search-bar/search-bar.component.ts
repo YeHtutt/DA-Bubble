@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageSelectionService } from 'src/app/services/message-selection.service';
-import { SearchService } from 'src/app/services/search.service';
+import { MessageSelectionService } from 'src/app/shared/services/message-selection.service';
+import { SearchService } from 'src/app/shared/services/search.service';
 import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user-profile-sub-view.component';
-import { DrawerService } from 'src/app/services/drawer.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
 
 
 @Component({

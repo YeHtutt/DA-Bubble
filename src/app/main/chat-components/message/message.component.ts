@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { FileUpload } from 'src/app/models/file-upload';
 import { UserProfile } from 'src/app/models/user-profile';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { MessageService } from 'src/app/services/message.service';
-import { ThreadService } from 'src/app/services/thread.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 
 
@@ -298,7 +298,7 @@ export class MessageComponent {
     let replyPath = `${this.origin}/${this.currentId}/message/${this.parentMessageId}/thread`;
 
     let count = await this.threadService.fetchUpdatedCount(replyPath) as number; // Make sure this is awaited
-    console.log('in delete' + count);
+    
     let timeOfLastReply;
 
     if (count > 0) {

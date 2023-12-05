@@ -2,18 +2,18 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { MessageService } from 'src/app/services/message.service';
-import { SearchService } from 'src/app/services/search.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
-import { ThreadService } from 'src/app/services/thread.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { SearchService } from 'src/app/shared/services/search.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FileUpload } from 'src/app/models/file-upload';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MessageSelectionService } from 'src/app/services/message-selection.service';
+import { MessageSelectionService } from 'src/app/shared/services/message-selection.service';
 import { Subscription } from 'rxjs';
 
 

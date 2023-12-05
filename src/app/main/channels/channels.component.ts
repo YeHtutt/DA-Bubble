@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ChannelService } from 'src/app/services/channel.service';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { MessageService } from 'src/app/services/message.service';
-import { ThreadService } from 'src/app/services/thread.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelService } from 'src/app/shared/services/channel.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { ThreadService } from 'src/app/shared/services/thread.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
 
 

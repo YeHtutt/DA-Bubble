@@ -3,7 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
-import { UserProfile } from '../models/user-profile';
+import { UserProfile } from '../../models/user-profile';
 
 
 

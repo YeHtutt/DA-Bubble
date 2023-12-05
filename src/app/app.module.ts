@@ -65,17 +65,17 @@ import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialo
 import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
 import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { MessageComponent } from './main/chat-components/message/message.component';
-import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
+import { DataPrivacyComponent } from './data-privacy/data-privacy.component';
 import { DirectChatComponent } from './main/direct-chat/direct-chat.component';
 import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
-import { ImprintComponent } from './main/imprint/imprint.component';
-import { FilterPipe } from './main/pipes/filter.pipe';
+import { ImprintComponent } from './imprint/imprint.component';
+import { FilterPipe } from './shared/pipes/filter.pipe';
 import { SearchBarComponent } from './main/search-bar/search-bar.component';
 import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
 import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './main/users/user-profile-view/user-profile-view.component';
 
-import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { ClickOutsideDirective } from './shared/directives/click-outside.directive';
 import { UserMenuDialogComponent } from './main/channels/user-menu-dialog/user-menu-dialog.component';
 import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
 import { UserProfileChooseAvatarComponent } from './main/users/user-profile-choose-avatar/user-profile-choose-avatar.component';

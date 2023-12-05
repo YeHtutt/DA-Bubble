@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { UserProfileEditComponent } from '../user-profile-edit/user-profile-edit.component';
-import { PresenceService } from 'src/app/services/presence.service';
+import { PresenceService } from 'src/app/shared/services/presence.service';
 import { Observable } from 'rxjs';
 import { UserProfile } from 'src/app/models/user-profile';
 

@@ -10,10 +10,10 @@ import { StartAnimationComponent } from './auth/start-animation/start-animation.
 import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
 import { ChatComponent } from './main/chat-components/chat/chat.component';
 import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
-import { DataPrivacyComponent } from './main/data-privacy/data-privacy.component';
-import { ImprintComponent } from './main/imprint/imprint.component';
+import { DataPrivacyComponent } from './data-privacy/data-privacy.component';
+import { ImprintComponent } from './imprint/imprint.component';
 import { MainComponent } from './main/main.component';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './shared/services/authentication.service';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
 import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
 import { DistributorComponent } from './auth/distributor/distributor.component';

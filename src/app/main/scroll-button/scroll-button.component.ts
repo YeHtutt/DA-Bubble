@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
-import { MessageSelectionService } from 'src/app/services/message-selection.service';
+import { MessageSelectionService } from 'src/app/shared/services/message-selection.service';
 
 @Component({
   selector: 'app-scroll-button',

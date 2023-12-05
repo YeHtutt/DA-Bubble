@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel';
 import { AddPeopleDialogComponent } from '../add-people-dialog/add-people-dialog.component';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { UserProfile } from 'src/app/models/user-profile';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 

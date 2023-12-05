@@ -4,11 +4,11 @@ import { DirectChat } from 'src/app/models/direct-chat';
 import { FileUpload } from 'src/app/models/file-upload';
 import { Message } from 'src/app/models/message';
 import { UserProfile } from 'src/app/models/user-profile';
-import { FileStorageService } from 'src/app/services/file-storage.service';
-import { MessageService } from 'src/app/services/message.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { SearchService } from 'src/app/services/search.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
+import { MessageService } from 'src/app/shared/services/message.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { SearchService } from 'src/app/shared/services/search.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 72
 type ReceiverType = UserProfile | Channel;

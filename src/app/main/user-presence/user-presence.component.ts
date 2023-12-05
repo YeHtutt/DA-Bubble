@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { PresenceService } from 'src/app/services/presence.service';
+import { PresenceService } from 'src/app/shared/services/presence.service';
 
 @Component({
   selector: 'app-user-presence',

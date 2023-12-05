@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 
 export function passwordsMatchValidator(): ValidatorFn {

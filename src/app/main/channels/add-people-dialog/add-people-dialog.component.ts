@@ -9,11 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { Channel } from 'src/app/models/channel';
 import { UserProfile } from 'src/app/models/user-profile';
-import { ChannelService } from 'src/app/services/channel.service';
-import { DrawerService } from 'src/app/services/drawer.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelService } from 'src/app/shared/services/channel.service';
+import { DrawerService } from 'src/app/shared/services/drawer.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
 @Component({

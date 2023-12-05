@@ -1,14 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile, getAuth, updateEmail } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { from, switchMap } from 'rxjs';
-import { UserProfile } from '../models/user-profile';
+import { UserProfile } from '../../models/user-profile';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
 import { ChannelService } from './channel.service';
-import { Channel } from '../models/channel';
+import { Channel } from '../../models/channel';
 
 
 
@@ -52,11 +52,20 @@ export class AuthenticationService {
   signUp(name: string, email: string, password: string, newUser: UserProfile) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap(({ user }) => {
+        // Update UID in the newUser object
         const uid = user.uid;
-        this.SendVerificationMail();
         this.addUidToUser(newUser, uid);
-        this.userfbService.addUserToFirebase(newUser.toJSON(), user.uid);
-        this.addToGeneralChannel(user.uid);
+
+        // Send a verification email to the user
+        this.sendVerificationMail(user);
+
+        // Add user details to Firestore
+        this.userfbService.addUserToFirebase(newUser.toJSON(), uid);
+
+        // Additional custom tasks (like adding user to a general channel)
+        this.addToGeneralChannel(uid);
+
+        // Update user profile with display name
         return updateProfile(user, { displayName: name });
       })
     );
@@ -162,24 +171,52 @@ export class AuthenticationService {
   }
 
 
-  updateEmail(newEmail: string) {
+  updateEmailInFirestore(newEmail: string) {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      updateEmail(user, `${newEmail}`).then(() => {
+      updateEmail(user, newEmail).then(() => {
+        console.log('Email address updated successfully');
       }).catch((error) => {
-        console.log('update email address error');
+        console.log('Update email address error:', error);
       });
+    } else {
+      console.log('No user is currently signed in');
     }
+  }
 
+  sendVerificationEmailForNewEmail(newEmail: any) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      // Zuerst die E-Mail-Adresse des Nutzers vorübergehend aktualisieren
+      updateEmail(user, newEmail).then(() => {
+        // Sende eine E-Mail zur Bestätigung der neuen E-Mail-Adresse
+        sendEmailVerification(user).then(() => {
+          console.log('Verification email sent to ' + newEmail);
+        }).catch((error) => {
+          console.log('Error sending verification email:', error);
+        });
+      }).catch((error) => {
+        console.log('Error updating email:', error);
+      });
+    } else {
+      console.log('No user is currently signed in');
+    }
   }
 
 
-  async SendVerificationMail() {
-    return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
+  sendVerificationMail(user: any) {
+    return sendEmailVerification(user)
       .then(() => {
-
+        console.log('Verification email sent.');
+        // Additional logic if needed, like redirecting to a 'check your email' page
+      })
+      .catch((error) => {
+        console.error('Error sending email verification:', error);
+        // Handle errors here, such as displaying a notification to the user
       });
   }
+
 }

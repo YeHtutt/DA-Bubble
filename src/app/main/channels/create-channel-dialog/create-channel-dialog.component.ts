@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserProfile } from 'src/app/models/user-profile';
-import { ChannelService } from 'src/app/services/channel.service';
-import { FirebaseUtilsService } from 'src/app/services/firebase-utils.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { UsersFirebaseService } from 'src/app/services/users-firebase.service';
+import { ChannelService } from 'src/app/shared/services/channel.service';
+import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 import { ChannelUsersDialogComponent } from '../channel-users-dialog/channel-users-dialog.component';
 
 
