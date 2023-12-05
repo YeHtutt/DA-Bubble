@@ -148,7 +148,7 @@ export class AuthenticationService {
         this.notificationService.showSuccess('Login erfolgreich');
       }
 
-      // Navigate to the main channel view
+      // Navigate to the main channel view ID
       this.router.navigate([`/dashboard/channel/W1y1PNesrIl7kbXs1YQU`]);
     } catch (error) {
       console.error(error);
@@ -170,19 +170,6 @@ export class AuthenticationService {
     this.isAuthenticated = value;
   }
 
-  /* 
-    updateUserEmail(newEmail: string) {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (user) {
-        updateEmail(user, `${newEmail}`).then(() => {
-        }).catch((error) => {
-          console.log('update email address error');
-        });
-      }
-  
-    }
-   */
 
   updateAndVerifyEmail(newEmail: any) {
     const auth = getAuth();
@@ -199,26 +186,7 @@ export class AuthenticationService {
     }
   }
 
-  // sendVerificationEmailForNewEmail(newEmail: any) {
-  //   const auth = getAuth();
-  //   const user = auth.currentUser;
 
-  //   if (user) {
-  //     // Zuerst die E-Mail-Adresse des Nutzers vorübergehend aktualisieren
-  //     updateEmail(user, newEmail).then(() => {
-  //       // Sende eine E-Mail zur Bestätigung der neuen E-Mail-Adresse
-  //       sendEmailVerification(user).then(() => {
-  //         console.log('Verification email sent to ' + newEmail);
-  //       }).catch((error) => {
-  //         console.log('Error sending verification email:', error);
-  //       });
-  //     }).catch((error) => {
-  //       console.log('Error updating email:', error);
-  //     });
-  //   } else {
-  //     console.log('No user is currently signed in');
-  //   }
-  // }
 
 
 
@@ -236,6 +204,5 @@ export class AuthenticationService {
 
 
 
-  /* Auth Guard */
 
 }

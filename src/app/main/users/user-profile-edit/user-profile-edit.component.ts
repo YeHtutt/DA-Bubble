@@ -36,17 +36,18 @@ export class UserProfileEditComponent {
   ) { }
 
   userEditForm = new FormGroup({
-    "email": new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
+    "email": new FormControl('', [Validators.required, Validators.email]),
     "name": new FormControl('', [Validators.required]),
   })
 
-
+  /*  disabled: true  */
   async onEdit() {
     if (this.userEditForm.valid) {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
       this.saveNewPic(this.currentPic, currentUserID);
       this.changeEmailInFirebase(currentUserID, formData);
+      this.changeEmailInAuth(formData.email)
     }
     this.dialog.closeAll();
   }
