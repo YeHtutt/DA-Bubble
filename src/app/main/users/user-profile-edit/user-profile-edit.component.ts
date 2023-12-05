@@ -31,12 +31,11 @@ export class UserProfileEditComponent {
   constructor(
     public dialog: MatDialog, public usersFbService: UsersFirebaseService,
     private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>,
-    private notificationService: NotificationService,
-    private authService: AuthenticationService
+    private notificationService: NotificationService
   ) { }
 
   userEditForm = new FormGroup({
-    "email": new FormControl('', [Validators.required, Validators.email]),
+    "email": new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
     "name": new FormControl('', [Validators.required]),
   })
 
@@ -46,7 +45,6 @@ export class UserProfileEditComponent {
       const formData = this.userEditForm.value;
       const currentUserID = this.usersFbService.getFromLocalStorage(); //von Localstorage currentuser Id rausholen
       this.saveNewPic(this.currentPic, currentUserID);
-      this.changeEmailInAuth(formData.email);
       this.changeEmailInFirebase(currentUserID, formData);
     }
     this.dialog.closeAll();
@@ -62,12 +60,14 @@ export class UserProfileEditComponent {
   }
 
 
-  changeEmailInFirebase(currentUserID: string | null, formData: Object) {
+  changeEmailInFirebase(currentUserID: string | null, formData: any) {
     // Aktualisieren Sie das Benutzerprofil in Firestore
     this.usersFbService.updateUserProfile(currentUserID!, formData) //mit currentUserID und formDatas
       .then(() => {
-        this.profileEditSuccess = true;
-        this.openSnackBar();
+        if (this.usersFbService.loggedInUserName !== formData.name) {
+          this.profileEditSuccess = true;
+          this.openSnackBar();
+        }
       })
       .catch((error: any) => {
         this.profileEditSuccess = false;

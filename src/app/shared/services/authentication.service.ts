@@ -199,26 +199,27 @@ export class AuthenticationService {
     }
   }
 
-  sendVerificationEmailForNewEmail(newEmail: any) {
-    const auth = getAuth();
-    const user = auth.currentUser;
+  // sendVerificationEmailForNewEmail(newEmail: any) {
+  //   const auth = getAuth();
+  //   const user = auth.currentUser;
 
-    if (user) {
-      // Zuerst die E-Mail-Adresse des Nutzers vorübergehend aktualisieren
-      updateEmail(user, newEmail).then(() => {
-        // Sende eine E-Mail zur Bestätigung der neuen E-Mail-Adresse
-        sendEmailVerification(user).then(() => {
-          console.log('Verification email sent to ' + newEmail);
-        }).catch((error) => {
-          console.log('Error sending verification email:', error);
-        });
-      }).catch((error) => {
-        console.log('Error updating email:', error);
-      });
-    } else {
-      console.log('No user is currently signed in');
-    }
-  }
+  //   if (user) {
+  //     // Zuerst die E-Mail-Adresse des Nutzers vorübergehend aktualisieren
+  //     updateEmail(user, newEmail).then(() => {
+  //       // Sende eine E-Mail zur Bestätigung der neuen E-Mail-Adresse
+  //       sendEmailVerification(user).then(() => {
+  //         console.log('Verification email sent to ' + newEmail);
+  //       }).catch((error) => {
+  //         console.log('Error sending verification email:', error);
+  //       });
+  //     }).catch((error) => {
+  //       console.log('Error updating email:', error);
+  //     });
+  //   } else {
+  //     console.log('No user is currently signed in');
+  //   }
+  // }
+
 
 
   sendVerificationMail(user: any) {
