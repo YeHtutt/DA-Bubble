@@ -171,9 +171,20 @@ export class AuthenticationService {
   }
 
 
+  updateUserEmail(newEmail: string) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      updateEmail(user, `${newEmail}`).then(() => {
+      }).catch((error) => {
+        console.log('update email address error');
+      });
+    }
+
+  }
 
 
-updateUserEmail(newEmail: any) {
+/* updateUserEmail(newEmail: any) {
     const auth = getAuth();
     const user = auth.currentUser;
   
@@ -207,7 +218,7 @@ updateUserEmail(newEmail: any) {
       console.log('No user is currently signed in');
     }
   }
-  
+   */
 
   sendVerificationEmailForNewEmail(newEmail: any) {
     const auth = getAuth();
@@ -242,5 +253,9 @@ updateUserEmail(newEmail: any) {
         // Handle errors here, such as displaying a notification to the user
       });
   }
+
+
+
+  /* Auth Guard */
 
 }
