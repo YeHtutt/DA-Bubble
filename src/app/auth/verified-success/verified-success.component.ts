@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -12,7 +13,7 @@ export class VerifiedSuccessComponent {
 
   oobCode: string = '';
 
-  constructor(private afAuth: AngularFireAuth, private authService: AuthenticationService, private router: Router) {
+  constructor(private afAuth: AngularFireAuth, private authService: AuthenticationService, private router: Router, private auth: Auth) {
     this.oobCode = this.authService.oobCode;
   }
 
