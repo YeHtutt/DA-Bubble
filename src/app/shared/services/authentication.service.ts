@@ -77,7 +77,7 @@ export class AuthenticationService {
     const userData = (await this.usersFbService.getUser(user)).toJSON();
 
     // Retrieve the channel data
-    let channel = (await this.channelService.getSingleChannel('W1y1PNesrIl7kbXs1YQU')).toJSON();
+    let channel = (await this.channelService.getSingleChannel('CQyOoOXPaiHnt18E3IQp')).toJSON();
 
     // Check if the user already exists in the channel
     if (!channel.usersData.some((u: any) => u.id === userData.id)) {
@@ -149,7 +149,7 @@ export class AuthenticationService {
       }
 
       // Navigate to the main channel view ID
-      this.router.navigate([`/dashboard/channel/W1y1PNesrIl7kbXs1YQU`]);
+      this.router.navigate([`/dashboard/channel/CQyOoOXPaiHnt18E3IQp`]);
     } catch (error) {
       console.error(error);
       this.notificationService.showError('Login fehlgeschlagen!');
@@ -177,12 +177,12 @@ export class AuthenticationService {
 
     if (user) {
       verifyBeforeUpdateEmail(user, newEmail).then(() => {
-        console.log('Verification email sent to new email address.');
+        this.notificationService.showSuccess('Eine Verifikations-Email wurde an ihre neue Adresse gesendet');
       }).catch((error) => {
-        console.error('Error updating email:', error);
+        this.notificationService.showError('Die Änderung der Email war nicht erfolgreich');
       });
     } else {
-      console.log('No user is currently signed in');
+      this.notificationService.showError('Es ist kein Benutzer eingeloggt');
     }
   }
 
@@ -193,7 +193,7 @@ export class AuthenticationService {
   sendVerificationMail(user: any) {
     return sendEmailVerification(user)
       .then(() => {
-        console.log('Verification email sent.');
+        this.notificationService.showSuccess('Eine Verifikations-Email wurde an ihr Postfach gesendet');
         // Additional logic if needed, like redirecting to a 'check your email' page
       })
       .catch((error) => {

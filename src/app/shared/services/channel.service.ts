@@ -80,7 +80,7 @@ export class ChannelService {
 
 
   private _transformer = (node: ChannelsNode, level: number) => {
-    console.log(`Node: ${node.channelName}, Level: ${level}`);  // Debugging line
+  
     const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
       expandable: isExpandable,

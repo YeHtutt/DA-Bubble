@@ -61,7 +61,7 @@ export class AddPeopleDialogComponent {
 
 
   ngOnInit() {
-    // console.log('open dialog')
+  
     this.getAllUsers().then(() => {
       this.getUsersNotInChannel();
       this.updateFilteredUsers();

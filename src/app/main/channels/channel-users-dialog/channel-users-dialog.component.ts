@@ -110,8 +110,7 @@ export class ChannelUsersDialogComponent {
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
     if (this.selectedOption === 'individual') {
-      this.pushCertainUsersToChannel();
-      console.log(this.channelCreator)
+      this.pushCertainUsersToChannel();   
       this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
