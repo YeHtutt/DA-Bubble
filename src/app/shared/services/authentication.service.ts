@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, reauthenticateWithCredential, EmailAuthProvider, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -170,55 +170,34 @@ export class AuthenticationService {
     this.isAuthenticated = value;
   }
 
-
-  updateUserEmail(newEmail: string) {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) {
-      updateEmail(user, `${newEmail}`).then(() => {
-      }).catch((error) => {
-        console.log('update email address error');
-      });
-    }
-
-  }
-
-
-/* updateUserEmail(newEmail: any) {
-    const auth = getAuth();
-    const user = auth.currentUser;
-  
-    if (user) {
-      updateEmail(user, newEmail)
-        .then(() => {
-          // Email updated in Firebase Auth, now send a verification email
-          sendEmailVerification(user).then(() => {
-            console.log('Verification email sent to new email address.');
-          }).catch((error) => {
-            console.error('Error sending email verification:', error);
-          });
-        })
-        .catch((error) => {
-          console.error('Error updating email:', error);
-  
-          // Example of re-authenticating the user if needed
-          if (error.code === 'auth/requires-recent-login') {
-            const credential = EmailAuthProvider.credential(
-              user.email as string, // assert that email is not null
-              'the user\'s current password'
-            );
-            reauthenticateWithCredential(user, credential).then(() => {
-              // Try to update the email again
-            }).catch((reauthError) => {
-              console.error('Error re-authenticating:', reauthError);
-            });
-          }
+  /* 
+    updateUserEmail(newEmail: string) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        updateEmail(user, `${newEmail}`).then(() => {
+        }).catch((error) => {
+          console.log('update email address error');
         });
+      }
+  
+    }
+   */
+
+  updateAndVerifyEmail(newEmail: any) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      verifyBeforeUpdateEmail(user, newEmail).then(() => {
+        console.log('Verification email sent to new email address.');
+      }).catch((error) => {
+        console.error('Error updating email:', error);
+      });
     } else {
       console.log('No user is currently signed in');
     }
   }
-   */
 
   sendVerificationEmailForNewEmail(newEmail: any) {
     const auth = getAuth();

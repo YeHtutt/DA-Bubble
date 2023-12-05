@@ -19,13 +19,14 @@ export class DistributorComponent {
   }
 
 
+
   saveCodeInService(oobCode: string) {
     this.authService.oobCode = oobCode;
   }
 
 
   routeToFinalDestination(mode: string) {
-    if (mode === 'verifyEmail') {
+    if (mode === 'verifyEmail' || mode === 'verifyAndChangeEmail') {
       this.router.navigate(['/verification-success']);
     } else {
       this.router.navigate(['/reset-password']);

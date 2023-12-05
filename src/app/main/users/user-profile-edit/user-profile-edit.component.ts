@@ -52,10 +52,10 @@ export class UserProfileEditComponent {
     this.dialog.closeAll();
   }
 
- async changeEmailInAuth(newEmail: any) {
+  async changeEmailInAuth(newEmail: any) {
     try {
       console.log(newEmail);
-      await this.authService.updateUserEmail(newEmail);
+      await this.authService.updateAndVerifyEmail(newEmail);
     } catch (error) {
       console.log('Change email failed')
     }

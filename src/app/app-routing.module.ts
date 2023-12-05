@@ -17,7 +17,7 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
 import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
 import { DistributorComponent } from './auth/distributor/distributor.component';
-
+import { authGuard } from './shared/services/auth-guard.service';
 
 let docId: any;
 
@@ -40,6 +40,7 @@ const routes: Routes = [
 
   {
     path: 'dashboard', component: MainComponent,
+ /*    canActivate: [authGuard], */
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'message', component: NewMessageComponent },
