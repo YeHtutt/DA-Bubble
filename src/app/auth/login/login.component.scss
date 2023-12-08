@@ -530,13 +530,20 @@ a {
 }
 
 
+
 @keyframes fadeOut {
-    from {
+    0% {
+        z-index: 1000;
         opacity: 1;
     }
 
-    to {
+    99% {
+        z-index: 1000;
         opacity: 0;
+    }
+
+    100% {
+        z-index: -1;
     }
 }
 
