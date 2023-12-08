@@ -1,23 +1,7 @@
-<div class="login-page-container">
-    <div [style.display]="!isIntro ? 'block' : 'none' " class="logo-content-normal">
-        <img src="./assets/img/logo+text.png">
-    </div>
-
-
-    <div style="position: absolute;">
-        <div style="position: relative; width: 100vw; height: 100vh;">
-            <div [style.display]="isIntro ? 'block' : 'none' " class="intro-bg"> </div>
-            <div [style.display]="isIntro ? 'block' : 'none' " class="logo-and-title-animation">
-
-                <div class="intro-logo-title">
-                    <div class="logo-and-title-content">
-                        <img src="./assets/img/logo.png">
-                        <div class="title">DABubble</div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+<app-login></app-login>
+<div class="start-screen">
+    <div class="logo-and-text">
+        <img class="moving-logo" src="./assets/img/logo.png">
+        <div class="title">DABubble</div>
     </div>
 </div>

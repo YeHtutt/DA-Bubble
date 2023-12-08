@@ -25,7 +25,7 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 const redirectAuthorizedToMain = () => redirectLoggedInTo([`main`]);
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'start', pathMatch: 'full' },
   { path: 'start', component: StartAnimationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
