@@ -34,8 +34,8 @@
     left: 0;
     bottom: 0;
     background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
-    animation: bgAnimation 500ms ease-in-out forwards;
-    animation-delay: 1.5s;
+/*     animation: bgAnimation 500ms ease-in-out forwards; */
+ /*    animation-delay: 1.5s; */
 }
 
 /*Logo and title animation for Intro*/
@@ -43,14 +43,17 @@
     z-index: 100;
     position: absolute;
     right: 0;
-    bottom: 64px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 
     .intro-logo-title {
         /*start Logo+Text Box Size*/
         width: 600px;
         height: 160px;
         /*horizontal vertical animation and scale down 50%*/
-        animation: logoTitleAnimation 1900ms ease-in-out forwards;
+    /*     animation: logoTitleAnimation 10000ms ease-in-out forwards; */
         animation-delay: 0.5s;
         overflow: hidden;
     }
@@ -58,7 +61,7 @@
 
 
 /*Logo and title content start and during animation*/
-.Logo-and-title-content {
+.logo-and-title-content {
     position: relative;
     height: 150px;
 
@@ -78,7 +81,7 @@
         left: 500px;
         top: 0;
         opacity: 0;
-        animation: titleAnimation 280ms ease-in-out forwards;
+     /*    animation: titleAnimation 280ms ease-in-out forwards; */
         animation-delay: 1s;
         display: flex;
         align-items: center;
@@ -87,7 +90,7 @@
 }
 
 
-
+/* 
 @keyframes bgAnimation {
     from {
         opacity: 1;
@@ -97,21 +100,17 @@
         opacity: 0;
         display: none;
     }
-}
+} */
 
-@keyframes logoTitleAnimation {
+/* @keyframes logoTitleAnimation {
     0% {
-        transform: translateX(0);
-        color: white;
-    }
 
-    35% {
-        transform: translateX(-200px);
         color: white;
+        transform: translate(-50%, -50%);
     }
 
     100% {
-        transform: translateX(calc(-100vw + 470px)) translateY(calc(-100vh + 220px)) scale(0.5);
+        transform: translate(calc(-50vw + 50px), calc(-50vh + 30px)) scale(0.5);
         color: black;
     }
 }
@@ -124,8 +123,7 @@
     }
 
     to {
-        width: 11%;
         opacity: 1;
         font-weight: bold;
     }
-}
+} */

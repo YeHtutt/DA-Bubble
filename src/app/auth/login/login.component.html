@@ -1,22 +1,22 @@
-<div class="background-container">
-
+<div class="background">
     <div class="login-page-container">
-        <div class="logo-content-normal">
-            <img src="./assets/img/logo+text.png">
+        <div class="headline">
+            <div class="logo-and-text">
+                <img class="moving-logo" src="./assets/img/logo.png">
+                <div class="title">DABubble</div>
+            </div>
 
             <div class="to-signup-top">
                 <div>Neu bei Bubble? </div>
                 <a [routerLink]="'/sign-up'">Konto Erstellen</a>
             </div>
         </div>
-
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Anmeldung</mat-card-title>
                 <mat-card-subtitle>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
                     verwendest</mat-card-subtitle>
             </mat-card-header>
-
             <form [formGroup]="loginForm" (ngSubmit)="submit()">
                 <mat-form-field appearance="outline" class="full-width register-outline-field">
                     <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
@@ -34,26 +34,20 @@
                     <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Mindestens 6 Zeichen
                         eingeben</mat-error>
                 </mat-form-field>
-
                 <div class="forget-password">
                     <a [routerLink]="'/forget-password'">Password vergessen?</a>
                 </div>
-
-
                 <div class="divider">
                     <div class="line"></div>
                     <div class="text">ODER</div>
                     <div class="line"></div>
                 </div>
-
-
                 <div class="input-field-container" (click)="loginWithGoogle()">
                     <div class="google-login-btn">
                         <img src="./assets/img/Google.png">
                         <span>Anmelden mit Google</span>
                     </div>
                 </div>
-
                 <div class="login-btns">
                     <button type="submit" [disabled]="loginForm.invalid" mat-fab extended color="primary">
                         Anmelden
@@ -64,18 +58,20 @@
                 </div>
             </form>
         </mat-card>
-
         <div class="to-signup-below">
             <div>Neu bei Bubble? </div>
             <a [routerLink]="'/sign-up'">Konto Erstellen</a>
         </div>
-
-
         <div class="legals">
             <div routerLink="/imprint">Impressum</div>
             <div routerLink="/data-privacy">Datenschutz</div>
         </div>
-
     </div>
+</div>
 
+<div class="start-screen">
+    <div class="logo-and-text">
+        <img class="moving-logo" src="./assets/img/logo.png">
+        <div class="title">DABubble</div>
+    </div>
 </div>

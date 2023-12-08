@@ -59,6 +59,15 @@ $active-color: #444DF2;
   font-weight: 500;
 }
 
+
+/************************** MATERIAL STYLES **********************/
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
 /************************** DIALOG STYLES **********************/
 
 
@@ -85,6 +94,9 @@ $active-color: #444DF2;
   top: 200px !important;
   right: 20px !important;
 }
+
+
+
 
 
 

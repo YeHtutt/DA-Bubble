@@ -13,12 +13,13 @@ import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.ser
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+
   userID: any;
   loginSuccess: boolean | null = null;
 
   ngOnInit() {
     this.loginSuccess = false;
+    
   }
 
   constructor(private authService: AuthenticationService,
@@ -63,13 +64,13 @@ export class LoginComponent implements OnInit {
           this.authService.setIsAuthenticated(true);
           this.openSnackBar();
           this.router.navigate([`/dashboard`]);
-        } 
+        }
       },
-      (error) => {
-        this.loginSuccess = false;
-        this.authService.setIsAuthenticated(false);
-        this.openSnackBar();
-      }
+        (error) => {
+          this.loginSuccess = false;
+          this.authService.setIsAuthenticated(false);
+          this.openSnackBar();
+        }
       )
     }
   }
@@ -97,15 +98,15 @@ export class LoginComponent implements OnInit {
         this.loginSuccess = true;
         this.authService.setIsAuthenticated(true);
         this.openSnackBar();
-       
+
       }
     },
-    (error) => {
-      //console.error('Login error:', error);
-      this.loginSuccess = false;
-      this.authService.setIsAuthenticated(false);
-      this.openSnackBar();
-    })
+      (error) => {
+        //console.error('Login error:', error);
+        this.loginSuccess = false;
+        this.authService.setIsAuthenticated(false);
+        this.openSnackBar();
+      })
   }
 
 
@@ -122,4 +123,6 @@ export class LoginComponent implements OnInit {
       this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben!')
     }
   }
+
+
 }
