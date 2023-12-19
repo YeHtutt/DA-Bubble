@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileUpload } from 'src/app/models/file-upload';
 import { UserProfile } from 'src/app/models/user-profile';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 @Component({
@@ -21,7 +24,11 @@ export class ChooseAvatarComponent {
   newUserName: string = '';
 
 
-  constructor(private router: Router, private usersfbService: UsersFirebaseService, private auth: Auth, private route: ActivatedRoute) {
+  constructor(private router: Router, 
+    private usersfbService: UsersFirebaseService
+    ,private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private fileService: FileStorageService) {
     // Retrieve user's name from the route state
     this.route.paramMap.subscribe(params => {
       this.newUserName = params.get('userName') || '';
@@ -50,23 +57,17 @@ export class ChooseAvatarComponent {
 
   onSelect(event: any) {
     this.avatarPic = false;
-    const file: File = event.target.files[0]; // ausgewählte Datei wird als variable file gespeichert (typ File interface)
-    let fileType = file.type;
-    let fileSize = file.size;
+    const file = new FileUpload(event.target.files[0]); // ausgewählte Datei wird als variable file gespeichert (typ File interface)
+    let fileType = file.file.type;
+    let fileSize = file.file.size;
     if (fileSize > 500 * 1024) {
-      window.alert('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
+      this.notificationService.showError('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
       return; // wenn die Datei zu groß ist, nicht ausgeben bzw. beenden.
     }
     if (fileType.match(/image\/(png|jpeg|jpg)/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-        this.setNewPic(this.url);
-      };
+      this.fileService.uploadFile(file).then(file => this.setNewPic(file.url));
     } else {
-      window.alert('Bitte nur png, jpg oder jpeg senden');
+      this.notificationService.showError('Bitte nur png, jpg oder jpeg senden');
     }
   }
 }

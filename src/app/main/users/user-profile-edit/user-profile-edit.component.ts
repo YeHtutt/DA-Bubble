@@ -5,6 +5,8 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { UsersFirebaseService } from '../../../shared/services/users-firebase.service';
 import { UserProfileChooseAvatarComponent } from '../user-profile-choose-avatar/user-profile-choose-avatar.component';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { FileUpload } from 'src/app/models/file-upload';
+import { FileStorageService } from 'src/app/shared/services/file-storage.service';
 
 
 @Component({
@@ -20,7 +22,6 @@ export class UserProfileEditComponent {
 
   ngOnInit() {
     this.profileEditSuccess = false;
-
     //der Standardwert für das Email-Feld setzten
     this.userEditForm.patchValue({
       email: this.usersFbService.loggedInUserEmail,
@@ -32,7 +33,8 @@ export class UserProfileEditComponent {
     public dialog: MatDialog, public usersFbService: UsersFirebaseService,
     private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>,
     private notificationService: NotificationService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private fileService: FileStorageService
   ) { }
 
   userEditForm = new FormGroup({
@@ -55,7 +57,7 @@ export class UserProfileEditComponent {
   async changeEmailInAuth(newEmail: any) {
     try {
       console.log(newEmail);
-      await this.authService.updateAndVerifyEmail(newEmail);
+      this.authService.updateAndVerifyEmail(newEmail);
     } catch (error) {
       console.log('Change email failed')
     }
@@ -80,21 +82,15 @@ export class UserProfileEditComponent {
 
   /** user Profilbild mit eigene Bilder aus dem PC zu aktualisieren*/
   onSelect(event: any) {
-    const file: File = event.target.files[0]; // ausgewählte Datei wird als variable file gespeichert (typ File interface)
-    let fileType = file.type;
-    let fileSize = file.size;
+    const file = new FileUpload(event.target.files[0]); 
+    let fileType = file.file.type;
+    let fileSize = file.file.size;
     if (fileSize > 500 * 1024) {
       window.alert('Die Datei ist zu groß. Bitte senden Sie eine Datei, die kleiner als 500KB ist.');
       return; // wenn die Datei zu groß ist, nicht ausgeben bzw. beenden.
     }
     if (fileType.match(/image\/(png|jpeg|jpg)/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-        this.setNewPic(this.url);
-      };
+      this.fileService.uploadFile(file).then(file => this.setNewPic(file.url));
     } else {
       window.alert('Bitte nur png, jpg oder jpeg senden');
     }
