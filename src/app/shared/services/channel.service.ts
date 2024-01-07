@@ -21,6 +21,7 @@ import {
 interface ChannelsNode {
   channelName: string;
   channelId: string;
+  isClosedChannel: boolean;
   children?: ChannelsNode[];
 }
 
@@ -55,13 +56,13 @@ export class ChannelService {
 
   setLevel(level: string) {
     this.levelSubject.next(level);
-    
+
   }
 
 
- getLevelObservable(): Observable<string> {
-  return this.levelSubject.asObservable();
-}
+  getLevelObservable(): Observable<string> {
+    return this.levelSubject.asObservable();
+  }
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
@@ -80,16 +81,16 @@ export class ChannelService {
 
 
   private _transformer = (node: ChannelsNode, level: number) => {
-  
+
     const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
       expandable: isExpandable,
       channelName: node.channelName,
       channelId: node.channelId,
+      isClosedChannel: node.isClosedChannel,  // Ensure this property is mapped
       level: level,
     };
   };
-  
 
 
   treeControl = new FlatTreeControl<ExampleFlatNode>(
@@ -113,7 +114,6 @@ export class ChannelService {
 
 
   getAllChannels() {
-    console.log(this.currentUserId);
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
@@ -124,12 +124,20 @@ export class ChannelService {
     });
   }
 
+
+  isUserPartOfChannel(channelId: string): boolean {
+    const channel = this.channels.find(c => c.channelId === channelId);
+    return channel ? channel.usersData.some((user: any) => user.id === this.currentUserId) : false;
+  }
+
+
   subChannelTree() {
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       this.channelTree = [];
       this.populateChannelsAndMore(list);
       this.updateDataSource();
       this.dataLoaded.next(true);
+      console.log(this.channelTree);
     });
   }
 
@@ -139,8 +147,11 @@ export class ChannelService {
     list.forEach((element: any) => {
       const channelObj = this.setChannelObj(element.data(), element.id);
       const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
-      if (containsCurrentUser) this.channelTree.push(channelObj);
-      else moreChannels.push(channelObj);
+      if (containsCurrentUser) {
+        this.channelTree.push({ ...channelObj, isClosedChannel: false });
+      } else {
+        moreChannels.push({ ...channelObj, isClosedChannel: true });
+      }
     });
     this.sortChannelTree();
     this.appendMoreChannels(moreChannels);
@@ -152,12 +163,13 @@ export class ChannelService {
   }
 
 
-  appendMoreChannels(moreChannels: ChannelsNode[]) {
+  private appendMoreChannels(moreChannels: ChannelsNode[]) {
     if (moreChannels.length) {
       this.channelTree.push({
         channelName: 'Weitere',
-        children: moreChannels,
-        channelId: 'weitere-id'
+        channelId: 'weitere-id',
+        isClosedChannel: false,  // Assuming 'Weitere' is not a closed channel
+        children: moreChannels
       });
     }
   }

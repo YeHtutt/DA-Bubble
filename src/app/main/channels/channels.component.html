@@ -5,8 +5,8 @@
         <button mat-flat-button class="child-node-btn"
           (click)="this.drawerService.close(); this.threadService.closeThread(); selectLevel(level, node.channelId)">
           <div>{{node.channelName}}</div>
-          <mat-icon *ngIf="level == 1" class="tag">tag </mat-icon>
-          <mat-icon *ngIf="level == 2" class="material-icons-outlined">lock</mat-icon>
+          <mat-icon *ngIf="!node.isClosedChannel" class="tag">tag </mat-icon>
+          <mat-icon *ngIf="node.isClosedChannel" class="material-icons-outlined">lock</mat-icon>
         </button>
       </mat-tree-node>
       <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" class="highest-node">
