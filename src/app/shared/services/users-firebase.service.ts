@@ -32,8 +32,7 @@ export class UsersFirebaseService implements OnInit {
 
   constructor(
     private firestore: Firestore,
-    private auth: Auth, private AngFirestore: AngularFirestore,
-    private idService: MainIdsService
+   
   ) { }
 
   ngOnInit() { }

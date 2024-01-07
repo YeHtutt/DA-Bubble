@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { PresenceService } from 'src/app/shared/services/presence.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -50,30 +51,34 @@ export class LoginComponent implements OnInit {
   submit() {
     if (!this.loginForm.valid) {
       return;
-    } else {
-      const { email, password } = this.loginForm.value;
-
-      this.authService.login(email, password).subscribe(() => {
-        const user = this.authService.getCurrentUser();
-        this.presence.setPresence('online');
+    }
+  
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email, password).subscribe({
+      next: (user) => {
         if (user) {
+          // Set user presence to online
+          this.presence.setPresence('online');
+          // Perform necessary actions after successful login
           this.usersFbService.getLoggedInUser(user.uid);
           this.usersFbService.saveToLocalStorage(user.uid);
           this.usersFbService.updateUserOnlineStatus(user.uid, true);
           this.loginSuccess = true;
           this.authService.setIsAuthenticated(true);
           this.openSnackBar();
-          this.router.navigate([`/dashboard`]);
+          this.router.navigate(['/dashboard']);
         }
       },
-        (error) => {
-          this.loginSuccess = false;
-          this.authService.setIsAuthenticated(false);
-          this.openSnackBar();
-        }
-      )
-    }
+      error: (error) => {
+        console.error('Login error:', error);
+        this.loginSuccess = false;
+        this.authService.setIsAuthenticated(false);
+        this.openSnackBar();
+        // Optionally handle the error more specifically, like showing an error message
+      }
+    });
   }
+  
 
 
   fillGuestForm() {
@@ -88,7 +93,6 @@ export class LoginComponent implements OnInit {
 
   loginAsGuest() {
     this.fillGuestForm();
-
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(() => {
       const user = this.authService.getCurrentUser();
       if (user) {

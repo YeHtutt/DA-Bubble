@@ -36,17 +36,18 @@ export class ChannelsComponent {
       if (loaded) this.channelService.expandChannels();
     });
     this.subscriptions.push(sub);
-  }
-
-
-  selectLevel(level: string, nodeId: string) {
-    this.channelService.setLevel(`${level}`);
-    this.router.navigate(['dashboard/channel/' + nodeId]);
+    this.channelService.unsubChannelTree = this.channelService.subChannelTree();
   }
 
 
   ngOnDestroy() {
+    this.channelService.unsubChannelTree();
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+
+  selectLevel(nodeId: string) {
+    this.router.navigate(['dashboard/channel/' + nodeId]);
   }
 
 
@@ -61,7 +62,6 @@ export class ChannelsComponent {
   }
 
   toggleExpanded(node: any) {
-    // Code to toggle the expanded state of the node
     this.channelService.treeControl.toggle(node);
   }
 }

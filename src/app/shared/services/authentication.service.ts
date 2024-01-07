@@ -1,16 +1,16 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification, UserCredential } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { from, switchMap } from 'rxjs';
+import { from, switchMap, Observable } from 'rxjs';
 import { UserProfile } from '../../models/user-profile';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
 import { ChannelService } from './channel.service';
 import { Channel } from '../../models/channel';
 import { MainIdsService } from './main-ids.service';
-
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,14 +36,24 @@ export class AuthenticationService {
   }
 
 
-  login(email: any, password: any) {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+  login(email: any, password: any): Observable<User> {
+    return from(signInWithEmailAndPassword(this.auth, email, password))
+      .pipe(
+        tap((userCredential: UserCredential) => {
+          if (userCredential.user) {
+            const userId = userCredential.user.uid;
+            this.usersFbService.saveToLocalStorage(userId); 
+            this.channelService.currentUserId = userId; 
+          }
+        }),
+        map(userCredential => userCredential.user)
+      );
   }
 
-
-  logout() {
+  logout() {    
     this.setIsAuthenticated(false);
     this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage(), false);
+    this.channelService.unsubChannelTree();
     return from(this.auth.signOut().then(() => {
       this.userfbService.removeFromLocalStorage();
     }));

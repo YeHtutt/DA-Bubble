@@ -50,34 +50,11 @@ export class ChannelService {
   unsubChannelTree: any;
   unsubMessage: any;
   unsubChannelContent: any;
-  currentUserId = this.userService.getFromLocalStorage()
-  level: string = '';
   private levelSubject = new BehaviorSubject<string>('1');
+  currentUserId: any;
 
-  setLevel(level: string) {
-    this.levelSubject.next(level);
-  }
 
-  getIsClosedChannel(channelId: string): boolean {
-    const findChannel = (node: ChannelsNode): ChannelsNode | undefined => {
-      if (node.channelId === channelId) return node;
-      if (node.children) {
-        for (const child of node.children) {
-          const found = findChannel(child);
-          if (found) return found;
-        }
-      }
-      return undefined;
-    };
 
-    for (const channel of this.channelTree) {
-      const foundChannel = findChannel(channel);
-      if (foundChannel) return foundChannel.isClosedChannel;
-    }
-    return false; // Default to false if channel is not found
-  }
-
-  
   getLevelObservable(): Observable<string> {
     return this.levelSubject.asObservable();
   }
@@ -86,9 +63,8 @@ export class ChannelService {
     private firebaseUtils: FirebaseUtilsService,
     private userService: UsersFirebaseService,
     private notificationService: NotificationService) {
-    this.unsubChannelTree = this.subChannelTree();
+    this.currentUserId = this.userService.getFromLocalStorage();  
   }
-
 
   ngOnDestroy() {
     this.unsubChannelTree();
@@ -97,9 +73,7 @@ export class ChannelService {
     this.unsubChannels();
   }
 
-
   private _transformer = (node: ChannelsNode, level: number) => {
-
     const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
       expandable: isExpandable,
@@ -110,7 +84,7 @@ export class ChannelService {
     };
   };
 
-
+  
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level,
     node => node.expandable,
@@ -132,7 +106,7 @@ export class ChannelService {
 
 
   getAllChannels() {
-    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
+    return this.unsubChannelContent = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channels.push(channelObj);
@@ -143,25 +117,37 @@ export class ChannelService {
   }
 
 
-  isUserPartOfChannel(channelId: string): boolean {
-    const channel = this.channels.find(c => c.channelId === channelId);
-    return channel ? channel.usersData.some((user: any) => user.id === this.currentUserId) : false;
-  }
-
-
   subChannelTree() {
+
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       this.channelTree = [];
       this.populateChannelsAndMore(list);
       this.updateDataSource();
       this.dataLoaded.next(true);
-      console.log(this.channelTree);
     });
   }
 
+  getIsClosedChannel(channelId: string): boolean {
+    const findChannel = (node: ChannelsNode): ChannelsNode | undefined => {
+      if (node.channelId === channelId) return node;
+      if (node.children) {
+        for (const child of node.children) {
+          const found = findChannel(child);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
+    for (const channel of this.channelTree) {
+      const foundChannel = findChannel(channel);
+      if (foundChannel) return foundChannel.isClosedChannel;
+    }
+    return false; // Default to false if channel is not found
+  }
 
   populateChannelsAndMore(list: any) {
     let moreChannels: ChannelsNode[] = [];
+    console.log(this.currentUserId)
     list.forEach((element: any) => {
       const channelObj = this.setChannelObj(element.data(), element.id);
       const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
@@ -181,7 +167,7 @@ export class ChannelService {
   }
 
 
-  private appendMoreChannels(moreChannels: ChannelsNode[]) {
+  appendMoreChannels(moreChannels: ChannelsNode[]) {
     if (moreChannels.length) {
       this.channelTree.push({
         channelName: 'Weitere',
