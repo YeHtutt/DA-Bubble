@@ -1,3 +1,5 @@
+@use "../../../styles.scss";
+
 .background {
     width: 100vw;
     height: 100vh;
@@ -7,6 +9,13 @@
 }
 
 .headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
     .logo-and-text {
         display: flex;
         align-items: center;
@@ -22,6 +31,10 @@
     .title {
         font-size: 32px;
         font-weight: 700;
+    }
+
+    @media(max-width:750px) {
+        justify-content: center;
     }
 }
 
@@ -172,7 +185,7 @@ form {
         display: flex;
         align-items: center;
         box-sizing: border-box;
-        padding: 18px 32px;
+        padding: 17px 32px;
         gap: 30px;
 
         &:hover {
@@ -187,12 +200,6 @@ form {
             }
         }
 
-
-        @media (max-width: 650px) {
-            width: 100%;
-            height: 50px;
-            padding: 18px 32px;
-        }
 
         @media (max-width: 400px) {
             width: 100%;
@@ -299,9 +306,8 @@ form {
 
     ::ng-deep .mat-mdc-form-field-icon-prefix>.mat-icon {
         padding: 0px;
-        box-sizing: content-box;
         padding: 18px 32px;
-        line-height: 17px;
+        line-height: 24px;
 
         @media(max-width: 650px) {
             padding: 13px 32px;
@@ -359,16 +365,6 @@ form {
     }
 }
 
-.headline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
 
 .legals {
     flex-shrink: 0;
@@ -411,7 +407,7 @@ form {
         color: #797EF3;
     }
 
-    @media(max-width: 749px) {
+    @media(max-width: 750px) {
         display: block;
         margin-top: 0px;
         margin-bottom: 10px;
@@ -428,4 +424,3 @@ a {
         display: none;
     }
 }
-

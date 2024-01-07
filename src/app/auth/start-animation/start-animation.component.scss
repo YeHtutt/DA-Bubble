@@ -5,7 +5,7 @@
     width: 100vw;
     height: 100vh;
     background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
-    animation: fadeOut 2.5s ease-in 2s forwards;
+    animation: fadeOut 2.55s ease-in 3.05s forwards;
 
     .logo-and-text {
         top: 50%;
@@ -97,30 +97,78 @@
 
 
 @keyframes fadeOut {
-    0% {
-        z-index: 1000;
+    from {
+
         opacity: 1;
     }
 
-    99% {
-        z-index: 1000;
+    to {
+
         opacity: 0;
     }
 
-    100% {
-        z-index: -1;
-    }
+
 }
 
 
 
-@media (max-width: 400px) {
-    .moving-logo {
-        width: 100px;
-        height: 100px;
+
+@media (max-width: 750px) {
+
+    .start-screen {
+
+        .logo-and-text {
+            top: 50%;
+            left: 50%;
+            animation: onLeftTopSmall 1.5s ease-in 2s forwards;
+        }
+        .moving-logo {
+            width: 125px;
+            height: 125px;
+        }
+        .title {
+            font-size: 38px
+        }
     }
 
-    .title {
-        font-size: 30px
+
+    @keyframes onLeftTopSmall {
+        from {
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+    
+        to {
+            transform: translate(-50%, -50%);
+            top: 9.5%; /* Only moving it up */
+            left: 50%;
+        }
     }
+    
+}
+
+
+@media (max-width: 400px) {
+
+
+    .start-screen {
+
+        .logo-and-text {
+            top: 50%;
+            left: 50%;
+            animation: onLeftTopSmall 1.5s ease-in 2s forwards;
+        }
+        .moving-logo {
+            width: 100px;
+            height: 100px;
+        }
+        .title {
+            font-size: 30px
+        }
+    }
+
+
+
+   
 }
