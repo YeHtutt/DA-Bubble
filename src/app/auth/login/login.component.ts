@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 
   fillGuestForm() {
     const guestEmail = 'guest@user.com';
-    const guestPassword = '123456';
+    const guestPassword = '1qay2wsx';
     this.loginForm = this.formBuilder.group({
       email: [guestEmail],
       password: [guestPassword]

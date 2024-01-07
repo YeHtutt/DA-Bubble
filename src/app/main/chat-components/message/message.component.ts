@@ -191,7 +191,6 @@ export class MessageComponent {
   toggleReaction(event: Event) {
     event.stopPropagation();
     this.isReactionInputOpened = !this.isReactionInputOpened;
-    // setTimeout(() => this.isReactionInputOpened = !this.isReactionInputOpened, 8000);
   }
 
 

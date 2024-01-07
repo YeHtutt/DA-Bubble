@@ -10,7 +10,7 @@
   },
 }; */
 
- export const environment = {
+export const environment = {
   firebase: {
     apiKey: "AIzaSyBy5E5j_g2LkufuTQSHAKaDByWL-A3tNoU",
     authDomain: "da-bubble-a97af.firebaseapp.com",
@@ -20,4 +20,18 @@
     appId: "1:658582190460:web:22b8dadc94101442c0ccf9",
     databaseURL: "https://da-bubble-a97af-default-rtdb.europe-west1.firebasedatabase.app"
   }
-}; 
+};
+
+// Firebase Account for PF
+
+// export const environment = {
+//   firebase: {
+//     apiKey: "AIzaSyDbgttocuA2ROXZUaoXG4l7zD_opsdMJgc",
+//     authDomain: "da-bubble-pf.firebaseapp.com",
+//     databaseURL: "https://da-bubble-pf-default-rtdb.europe-west1.firebasedatabase.app",
+//     projectId: "da-bubble-pf",
+//     storageBucket: "da-bubble-pf.appspot.com",
+//     messagingSenderId: "62180681571",
+//     appId: "1:62180681571:web:a32cb685104ddc731c5556"
+//   }
+// }
