@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Channel } from 'src/app/models/channel';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
+import { MainIdsService } from 'src/app/shared/services/main-ids.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
@@ -37,13 +38,14 @@ export class EditChannelDialogComponent {
     public notificationService: NotificationService,
     private firestoreUtils: FirebaseUtilsService,
     private router: Router,
+    private idsService: MainIdsService
   ) { }
 
 
   ngOnInit() {
     this.currentUserId = this.userService.getFromLocalStorage()
     this.checkMobileMode(window.innerWidth);
-     }
+  }
 
 
   toggleEdit() {
@@ -115,7 +117,7 @@ export class EditChannelDialogComponent {
     if (this.currentUserId == this.channel.creator.id) {
       this.firestoreUtils.deleteCollection('channel', this.channel.channelId);
     }
-    this.router.navigate(['/dashboard/channel/CQyOoOXPaiHnt18E3IQp']);
+    this.router.navigate([`/dashboard/channel/${this.idsService.mainChannelId}`]);
     this.closeCreateChannelDialog();
   }
 

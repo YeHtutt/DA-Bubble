@@ -11,7 +11,7 @@ import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.ser
 import { PresenceService } from '../shared/services/presence.service';
 import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-profile-sub-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
-
+import { MainIdsService } from '../shared/services/main-ids.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
   loggedinUser: any;
   userSubjectUnSub: Subscription = new Subscription();
   private unsubscribeUserFn!: () => void;
-  
+
 
   constructor(
     private router: Router,
@@ -44,7 +44,8 @@ export class MainComponent implements OnInit {
     public drawerService: DrawerService,
     public threadService: ThreadService,
     private authService: AuthenticationService,
-    private presence: PresenceService
+    private presence: PresenceService,
+    private idsService: MainIdsService
   ) { }
 
 
@@ -56,7 +57,7 @@ export class MainComponent implements OnInit {
   /* ID */
 
   async ngOnInit() {
-    this.router.navigate(['/dashboard/channel/CQyOoOXPaiHnt18E3IQp']);
+    this.router.navigate([`/dashboard/channel/${this.idsService.mainChannelId}`]);
     this.getCurrentUser();
     this.userId = this.userFbService.getFromLocalStorage();
     this.getUserDataAndSubscribe();
@@ -80,14 +81,14 @@ export class MainComponent implements OnInit {
 
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
-      }
+  }
 
 
   updateUserStatus(status: boolean) {
     this.userFbService.updateUserOnlineStatus(this.userId, status)
   }
 
-  
+
   closeMenu() {
     if (this.menuTrigger) {
       this.menuTrigger.closeMenu();

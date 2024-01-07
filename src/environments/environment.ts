@@ -1,4 +1,4 @@
-/* export const environment = {
+export const environment = {
   firebase: {
     projectId: 'da-bubble-dffea',
     appId: '1:780185020934:web:f7602f0a757e22aec93187',
@@ -8,8 +8,10 @@
     messagingSenderId: '780185020934',
     databaseURL: "https://da-bubble-dffea-default-rtdb.europe-west1.firebasedatabase.app"
   },
-}; */
+};
 
+
+/*
 export const environment = {
   firebase: {
     apiKey: "AIzaSyBy5E5j_g2LkufuTQSHAKaDByWL-A3tNoU",
@@ -22,6 +24,8 @@ export const environment = {
   }
 };
 
+
+ */
 // Firebase Account for PF
 
 // export const environment = {

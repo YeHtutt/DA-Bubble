@@ -1,5 +1,9 @@
 @use "../../../styles.scss";
 
+body {
+    background-color: #ECEEFE;
+}
+
 .background {
     width: 100vw;
     height: 100vh;
@@ -48,6 +52,7 @@
     width: 100%;
     height: calc(100% - 10%);
     top: 5%;
+    background-color: #ECEEFE;
 }
 
 
@@ -176,7 +181,7 @@ form {
 
 
     .input-field-container {
-        width: 500px;
+        width: 100%;
         height: 60px;
         border-radius: 100px;
         border: none;

@@ -9,7 +9,7 @@ import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
 import { ChannelService } from './channel.service';
 import { Channel } from '../../models/channel';
-
+import { MainIdsService } from './main-ids.service';
 
 
 @Injectable({
@@ -30,7 +30,8 @@ export class AuthenticationService {
     private userfbService: UsersFirebaseService, private router: Router,
     private usersFbService: UsersFirebaseService,
     private notificationService: NotificationService,
-    private channelService: ChannelService) {
+    private channelService: ChannelService,
+    private idService: MainIdsService) {
     this.user = new UserProfile(); // user initialisiert
   }
 
@@ -52,42 +53,24 @@ export class AuthenticationService {
   signUp(name: string, email: string, password: string, newUser: UserProfile) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap(({ user }) => {
-        // Update UID in the newUser object
         const uid = user.uid;
         this.addUidToUser(newUser, uid);
-
-        // Send a verification email to the user
         this.sendVerificationMail(user);
-
-        // Add user details to Firestore
         this.userfbService.addUserToFirebase(newUser.toJSON(), uid);
-
-        // Additional custom tasks (like adding user to a general channel)
         this.addToGeneralChannel(uid);
-
-        // Update user profile with display name
         return updateProfile(user, { displayName: name });
       })
     );
   }
 
-  /* ID */
+
   async addToGeneralChannel(user: string) {
-    // Retrieve user data
     const userData = (await this.usersFbService.getUser(user)).toJSON();
-
-    // Retrieve the channel data
-    let channel = (await this.channelService.getSingleChannel('CQyOoOXPaiHnt18E3IQp')).toJSON();
-
-    // Check if the user already exists in the channel
+    let channel = (await this.channelService.getSingleChannel(this.idService.mainChannelId)).toJSON();
     if (!channel.usersData.some((u: any) => u.id === userData.id)) {
-      // If the user doesn't exist, add them to the channel
       channel.usersData.push(userData);
-
-      // Update the channel with the new user list
       this.channelService.updateChannel(new Channel(channel));
     } else {
-      // If the user already exists in the channel, you might want to do something else
       console.log('User already exists in the channel');
     }
   }
@@ -138,18 +121,12 @@ export class AuthenticationService {
           photoURL: result.user.photoURL,
           isOnline: true,
         });
-
         await setDoc(collRef, this.user.toJSON());
-
-        // Check and add the user to the general channel
         await this.addToGeneralChannel(result.user.uid);
-
         this.usersFbService.saveToLocalStorage(result.user.uid);
         this.notificationService.showSuccess('Login erfolgreich');
       }
-
-      // Navigate to the main channel view ID
-      this.router.navigate([`/dashboard/channel/CQyOoOXPaiHnt18E3IQp`]);
+      this.router.navigate([`/dashboard/channel/${this.idService.mainChannelId}`]);
     } catch (error) {
       console.error(error);
       this.notificationService.showError('Login fehlgeschlagen!');
@@ -174,7 +151,6 @@ export class AuthenticationService {
   updateAndVerifyEmail(newEmail: any) {
     const auth = getAuth();
     const user = auth.currentUser;
-
     if (user) {
       verifyBeforeUpdateEmail(user, newEmail).then(() => {
         this.notificationService.showSuccess('Eine Verifikations-Email wurde an ihre neue Adresse gesendet');
@@ -194,15 +170,11 @@ export class AuthenticationService {
     return sendEmailVerification(user)
       .then(() => {
         this.notificationService.showSuccess('Eine Verifikations-Email wurde an ihr Postfach gesendet');
-        // Additional logic if needed, like redirecting to a 'check your email' page
       })
       .catch((error) => {
         console.error('Error sending email verification:', error);
-        // Handle errors here, such as displaying a notification to the user
       });
   }
-
-
-
-
 }
+
+

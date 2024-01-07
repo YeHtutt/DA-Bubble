@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { UserProfile } from '../../models/user-profile';
-
+import { MainIdsService } from './main-ids.service';
 
 
 interface User {
@@ -17,11 +17,12 @@ interface User {
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class UsersFirebaseService implements OnInit {
   picURL: any;
   user: UserProfile = new UserProfile;
   id: any;
-
   loggedInUserID: any;
   loggedInUserImg: any;
   loggedInUserName: any;
@@ -32,6 +33,7 @@ export class UsersFirebaseService implements OnInit {
   constructor(
     private firestore: Firestore,
     private auth: Auth, private AngFirestore: AngularFirestore,
+    private idService: MainIdsService
   ) { }
 
   ngOnInit() { }

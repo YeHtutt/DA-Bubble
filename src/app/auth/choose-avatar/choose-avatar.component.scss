@@ -14,6 +14,13 @@
     }
 }
 
+.button-box {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
 mat-card {
     width: 606px;
     height: max-content;
@@ -29,17 +36,10 @@ mat-card {
         position: absolute;
         top: 45px;
         left: 32px;
-        padding: 8px;
         cursor: pointer;
-        border-radius: 20%;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-shrink: 0;
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.15);
-        }
 
         @media(max-width: 650px) {
             top: 25px;
@@ -221,31 +221,6 @@ mat-card-title {
         }
     }
 
-    .button-box {
-        position: block;
-        box-sizing: border-box;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        right: 53px;
-        bottom: 30px;
-
-        button {
-            width: 110px;
-            height: 45px;
-            border-radius: 25px;
-            background-color: #444DF2;
-            border: none;
-            cursor: pointer;
-
-            font-weight: 700;
-            font-size: 18px;
-
-            &:hover {
-                filter: opacity(70%);
-            }
-        }
-    }
 
     @media(max-width: 650px) {
         width: 100%;

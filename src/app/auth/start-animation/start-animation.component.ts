@@ -17,6 +17,6 @@ export class StartAnimationComponent {
     setTimeout(() => {
       this.isIntro = false;
       this.router.navigate(['/login']);
-    }, 5550);
+    }, 3400);
   }
 }

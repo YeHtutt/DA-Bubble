@@ -123,6 +123,4 @@ export class LoginComponent implements OnInit {
       this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben!')
     }
   }
-
-
 }
