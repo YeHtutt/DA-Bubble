@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <section class="message-section" *ngIf="this.level=== '2'">
+    <section class="message-section" *ngIf="this.isClosedChannel">
         <header>
             <div class="channel-info-box">
                 <mat-icon class="material-icons-outlined">lock</mat-icon>
@@ -18,7 +18,7 @@
             </div>
         </main>
     </section>
-    <section class="message-section" *ngIf="this.level=== '1'">
+    <section class="message-section" *ngIf="!this.isClosedChannel">
         <header>
             <div class="channel-info-box" (click)="openChannelMenu()">
                 <mat-icon class="tag">tag</mat-icon>

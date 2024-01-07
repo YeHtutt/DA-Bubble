@@ -56,10 +56,28 @@ export class ChannelService {
 
   setLevel(level: string) {
     this.levelSubject.next(level);
-
   }
 
+  getIsClosedChannel(channelId: string): boolean {
+    const findChannel = (node: ChannelsNode): ChannelsNode | undefined => {
+      if (node.channelId === channelId) return node;
+      if (node.children) {
+        for (const child of node.children) {
+          const found = findChannel(child);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
 
+    for (const channel of this.channelTree) {
+      const foundChannel = findChannel(channel);
+      if (foundChannel) return foundChannel.isClosedChannel;
+    }
+    return false; // Default to false if channel is not found
+  }
+
+  
   getLevelObservable(): Observable<string> {
     return this.levelSubject.asObservable();
   }

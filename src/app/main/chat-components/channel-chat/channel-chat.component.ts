@@ -78,6 +78,8 @@ export class ChannelChatComponent {
   replyPath: any = '';
   level: string = '';
   private levelSubscription: Subscription | undefined;
+  isClosedChannel: boolean = false;
+
 
   constructor(
     public dialog: MatDialog,
@@ -105,11 +107,9 @@ export class ChannelChatComponent {
         this.channel = channelData;
         this.messageService.subMessage('channel', this.channelId);
         this.channelService.unsubChannel = this.channelService.subChannelContent(this.channelId, channelData => {
-          this.channel = channelData;
+          this.channel = channelData;     
           this.getUsersForDialog(channelData)
-          this.channelService.getLevelObservable().subscribe(level => {
-            this.level = level;
-          });
+          this.isClosedChannel = this.channelService.getIsClosedChannel(this.channelId);
           setTimeout(() => this.scrollDown(), 1000);
         });
       }).catch(err => {
