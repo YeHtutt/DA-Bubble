@@ -8,6 +8,13 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { PresenceService } from 'src/app/shared/services/presence.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
+
+/**
+ * Component for displaying a sub-view of a user profile.
+ * This component provides functionality to view user details, open chat sessions,
+ * and observe user presence status. It integrates with various services to manage user data,
+ * message operations, and presence updates.
+ */
 @Component({
   selector: 'app-user-profile-sub-view',
   templateUrl: './user-profile-sub-view.component.html',
@@ -47,8 +54,10 @@ export class UserProfileSubViewComponent {
   openChat() {
     this.prepareChatSession();
   }
-  
 
+  /**
+  * Prepares and navigates to a chat session with a certain user.
+  */
   async prepareChatSession() {
     const directChat = this.createDirectChatObject();
     const chatExists = await this.messageService.chatExists(directChat.user1, directChat.user2)
@@ -62,6 +71,10 @@ export class UserProfileSubViewComponent {
   }
 
 
+  /**
+  * Creates a DirectChat object for initiating a chat session between two users.
+  * @returns {DirectChat} A new DirectChat object.
+  */
   createDirectChatObject(): DirectChat {
     const currentUser = this.userFbService.getFromLocalStorage();
     return new DirectChat({

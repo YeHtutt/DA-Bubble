@@ -9,8 +9,11 @@ import { DrawerService } from 'src/app/shared/services/drawer.service';
 import { ThreadService } from 'src/app/shared/services/thread.service';
 
 
-
-
+/**
+* Component for handling the side navigation functionality.
+* This component provides navigation options, reacts to screen size changes for responsive design,
+* and integrates with various services for authentication and managing drawer state.
+*/
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -52,6 +55,12 @@ export class SidenavComponent {
     this.drawerSub.unsubscribe();
   }
 
+
+  /**
+  * Host listener for window resize events.
+  * Adjusts UI elements based on the window size and mobile status.
+  * @param {Event} event - The window resize event.
+  */
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.checkScreenSize();

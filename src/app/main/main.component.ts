@@ -13,6 +13,12 @@ import { UserProfileSubViewComponent } from './users/user-profile-sub-view/user-
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
 import { MainIdsService } from '../shared/services/main-ids.service';
 
+
+/**
+ * Component for the main dashboard view of the application.
+ * This component handles user interactions, manages state related to the dashboard, 
+ * and integrates with various services for user data, authentication, and presence updates.
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './main.component.html',
@@ -49,12 +55,16 @@ export class MainComponent implements OnInit {
   ) { }
 
 
+  /**
+   * Handles the window beforeunload event to update user status.
+   * @param event  - The beforeunload event object.
+   */
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {
     setTimeout(() => this.updateUserStatus(false), 5000);
   }
 
-  
+
   async ngOnInit() {
     this.router.navigate([`/dashboard/channel/${this.idsService.mainChannelId}`]);
     this.getCurrentUser();
@@ -83,6 +93,10 @@ export class MainComponent implements OnInit {
   }
 
 
+  /**
+  * Updates the online status of the current user.
+  * @param {boolean} status - The new online status to set.
+  */
   updateUserStatus(status: boolean) {
     this.userFbService.updateUserOnlineStatus(this.userId, status)
   }
@@ -109,6 +123,10 @@ export class MainComponent implements OnInit {
   }
 
 
+  /**
+  * Opens a user profile dialog where the data of the user are displayed.
+  * @param {any} node - The node data containing user information.
+  */
   openUserProfile() {
     this.dialog.open(UserProfileViewComponent, {
       width: '500px',

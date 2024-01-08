@@ -16,6 +16,11 @@ export class UserProfileChooseAvatarComponent {
     private dialogRef: MatDialogRef<UserProfileChooseAvatarComponent>
     ) {}
 
+  
+  /**
+  * Sets a new profile picture for the user.
+  * @param {any} image - The new image URL to set as the profile picture.
+  */  
   setNewPic(image: any) {
       this.urlToSelectedAvatar = 'assets/img/avatar/' + image;
       this.avatarSelected.emit(this.urlToSelectedAvatar); 

@@ -6,6 +6,11 @@ import { UserProfileSubViewComponent } from '../users/user-profile-sub-view/user
 import { DrawerService } from 'src/app/shared/services/drawer.service';
 
 
+/**
+* Component for handling the search functionality within the application.
+* This component provides a search bar for finding users, channels, and messages.
+* It integrates with the SearchService for search operations and displays the results in a user-friendly manner.
+*/
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
@@ -31,6 +36,9 @@ export class SearchBarComponent {
   ) { }
 
 
+  /**
+  * Conducts a search based on the current search input and updates the component state with the results.
+  */
   async searchData() {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(this.search, this.messageSearch)
     this.filteredUser = searchResult.filteredUser;
@@ -54,6 +62,10 @@ export class SearchBarComponent {
   }
 
 
+  /**
+  * Opens the search output area.
+  * @param {Event} event - The event that triggered the opening.
+  */
   openSearchOutput(event: Event) {
     event.stopPropagation();
     this.searchOutput = true;
@@ -71,7 +83,6 @@ export class SearchBarComponent {
     const userPhotoURL = node.photoURL;
     const userEmail = node.email;
     const isOnline = node.isOnline;
-
     this.dialog.open(UserProfileSubViewComponent, {
       width: '500px',
       height: '727px',
@@ -89,6 +100,11 @@ export class SearchBarComponent {
   }
 
 
+  /**
+  * Formats a timestamp into a readable date format.
+  * @param {{ seconds: number; nanoseconds: number }} timestamp - The timestamp to format.
+  * @returns {string} A formatted date string.
+  */
   formatTimestamp(timestamp: { seconds: number; nanoseconds: number }): string {
     const date = new Date(timestamp.seconds * 1000);
     const day = date.getDate();

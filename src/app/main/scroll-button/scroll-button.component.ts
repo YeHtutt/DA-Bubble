@@ -3,6 +3,12 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
 import { MessageSelectionService } from 'src/app/shared/services/message-selection.service';
 
+
+/**
+* Component for displaying and managing a scroll button.
+* This component handles the functionality related to scrolling through messages,
+* including tracking new messages and emitting events to trigger scrolling actions.
+*/
 @Component({
   selector: 'app-scroll-button',
   templateUrl: './scroll-button.component.html',
@@ -10,31 +16,70 @@ import { MessageSelectionService } from 'src/app/shared/services/message-selecti
 })
 export class ScrollButtonComponent {
 
-
+  /**
+  * Event emitter for when the scroll down action is triggered.
+  */
   @Output() EmitScrollDown = new EventEmitter<void>();
+
+  /**
+  * Input for chat data, including the collection path for messages.
+  */
   @Input() chatData: any;
+
+  /**
+  * Observable for retrieving messages from Firestore.
+  */
   messages: Observable<any> = new Observable();
+
+  /**
+  * Subscription to the messages Observable.
+  */
   private messageSubscription: Subscription = new Subscription();
+
+
+  /**
+  * Total count of messages.
+  */
   messageCount: number = 0;
+
+  /**
+  * Count of new messages since last reset or scroll down action.
+  */
   newMessageCount: number = 0;
+
+  /**
+  * Count of messages when the component was initialized.
+  */
   originMessageCount: number = 0;
+
+  /**
+  * Flag to indicate if a new message has been checked.
+  */
   checked: boolean = false;
+
+  /**
+   * Subscription to message selection events.
+   */
+
   messageSelectionSub: Subscription = new Subscription();
+  /**
+  * Flag to reset new message count.
+  */
   reset: boolean = false;
 
 
   constructor(
-    private firestore: Firestore = inject(Firestore), 
+    private firestore: Firestore = inject(Firestore),
     private mss: MessageSelectionService
-    ) {}
-    
+  ) { }
+
 
   ngOnInit() {
     this.getMessageLength();
-    this.messageSelectionSub = this.mss.selectedMessageId$.subscribe(id => { 
+    this.messageSelectionSub = this.mss.selectedMessageId$.subscribe(id => {
       if (id) {
         this.resetNewMessageCount();
-        this.reset = true; 
+        this.reset = true;
       }
     });
   }
@@ -57,6 +102,10 @@ export class ScrollButtonComponent {
   }
 
 
+  /**
+  * Sets the message counter based on the current message count.
+  * @param {number} count - The current count of messages.
+  */
   setCounter(count: number) {
     if (this.messageCount > count) this.messageCount = 0; // when deleting messages, reset messageCount
     if (this.messageCount == 0) this.messageCount = count; // when first rendered
@@ -69,7 +118,7 @@ export class ScrollButtonComponent {
     this.messageCount = count;
     this.checked = true;
     setTimeout(() => this.checked = false, 500);
-    if(this.reset) {
+    if (this.reset) {
       this.resetNewMessageCount();
       this.reset = false;
     }
