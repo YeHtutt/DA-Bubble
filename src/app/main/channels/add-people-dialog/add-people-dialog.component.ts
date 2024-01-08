@@ -6,16 +6,19 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { Channel } from 'src/app/models/channel';
 import { UserProfile } from 'src/app/models/user-profile';
 import { ChannelService } from 'src/app/shared/services/channel.service';
 import { DrawerService } from 'src/app/shared/services/drawer.service';
-import { FirebaseUtilsService } from 'src/app/shared/services/firebase-utils.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
+/**
+ * Component for adding people to a channel.
+ * Allows for the addition of users to an existing channel individually or by selecting all available users.
+ */
 @Component({
   selector: 'app-add-people-dialog',
   templateUrl: './add-people-dialog.component.html',
@@ -61,14 +64,12 @@ export class AddPeopleDialogComponent {
 
 
   ngOnInit() {
-  
     this.getAllUsers().then(() => {
       this.getUsersNotInChannel();
       this.updateFilteredUsers();
     });
     this.drawerService.checkMobileMode(window.innerWidth);
     this.filteredUsers.subscribe(users => {
-      // console.log('Aktualisierte filteredUsers:', users);
     });
   }
 
@@ -107,6 +108,7 @@ export class AddPeopleDialogComponent {
     this.dialogRef.close();
   }
 
+
   closeAddPeopleDialog() {
     if (!this.openingInChat) {
       const dialogContainer = document.querySelector('.top-left-right-dialog');
@@ -124,8 +126,10 @@ export class AddPeopleDialogComponent {
   }
 
 
+  /**
+  * Adds selected users to the channel based on the selection option, where only users not in the channel can be added.
+  */
   addUsers() {
-
     let usersAsJSON = this.users.map((user: UserProfile) => user.toJSON());
     this.channel.usersData.push(...usersAsJSON);
     this.updateUsersNotInChannel();
@@ -140,6 +144,9 @@ export class AddPeopleDialogComponent {
 
 
 
+  /**
+  * Pushes certain selected users to the channel's user data.
+  */
   pushCertainUsersToChannel() {
     this.users.forEach((user: any) => {
       const userObject = user instanceof UserProfile ? user.toJSON() : user;
@@ -148,50 +155,44 @@ export class AddPeopleDialogComponent {
   }
 
 
+  /**
+  * Removes a user from the selected users list.
+  * @param {string} name - The name of the user to remove.
+  */
   remove(name: string): void {
     const index = this.users.findIndex((user: any) => user.name === name);
     if (index >= 0) {
-      // Benutzer aus der Liste der ausgewählten Benutzer entfernen
       const removedUser = this.users[index];
       this.users.splice(index, 1);
-
-      // Benutzer wieder zur Liste der nicht im Kanal befindlichen Benutzer hinzufügen
       if (!this.usersNotInChannel.some(u => u.id === removedUser.id)) {
         this.usersNotInChannel.push(removedUser);
       }
-
-      // Aktualisieren der Listen und der Ansicht
       this.updateFilteredUsers();
       this.announcer.announce(`Removed ${name}`);
-      this.cdRef.detectChanges(); // Stellen Sie sicher, dass Änderungen erkannt werden
+      this.cdRef.detectChanges();
     }
   }
 
 
-
+  /**
+  * Handler for selecting a user from the autocomplete list.
+  * @param {MatAutocompleteSelectedEvent} event - The selection event.
+  */
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
     if (!this.users.some(u => u.id === selectedUser.id)) {
       this.users.push(selectedUser);
       this.usersNotInChannel = this.usersNotInChannel.filter(u => u.id !== selectedUser.id);
-      this.updateFilteredUsers(); // Aktualisieren Sie die gefilterten Benutzer
+      this.updateFilteredUsers();
     }
     this.userInput.nativeElement.value = '';
     this.userCtrl.setValue(null);
   }
 
-  private refreshUserControl(): void {
-    // Triggering a null value change to refresh the filteredUsers Observable
-    this.userCtrl.setValue('');
-  }
-
 
   updateUsersNotInChannel() {
-    // Assuming channel.usersData contains the list of users in the channel
     let usersInChannelIds = new Set(this.channel.usersData.map((user: any) => user.id));
     this.usersNotInChannel = this.allUsers.filter((user: any) => !usersInChannelIds.has(user.id));
-
-    // Refresh the filteredUsers Observable
     this.refreshFilteredUsers();
   }
 
@@ -217,15 +218,11 @@ export class AddPeopleDialogComponent {
   }
 
   private _filter(value: any): any[] {
-    // Überprüfen Sie, ob der Wert null ist und geben Sie im Fall von null die gesamte Benutzerliste zurück
-    if (value === null) {
-      return this.usersNotInChannel;
-    }
-  
+    if (value === null) return this.usersNotInChannel;
     const filterValue = value.name.toLowerCase();
     return this.usersNotInChannel.filter(user => user.name.toLowerCase().includes(filterValue) && !this.users.some(u => u.id === user.id));
   }
-  
+
 
   validateInput(): void {
     const inputValue = this.userCtrl.value?.trim();
@@ -239,17 +236,19 @@ export class AddPeopleDialogComponent {
   }
 
 
+  /**
+  * Adds a user to the selected users list based on input event.
+  * @param {MatChipInputEvent} event - The chip input event.
+  */
   add(event: MatChipInputEvent): void {
     const inputName = (event.value || '').trim();
     const userToAdd = this.usersNotInChannel.find(u => u.name === inputName);
-
     if (userToAdd && !this.users.some(u => u.id === userToAdd.id)) {
       this.users.push(userToAdd);
       this.updateFilteredUsers();
       this.usersNotInChannel = this.usersNotInChannel.filter(u => u.id !== userToAdd.id);
-      this.updateFilteredUsers(); // Aktualisieren Sie die gefilterten Benutzer
+      this.updateFilteredUsers();
     }
-
     event.chipInput!.clear();
   }
 

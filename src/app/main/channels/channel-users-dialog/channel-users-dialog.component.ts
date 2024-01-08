@@ -13,7 +13,10 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
-
+/**
+* Component for managing users in a channel.
+* Allows for the addition of users to a newly created channel, either individually or by adding all users.
+*/
 @Component({
   selector: 'app-channel-users-dialog',
   templateUrl: './channel-users-dialog.component.html',
@@ -70,27 +73,34 @@ export class ChannelUsersDialogComponent {
     this.dialogRef.close();
   }
 
-
+  /**
+  * Determines if the 'Create' button should be disabled based on the users in the channel.
+  * @returns {boolean} True if the button should be disabled, false otherwise.
+  */
   shouldDisableCreateButton(): boolean {
     const isUserListEmpty = this.users.length === 0;
     const isAllSelected = this.selectedOption === 'all';
-  
+
     if (isAllSelected) {
       return false;
     }
-  
+
     return isUserListEmpty;
   }
-  
-  
 
+
+  /**
+  * Fetches all users from the user service.
+  */
   async getAllUsers() {
     this.allUsers = await this.userService.getUsers();
   }
 
 
+  /**
+  * Handler for radio button changes.
+  */
   onRadioChange(): void {
-    
     if (this.selectedOption === 'all') {
       while (this.users.length > 0) {
         this.remove(this.users[0].name);
@@ -110,7 +120,7 @@ export class ChannelUsersDialogComponent {
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
     if (this.selectedOption === 'individual') {
-      this.pushCertainUsersToChannel();   
+      this.pushCertainUsersToChannel();
       this.channel.usersData.push(this.channelCreator instanceof UserProfile ? this.channelCreator.toJSON() : this.channelCreator);
       this.firebaseUtils.addColl(this.channel, 'channel', 'channelId');
     };
@@ -134,7 +144,10 @@ export class ChannelUsersDialogComponent {
     });
   }
 
-
+  /**
+  * Removes a user from the selected users list.
+  * @param {string} name - The name of the user to remove.
+  */
   remove(name: string): void {
     const index = this.users.findIndex((user: any) => user.name === name);
     if (index >= 0) {
@@ -152,6 +165,10 @@ export class ChannelUsersDialogComponent {
   }
 
 
+  /**
+  * Handler for selecting a user from the autocomplete list.
+  * @param {MatAutocompleteSelectedEvent} event - The selection event.
+  */
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedUser = event.option.value;
 
@@ -172,6 +189,9 @@ export class ChannelUsersDialogComponent {
   }
 
 
+  /**
+  * Validates the user input for adding users.
+  */
   validateInput(): void {
     const inputValue = this.userCtrl.value?.trim();
     if (!inputValue) {
@@ -184,11 +204,14 @@ export class ChannelUsersDialogComponent {
   }
 
 
+  /**
+  * Adds a user to the selected users list based on input event.
+  * @param {MatChipInputEvent} event - The chip input event.
+  */
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    // Find the user object from allUsers
+    // Finding the user object from allUsers
     const userToAdd = this.allUsers.find((u: any) => u.name === value);
-
     if (userToAdd && !this.users.some(u => u.id === userToAdd.id)) {
       this.users.push(userToAdd);
       // Update allUsers to remove the added user
@@ -197,8 +220,11 @@ export class ChannelUsersDialogComponent {
     }
     event.chipInput!.clear();
   }
-  
 
+
+  /**
+  * Updates the list of filtered users based on the current selection.
+  */
   private updateFilteredUsers(): void {
     this.filteredUsers = this.userCtrl.valueChanges.pipe(
       startWith(''),
@@ -210,6 +236,11 @@ export class ChannelUsersDialogComponent {
   }
 
 
+  /**
+  * Filters the list of all users based on the given value.
+  * @param {any} value - The value to filter the users by.
+  * @returns {any[]} A filtered array of users.
+  */
   private _filter(value: any): any[] {
     const filterValue = value.name.toLowerCase();
     // Filter out users that have already been added
