@@ -12,8 +12,9 @@ import {
 } from '@angular/fire/firestore';
 
 
-
-//interfaces for mat tree
+/**
+ * Interface for the mat tree
+ */
 interface MessagesNode {
   name: string;
   id: any;
@@ -31,6 +32,11 @@ interface ExampleFlatNode {
 }
 
 
+/**
+ * Service for handling message tree (direct-chat) operations in DABubble.
+ * This service integrates with Firebase Firestore for data retrieval and uses Angular Material's tree
+ * structures to manage and display message nodes.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -56,7 +62,12 @@ export class MessageTreeService {
   }
 
 
-  //the following functions are for rendering the contacts in sidenav with a mat tree
+  /**
+  * Transforms message nodes for the tree structure.
+  * @param {MessagesNode} node - The message node to transform.
+  * @param {number} level - The current level of the node in the tree.
+  * @returns {ExampleFlatNode} A transformed node suitable for the flat tree control.
+  */
   private _transformer = (node: MessagesNode, level: number) => {
     const isExpandable = (node.children && node.children.length > 0) || node.name === 'Neuer Chat';
     return {
@@ -84,7 +95,12 @@ export class MessageTreeService {
     node => node.children,
   );
 
-
+  /**
+  * Determines if a tree node has children.
+  * @param {number} _ - Index of the node.
+  * @param {ExampleFlatNode} node - The tree node to check.
+  * @returns {boolean} True if the node is expandable (has children), false otherwise.
+  */
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
 
@@ -93,14 +109,17 @@ export class MessageTreeService {
 
 
 
-
+  /**
+  * Subscribes to the users collection and updates the message tree data source.
+  * This method is responsible for retrieving user data and formatting it for the tree display.
+  */
   subUserMessagesList() {
     return this.unsubChat = onSnapshot(this.firebaseUtils.getColl('users'), (list: any) => {
       this.messageTree = [];
       list.forEach((element: any) => {
         const messageObj = this.setDirectMessageObj(element.data(), element.id);
         let currentUser = this.userService.getFromLocalStorage();
-        if (currentUser !== messageObj.id) this.messageTree.push(messageObj);    
+        if (currentUser !== messageObj.id) this.messageTree.push(messageObj);
       });
       this.messageTree.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
       this.themes = [{ name: 'Direktnachrichten', children: this.messageTree }];
@@ -110,7 +129,12 @@ export class MessageTreeService {
   }
 
 
- 
+  /**
+  * Creates a direct message object from a user object.
+  * @param {any} obj - The user object to convert.
+  * @param {string} docId - The document ID of the user.
+  * @returns {MessagesNode} The created direct message node.
+  */
   setDirectMessageObj(obj: any, docId: string): MessagesNode {
     return new UserProfile({
       name: obj.name,
@@ -121,8 +145,4 @@ export class MessageTreeService {
       children: []
     });
   }
-
-
-
-
 }

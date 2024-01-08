@@ -12,6 +12,13 @@ import { Channel } from '../../models/channel';
 import { MainIdsService } from './main-ids.service';
 import { tap, map } from 'rxjs/operators';
 
+/**
+ * Service for handling authentication-related operations in an Angular application.
+ * Utilizes Firebase Authentication for managing user authentication and AngularFireAuth
+ * for integrating Firebase Authentication with Angular. Also interacts with Firestore
+ * for user data management and Router for navigation.
+ */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,43 +30,71 @@ export class AuthenticationService {
   oobCode: string = '';
 
 
-
   firestore: Firestore = inject(Firestore);
 
-  constructor(private auth: Auth, private afAuth: AngularFireAuth,
+  constructor(
+    private auth: Auth,
+    private afAuth: AngularFireAuth,
     private userfbService: UsersFirebaseService, private router: Router,
     private usersFbService: UsersFirebaseService,
     private notificationService: NotificationService,
     private channelService: ChannelService,
     private idService: MainIdsService) {
-    this.user = new UserProfile(); // user initialisiert
+    this.user = new UserProfile();
   }
 
-
+  /**
+   * Authenticates a user using their email and password. Tap, pipe and map methods needs to implemented because of a
+   * channel related bug, which causes the channels to be sorted false to close and open channels.
+   * @param {any} email - User's email address.
+   * @param {any} password - User's password.
+   * @returns {Observable<User>} An observable emitting the authenticated user.
+   */
   login(email: any, password: any): Observable<User> {
     return from(signInWithEmailAndPassword(this.auth, email, password))
       .pipe(
         tap((userCredential: UserCredential) => {
           if (userCredential.user) {
             const userId = userCredential.user.uid;
-            this.usersFbService.saveToLocalStorage(userId); 
-            this.channelService.currentUserId = userId; 
+            this.usersFbService.saveToLocalStorage(userId);
+            this.channelService.currentUserId = userId;
           }
         }),
         map(userCredential => userCredential.user)
       );
   }
 
-  logout() {    
+  /**
+   * Logs out the current user and performs necessary cleanup.
+   * @returns {Promise<void>} A promise indicating the completion of the logout process.
+   */
+  async logout(): Promise<void> {
     this.setIsAuthenticated(false);
-    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage(), false);
-    this.channelService.unsubChannelTree();
-    return from(this.auth.signOut().then(() => {
-      this.userfbService.removeFromLocalStorage();
-    }));
+    await this.performLogoutCleanup();
+    try {
+      await this.auth.signOut();
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Additional error handling as needed
+    }
+    this.userfbService.removeFromLocalStorage();
   }
 
 
+  /**
+   * Performs cleanup operations necessary during logout.
+   * To unsub the channel tree was necessary display the correct data when changing the current user.
+   */
+  async performLogoutCleanup() {
+    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage(), false);
+    this.channelService.unsubChannelTree();
+  }
+
+  /**
+     * Signs up a new user with their name, email, and password.  
+     * @param {UserProfile} newUser - New user's profile information.
+     * @returns {Observable<any>} An observable with the result of the sign-up process.
+  */
   signUp(name: string, email: string, password: string, newUser: UserProfile) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap(({ user }) => {
@@ -74,19 +109,26 @@ export class AuthenticationService {
   }
 
 
+  /**
+   * Adds a user to the general channel.
+   * @param {string} user - User identifier.
+   */
   async addToGeneralChannel(user: string) {
     const userData = (await this.usersFbService.getUser(user)).toJSON();
     let channel = (await this.channelService.getSingleChannel(this.idService.mainChannelId)).toJSON();
     if (!channel.usersData.some((u: any) => u.id === userData.id)) {
       channel.usersData.push(userData);
       this.channelService.updateChannel(new Channel(channel));
-    } else {
-      console.log('User already exists in the channel');
     }
   }
 
 
-
+  /**
+   * Associates a unique identifier with a new user's profile.
+   * @param {UserProfile} newUser - The new user's profile.
+   * @param {string} uid - The unique identifier for the user.
+   * @returns {UserProfile} The updated user profile.
+   */
   addUidToUser(newUser: UserProfile, uid: string) {
     newUser.id = uid;
     return newUser;
@@ -113,13 +155,11 @@ export class AuthenticationService {
   }
 
 
-  /* ID */
+
   async signinWithGoogle() {
     try {
       const googleProvider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, googleProvider);
-
-      console.log("signInWithPopup result:", result);
       if (result && result.user) {
         const collRef = doc(this.firestore, 'users', result.user.uid);
         this.userUID = result.user.uid;
@@ -144,15 +184,11 @@ export class AuthenticationService {
   }
 
 
-
-
-  // Füge eine öffentliche Methode hinzu, um isAuthenticated abzurufen
   getIsAuthenticated(): boolean {
     return this.isAuthenticated;
   }
 
 
-  // Füge eine öffentliche Methode hinzu, um isAuthenticated festzulegen
   setIsAuthenticated(value: boolean) {
     this.isAuthenticated = value;
   }
@@ -171,9 +207,6 @@ export class AuthenticationService {
       this.notificationService.showError('Es ist kein Benutzer eingeloggt');
     }
   }
-
-
-
 
 
   sendVerificationMail(user: any) {

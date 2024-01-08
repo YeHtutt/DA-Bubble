@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
+/**
+* A service for displaying notifications, like error or success messages.
+*/
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +13,7 @@ export class NotificationService {
 
   constructor(
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) { }
+     ) { }
 
 
   /* Notification */

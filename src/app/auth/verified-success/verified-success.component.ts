@@ -33,6 +33,6 @@ export class VerifiedSuccessComponent {
     }
     setTimeout(() => {
       this.router.navigate(['/login'])
-    }, 3000);
+    }, 6000);
   }
 }

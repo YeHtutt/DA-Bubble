@@ -54,8 +54,7 @@ export class MainComponent implements OnInit {
     setTimeout(() => this.updateUserStatus(false), 5000);
   }
 
-  /* ID */
-
+  
   async ngOnInit() {
     this.router.navigate([`/dashboard/channel/${this.idsService.mainChannelId}`]);
     this.getCurrentUser();
