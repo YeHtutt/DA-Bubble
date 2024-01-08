@@ -13,6 +13,7 @@ export class StartAnimationComponent {
   isStarting: boolean = true;
   isIntro = true;
 
+  
   constructor(private router: Router) {
     setTimeout(() => {
       this.isIntro = false;
