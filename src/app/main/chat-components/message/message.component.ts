@@ -17,6 +17,12 @@ interface Reaction {
   users: string[]
 }
 
+
+/**
+* Component for displaying and interacting with messages.
+* This component handles message display, editing, deletion, reactions, and thread management.
+* It integrates with various services for file uploading, user data management, and message operations.
+*/
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -56,8 +62,6 @@ export class MessageComponent {
   subscription: Subscription = new Subscription;
 
 
-
-
   constructor(
     public userService: UsersFirebaseService,
     private messageService: MessageService,
@@ -71,6 +75,7 @@ export class MessageComponent {
     this.currentUser = this.userService.getFromLocalStorage() || '';
     this.userService.getUser(this.currentUser).then((user) => this.currentUserName = user.name);
   }
+
 
   ngOnInit() {
     this.getPDFurl();
@@ -95,6 +100,9 @@ export class MessageComponent {
   }
 
 
+  /**
+  * Retrieves the user information associated with a message.
+  */
   getUserForMessage() {
     this.subscription = this.userObservable.pipe(
       map(users => users.find((user: UserProfile) => user.id === this.message.user.id))
@@ -111,6 +119,11 @@ export class MessageComponent {
   }
 
 
+  /**
+  * Converts a Firestore timestamp into a readable time format.
+  * @param {any} timestamp - The Firestore timestamp to convert.
+  * @returns {string} A readable time string.
+  */
   getTimeOfDate(timestamp: any) {
     const date = new Date(timestamp.seconds * 1000);
     const hours = date.getHours();
@@ -133,6 +146,9 @@ export class MessageComponent {
   }
 
 
+  /**
+  * Extracts the document ID and collection path from the current URL.
+  */
   getMessagePath() {
     const url = this.router.url;
     let urlParts = url.split('/');
@@ -141,12 +157,20 @@ export class MessageComponent {
   }
 
 
+  /**
+   * Saves the edited message to the database.
+   * @param {string} msgId - The ID of the message being edited.
+   */
   saveMessage(msgId: string) {
     this.messageService.updateMessage(this.coll, this.docId, msgId, this.editMessage);
     this.showEdit = !this.showEdit;
   }
 
 
+  /**
+  * Detects keypress events and triggers message sending or editing based on the key pressed.
+  * @param {KeyboardEvent} event - The keyboard event.
+  */
   sendByKey(event: KeyboardEvent) {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
@@ -158,6 +182,11 @@ export class MessageComponent {
   }
 
 
+  /**
+  * Checks if a given text is empty or consists only of whitespace.
+  * @param {string} text - The text to check.
+  * @returns {boolean} True if the text is empty or whitespace, false otherwise.
+  */
   isEmptyOrWhitespace(text: string): boolean {
     return text.replace(/\n/g, '').trim().length === 0;
   }
@@ -206,8 +235,12 @@ export class MessageComponent {
   }
 
 
+  /**
+  * Updates the reactions on a message.
+  * @param {string} emoji - The emoji used in the reaction.
+  * @param {string} msgId - The ID of the message being reacted to.
+  */
   async updateMessageReactions(emoji: string, msgId: string) {
-
     this.getMessagePath();
     const reaction = this.createReactionObject(emoji);
     const existingReactions = this.message.reactions || [];
@@ -297,7 +330,7 @@ export class MessageComponent {
     let replyPath = `${this.origin}/${this.currentId}/message/${this.parentMessageId}/thread`;
 
     let count = await this.threadService.fetchUpdatedCount(replyPath) as number; // Make sure this is awaited
-    
+
     let timeOfLastReply;
 
     if (count > 0) {
@@ -310,7 +343,6 @@ export class MessageComponent {
     await this.messageService.updateCount(parentPath, count, timeOfLastReply);
   }
 
-  // UPLOADED FILES
 
   async getPDFurl() {
     if (this.message.fileUpload && this.message.fileUpload.name) {

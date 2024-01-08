@@ -10,9 +10,13 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { SearchService } from 'src/app/shared/services/search.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
-72
-type ReceiverType = UserProfile | Channel;
 
+type ReceiverType = UserProfile | Channel;
+/**
+* Component for creating and sending new messages.
+* This component allows users to compose and send messages to either individual users or channels.
+* It integrates with various services for message creation, file uploading, and user search functionality.
+*/
 @Component({
   selector: 'app-new-message',
   templateUrl: './new-message.component.html',
@@ -53,6 +57,9 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Sends the composed message to the selected receiver.
+  */
   send() {
     if (this.receiver instanceof UserProfile) {
       let origin = 'chat';
@@ -66,6 +73,10 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Sends the message when the 'Enter' key is pressed and certain conditions are met.
+  * @param {KeyboardEvent} event - The keyboard event.
+  */
   sendByKey(event: KeyboardEvent) {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
@@ -77,21 +88,20 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Checks if the message text is empty or contains only whitespace.
+  * @returns {boolean} True if the message is empty or whitespace, false otherwise.
+  */
   isEmptyOrWhitespace(): boolean {
     return this.text.replace(/\n/g, '').trim().length === 0;
   }
 
 
-  // createDirectChatObject(receiver: UserProfile): DirectChat {
-  //   return new DirectChat({
-  //     chatId: `${this.currentUser.id}_${receiver.id}`,
-  //     creationTime: new Date(),
-  //     user1: this.currentUser.id,
-  //     user2: receiver.id,
-  //   });
-  // }
-
-
+  /**
+  * Creates a message object based on the current state.
+  * @param {string} origin - The origin of the message ('chat' or 'channel').
+  * @returns {Message} The created message object.
+  */
   createMessageObject(origin: string) {
     return new Message({
       origin: origin,
@@ -109,6 +119,9 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Conducts a search based on the current search input and updates the component state with the results.
+  */
   async searchData() {
     const searchResult = await this.searchService.searchUsersChannelsAndMessages(this.search, this.searchMessage)
     this.filteredUser = searchResult.filteredUser;
@@ -116,6 +129,10 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Selects a receiver for the message.
+  * @param {any} receiver - The receiver object.
+  */
   selectReceiver(receiver: any) {
     this.search = receiver.name || `# ${receiver.channelName}`;
     this.receiver = receiver;
@@ -124,6 +141,10 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Opens the search output area.
+  * @param {Event} event - The event that triggered the opening.
+  */
   openSearchOutput(event: Event) {
     event.stopPropagation();
     this.searchOutput = true;
@@ -134,15 +155,6 @@ export class NewMessageComponent {
   }
 
 
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent) {
-  //   const target = event.target as HTMLElement;
-  //   if (!target.closest('input') && !target.closest('.searchOutput')) {
-  //     this.searchOutput = false;
-  //   }
-  // }
-
-
   async openTagMenu() {
     this.showTagMenu = !this.showTagMenu;
     const searchResult = await this.searchService.searchUsersChannelsAndMessages('@', this.searchMessage);
@@ -151,6 +163,10 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Inserts a tagged user into the message input.
+  * @param {string} user - The username of the user to tag.
+  */
   tagUser(user: string) {
     this.text = `@${user}`;
     this.showTagMenu = !this.showTagMenu;
@@ -169,8 +185,10 @@ export class NewMessageComponent {
   }
 
 
-  // Upload File
-
+  /**
+  * Handles the file upload process for a message.
+  * @param {any} event - The file upload event.
+  */
   onUpload(event: any) {
     const file = new FileUpload(event.target.files[0]);
     const maxSize = 1500 * 1024;
@@ -187,6 +205,10 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Sets the file type icon based on the type of the file.
+  * @param {string} type - The file type.
+  */
   setFileType(type: string) {
     if (type.includes('jpeg' || 'jpg')) this.fileType = 'assets/img/icons/jpg.png';
     if (type.includes('png')) this.fileType = 'assets/img/icons/png.png';
@@ -194,6 +216,10 @@ export class NewMessageComponent {
   }
 
 
+  /**
+  * Deletes a file from the storage.
+  * @param {string} filePath - The path of the file to delete.
+  */
   onDelete(filePath: string) {
     this.fileService.deleteFile(filePath);
     this.fileUpload = undefined;

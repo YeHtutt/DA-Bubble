@@ -13,6 +13,11 @@ import { ThreadService } from 'src/app/shared/services/thread.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
 
+/**
+* Component for handling direct chat functionality.
+* This component provides functionality to manage and initiate direct chats between users.
+* It integrates with various services for message and user data management, navigation, and UI interactivity.
+*/
 @Component({
   selector: 'app-direct-chat',
   templateUrl: './direct-chat.component.html',
@@ -30,7 +35,7 @@ export class DirectChatComponent {
   public receiver: UserProfile = new UserProfile;
   public search: string = '';
   filteredUser: any = [];
-  
+
 
   constructor(
     public messageTreeService: MessageTreeService,
@@ -54,6 +59,10 @@ export class DirectChatComponent {
   }
 
 
+  /**
+  * Selects a receiver for direct chat, checks for existing chats, and navigates to the chat if it exists.
+  * @param {any} receiverId - The ID of the receiver to initiate a direct chat with.
+  */
   async selectReceiver(receiverId: any) {
     const chatAlreadyExists = await this.messageService.chatExists(this.currentUser.id, receiverId);
     if (!chatAlreadyExists) {
@@ -67,6 +76,11 @@ export class DirectChatComponent {
   }
 
 
+  /**
+  * Creates a new DirectChat object(basically a conversation between to users).
+  * @param {string} receiver - The ID of the receiver for the direct chat.
+  * @returns {DirectChat} A new DirectChat object.
+  */
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
       chatId: '',
@@ -77,11 +91,18 @@ export class DirectChatComponent {
   }
 
 
+  /**
+  * Toggles the expanded state of a node in the message tree.
+  * @param {any} node - The node to toggle.
+  */
   toggleExpanded(node: any) {
     this.messageTreeService.treeControl.toggle(node);
   }
 
-
+  /**
+  * Retrieves the ID of the current user (the sender of the message) from local storage.
+  * @returns {string} The ID of the current user.
+  */
   getCreatorId() {
     return this.userService.getFromLocalStorage();
   }

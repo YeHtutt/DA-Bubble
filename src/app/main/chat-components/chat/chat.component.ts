@@ -17,6 +17,11 @@ import { MessageSelectionService } from 'src/app/shared/services/message-selecti
 import { Subscription } from 'rxjs';
 
 
+/**
+ * Component for managing and displaying chat functionality.
+ * This component allows users to send and view messages within a chat, including file uploads and emoji reactions.
+ * It integrates with various services for user, message, and file management.
+ */
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -90,6 +95,9 @@ export class ChatComponent {
   }
 
 
+  /**
+   * Sets up an intersection observer for handling scroll events after the view initializes.
+   */
   ngAfterViewInit() {
     this.initIntersectionObserver();
   }
@@ -101,6 +109,9 @@ export class ChatComponent {
   }
 
 
+  /**
+  * Initializes an intersection observer for detecting when an element is in the viewport.
+  */
   initIntersectionObserver() {
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -113,12 +124,22 @@ export class ChatComponent {
   }
 
 
+  /**
+   * Retrieves all messages for display in the chat.
+   * @returns {Message[]} An array of message objects.
+   */
   getAllMessages() {
     if (this.messageService.messages.length > 0) this.chatExists = true;
     return this.messageService.messages
   }
 
 
+  /**
+   * TrackBy function to optimize Angular's change detection within ngFor loops.
+   * @param {number} index - The index of the current item in the loop.
+   * @param {any} item - The current item.
+   * @returns The unique identifier for the item.
+   */
   trackByFunction(index: number, item: any) {
     return item.messageId; // oder eine eindeutige Eigenschaft der Nachricht
   }
@@ -129,12 +150,19 @@ export class ChatComponent {
   }
 
 
+  /**
+   * Scrolls the chat to the latest message.
+   */
   scrollDown() {
     this.scrollElement = this.scrollElementRef?.nativeElement;
     this.scrollElement.scrollTop = this.scrollElement.scrollHeight;
   }
 
 
+  /**
+   * Scrolls to a specific message in the chat.
+   * @param {string} id - The ID of the message to scroll to.
+   */
   scrollToMessage(id: string) {
     const element = document.getElementById(id);
     if (element) {
@@ -147,6 +175,9 @@ export class ChatComponent {
   }
 
 
+  /**
+   * Retrieves the receiver's data for the current chat.
+   */
   async getReceiverData() {
     this.chat = await this.messageService.getDirectChatDoc(this.chatId);
     this.checkWhoReceiverIs();
@@ -154,6 +185,10 @@ export class ChatComponent {
   }
 
 
+  /**
+   * Determines the receiver of the chat based on the current user and chat data.
+   * @returns {string} The ID of the receiver.
+   */
   checkWhoReceiverIs() {
     if (this.chat.user1 == this.currentUser.id) {
       return this.chat.user2;
@@ -192,21 +227,30 @@ export class ChatComponent {
   }
 
 
+  /**
+   * Detects keypress events and triggers message sending based on the key pressed.
+   * @param {KeyboardEvent} event - The keyboard event.
+   */
   sendByKey(event: KeyboardEvent) {
     if (event.key == 'Shift') {
       this.shiftPressed = event.type === 'keydown';
     }
-    if ( !this.messageSending && event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '') {
+    if (!this.messageSending && event.key === 'Enter' && !this.shiftPressed && !this.isEmptyOrWhitespace() || this.fileType !== '') {
       this.messageSending = true;
       this.sendMessage();
     }
   }
 
 
+  /**
+   * Checks if the message text is empty or consists only of whitespace.
+   * @returns {boolean} True if the message is empty or whitespace, false otherwise.
+   */
   isEmptyOrWhitespace(): boolean {
     return this.text.replace(/\n/g, '').trim().length === 0;
   }
 
+  
   checkForTag() {
     const atIndex = this.text.lastIndexOf('@');
     if (atIndex > 0 && this.text[atIndex - 1] === ' ' && this.text.includes('@') || atIndex === 0) {

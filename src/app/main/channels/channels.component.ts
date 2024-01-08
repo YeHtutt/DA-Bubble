@@ -10,6 +10,11 @@ import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.ser
 import { CreateChannelDialogComponent } from './create-channel-dialog/create-channel-dialog.component';
 
 
+/**
+ * Component for displaying and managing channel functionalities.
+ * This component allows users to view, navigate, and create channels.
+ * It integrates with various services for channel operations, navigation, and dialog management.
+ */
 @Component({
   selector: 'app-channels',
   templateUrl: './channels.component.html',
@@ -40,6 +45,9 @@ export class ChannelsComponent {
   }
 
 
+  /**
+  * Cleans up subscriptions when the component is destroyed.
+  */
   ngOnDestroy() {
     this.channelService.unsubChannelTree();
     this.subscriptions.forEach(sub => sub.unsubscribe());

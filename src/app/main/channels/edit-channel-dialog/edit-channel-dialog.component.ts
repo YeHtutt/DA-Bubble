@@ -9,6 +9,11 @@ import { MainIdsService } from 'src/app/shared/services/main-ids.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
+
+/**
+ * Component for displaying and managing the edit channel dialog.
+ * This component allows users to edit channel details like name and description, leave a channel, or delete it.
+ */
 @Component({
   selector: 'app-edit-channel-dialog',
   templateUrl: './edit-channel-dialog.component.html',
@@ -53,12 +58,20 @@ export class EditChannelDialogComponent {
   }
 
 
+  /**
+  * HostListener for window resize events to adjust mobile responsiveness.
+  * @param {any} event - The resize event.
+  */
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkMobileMode(event.target.innerWidth);
   }
 
 
+  /**
+   * Checks and sets the mobile mode based on window width.
+   * @param {number} width - The width of the window.
+   */
   private checkMobileMode(width: number): void {
     this.isMobile = width <= 750;
     //console.log(this.isMobile);
@@ -75,6 +88,9 @@ export class EditChannelDialogComponent {
   }
 
 
+  /**
+   * Leaves the channel if the user is not in the main channel.
+   */
   leaveChannel() {
     if (this.channel.channelName === 'allgemein') {
       this.notificationService.showError('Der allgemeine Channel kann nicht verlassen werden.')
@@ -83,6 +99,10 @@ export class EditChannelDialogComponent {
   }
 
 
+  /**
+   * Logic for leaving the channel and updating the information in firestore.
+   * It also shows notification for success and error messages. 
+   */
   async leaveTheChannel() {
     try {
       if (this.channel && this.currentUserId && this.channel.usersData) {
@@ -96,9 +116,7 @@ export class EditChannelDialogComponent {
         }
       }
     } catch (error) {
-      // Handle any errors that occur during the process
       this.notificationService.showError('Ein Fehler ist aufgetreten beim Verlassen des Channels.');
-      //console.error(error);
     }
   }
 

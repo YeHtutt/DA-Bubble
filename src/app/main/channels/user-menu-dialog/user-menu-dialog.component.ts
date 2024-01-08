@@ -7,6 +7,10 @@ import { UserProfile } from 'src/app/models/user-profile';
 import { UserProfileSubViewComponent } from '../../users/user-profile-sub-view/user-profile-sub-view.component';
 
 
+/**
+ * Component for managing and displaying a user menu dialog.
+ * This component is responsible for showing user information within a dialog and provides functionality for adding users to channels.
+ */
 @Component({
   selector: 'app-user-menu-dialog',
   templateUrl: './user-menu-dialog.component.html',
@@ -30,12 +34,14 @@ export class UserMenuDialogComponent {
   ) { }
 
 
-
   ngOnInit() {
     this.getAllUsers();
-   }
+  }
 
 
+  /**
+  * Retrieves all users and prepares the data for display in the dialog.
+  */
   async getAllUsers() {
     this.allUsers = await this.userService.getUsers();
     this.allUsers.forEach((user: UserProfile) => {
@@ -46,10 +52,11 @@ export class UserMenuDialogComponent {
   }
 
 
-  // I'm assuming 'id' is the unique identifier for each user. Replace 'id' with the appropriate key.
+  /**
+  * Filters users for the dialog based on the channel's user data.
+  */
   getUsersForDialog() {
     this.channel.usersData.forEach((channelUser: any) => {
-      // Find the matching user in allUsersArray
       const matchedUser = this.allUsersArray.find(user => user.id === channelUser.id);
       if (matchedUser) {
         this.channelUsers.push(matchedUser)
@@ -81,6 +88,10 @@ export class UserMenuDialogComponent {
   }
 
 
+  /**
+  * Opens a profile dialog displaying detailed user information, when clicking on the users name.
+  * @param {any} node - The data object containing user information.
+  */
   openProfileDialog(node: any) {
     const userId = node.id;
     const userName = node.name;
