@@ -37,6 +37,20 @@ body {
         font-weight: 700;
     }
 
+
+    @media (max-width: 450px) {
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .moving-logo {
+            height: 60px;
+            width: 60px;
+        }
+    }
+
+
     @media(max-width:750px) {
         justify-content: center;
     }

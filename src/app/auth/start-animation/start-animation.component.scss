@@ -25,18 +25,19 @@
         animation: shrinkLogo 1.0s ease-in 1s forwards;
     }
 
-    .title {
-        z-index: 1100;
-        font-size: 64px;
-        font-weight: 700;
-        color: white;
-        display: inline-block;
-        width: 0%;
-        overflow: hidden;
-        animation: textInFirst 2s ease-in forwards;
-    }
+
 }
 
+.title {
+    z-index: 1100;
+    font-size: 64px;
+    font-weight: 700;
+    color: white;
+    display: inline-block;
+    width: 0%;
+    overflow: hidden;
+    animation: textInFirst 2s ease-in forwards;
+}
 
 @keyframes textInFirst {
     0% {
@@ -51,7 +52,7 @@
         color: white;
     }
 
-    75% {
+    95% {
         font-size: 32px;
         color: black;
         width: 100%;
@@ -103,8 +104,6 @@
 
         opacity: 0;
     }
-
-
 }
 
 
@@ -112,24 +111,23 @@
 
 @media (max-width: 750px) {
 
-    .start-screen {
 
+    .start-screen {
         .logo-and-text {
             top: 50%;
             left: 50%;
-            animation: onLeftTopSmall 1.5s ease-in 2s forwards;
+            animation: onLeftTopSmall 1.0s ease-in 1s forwards;
         }
 
         .moving-logo {
-            width: 125px;
-            height: 125px;
-        }
-
-        .title {
-            font-size: 38px
+            animation: shrinkLogoSmall 1.0s ease-in 1s forwards;
         }
     }
 
+    .title {
+        font-size: 32px;
+        animation: textInFirstSmall 2s ease-in forwards;
+    }
 
     @keyframes onLeftTopSmall {
         from {
@@ -141,32 +139,113 @@
         to {
             transform: translate(-50%, -50%);
             top: 9.5%;
-            /* Only moving it up */
             left: 50%;
         }
     }
 
+
+    @keyframes shrinkLogoSmall {
+        from {
+            height: 125px;
+            width: 125px;
+        }
+
+        to {
+            height: 85px;
+            width: 85px;
+        }
+    }
+
+
+    @keyframes textInFirstSmall {
+        0% {
+            width: 0%;
+            font-size: 48px;
+            color: white;
+        }
+
+        50% {
+            width: 100%;
+            font-size: 48px;
+            color: white;
+        }
+
+        95% {
+            font-size: 32px;
+            color: black;
+            width: 100%;
+        }
+
+        100% {
+            font-size: 32px;
+            color: black;
+            width: 100%;
+        }
+    }
 }
 
 
-@media (max-width: 400px) {
-
+@media (max-width: 450px) {
 
     .start-screen {
-
         .logo-and-text {
             top: 50%;
             left: 50%;
-            animation: onLeftTopSmall 1.5s ease-in 2s forwards;
+            animation: onLeftTopSmall 1.0s ease-in 1s forwards;
+        }
+    }
+
+    @keyframes onLeftTopSmall {
+        from {
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
         }
 
-        .moving-logo {
-            width: 100px;
-            height: 100px;
+        to {
+            transform: translate(-50%, -50%);
+            top: 8%;
+            left: 50%;
+        }
+    }
+
+
+    @keyframes shrinkLogoSmall {
+        from {
+            height: 125px;
+            width: 125px;
         }
 
-        .title {
-            font-size: 30px
+        to {
+            height: 60px;
+            width: 60px;
+        }
+    }
+
+
+    @keyframes textInFirstSmall {
+        0% {
+            width: 0%;
+            font-size: 32px;
+            color: white;
+        }
+
+        50% {
+            width: 100%;
+            font-size: 32px;
+            color: white;
+        }
+
+        95% {
+            font-size: 20px;
+            color: black;
+            width: 100%;
+        }
+
+        100% {
+            font-size: 20px;
+            color: black;
+            width: 100%;
         }
     }
 
