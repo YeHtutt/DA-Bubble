@@ -83,7 +83,8 @@ mat-card {
 
     @media(max-width: 650px) {
         width: 90%;
-        margin: auto;
+        margin-left: auto;
+        margin-right: auto;
         padding: 10px 10px;
     }
 
@@ -392,6 +393,10 @@ form {
     gap: 16px;
     color: #A4A8F7;
     cursor: pointer;
+
+    @media (max-width: 450px) {
+        margin-top: 0px;
+    }
 }
 
 
