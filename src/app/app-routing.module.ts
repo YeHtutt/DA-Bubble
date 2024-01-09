@@ -22,7 +22,7 @@ import { authGuard } from './shared/services/auth-guard.service';
 let docId: any;
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
-const redirectAuthorizedToMain = () => redirectLoggedInTo([`main`]);
+const redirectAuthorizedToMain = () => redirectLoggedInTo([`dashboard`]);
 
 const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },

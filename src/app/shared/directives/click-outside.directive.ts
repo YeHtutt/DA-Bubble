@@ -18,7 +18,7 @@ export class ClickOutsideDirective {
   @Output() clickOutside = new EventEmitter<void>();
 
   constructor(private elementRef: ElementRef) { }
-
+ 
 
   /**
   * Host listener for the 'click' event on the document. Emits the `clickOutside` event
