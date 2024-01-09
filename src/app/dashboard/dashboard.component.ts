@@ -21,10 +21,10 @@ import { MainIdsService } from '../shared/services/main-ids.service';
  */
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class MainComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
   public search: string = '';
   filteredUser: any = [];

@@ -21,7 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTreeModule } from '@angular/material/tree';
-import { CreateChannelDialogComponent } from './main/channels/create-channel-dialog/create-channel-dialog.component';
+import { CreateChannelDialogComponent } from './dashboard/channels/create-channel-dialog/create-channel-dialog.component';
 
 
 /* Firestore */
@@ -45,12 +45,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ChannelsComponent } from './main/channels/channels.component';
-import { EditChannelDialogComponent } from './main/channels/edit-channel-dialog/edit-channel-dialog.component';
-import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
-import { MainComponent } from './main/main.component';
-import { SidenavComponent } from './main/sidenav/sidenav.component';
-import { ThreadsComponent } from './main/threads/threads.component';
+import { ChannelsComponent } from './dashboard/channels/channels.component';
+import { EditChannelDialogComponent } from './dashboard/channels/edit-channel-dialog/edit-channel-dialog.component';
+import { NewMessageComponent } from './dashboard/chat-components/new-message/new-message.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SidenavComponent } from './dashboard/sidenav/sidenav.component';
+import { ThreadsComponent } from './dashboard/threads/threads.component';
 
 /* Module */
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -60,26 +60,25 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
-import { AddPeopleDialogComponent } from './main/channels/add-people-dialog/add-people-dialog.component';
-import { ChannelUsersDialogComponent } from './main/channels/channel-users-dialog/channel-users-dialog.component';
-import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
-import { ChatComponent } from './main/chat-components/chat/chat.component';
-import { MessageComponent } from './main/chat-components/message/message.component';
+import { AddPeopleDialogComponent } from './dashboard/channels/add-people-dialog/add-people-dialog.component';
+import { ChannelUsersDialogComponent } from './dashboard/channels/channel-users-dialog/channel-users-dialog.component';
+import { ChannelChatComponent } from './dashboard/chat-components/channel-chat/channel-chat.component';
+import { ChatComponent } from './dashboard/chat-components/chat/chat.component';
+import { MessageComponent } from './dashboard/chat-components/message/message.component';
 import { DataPrivacyComponent } from './data-privacy/data-privacy.component';
-import { DirectChatComponent } from './main/direct-chat/direct-chat.component';
-import { EmojiPickerComponent } from './main/emoji-picker/emoji-picker.component';
+import { DirectChatComponent } from './dashboard/direct-chat/direct-chat.component';
+import { EmojiPickerComponent } from './dashboard/emoji-picker/emoji-picker.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { FilterPipe } from './shared/pipes/filter.pipe';
-import { SearchBarComponent } from './main/search-bar/search-bar.component';
-import { UserProfileEditComponent } from './main/users/user-profile-edit/user-profile-edit.component';
-import { UserProfileSubViewComponent } from './main/users/user-profile-sub-view/user-profile-sub-view.component';
-import { UserProfileViewComponent } from './main/users/user-profile-view/user-profile-view.component';
-
+import { SearchBarComponent } from './dashboard/search-bar/search-bar.component';
+import { UserProfileEditComponent } from './dashboard/users/user-profile-edit/user-profile-edit.component';
+import { UserProfileSubViewComponent } from './dashboard/users/user-profile-sub-view/user-profile-sub-view.component';
+import { UserProfileViewComponent } from './dashboard/users/user-profile-view/user-profile-view.component';
 import { ClickOutsideDirective } from './shared/directives/click-outside.directive';
-import { UserMenuDialogComponent } from './main/channels/user-menu-dialog/user-menu-dialog.component';
-import { ScrollButtonComponent } from './main/scroll-button/scroll-button.component';
-import { UserProfileChooseAvatarComponent } from './main/users/user-profile-choose-avatar/user-profile-choose-avatar.component';
-import { UserPresenceComponent } from './main/user-presence/user-presence.component';
+import { UserMenuDialogComponent } from './dashboard/channels/user-menu-dialog/user-menu-dialog.component';
+import { ScrollButtonComponent } from './dashboard/scroll-button/scroll-button.component';
+import { UserProfileChooseAvatarComponent } from './dashboard/users/user-profile-choose-avatar/user-profile-choose-avatar.component';
+import { UserPresenceComponent } from './dashboard/user-presence/user-presence.component';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
 import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
 import { DistributorComponent } from './auth/distributor/distributor.component';
@@ -92,7 +91,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     LoginComponent,
     SignUpComponent,
     ChannelsComponent,
-    MainComponent,
+    DashboardComponent,
     NewMessageComponent,
     SidenavComponent,
     ThreadsComponent,
