@@ -33,9 +33,37 @@
         display: inline-block;
         width: 0%;
         overflow: hidden;
-        animation: textInFirst 0.5s ease-in 0.5s forwards, textInSecond 0.5s ease-in 1s forwards;
+        animation: textInFirst 2s ease-in forwards;
     }
 }
+
+
+@keyframes textInFirst {
+    0% {
+        width: 0%;
+        font-size: 64px;
+        color: white;
+    }
+
+    50% {
+        width: 100%;
+        font-size: 64px;
+        color: white;
+    }
+
+    75% {
+        font-size: 32px;
+        color: black;
+        width: 100%;
+    }
+
+    100% {
+        font-size: 32px;
+        color: black;
+        width: 100%;
+    }
+}
+
 
 @keyframes shrinkLogo {
     from {
@@ -46,37 +74,6 @@
     to {
         height: 85px;
         width: 85px;
-    }
-}
-
-
-@keyframes textInFirst {
-    from {
-        width: 0%;
-        font-size: 64px;
-        color: white;
-    }
-
-    to {
-        width: 100%;
-        font-size: 64px;
-        color: white;
-    }
-
-
-}
-
-@keyframes textInSecond {
-    from {
-        font-size: 64px;
-        color: white;
-        width: 100%;
-    }
-
-    to {
-        font-size: 32px;
-        color: black;
-        width: 100%;
     }
 }
 
@@ -122,10 +119,12 @@
             left: 50%;
             animation: onLeftTopSmall 1.5s ease-in 2s forwards;
         }
+
         .moving-logo {
             width: 125px;
             height: 125px;
         }
+
         .title {
             font-size: 38px
         }
@@ -138,14 +137,15 @@
             top: 50%;
             left: 50%;
         }
-    
+
         to {
             transform: translate(-50%, -50%);
-            top: 9.5%; /* Only moving it up */
+            top: 9.5%;
+            /* Only moving it up */
             left: 50%;
         }
     }
-    
+
 }
 
 
@@ -159,10 +159,12 @@
             left: 50%;
             animation: onLeftTopSmall 1.5s ease-in 2s forwards;
         }
+
         .moving-logo {
             width: 100px;
             height: 100px;
         }
+
         .title {
             font-size: 30px
         }
@@ -170,5 +172,5 @@
 
 
 
-   
+
 }
