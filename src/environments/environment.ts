@@ -39,3 +39,19 @@ export const environment = {
 //     appId: "1:62180681571:web:a32cb685104ddc731c5556"
 //   }
 // }
+
+
+
+/*own Firebase enviroment YeHtut */
+
+// export const environment = {
+//   firebase: {
+//     apiKey: "AIzaSyDi9kEsdbk_kjZaGRmPegPeISvs3Vm7HHM",
+//   authDomain: "da-bubble-yha.firebaseapp.com",
+//   databaseURL: "https://da-bubble-yha-default-rtdb.europe-west1.firebasedatabase.app",
+//   projectId: "da-bubble-yha",
+//   storageBucket: "da-bubble-yha.appspot.com",
+//   messagingSenderId: "514515604355",
+//   appId: "1:514515604355:web:cc06f55fe0e0027cfadcb6"
+//   },
+// };
