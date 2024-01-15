@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -7,6 +7,11 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { PresenceService } from 'src/app/shared/services/presence.service';
 import { UsersFirebaseService } from 'src/app/shared/services/users-firebase.service';
 
+
+/**
+ * LoginComponent handles user login operations.
+ * It allows users to log in using email and password, as a guest, or via Google authentication.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,10 +21,10 @@ export class LoginComponent implements OnInit {
 
   userID: any;
   loginSuccess: boolean | null = null;
+  @Input() isStarting: boolean = false;
 
   ngOnInit() {
     this.loginSuccess = false;
-    
   }
 
   constructor(private authService: AuthenticationService,
@@ -32,50 +37,71 @@ export class LoginComponent implements OnInit {
   ) {
   }
 
+
+  /**
+   * Form controls for email and password with validator
+   */
   loginForm = new FormGroup({
     "email": new FormControl('', [Validators.required, Validators.email]),
     "password": new FormControl('', [Validators.required, Validators.minLength(6)]),
   })
 
 
+  /**
+   * Getter for the 'email' form control.
+   * @returns FormControl for email.
+   */
   get email() {
     return this.loginForm.get('email');
   }
 
+
+  /**
+   * Getter for the 'password' form control.
+   * @returns FormControl for password.
+   */
   get password() {
     return this.loginForm.get('password');
   }
 
 
+  /**
+  * Submits the login form and processes user authentication.
+  * Sets user presence, updates online status, and navigates to the dashboard on successful login.
+  * Due to issues with the channels sorting the needed a subscription to login the user correctly.
+  */
   submit() {
     if (!this.loginForm.valid) {
       return;
-    } else {
-      const { email, password } = this.loginForm.value;
+    }
 
-      this.authService.login(email, password).subscribe(() => {
-        const user = this.authService.getCurrentUser();
-        this.presence.setPresence('online');
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email, password).subscribe({
+      next: (user) => {
         if (user) {
+          this.presence.setPresence('online');
           this.usersFbService.getLoggedInUser(user.uid);
           this.usersFbService.saveToLocalStorage(user.uid);
           this.usersFbService.updateUserOnlineStatus(user.uid, true);
           this.loginSuccess = true;
           this.authService.setIsAuthenticated(true);
           this.openSnackBar();
-          this.router.navigate([`/dashboard`]);
+          this.router.navigate(['/dashboard']);
         }
       },
-        (error) => {
-          this.loginSuccess = false;
-          this.authService.setIsAuthenticated(false);
-          this.openSnackBar();
-        }
-      )
-    }
+      error: (error) => {
+        console.error('Login error:', error);
+        this.loginSuccess = false;
+        this.authService.setIsAuthenticated(false);
+        this.openSnackBar();
+      }
+    });
   }
 
 
+  /**
+  * Fills the login form with credentials for a guest user.
+  */
   fillGuestForm() {
     const guestEmail = 'guest@user.com';
     const guestPassword = '1qay2wsx';
@@ -88,7 +114,6 @@ export class LoginComponent implements OnInit {
 
   loginAsGuest() {
     this.fillGuestForm();
-
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(() => {
       const user = this.authService.getCurrentUser();
       if (user) {
@@ -102,7 +127,6 @@ export class LoginComponent implements OnInit {
       }
     },
       (error) => {
-        //console.error('Login error:', error);
         this.loginSuccess = false;
         this.authService.setIsAuthenticated(false);
         this.openSnackBar();
@@ -116,6 +140,9 @@ export class LoginComponent implements OnInit {
   }
 
 
+  /**
+  * Displays a notification based on the result of the login attempt.
+  */
   openSnackBar() {
     if (this.loginSuccess == true) {
       this.notificationService.showSuccess('Login erfolgreich');
@@ -123,6 +150,4 @@ export class LoginComponent implements OnInit {
       this.notificationService.showError('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben!')
     }
   }
-
-
 }

@@ -50,8 +50,12 @@ export class MessageService {
     private firebaseUtils: FirebaseUtilsService
   ) { this.currentUserId = this.userService.getFromLocalStorage(); }
 
-  // SEND MESSAGE //
-
+  /**
+   * Sends a message to either a user or a channel.
+   * @param {Message} message - The message to send.
+   * @param {UserProfile | Channel} receiver - The receiver of the message, either a user or a channel.
+   * @param {boolean} newMessage - Flag indicating if it's a new message.
+   */
   async sendMessage(message: Message, receiver: any, newMessage: boolean) {
     try {
       if (receiver instanceof UserProfile) {
@@ -71,9 +75,13 @@ export class MessageService {
   }
 
 
+  /**
+  * The function checks if a chat between users already exists or if a new one should be created.
+  * @param id id of a user who can receive messages
+  * @param message a message Object
+  */
   async createOrConfirmChat(id: string, message: Message) {
     const chatAlreadyExists: boolean = await this.chatExists(this.currentUserId, id);
-
     if (chatAlreadyExists) {
       this.sendMessageToChat(id, message);
     } else {
@@ -104,6 +112,11 @@ export class MessageService {
   }
 
 
+  /**
+  * Creates a new direct chat object.
+  * @param {string} receiver - The ID of the receiver.
+  * @returns {DirectChat} The created DirectChat object.
+  */
   createDirectChatObject(receiver: string): DirectChat {
     return new DirectChat({
       chatId: `${this.currentUserId}_${receiver}`,
@@ -124,7 +137,6 @@ export class MessageService {
     }
   }
 
-  // GET DOC OR COLLECTION REF AND WHOLE DOCUMENTS
 
   // returns reference 
   getRefSubcollChannel(mainColl: string, docId: string | null, subColl: string) {
@@ -132,7 +144,7 @@ export class MessageService {
   }
 
 
-  // gets a specific direct chat 
+  // gets a specific direct chat   
   async getDirectChatDoc(docId: string) {
     const docRef = doc(this.firestore, "chat", docId);
     const chatDoc = (await getDoc(docRef)).data();
@@ -145,9 +157,11 @@ export class MessageService {
   }
 
 
-  // GET MESSAGE //
-
-
+  /**
+  * Subscribes to messages in a collection and groups them by date.
+  * @param {string} coll - The collection to subscribe to.
+  * @param {string} subId - The sub-collection ID.
+  */
   async subMessage(coll: string, subId: string) {
     let ref = collection(this.firestore, `${coll}/${subId}/message`);
     const q = query(ref, orderBy('time'));
@@ -163,6 +177,11 @@ export class MessageService {
   }
 
 
+  /**
+   * Groups messages depending on their dates and formats the date with the date pipe.
+   * @param {any[]} messagesToGroup - Array of messages to group.
+   * @returns {any[]} Grouped messages.
+   */
   groupMessagesByDate(messagesToGroup: any) {
     const groupedMessages: any = [];
     let currentDate: string | null = null;
@@ -188,7 +207,11 @@ export class MessageService {
 
   // DIRECT CHAT FUNKTIONS //
 
-  // creates a new direct chat with user
+  /**
+  * Creates a new direct chat.
+  * @param {DirectChat} directChat - The direct chat to create.
+  * @returns {Promise<string>} The ID of the created chat.
+  */
   async createDirectChat(directChat: DirectChat) {
     const itemCollection = collection(this.firestore, 'chat');
     const docRef = await addDoc(itemCollection, directChat.toJSON());
@@ -196,7 +219,6 @@ export class MessageService {
     return docRef.id;
   }
 
-  // UPDATE MESSAGE //
 
   // updates message document with new text
   async updateMessage(coll: any, docId: any, msgId: string, editedMsg: string) {
@@ -206,21 +228,25 @@ export class MessageService {
 
 
   // DELETE MESSAGE //
-
   async deleteMessageDoc(coll: any, docId: any, msgId: string) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     deleteDoc(msgRef);
   }
 
+
   // REACTIONS TO MESSAGES //
-
-
   async updateReaction(coll: any, docId: any, msgId: string, reaction: any) {
     const msgRef = await this.getMsgDocRef(coll, docId, msgId);
     updateDoc(msgRef, { reactions: reaction })
   }
 
 
+  /**
+   * The function updates the number of replies in a thread for the parent message.
+   * @param path - the path to the message
+   * @param count - number of replies in a thread
+   * @param time - the time where the last reply was received
+   */
   async updateCount(path: any, count: number, time: any) {
     const msgRef = await this.firebaseUtils.getDoc(path);
     updateDoc(msgRef, {
@@ -229,6 +255,12 @@ export class MessageService {
     });
   }
 
+
+  /**
+   * The function get the latest reply in a thread and displays it in the corresponding parent message. 
+   * @param subCollRef - the message referece.
+   * @returns a date where the latest message was created.
+   */
   async getLastMessageFromSubcollection(subCollRef: CollectionReference<DocumentData>): Promise<Message | null> {
     const q = query(subCollRef, orderBy('time', 'desc'), limit(1));
     const snapshot = await getDocs(q);
@@ -242,7 +274,12 @@ export class MessageService {
   }
 
 
-
+  /**
+  * Checks if a chat already exists between two users.
+  * @param {string} user1 - The ID of the first user.
+  * @param {string} user2 - The ID of the second user.
+  * @returns {Promise<boolean>} True if the chat exists, false otherwise.
+  */
   async chatExists(user1: string, user2: string): Promise<boolean> {
     const chatCollection = collection(this.firestore, 'chat');
     const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));
@@ -253,6 +290,12 @@ export class MessageService {
   }
 
 
+  /**
+  * Retrieves the existing chat ID between two users.
+  * @param {string} user1 - The ID of the first user.
+  * @param {string} user2 - The ID of the second user.
+  * @returns {Promise<string>} The chat ID if it exists, otherwise an empty string.
+  */
   async getExistingChatId(user1: string, user2: string): Promise<string> {
     const chatCollection = collection(this.firestore, 'chat');
     const query1 = query(chatCollection, where('user1', '==', user1), where('user2', '==', user2));

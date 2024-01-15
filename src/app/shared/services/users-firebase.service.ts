@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Firestore, collection, collectionData, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { UserProfile } from '../../models/user-profile';
-
+import { MainIdsService } from './main-ids.service';
 
 
 interface User {
@@ -17,11 +17,12 @@ interface User {
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class UsersFirebaseService implements OnInit {
   picURL: any;
   user: UserProfile = new UserProfile;
   id: any;
-
   loggedInUserID: any;
   loggedInUserImg: any;
   loggedInUserName: any;
@@ -31,11 +32,15 @@ export class UsersFirebaseService implements OnInit {
 
   constructor(
     private firestore: Firestore,
-    private auth: Auth, private AngFirestore: AngularFirestore,
   ) { }
 
   ngOnInit() { }
 
+  /**
+  * Adds a user to Firestore.
+  * @param {any} user - User data to add.
+  * @param {string} uid - User's unique identifier.
+  */
   async addUserToFirebase(user: any, uid: string) {
     try {
       const userRef = doc(this.firestore, 'users', uid);
@@ -47,20 +52,37 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Saves the user's ID to local storage.
+  * @param {any} idValue - The user's ID to save.
+  */
   saveToLocalStorage(idValue: any) {
     localStorage.setItem('currentUser', idValue);
   }
 
+
+  /**
+  * Removes the user's ID from local storage.
+  */
   removeFromLocalStorage() {
     localStorage.removeItem('currentUser');
   }
 
+
+  /**
+  * Retrieves the current user's ID from local storage.
+  * @returns {string | null} The current user's ID or null if not found.
+  */
   getFromLocalStorage() {
     const currentUser = localStorage.getItem('currentUser');
     return currentUser;
   }
 
 
+  /**
+  * Retrieves all users from Firestore.
+  * @returns {Promise<any[]>} A promise containing an array of users.
+  */
   async getUsers() {
     const itemCollection = collection(this.firestore, 'users');
     const usersArray: any[] = [];
@@ -73,6 +95,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Retrieves a specific user by their ID.
+  * @param {any} uid - The user's unique identifier.
+  * @returns {Promise<UserProfile>} A promise containing the user's profile.
+  */
   async getUser(uid: any) {
     const itemDoc = doc(this.firestore, 'users', uid);
     const querySnapshot = await getDoc(itemDoc);
@@ -82,6 +109,12 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Sets current user data for logged-in user.
+  * @param {any} name - The user's name.
+  * @param {any} email - The user's email.
+  * @param {any} photoURL - The user's photo URL.
+  */
   getCurrentUserData(name: any, email: any, photoURL: any) {
     this.loggedInUserName = name;
     this.loggedInUserEmail = email;
@@ -89,6 +122,10 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Retrieves a Subject stream for the current user.
+  * @returns {Observable<any>} An observable streaming the current user's data.
+  */
   getCurrentUserSubject() {
     const userSubject = new Subject<any>();
     const uid = this.getFromLocalStorage();
@@ -107,6 +144,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Creates a user object from provided data.
+  * @param {any} obj - Object containing user data.
+  * @returns {User} A user object.
+  */
   setUserObject(obj: any): User {
     if (!obj) {
       throw new Error('Provided object is undefined or null');
@@ -121,6 +163,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Checks if a subcollection exists in Firestore.
+  * @param {string} documentPath - The path of the document to check.
+  * @returns {Promise<boolean>} A promise indicating if the subcollection exists.
+  */
   async checkIfSubcollectionExists(documentPath: string): Promise<boolean> {
     const subcollectionRef = collection(this.firestore, documentPath);
     const snapshot = await getDocs(subcollectionRef);
@@ -128,6 +175,10 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Saves a user's picture URL to Firestore.
+  * @param {string} image - The image URL to save.
+  */
   async saveUserPic(image: string) {
     this.user.photoURL = image;
     const docRef = doc(this.firestore, 'users', `${this.id}`);
@@ -136,7 +187,11 @@ export class UsersFirebaseService implements OnInit {
     });
   }
 
-  /**ändert das neue Bild des Benutzers mit dem dialog component -> user-profile-edit.component */
+
+  /**
+  * Saves a user's picture URL to Firestore.
+  * @param {string} image - The image URL to save.
+  */
   async saveUserPicFromDialog(image: string, avatarPic: boolean, currentUserID: any) {
     this.user.photoURL = image;
     const docRef = doc(this.firestore, 'users', `${currentUserID}`);
@@ -169,7 +224,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
-  //User updaten ins Firestore
+  /**
+  * Updates a user's profile in Firestore.
+  * @param {string} userID - The user's unique identifier.
+  * @param {any} formData - The data to update in the user's profile.
+  */
   async updateUserProfile(userID: string, formData: any) {
     try {
       const userRef = doc(this.firestore, 'users', userID);
@@ -181,6 +240,11 @@ export class UsersFirebaseService implements OnInit {
   }
 
 
+  /**
+  * Updates a user's online status in Firestore.
+  * @param {any} userID - The user's unique identifier.
+  * @param {boolean} onlineStatus - The user's new online status.
+  */
   async updateUserOnlineStatus(userID: any, onlineStatus: boolean) {
     try {
       const userRef = doc(this.firestore, 'users', userID);

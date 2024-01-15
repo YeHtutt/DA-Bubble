@@ -1,0 +1,188 @@
+@import 'src/app/dashboard/chat-components/channel-chat/channel-chat.component.scss';
+
+
+// HEADER
+
+header {
+    height: fit-content;
+    background-color: white;
+    position: inherit;
+    padding: 20px 45px 20px 45px;
+    // z-index: 5;
+}
+
+.direct-message-info-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    span {
+        color: black;
+        font-size: 18px;
+    }
+}
+
+.input-container {
+    width: 100%;
+    border: 1px solid #ADB0D9;
+    border-radius: 30px;
+    padding: 10px 15px 10px 15px;
+
+    input {
+        width: 100%;
+        border: unset;
+
+        &:focus {
+            outline: unset;
+        }
+    }
+}
+
+.user-avatar-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+
+    span {
+        color: black;
+        font-size: 18px;
+    }
+}
+
+// MESSAGES
+
+main {
+    padding-top: 46px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    top: 80px;
+}
+
+.new-conversation-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info-box {
+
+    display: flex;
+    gap: 15px;
+
+    img {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+    }
+
+    span {
+        font-size: 18px;
+        color: black !important;
+        align-self: flex-end;
+    }
+}
+
+.new-conversation-container {
+    position: absolute;
+    bottom: 40px;
+    left: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    span {
+        color: #686868;
+
+        span {
+            color: #535AF1;
+            cursor: pointer;
+
+            &:hover {
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+// SEARCH 
+
+.searchOutput {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: fit-content;
+    max-height: 300px;
+    box-shadow: 0 4px 8px #0000004d;
+    background-color: white;
+    border-radius: 30px;
+    padding: 20px;
+    overflow-y: scroll;
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+}
+
+.user-box>.headline,
+.channelBox>.headline {
+    color: #535AF1;
+    margin-bottom: 16px !important;
+}
+
+.channel {
+
+    mat-icon {
+        font-weight: bold;
+        font-style: italic;
+        margin-left: 4px;
+    }
+
+    span {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+    }
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+// .user,
+.channel {
+    padding: 4px 8px;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ECEEFE;
+    }
+}
+
+// MEDIA-QUERIES
+
+@media (max-width: 500px) {
+
+    header {
+        padding: 15px 25px;
+    }
+    
+    .direct-message-info-box {
+        gap: 10px;
+    }
+
+    main {
+        top: 60px;
+    }
+}

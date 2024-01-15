@@ -5,7 +5,6 @@
                 <img class="moving-logo" src="./assets/img/logo.png">
                 <div class="title">DABubble</div>
             </div>
-
             <div class="to-signup-top">
                 <div>Neu bei Bubble? </div>
                 <a [routerLink]="'/sign-up'">Konto Erstellen</a>
@@ -19,7 +18,7 @@
             </mat-card-header>
             <form [formGroup]="loginForm" (ngSubmit)="submit()">
                 <mat-form-field appearance="outline" class="full-width register-outline-field">
-                    <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
+                    <mat-icon matIconPrefix class="material-icons-outlined">mail</mat-icon>
                     <input matInput formControlName="email" placeholder="beispiel@email.com" type="email"
                         style="color: black !important;">
                     <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email eingeben</mat-error>
@@ -27,7 +26,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="full-width register-outline-field">
-                    <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
+                    <mat-icon matIconPrefix class="material-icons-outlined">lock</mat-icon>
                     <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
                     <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password eingeben</mat-error>

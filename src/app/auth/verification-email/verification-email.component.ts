@@ -13,7 +13,6 @@ export class VerificationEmailComponent {
 
   constructor(public authService: AuthenticationService, private route: ActivatedRoute, private router: Router) { }
 
-
   ngOnInit(): void {
     this.userEmail = this.authService.getCurrentUserEmail() || '';
   }

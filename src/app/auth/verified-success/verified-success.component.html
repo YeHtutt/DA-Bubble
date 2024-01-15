@@ -3,16 +3,14 @@
         <div class="logo-content-normal">
             <img src="assets/img/logo+text.png">
         </div>
-
         <mat-card>
             <div class="verify-message">
                Ihre Email wurde erfolgreich bestätigt. 
             </div>
-            <span>In ein paar Sekunden werden Sie zur Login Seite geleitet.</span>
-            <div class="return-to-login" [routerLink]="'/login'"> 
-                <img src="assets/img/arrow_back.png"> <span>hier schnell zum Login</span>
-            </div>
+            <span>In ein paar Sekunden werden Sie zur Login Seite geleitet.</span> 
+            <button  [routerLink]="'/login'" mat-fab extended color="primary">
+                Hier schnell zum Login
+            </button>
         </mat-card>
-
     </div>
 </div>

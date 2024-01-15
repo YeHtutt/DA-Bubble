@@ -120,27 +120,13 @@ form {
     .button-box {
         position: absolute;
         right: 53px;
-        bottom: 40px;
-
-        button {
-            width: 82px;
-            height: 37px;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            bottom: 20px;
-
-            &:hover {
-                filter: opacity(70%);
-            }
-        }
+        bottom: 40px;   
 
         @media(max-width: 750px) {
             position: absolute !important;
             right: 23px !important;
             bottom: 15px !important;
         }
-
     }
 
     /*mat Formfield design*/
@@ -152,7 +138,7 @@ form {
         padding: 0px;
         box-sizing: content-box;
         padding: 18px 32px;
-        line-height: 17px;
+        line-height: 24px;
 
         @media(max-width: 750px) {
             padding: 16px 32px;
@@ -214,16 +200,10 @@ form {
     padding: 8px;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.15);
-    }
-
+    flex-shrink: 0;   
     @media(max-width: 400px) {
         top: 15px;
-        left: 5px;
-    }
+        left: 5px;    }
 
     @media(max-width: 750px) {
         top: 10px;

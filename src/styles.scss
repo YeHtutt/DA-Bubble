@@ -15,6 +15,7 @@ body {
   padding: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow-x: hidden;
+  background-color: #ECEEFE;
 }
 
 
@@ -120,18 +121,31 @@ button {
   }
 }
 
+
+
+
+
 /************************** AUTH COPONENT MATERIAL STYLES **********************/
 
 .register-outline-field {
 
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading {
+    border-color: #ECEEFE;
+  }
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: #ECEEFE;
+  }
+
   .mat-mdc-form-field-flex {
     margin-left: 2px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
   }
 
   .mdc-text-field--outlined {
-    --mdc-outlined-text-field-outline-width: 0px !important;
-    --mdc-outlined-text-field-focus-outline-width: 0px !important;
-    --mdc-outlined-text-field-container-shape: 0px !important;
+    --mdc-outlined-text-field-outline-width: 1px !important;
+    --mdc-outlined-text-field-focus-outline-width: 2px !important;
+    --mdc-outlined-text-field-container-shape: 2px !important;
   }
 
   .mdc-notched-outline__leading {
@@ -157,11 +171,29 @@ button {
   }
 }
 
+
+html {
+  --mdc-outlined-text-field-hover-outline-color: #9747FF !important;
+}
+
+
 .resetPassword-input-field {
+
+
+  
+
+
+  .mat-mdc-form-field-flex {
+    margin-left: 2px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+  }
+
+
   .mdc-text-field--outlined {
     --mdc-outlined-text-field-outline-width: 0px !important;
-    --mdc-outlined-text-field-focus-outline-width: 0px !important;
-    --mdc-outlined-text-field-container-shape: 0px !important;
+    --mdc-outlined-text-field-focus-outline-width: 2px !important;
+    --mdc-outlined-text-field-container-shape: 2px !important;
   }
 
   .mdc-notched-outline__leading {

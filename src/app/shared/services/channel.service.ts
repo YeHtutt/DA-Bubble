@@ -21,6 +21,7 @@ import {
 interface ChannelsNode {
   channelName: string;
   channelId: string;
+  isClosedChannel: boolean;
   children?: ChannelsNode[];
 }
 
@@ -30,16 +31,21 @@ interface ExampleFlatNode {
   level: number;
 }
 
+/**
+ * Service for handling channel-related operations.
+ * This service integrates with Firebase Firestore for data retrieval and updates,
+ * and utilizes Angular Material's tree structures to manage and display channel data.
+ */
+
 @Injectable({
   providedIn: 'root'
 })
 
-
 export class ChannelService {
 
+  firestore: Firestore = inject(Firestore);
   unsubUsers: any;
   users: any;
-  firestore: Firestore = inject(Firestore);
   channelContent: Channel[] = [];
   channelTree: ChannelsNode[] = [];
   channels: Channel[] = [];
@@ -49,25 +55,14 @@ export class ChannelService {
   unsubChannelTree: any;
   unsubMessage: any;
   unsubChannelContent: any;
-  currentUserId = this.userService.getFromLocalStorage()
-  level: string = '';
-  private levelSubject = new BehaviorSubject<string>('1');
+  currentUserId: any;
 
-  setLevel(level: string) {
-    this.levelSubject.next(level);
-    
-  }
-
-
- getLevelObservable(): Observable<string> {
-  return this.levelSubject.asObservable();
-}
 
   constructor(
     private firebaseUtils: FirebaseUtilsService,
     private userService: UsersFirebaseService,
     private notificationService: NotificationService) {
-    this.unsubChannelTree = this.subChannelTree();
+    this.currentUserId = this.userService.getFromLocalStorage();
   }
 
 
@@ -79,17 +74,22 @@ export class ChannelService {
   }
 
 
+  /**
+   * Transforms channel nodes for the tree structure.
+   * @param {ChannelsNode} node - The channel node to transform.
+   * @param {number} level - The current level of the node in the tree.
+   * @returns {ExampleFlatNode} A transformed node suitable for the flat tree control.
+   */
   private _transformer = (node: ChannelsNode, level: number) => {
-  
     const isExpandable = (node.children && node.children.length > 0) || node.channelName === 'Weitere';
     return {
       expandable: isExpandable,
       channelName: node.channelName,
       channelId: node.channelId,
+      isClosedChannel: node.isClosedChannel,  // Ensure this property is mapped
       level: level,
     };
   };
-  
 
 
   treeControl = new FlatTreeControl<ExampleFlatNode>(
@@ -105,7 +105,12 @@ export class ChannelService {
     node => node.children,
   );
 
-
+  /**
+    * Determines if a tree node has children.
+    * @param {number} _ - Index of the node.
+    * @param {ExampleFlatNode} node - The tree node to check.
+    * @returns {boolean} True if the node is expandable (has children), false otherwise.
+    */
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -113,8 +118,7 @@ export class ChannelService {
 
 
   getAllChannels() {
-    console.log(this.currentUserId);
-    return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
+    return this.unsubChannelContent = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       list.forEach((element: any) => {
         const channelObj = this.setChannelObj(element.data(), element.id);
         this.channels.push(channelObj);
@@ -124,6 +128,9 @@ export class ChannelService {
     });
   }
 
+  /**
+   * Subscribes to the channels tree and updates the tree data source.
+   */
   subChannelTree() {
     return this.unsubChannelTree = onSnapshot(this.firebaseUtils.getColl('channel'), (list: any) => {
       this.channelTree = [];
@@ -133,14 +140,42 @@ export class ChannelService {
     });
   }
 
+  /**
+   * Checks if a given channel is a closed channel. Its necessary to prevent the search function from opening
+   * closed channels when the node can't be determined via the route.
+   * @param {string} channelId - The ID of the channel to check.
+   * @returns {boolean} True if the channel is closed, false otherwise.
+   */
+  getIsClosedChannel(channelId: string): boolean {
+    const findChannel = (node: ChannelsNode): ChannelsNode | undefined => {
+      if (node.channelId === channelId) return node;
+      if (node.children) {
+        for (const child of node.children) {
+          const found = findChannel(child);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
+    for (const channel of this.channelTree) {
+      const foundChannel = findChannel(channel);
+      if (foundChannel) return foundChannel.isClosedChannel;
+    }
+    return false; // Default to false if channel is not found
+  }
+
 
   populateChannelsAndMore(list: any) {
     let moreChannels: ChannelsNode[] = [];
+    console.log(this.currentUserId)
     list.forEach((element: any) => {
       const channelObj = this.setChannelObj(element.data(), element.id);
       const containsCurrentUser = channelObj.usersData.some((user: any) => user.id === this.currentUserId);
-      if (containsCurrentUser) this.channelTree.push(channelObj);
-      else moreChannels.push(channelObj);
+      if (containsCurrentUser) {
+        this.channelTree.push({ ...channelObj, isClosedChannel: false });
+      } else {
+        moreChannels.push({ ...channelObj, isClosedChannel: true });
+      }
     });
     this.sortChannelTree();
     this.appendMoreChannels(moreChannels);
@@ -156,8 +191,9 @@ export class ChannelService {
     if (moreChannels.length) {
       this.channelTree.push({
         channelName: 'Weitere',
-        children: moreChannels,
-        channelId: 'weitere-id'
+        channelId: 'weitere-id',
+        isClosedChannel: false,  // Assuming 'Weitere' is not a closed channel
+        children: moreChannels
       });
     }
   }
@@ -169,6 +205,9 @@ export class ChannelService {
   }
 
 
+  /**
+   * Expands the first node in the channels tree.
+   */
   expandChannels() {
     const firstNode = this.treeControl.dataNodes[0];
     if (firstNode) {
@@ -177,6 +216,11 @@ export class ChannelService {
   }
 
 
+  /**
+   * Subscribes to channel content changes and executes a callback with the channel data.
+   * @param {string} documentId - The document ID of the channel to subscribe to.
+   * @param {(channelData: any) => void} callback - The callback to execute with the channel data.
+   */
   subChannelContent(documentId: string, callback: (channelData: any) => void) {
     const docRef = doc(this.firebaseUtils.getColl('channel'), documentId);
     return onSnapshot(docRef, (docSnapshot) => {
@@ -189,14 +233,16 @@ export class ChannelService {
   }
 
 
+  /**
+  * Updates a channel's information in Firestore.
+  * @param {Channel} channel - The channel object with updated information.
+  */
   async updateChannel(channel: Channel) {
     if (channel.channelId) {
       const docRef = this.firebaseUtils.getSingleDocRef('channel', channel.channelId);
       const plainChannelObject = channel.toJSON();
       await updateDoc(docRef, plainChannelObject);
-    } else {
-      //console.error("Channel ID is missing");
-    }
+    } 
   }
 
 

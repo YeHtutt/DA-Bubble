@@ -1,3 +1,9 @@
+@use "../../../styles.scss";
+
+body {
+    background-color: #ECEEFE;
+}
+
 .background {
     width: 100vw;
     height: 100vh;
@@ -7,6 +13,13 @@
 }
 
 .headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
     .logo-and-text {
         display: flex;
         align-items: center;
@@ -23,6 +36,24 @@
         font-size: 32px;
         font-weight: 700;
     }
+
+
+    @media (max-width: 450px) {
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .moving-logo {
+            height: 60px;
+            width: 60px;
+        }
+    }
+
+
+    @media(max-width:750px) {
+        justify-content: center;
+    }
 }
 
 
@@ -35,6 +66,7 @@
     width: 100%;
     height: calc(100% - 10%);
     top: 5%;
+    background-color: #ECEEFE;
 }
 
 
@@ -51,7 +83,8 @@ mat-card {
 
     @media(max-width: 650px) {
         width: 90%;
-        margin: auto;
+        margin-left: auto;
+        margin-right: auto;
         padding: 10px 10px;
     }
 
@@ -163,7 +196,7 @@ form {
 
 
     .input-field-container {
-        width: 500px;
+        width: 100%;
         height: 60px;
         border-radius: 100px;
         border: none;
@@ -172,7 +205,7 @@ form {
         display: flex;
         align-items: center;
         box-sizing: border-box;
-        padding: 18px 32px;
+        padding: 17px 32px;
         gap: 30px;
 
         &:hover {
@@ -187,12 +220,6 @@ form {
             }
         }
 
-
-        @media (max-width: 650px) {
-            width: 100%;
-            height: 50px;
-            padding: 18px 32px;
-        }
 
         @media (max-width: 400px) {
             width: 100%;
@@ -299,9 +326,8 @@ form {
 
     ::ng-deep .mat-mdc-form-field-icon-prefix>.mat-icon {
         padding: 0px;
-        box-sizing: content-box;
         padding: 18px 32px;
-        line-height: 17px;
+        line-height: 24px;
 
         @media(max-width: 650px) {
             padding: 13px 32px;
@@ -359,16 +385,6 @@ form {
     }
 }
 
-.headline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
 
 .legals {
     flex-shrink: 0;
@@ -377,6 +393,10 @@ form {
     gap: 16px;
     color: #A4A8F7;
     cursor: pointer;
+
+    @media (max-width: 450px) {
+        margin-top: 0px;
+    }
 }
 
 
@@ -411,7 +431,7 @@ form {
         color: #797EF3;
     }
 
-    @media(max-width: 749px) {
+    @media(max-width: 750px) {
         display: block;
         margin-top: 0px;
         margin-bottom: 10px;
@@ -428,4 +448,3 @@ a {
         display: none;
     }
 }
-

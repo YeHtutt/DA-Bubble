@@ -13,7 +13,7 @@
 
         <form [formGroup]="signUpForm" (ngSubmit)="submit()">
             <mat-form-field appearance="outline" class="full-width register-outline-field">
-                <mat-icon matIconPrefix><img src="./assets/img/person.png"></mat-icon>
+                <mat-icon matIconPrefix class="material-icons-outlined">person</mat-icon>
                 <input matInput placeholder="Name und Nachname" formControlName="name" type="text" style="
                 color: black !important;">
                 <mat-error *ngIf="signUpForm.get('name')?.hasError('required')">Name eingeben</mat-error>
@@ -21,7 +21,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width register-outline-field">
-                <mat-icon matIconPrefix><img src="./assets/img/mail.png"></mat-icon>
+                <mat-icon matIconPrefix class="material-icons-outlined">mail</mat-icon>
                 <input matInput placeholder="beispiel@email.com" formControlName="email" type="email" style="
                 color: black !important;">
                 <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">Email eingeben</mat-error>
@@ -29,7 +29,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width register-outline-field">
-                <mat-icon matIconPrefix><img src="./assets/img/lock.png"></mat-icon>
+                <mat-icon matIconPrefix class="material-icons-outlined">lock</mat-icon>
                 <input matInput placeholder="Password" formControlName="password" type="password" style="
                 color: black !important;">
                 <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">Password eingeben</mat-error>
@@ -48,7 +48,7 @@
         </form>
 
         <div class="arrow-back">
-            <img src="assets/img/arrow_back.png" [routerLink]="'/login'">
+            <button class="basic-button close-btn" [routerLink]="'/login'"><mat-icon>arrow_back</mat-icon></button>
         </div>
 
     </mat-card>

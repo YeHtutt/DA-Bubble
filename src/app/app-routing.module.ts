@@ -7,12 +7,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { StartAnimationComponent } from './auth/start-animation/start-animation.component';
-import { ChannelChatComponent } from './main/chat-components/channel-chat/channel-chat.component';
-import { ChatComponent } from './main/chat-components/chat/chat.component';
-import { NewMessageComponent } from './main/chat-components/new-message/new-message.component';
+import { ChannelChatComponent } from './dashboard/chat-components/channel-chat/channel-chat.component';
+import { ChatComponent } from './dashboard/chat-components/chat/chat.component';
+import { NewMessageComponent } from './dashboard/chat-components/new-message/new-message.component';
 import { DataPrivacyComponent } from './data-privacy/data-privacy.component';
 import { ImprintComponent } from './imprint/imprint.component';
-import { MainComponent } from './main/main.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { VerificationEmailComponent } from './auth/verification-email/verification-email.component';
 import { VerifiedSuccessComponent } from './auth/verified-success/verified-success.component';
@@ -22,7 +22,7 @@ import { authGuard } from './shared/services/auth-guard.service';
 let docId: any;
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
-const redirectAuthorizedToMain = () => redirectLoggedInTo([`main`]);
+const redirectAuthorizedToMain = () => redirectLoggedInTo([`dashboard`]);
 
 const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
@@ -39,8 +39,8 @@ const routes: Routes = [
   { path: 'distributor', component: DistributorComponent },
 
   {
-    path: 'dashboard', component: MainComponent,
- /*    canActivate: [authGuard], */
+    path: 'dashboard', component: DashboardComponent,
+    /*    canActivate: [authGuard], */
     children: [
       { path: 'channel/:channelId', component: ChannelChatComponent },
       { path: 'message', component: NewMessageComponent },

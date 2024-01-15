@@ -5,11 +5,15 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 
+/**
+ * Function to create a custom validator for the password reset form.
+ * It checks if the password and confirm password fields have the same value.
+ * @returns Validator function for the form group.
+ */
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
-
     if (password && confirmPassword && password !== confirmPassword) {
       return {
         passwordsDontMatch: true
@@ -19,6 +23,11 @@ export function passwordsMatchValidator(): ValidatorFn {
   }
 }
 
+
+/**
+ * ResetPasswordComponent handles password resetting functionality.
+ * It includes a form for users to enter and confirm their new password.
+ */
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -46,7 +55,10 @@ export class ResetPasswordComponent {
     this.oobCode = this.authService.oobCode;
   }
 
-  
+
+  /**
+  * Submits the reset password form and processes the password reset request.
+  */
   onSubmit() {
     const password = this.resetPasswordForm.value.password;
     this.authService.confirmResetPassword(this.oobCode, password)
@@ -65,6 +77,9 @@ export class ResetPasswordComponent {
   }
 
 
+  /**
+  * Opens a snack bar to show the result of the password reset operation.
+  */
   openSnackBar() {
     if (this.resetPasswordSuccess == true) {
       this.notificationService.showSuccess('Passwort wurde erfolgreich zurückgesetzt');

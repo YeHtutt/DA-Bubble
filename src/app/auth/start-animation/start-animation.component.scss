@@ -5,7 +5,7 @@
     width: 100vw;
     height: 100vh;
     background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
-    animation: fadeOut 2.5s ease-in 2s forwards;
+    animation: fadeOut 1.55s ease-in 1.85s forwards;
 
     .logo-and-text {
         top: 50%;
@@ -15,27 +15,56 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
-        animation: onLeftTop 1.5s ease-in 2s forwards;
+        animation: onLeftTop 1.0s ease-in 1s forwards;
         transform: translate(-50%, -50%);
     }
 
     .moving-logo {
         height: 150px;
         width: 150px;
-        animation: shrinkLogo 1.5s ease-in 2s forwards;
+        animation: shrinkLogo 1.0s ease-in 1s forwards;
     }
 
-    .title {
-        z-index: 1100;
-        font-size: 64px;
-        font-weight: 700;
-        color: white;
-        display: inline-block;
+
+}
+
+.title {
+    z-index: 1100;
+    font-size: 64px;
+    font-weight: 700;
+    color: white;
+    display: inline-block;
+    width: 0%;
+    overflow: hidden;
+    animation: textInFirst 2s ease-in forwards;
+}
+
+@keyframes textInFirst {
+    0% {
         width: 0%;
-        overflow: hidden;
-        animation: textInFirst 1s ease-in 1s forwards, textInSecond 1s ease-in 2s forwards;
+        font-size: 64px;
+        color: white;
+    }
+
+    50% {
+        width: 100%;
+        font-size: 64px;
+        color: white;
+    }
+
+    95% {
+        font-size: 32px;
+        color: black;
+        width: 100%;
+    }
+
+    100% {
+        font-size: 32px;
+        color: black;
+        width: 100%;
     }
 }
+
 
 @keyframes shrinkLogo {
     from {
@@ -46,37 +75,6 @@
     to {
         height: 85px;
         width: 85px;
-    }
-}
-
-
-@keyframes textInFirst {
-    from {
-        width: 0%;
-        font-size: 64px;
-        color: white;
-    }
-
-    to {
-        width: 100%;
-        font-size: 64px;
-        color: white;
-    }
-
-
-}
-
-@keyframes textInSecond {
-    from {
-        font-size: 64px;
-        color: white;
-        width: 100%;
-    }
-
-    to {
-        font-size: 32px;
-        color: black;
-        width: 100%;
     }
 }
 
@@ -97,30 +95,161 @@
 
 
 @keyframes fadeOut {
-    0% {
-        z-index: 1000;
+    from {
+
         opacity: 1;
     }
 
-    99% {
-        z-index: 1000;
-        opacity: 0;
-    }
+    to {
 
-    100% {
-        z-index: -1;
+        opacity: 0;
     }
 }
 
 
 
-@media (max-width: 400px) {
-    .moving-logo {
-        width: 100px;
-        height: 100px;
+
+@media (max-width: 750px) {
+
+
+    .start-screen {
+        .logo-and-text {
+            top: 50%;
+            left: 50%;
+            animation: onLeftTopSmall 1.0s ease-in 1s forwards;
+        }
+
+        .moving-logo {
+            animation: shrinkLogoSmall 1.0s ease-in 1s forwards;
+        }
     }
 
     .title {
-        font-size: 30px
+        font-size: 32px;
+        animation: textInFirstSmall 2s ease-in forwards;
     }
+
+    @keyframes onLeftTopSmall {
+        from {
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        to {
+            transform: translate(-50%, -50%);
+            top: 9.5%;
+            left: 50%;
+        }
+    }
+
+
+    @keyframes shrinkLogoSmall {
+        from {
+            height: 125px;
+            width: 125px;
+        }
+
+        to {
+            height: 85px;
+            width: 85px;
+        }
+    }
+
+
+    @keyframes textInFirstSmall {
+        0% {
+            width: 0%;
+            font-size: 48px;
+            color: white;
+        }
+
+        50% {
+            width: 100%;
+            font-size: 48px;
+            color: white;
+        }
+
+        95% {
+            font-size: 32px;
+            color: black;
+            width: 100%;
+        }
+
+        100% {
+            font-size: 32px;
+            color: black;
+            width: 100%;
+        }
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .start-screen {
+        .logo-and-text {
+            top: 50%;
+            left: 50%;
+            animation: onLeftTopSmall 1.0s ease-in 1s forwards;
+        }
+    }
+
+    @keyframes onLeftTopSmall {
+        from {
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        to {
+            transform: translate(-50%, -50%);
+            top: 8%;
+            left: 50%;
+        }
+    }
+
+
+    @keyframes shrinkLogoSmall {
+        from {
+            height: 125px;
+            width: 125px;
+        }
+
+        to {
+            height: 60px;
+            width: 60px;
+        }
+    }
+
+
+    @keyframes textInFirstSmall {
+        0% {
+            width: 0%;
+            font-size: 32px;
+            color: white;
+        }
+
+        50% {
+            width: 100%;
+            font-size: 32px;
+            color: white;
+        }
+
+        95% {
+            font-size: 20px;
+            color: black;
+            width: 100%;
+        }
+
+        100% {
+            font-size: 20px;
+            color: black;
+            width: 100%;
+        }
+    }
+
+
+
+
 }

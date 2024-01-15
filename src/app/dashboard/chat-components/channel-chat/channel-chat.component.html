@@ -1,0 +1,99 @@
+<div class="dashboard">
+    <section class="message-section" *ngIf="this.isClosedChannel">
+        <header>
+            <div class="channel-info-box">
+                <mat-icon class="material-icons-outlined">lock</mat-icon>
+                <span>{{channel?.channelName}} (geschlossen)</span>
+            </div>
+        </header>
+        <main class="closed-main">
+            <h3>Wende dich an eines der folgenden Mitglieder, um dich einzuladen.</h3>
+            <mat-divider></mat-divider>
+            <div class="users-list scrollable-users-list">
+                <div *ngFor="let user of this.channel?.usersData" class="user-in-list" (click)="openProfileDialog(user)">
+                    <img class="profil-icon" src="{{ user.photoURL }}">
+                    <app-user-presence [mini]="false" [userID]="user.id"></app-user-presence>
+                    <div>{{user.name}}</div>
+                </div>
+            </div>
+        </main>
+    </section>
+    <section class="message-section" *ngIf="!this.isClosedChannel">
+        <header>
+            <div class="channel-info-box" (click)="openChannelMenu()">
+                <mat-icon class="tag">tag</mat-icon>
+                <span>{{channel?.channelName}}</span>
+                <mat-icon>expand_more</mat-icon>
+            </div>
+            <div class="user-channel-info-box">
+                <div class="user-in-channel-box" (click)="openUserMenu()">
+                    <div class="user-avatar-box">
+                        <div *ngFor="let user of channelUserData$ | async; let i=index;">
+                            <img *ngIf="i < 3" [ngStyle]="{'right.px': i * 25, 'z-index': 2 - i}" [src]="user.photoURL"
+                                alt="User image">
+                        </div>
+                    </div>
+                    <div class="user-amount-box">{{channel?.usersData.length}}</div>
+                </div>
+                <div *ngIf="!this.isMobile" class="add-user" (click)="openAddUserDialog()">
+                    <mat-icon class="material-icons-outlined">person_add</mat-icon>
+                </div>
+                <div *ngIf="this.isMobile" class="add-user" (click)="openUserMenu()">
+                    <mat-icon class="material-icons-outlined">person_add</mat-icon>
+                </div>
+            </div>
+        </header>
+        <main #scroller>
+            <div *ngFor="let messageGroup of this.messageService.groupedMessages; trackBy: trackByFunction">
+                <div class="date-border">
+                    <div class="message-date"><span>{{ messageGroup.date }}</span></div>
+                </div>
+                <app-message *ngFor="let msg of this.messageGroup.messages; let i = index; trackBy: trackByFunction"
+                    [message]="msg" [allUsers]="allUsers"></app-message>
+            </div>
+            <div #endScrollElement></div>
+        </main>
+        <app-scroll-button [ngStyle]="{'opacity': !isElementVisible ? '1' : '0'}" (EmitScrollDown)="scrollDown()"
+            [chatData]="{collPath: 'channel/' + channelId + '/message'}"></app-scroll-button>
+        <div class="input-message-container">
+            <textarea #myTextarea [(ngModel)]="text" (ngModelChange)="checkForTag()"
+                placeholder="Nachricht an #{{channel?.channelName}}" (keyup)="sendByKey($event)"
+                (keydown)="sendByKey($event)"></textarea>
+            <div class="control-container">
+                <div class="chat-action-box">
+                    <div class="file-upload-button">
+                        <label for="fileUpload">
+                            <mat-icon class="action-btn-style">add</mat-icon>
+                        </label>
+                        <input type="file" style="display:none;" id="fileUpload" (change)="onUpload($event)">
+                    </div>
+                    <hr>
+                    <mat-icon (click)="toggleEmoji($event)" class="action-btn-style">sentiment_satisfied</mat-icon>
+                    <app-emoji-picker *ngIf="isOpened" (emojiSelectedEvent)="addEmoji($event)" appClickOutside
+                        (clickOutside)="closeEmojiMenu()"></app-emoji-picker>
+                    <mat-icon appClickOutside (clickOutside)="closeTagMenu()" (click)="toggleTagMenu('@')"
+                        class="action-btn-style">alternate_email</mat-icon>
+                    <div *ngIf="fileUpload" class="file-to-upload">
+                        <mat-icon (click)="onDelete(fileUpload.path)" class="delete-btn">close</mat-icon>
+                        <img style="height: 45px;" src="{{fileType}}" alt="">
+                    </div>
+                    <div class="tag-menu-outer-container">
+                        <div *ngIf="showTagMenu" class="tag-menu-inner-container">
+                            <div class="user" *ngFor="let user of filteredUsersForTag" (click)="tagUser(user.name)">
+                                <img src="{{user.photoURL}}" alt="">
+                                <span>{{user.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button [disabled]="text.length == 0 && fileType === ''"
+                    (click)="sendMessageTo(channel.channelId)"><mat-icon
+                        [ngStyle]="{'color' : text.length == 0 && fileType === '' ? 'grey' : '#535AF1'}"
+                        class="send-btn">send</mat-icon></button>
+            </div>
+        </div>
+    </section>
+    <section [@slide] class="thread-section" *ngIf="this.threadService.threadIsOpen">
+        <app-threads></app-threads>
+    </section>
+</div>

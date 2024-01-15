@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-/*import { UserProfile } from '@angular/fire/auth';*/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserProfile } from 'src/app/models/user-profile';
@@ -21,8 +20,6 @@ export class SignUpComponent {
 
   constructor(private authService: AuthenticationService,
     private router: Router,
-    private usersFbService: UsersFirebaseService,
-    private auth: Auth,
     private notificationService: NotificationService,
   ) {}
 

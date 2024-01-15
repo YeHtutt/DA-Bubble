@@ -1,16 +1,23 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, signInWithEmailAndPassword, reauthenticateWithCredential, EmailAuthProvider, verifyBeforeUpdateEmail, signInWithPopup, updateProfile, getAuth, updateEmail, sendEmailVerification, UserCredential } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { from, switchMap } from 'rxjs';
+import { from, switchMap, Observable } from 'rxjs';
 import { UserProfile } from '../../models/user-profile';
 import { NotificationService } from './notification.service';
 import { UsersFirebaseService } from './users-firebase.service';
 import { ChannelService } from './channel.service';
 import { Channel } from '../../models/channel';
+import { MainIdsService } from './main-ids.service';
+import { tap, map } from 'rxjs/operators';
 
-
+/**
+ * Service for handling authentication-related operations in an Angular application.
+ * Utilizes Firebase Authentication for managing user authentication and AngularFireAuth
+ * for integrating Firebase Authentication with Angular. Also interacts with Firestore
+ * for user data management and Router for navigation.
+ */
 
 @Injectable({
   providedIn: 'root'
@@ -23,77 +30,105 @@ export class AuthenticationService {
   oobCode: string = '';
 
 
-
   firestore: Firestore = inject(Firestore);
 
-  constructor(private auth: Auth, private afAuth: AngularFireAuth,
+  constructor(
+    private auth: Auth,
+    private afAuth: AngularFireAuth,
     private userfbService: UsersFirebaseService, private router: Router,
     private usersFbService: UsersFirebaseService,
     private notificationService: NotificationService,
-    private channelService: ChannelService) {
-    this.user = new UserProfile(); // user initialisiert
+    private channelService: ChannelService,
+    private idService: MainIdsService) {
+    this.user = new UserProfile();
   }
 
-
-  login(email: any, password: any) {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+  /**
+   * Authenticates a user using their email and password. Tap, pipe and map methods needs to implemented because of a
+   * channel related bug, which causes the channels to be sorted false to close and open channels.
+   * @param {any} email - User's email address.
+   * @param {any} password - User's password.
+   * @returns {Observable<User>} An observable emitting the authenticated user.
+   */
+  login(email: any, password: any): Observable<User> {
+    return from(signInWithEmailAndPassword(this.auth, email, password))
+      .pipe(
+        tap((userCredential: UserCredential) => {
+          if (userCredential.user) {
+            const userId = userCredential.user.uid;
+            this.usersFbService.saveToLocalStorage(userId);
+            this.channelService.currentUserId = userId;
+          }
+        }),
+        map(userCredential => userCredential.user)
+      );
   }
 
-
-  logout() {
+  /**
+   * Logs out the current user and performs necessary cleanup.
+   * @returns {Promise<void>} A promise indicating the completion of the logout process.
+   */
+  async logout(): Promise<void> {
     this.setIsAuthenticated(false);
-    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage(), false);
-    return from(this.auth.signOut().then(() => {
-      this.userfbService.removeFromLocalStorage();
-    }));
+    await this.performLogoutCleanup();
+    try {
+      await this.auth.signOut();
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Additional error handling as needed
+    }
+    this.userfbService.removeFromLocalStorage();
   }
 
 
+  /**
+   * Performs cleanup operations necessary during logout.
+   * To unsub the channel tree was necessary display the correct data when changing the current user.
+   */
+  async performLogoutCleanup() {
+    this.userfbService.updateUserOnlineStatus(this.userfbService.getFromLocalStorage(), false);
+    this.channelService.unsubChannelTree();
+  }
+
+  /**
+     * Signs up a new user with their name, email, and password.  
+     * @param {UserProfile} newUser - New user's profile information.
+     * @returns {Observable<any>} An observable with the result of the sign-up process.
+  */
   signUp(name: string, email: string, password: string, newUser: UserProfile) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap(({ user }) => {
-        // Update UID in the newUser object
         const uid = user.uid;
         this.addUidToUser(newUser, uid);
-
-        // Send a verification email to the user
         this.sendVerificationMail(user);
-
-        // Add user details to Firestore
         this.userfbService.addUserToFirebase(newUser.toJSON(), uid);
-
-        // Additional custom tasks (like adding user to a general channel)
         this.addToGeneralChannel(uid);
-
-        // Update user profile with display name
         return updateProfile(user, { displayName: name });
       })
     );
   }
 
-  /* ID */
+
+  /**
+   * Adds a user to the general channel.
+   * @param {string} user - User identifier.
+   */
   async addToGeneralChannel(user: string) {
-    // Retrieve user data
     const userData = (await this.usersFbService.getUser(user)).toJSON();
-
-    // Retrieve the channel data
-    let channel = (await this.channelService.getSingleChannel('CQyOoOXPaiHnt18E3IQp')).toJSON();
-
-    // Check if the user already exists in the channel
+    let channel = (await this.channelService.getSingleChannel(this.idService.mainChannelId)).toJSON();
     if (!channel.usersData.some((u: any) => u.id === userData.id)) {
-      // If the user doesn't exist, add them to the channel
       channel.usersData.push(userData);
-
-      // Update the channel with the new user list
       this.channelService.updateChannel(new Channel(channel));
-    } else {
-      // If the user already exists in the channel, you might want to do something else
-      console.log('User already exists in the channel');
     }
   }
 
 
-
+  /**
+   * Associates a unique identifier with a new user's profile.
+   * @param {UserProfile} newUser - The new user's profile.
+   * @param {string} uid - The unique identifier for the user.
+   * @returns {UserProfile} The updated user profile.
+   */
   addUidToUser(newUser: UserProfile, uid: string) {
     newUser.id = uid;
     return newUser;
@@ -120,13 +155,11 @@ export class AuthenticationService {
   }
 
 
-  /* ID */
+
   async signinWithGoogle() {
     try {
       const googleProvider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, googleProvider);
-
-      console.log("signInWithPopup result:", result);
       if (result && result.user) {
         const collRef = doc(this.firestore, 'users', result.user.uid);
         this.userUID = result.user.uid;
@@ -138,18 +171,12 @@ export class AuthenticationService {
           photoURL: result.user.photoURL,
           isOnline: true,
         });
-
         await setDoc(collRef, this.user.toJSON());
-
-        // Check and add the user to the general channel
         await this.addToGeneralChannel(result.user.uid);
-
         this.usersFbService.saveToLocalStorage(result.user.uid);
         this.notificationService.showSuccess('Login erfolgreich');
       }
-
-      // Navigate to the main channel view ID
-      this.router.navigate([`/dashboard/channel/CQyOoOXPaiHnt18E3IQp`]);
+      this.router.navigate([`/dashboard/channel/${this.idService.mainChannelId}`]);
     } catch (error) {
       console.error(error);
       this.notificationService.showError('Login fehlgeschlagen!');
@@ -157,15 +184,11 @@ export class AuthenticationService {
   }
 
 
-
-
-  // Füge eine öffentliche Methode hinzu, um isAuthenticated abzurufen
   getIsAuthenticated(): boolean {
     return this.isAuthenticated;
   }
 
 
-  // Füge eine öffentliche Methode hinzu, um isAuthenticated festzulegen
   setIsAuthenticated(value: boolean) {
     this.isAuthenticated = value;
   }
@@ -174,7 +197,6 @@ export class AuthenticationService {
   updateAndVerifyEmail(newEmail: any) {
     const auth = getAuth();
     const user = auth.currentUser;
-
     if (user) {
       verifyBeforeUpdateEmail(user, newEmail).then(() => {
         this.notificationService.showSuccess('Eine Verifikations-Email wurde an ihre neue Adresse gesendet');
@@ -187,22 +209,15 @@ export class AuthenticationService {
   }
 
 
-
-
-
   sendVerificationMail(user: any) {
     return sendEmailVerification(user)
       .then(() => {
         this.notificationService.showSuccess('Eine Verifikations-Email wurde an ihr Postfach gesendet');
-        // Additional logic if needed, like redirecting to a 'check your email' page
       })
       .catch((error) => {
         console.error('Error sending email verification:', error);
-        // Handle errors here, such as displaying a notification to the user
       });
   }
-
-
-
-
 }
+
+
