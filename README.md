@@ -25,3 +25,22 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Angular Fire Backend help
+
+To add Angular Fire to project run `ng add @angular/fire`.
+Code example for the manual import of Angular Fire
+```
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+
+@NgModule({
+  imports: [
+    provideFirebaseApp(() => initializeApp({ environment.firebaseConfig })),
+    provideFirestore(() => getFirestore()),
+  ],
+  ...
+})
+export class AppModule { }
+```
+Edit the Firebase environment in `environment.ts` with your own Firebase backend configuration. For further more Firebase help go check out the [Github Angular Quickstart Page](https://github.com/angular/angularfire/blob/master/docs/install-and-setup.md)
